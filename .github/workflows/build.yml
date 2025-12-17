@@ -1,0 +1,215 @@
+# Build Workflow
+#
+# Builds artifacts and creates GitHub releases when tags are pushed
+# Runs on semantic version tags (e.g., v1.2.3, v2.0.0-beta.1)
+#
+# CUSTOMIZATION REQUIRED:
+# - Replace placeholder build commands with your project's actual commands
+# - Configure artifact paths
+# - Adjust release asset names
+# - Customize release notes generation
+
+name: Build
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Semantic version tags (v1.2.3)
+  workflow_dispatch: # Allow manual trigger for testing
+
+# Ensure only one build runs at a time per tag
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false # Don't cancel release builds
+
+jobs:
+  build:
+    name: Build Artifacts
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for changelog generation
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Extract version from tag (remove 'v' prefix)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
+
+      # TODO: Uncomment and configure for your language/framework
+      # Python example:
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.11'
+      #     cache: 'pip'
+      #
+      # - name: Install build dependencies
+      #   run: |
+      #     pip install build twine
+      #     pip install -r requirements.txt
+      #
+      # - name: Build distribution
+      #   run: python -m build
+      #
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: python-package
+      #     path: dist/*
+      #     retention-days: 30
+
+      # Node.js/TypeScript example:
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #     cache: 'npm'
+      #
+      # - name: Install dependencies
+      #   run: npm ci
+      #
+      # - name: Build
+      #   run: npm run build
+      #
+      # - name: Package
+      #   run: npm pack
+      #
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: npm-package
+      #     path: '*.tgz'
+      #     retention-days: 30
+
+      # Go example:
+      # - name: Set up Go
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: '1.21'
+      #     cache: true
+      #
+      # - name: Build binaries
+      #   run: |
+      #     GOOS=linux GOARCH=amd64 go build -o dist/myapp-linux-amd64
+      #     GOOS=darwin GOARCH=amd64 go build -o dist/myapp-darwin-amd64
+      #     GOOS=darwin GOARCH=arm64 go build -o dist/myapp-darwin-arm64
+      #     GOOS=windows GOARCH=amd64 go build -o dist/myapp-windows-amd64.exe
+      #
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: go-binaries
+      #     path: dist/*
+      #     retention-days: 30
+
+      # Docker example:
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      #
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: |
+      #       myorg/myapp:${{ steps.version.outputs.version }}
+      #       myorg/myapp:latest
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+
+      - name: Placeholder - Configure build
+        run: |
+          echo "TODO: Replace with your build commands"
+          echo "Version: ${{ steps.version.outputs.version }}"
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write # Required to create releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Download build artifacts if you uploaded them in the build job
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: python-package  # or npm-package, go-binaries, etc.
+      #     path: dist/
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          # Extract version-specific changelog from CHANGELOG.md
+          # This assumes you use Keep a Changelog format
+          VERSION=${{ needs.build.outputs.version }}
+
+          # If CHANGELOG.md exists, extract the section for this version
+          if [ -f CHANGELOG.md ]; then
+            # Extract from "## [version]" to the next "## [" or end of file
+            NOTES=$(sed -n "/## \[$VERSION\]/,/## \[/{/## \[/!p;}" CHANGELOG.md | sed '$ d')
+            
+            if [ -n "$NOTES" ]; then
+              echo "Found changelog for version $VERSION"
+              # Save to file for multi-line content
+              echo "$NOTES" > /tmp/release-notes.md
+            else
+              echo "No specific changelog found for version $VERSION, using auto-generated notes"
+              echo "See [CHANGELOG.md](CHANGELOG.md) for details." > /tmp/release-notes.md
+            fi
+          else
+            echo "No CHANGELOG.md found, using auto-generated notes"
+            echo "See commit history for details." > /tmp/release-notes.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release v${{ needs.build.outputs.version }}
+          body_path: /tmp/release-notes.md
+          draft: false
+          prerelease: ${{ contains(needs.build.outputs.version, '-') }} # Mark pre-releases (alpha, beta, rc)
+          generate_release_notes: true # Auto-generate from commits
+          # Uncomment to attach build artifacts to the release
+          # files: |
+          #   dist/*
+
+      # Optional: Publish to package registry
+      # Python example (PyPI):
+      # - name: Publish to PyPI
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      #   run: twine upload dist/*
+
+      # Node.js example (npm):
+      # - name: Publish to npm
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Go example (GitHub Packages):
+      # - name: Publish to GitHub Packages
+      #   run: |
+      #     echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      #     docker push ghcr.io/${{ github.repository }}:${{ needs.build.outputs.version }}

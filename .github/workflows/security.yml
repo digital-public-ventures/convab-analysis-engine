@@ -1,0 +1,335 @@
+# Security Workflow
+#
+# Automated security scanning for vulnerabilities
+# Includes: dependency scanning, secret scanning, SAST, and license compliance
+#
+# Runs on:
+# - Schedule (daily)
+# - Pull requests
+# - Manual trigger
+#
+# CUSTOMIZATION REQUIRED:
+# - Enable Dependabot in repository settings
+# - Configure CodeQL for your language (if applicable)
+# - Add additional security scanners as needed
+# - Set up security alert notifications
+
+name: Security
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+# Limit concurrent security scans
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write  # Required for uploading SARIF results
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # GitHub automatically runs Dependabot if enabled in settings
+      # This job provides additional dependency scanning
+
+      # Python example (Safety):
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.11'
+      #
+      # - name: Install dependencies
+      #   run: |
+      #     pip install safety
+      #     pip install -r requirements.txt
+      #
+      # - name: Run Safety check
+      #   run: safety check --json --output safety-report.json
+      #   continue-on-error: true
+      #
+      # - name: Upload Safety report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: safety-report
+      #     path: safety-report.json
+
+      # Node.js example (npm audit):
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #
+      # - name: Run npm audit
+      #   run: npm audit --json > npm-audit.json
+      #   continue-on-error: true
+      #
+      # - name: Upload audit report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: npm-audit-report
+      #     path: npm-audit.json
+
+      # Universal: OWASP Dependency-Check
+      # - name: Run OWASP Dependency-Check
+      #   uses: dependency-check/Dependency-Check_Action@main
+      #   with:
+      #     project: 'myproject'
+      #     path: '.'
+      #     format: 'SARIF'
+      #
+      # - name: Upload SARIF results
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: reports/dependency-check-report.sarif
+
+      # Snyk example (requires SNYK_TOKEN secret):
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/node@master  # or python, maven, etc.
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     args: --sarif-file-output=snyk.sarif
+      #   continue-on-error: true
+      #
+      # - name: Upload Snyk results
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: snyk.sarif
+
+      - name: Placeholder - Configure dependency scanning
+        run: |
+          echo "TODO: Configure dependency scanning for your language/framework"
+          echo "Enable Dependabot in Settings > Security > Dependabot"
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for complete scanning
+
+      # GitHub Secret Scanning is available for public repos and GitHub Advanced Security
+      # This job provides additional scanning with Gitleaks
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}  # Optional: for Gitleaks+
+
+      # Alternative: TruffleHog
+      # - name: TruffleHog OSS
+      #   uses: trufflesecurity/trufflehog@main
+      #   with:
+      #     path: ./
+      #     base: ${{ github.event.repository.default_branch }}
+      #     head: HEAD
+
+  sast:
+    name: Static Application Security Testing
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # CodeQL (supports multiple languages)
+      # Uncomment and configure for your language
+      # - name: Initialize CodeQL
+      #   uses: github/codeql-action/init@v3
+      #   with:
+      #     languages: python  # or javascript, typescript, java, go, etc.
+      #     # For compiled languages, add build steps here
+      #
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v3
+      #   # Or replace with manual build steps:
+      #   # - run: |
+      #   #     make bootstrap
+      #   #     make release
+      #
+      # - name: Perform CodeQL Analysis
+      #   uses: github/codeql-action/analyze@v3
+
+      # Semgrep (multi-language SAST)
+      - name: Run Semgrep
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: auto  # Use Semgrep's recommended rules
+          # Or specify custom rulesets:
+          # config: >-
+          #   p/security-audit
+          #   p/secrets
+          #   p/owasp-top-ten
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}  # Optional: for Semgrep Cloud
+        continue-on-error: true  # Don't fail builds on findings
+
+      # Bandit (Python-specific SAST)
+      # - name: Run Bandit
+      #   if: hashFiles('**/*.py') != ''
+      #   run: |
+      #     pip install bandit
+      #     bandit -r . -f json -o bandit-report.json
+      #   continue-on-error: true
+
+      # ESLint security plugin (JavaScript/TypeScript)
+      # - name: Run ESLint security scan
+      #   if: hashFiles('**/*.js', '**/*.ts') != ''
+      #   run: |
+      #     npm install
+      #     npm run lint:security
+      #   continue-on-error: true
+
+  license-compliance:
+    name: License Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Python example (pip-licenses):
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.11'
+      #
+      # - name: Install dependencies
+      #   run: |
+      #     pip install pip-licenses
+      #     pip install -r requirements.txt
+      #
+      # - name: Check licenses
+      #   run: |
+      #     pip-licenses --format=json --output-file=licenses.json
+      #     pip-licenses --fail-on="GPL;AGPL"  # Fail on copyleft licenses if needed
+      #
+      # - name: Upload license report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: license-report
+      #     path: licenses.json
+
+      # Node.js example (license-checker):
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #
+      # - name: Install dependencies
+      #   run: npm ci
+      #
+      # - name: Check licenses
+      #   run: |
+      #     npx license-checker --json --out licenses.json
+      #     npx license-checker --failOn "GPL;AGPL"  # Fail on copyleft licenses
+      #
+      # - name: Upload license report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: license-report
+      #     path: licenses.json
+
+      # FOSSA (comprehensive license scanning - requires FOSSA_API_KEY):
+      # - name: Run FOSSA analysis
+      #   uses: fossas/fossa-action@main
+      #   with:
+      #     api-key: ${{ secrets.FOSSA_API_KEY }}
+
+      - name: Placeholder - Configure license compliance
+        run: |
+          echo "TODO: Configure license compliance scanning"
+          echo "Consider: pip-licenses, license-checker, FOSSA, etc."
+
+  container-scan:
+    name: Container Image Scan
+    runs-on: ubuntu-latest
+    if: hashFiles('Dockerfile') != ''  # Only run if Dockerfile exists
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Trivy (comprehensive container scanner)
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'  # Filesystem scan
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      # If you build Docker images, scan them too:
+      # - name: Build Docker image
+      #   run: docker build -t myapp:${{ github.sha }} .
+      #
+      # - name: Scan Docker image with Trivy
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: 'myapp:${{ github.sha }}'
+      #     format: 'sarif'
+      #     output: 'trivy-image-results.sarif'
+      #
+      # - name: Upload image scan results
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     sarif_file: 'trivy-image-results.sarif'
+
+  security-summary:
+    name: Security Summary
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, secret-scan, sast, license-compliance, container-scan]
+    if: always()  # Run even if some jobs fail
+    
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## 🔒 Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Dependency Scan | ${{ needs.dependency-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Secret Scan | ${{ needs.secret-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| SAST | ${{ needs.sast.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| License Compliance | ${{ needs.license-compliance.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Container Scan | ${{ needs.container-scan.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review the Security tab for detailed findings." >> $GITHUB_STEP_SUMMARY
+
+      # Optional: Fail the workflow if critical scans failed
+      # - name: Check for failures
+      #   if: |
+      #     needs.dependency-scan.result == 'failure' ||
+      #     needs.secret-scan.result == 'failure' ||
+      #     needs.sast.result == 'failure'
+      #   run: |
+      #     echo "Critical security checks failed"
+      #     exit 1

@@ -1,0 +1,19 @@
+# Python package distribution files
+include README.md
+include LICENSE
+include CHANGELOG.md
+include pyproject.toml
+include requirements-dev.txt
+
+# Include source files
+recursive-include src *.py
+recursive-include src *.typed
+
+# Include tests
+recursive-include tests *.py
+
+# Exclude build artifacts
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .DS_Store
