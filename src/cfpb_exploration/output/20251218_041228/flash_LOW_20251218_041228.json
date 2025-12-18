@@ -1,0 +1,164 @@
+[
+  {
+    "id": "8d2aef56-3f40-4779-80aa-ac2e8261c175",
+    "scalar_metrics": {
+      "financial_loss_amount": 70.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Subscription Trap",
+      "communication_vector": "Website",
+      "payment_mechanism": "Credit Card",
+      "company_behavior_flags": [
+        "Dark Patterns",
+        "Unable to Cancel",
+        "Responsive Failure",
+        "Unauthorized Charges"
+      ],
+      "life_impact_categories": [
+        "Identity Theft Risk",
+        "Data Privacy Breach"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Unfair Deceptive or Abusive Acts or Practices (UDAAP)"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "55e51f66-4a6f-4433-81ab-2960808c9738",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 50
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Phantom Debt Collection",
+      "communication_vector": "Email",
+      "payment_mechanism": "Payday Loan",
+      "company_behavior_flags": [
+        "Threats of Legal Action",
+        "Impersonation",
+        "Harassment"
+      ],
+      "life_impact_categories": [
+        "Emotional Distress",
+        "Benefit Loss Risk"
+      ],
+      "consumer_vulnerability_tags": [
+        "Social Security Recipient"
+      ],
+      "regulatory_issues": [
+        "FDCPA Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Ace Cash Express"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "569f452f-b053-42b4-84c8-55b1caf845a1",
+    "scalar_metrics": {
+      "financial_loss_amount": 12000.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 45,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Unauthorized Wire/Transfer",
+      "communication_vector": "In-Person",
+      "payment_mechanism": "Bank Transfer",
+      "company_behavior_flags": [
+        "Denied Claim"
+      ],
+      "life_impact_categories": [
+        "Significant Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation E"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "a8c52beb-6fbc-498d-9027-2acb44f6a345",
+    "scalar_metrics": {
+      "financial_loss_amount": 450.0,
+      "sentiment_score": -0.7,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 14,
+      "interaction_count": 1
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Misdirected Payment",
+      "communication_vector": "Mobile App",
+      "payment_mechanism": "PayPal",
+      "company_behavior_flags": [
+        "Refusal to Help"
+      ],
+      "life_impact_categories": [
+        "Negative Balance"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "PayPal"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "b7cb224e-d851-4500-b6b2-91e00cd87023",
+    "scalar_metrics": {
+      "financial_loss_amount": 1000.0,
+      "sentiment_score": -0.5,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 90,
+      "interaction_count": 4
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Check Fraud/Forgery",
+      "communication_vector": "Mail",
+      "payment_mechanism": "Check",
+      "company_behavior_flags": [
+        "Delaying Reimbursement",
+        "Third-party Blaming"
+      ],
+      "life_impact_categories": [
+        "Rent Money",
+        "Withheld Deposit"
+      ],
+      "consumer_vulnerability_tags": [
+        "Tenant"
+      ],
+      "regulatory_issues": [
+        "State Security Deposit Law"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Wells Fargo"
+      ]
+    }
+  }
+]

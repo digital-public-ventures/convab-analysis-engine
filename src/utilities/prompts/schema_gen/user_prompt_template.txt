@@ -1,0 +1,17 @@
+Based on the following use case and sample data, design a comprehensive tagging schema.
+
+USE CASE:
+{use_case}
+
+SAMPLE DATA ({num_records} records):
+{sample_data}
+
+Analyze these samples to understand what kinds of patterns, themes, and dimensions exist in this text data.
+
+Design a schema that includes:
+1. Categorical fields - discrete categories for classification (include field name, description, and suggested category values)
+2. Scalar fields - numerical rating scales from 0-10 (include field name, description, and scale interpretation)
+
+Return ONLY the schema definition as a JSON object adhering to the attached response schema. Do NOT tag or score any of the sample records.
+
+The response must follow the exact structure defined in the JSON schema, including all required fields.

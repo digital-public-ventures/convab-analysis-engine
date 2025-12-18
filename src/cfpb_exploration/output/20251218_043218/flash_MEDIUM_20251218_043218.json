@@ -1,0 +1,1260 @@
+[
+  {
+    "id": "eefcb834-d5d8-47be-a6d8-3ea3dff6659e",
+    "scalar_metrics": {
+      "financial_loss_amount": 70.0,
+      "sentiment_score": -0.75,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Subscription Trap",
+      "communication_vector": "Website",
+      "payment_mechanism": "Bank Account",
+      "company_behavior_flags": [
+        "Unresponsive customer service",
+        "Hidden Cancellation Terms",
+        "Data Privacy Concerns"
+      ],
+      "life_impact_categories": [
+        "Privacy Breach risk"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Potential ROSCA violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "9acdc410-0778-40b6-8c2f-f2fbf6f1408e",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 50
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Phantom Debt Scam",
+      "communication_vector": "Email",
+      "payment_mechanism": "Payday Loan",
+      "company_behavior_flags": [
+        "Harassment",
+        "Threat of legal action",
+        "Impersonation"
+      ],
+      "life_impact_categories": [
+        "Mental Distress",
+        "Credit Score Damage"
+      ],
+      "consumer_vulnerability_tags": [
+        "Social Security Recipient"
+      ],
+      "regulatory_issues": [
+        "FDCPA Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Ace Cash Express"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "12e14dff-a808-47a0-89a9-ab6f01ad610d",
+    "scalar_metrics": {
+      "financial_loss_amount": 12000.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 8,
+      "duration_of_ordeal_days": 45,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Unauthorized Transfer",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Bank Transfer",
+      "company_behavior_flags": [
+        "Denied Claim"
+      ],
+      "life_impact_categories": [
+        "Significant Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation E"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "95f27d32-9046-42d0-b3bc-ed36c3c4f1d6",
+    "scalar_metrics": {
+      "financial_loss_amount": 450.0,
+      "sentiment_score": -0.7,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 14,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Misdirected Payment",
+      "communication_vector": "App",
+      "payment_mechanism": "PayPal",
+      "company_behavior_flags": [
+        "Refusal to assist"
+      ],
+      "life_impact_categories": [
+        "Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "ff431718-91cb-443b-b9e1-b9e736891916",
+    "scalar_metrics": {
+      "financial_loss_amount": 1000.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 5
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Check Fraud",
+      "communication_vector": "Mail",
+      "payment_mechanism": "Check",
+      "company_behavior_flags": [
+        "Delayed reimbursement",
+        "Inter-institution finger-pointing"
+      ],
+      "life_impact_categories": [
+        "Housing Deposit Loss"
+      ],
+      "consumer_vulnerability_tags": [
+        "Tenant"
+      ],
+      "regulatory_issues": [
+        "UCC Forged Endorsement"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Landlord"
+      ],
+      "linked_financial_institutions": [
+        "Wells Fargo"
+      ]
+    }
+  },
+  {
+    "id": "e019b68a-51cd-409b-873d-702bd7e0d139",
+    "scalar_metrics": {
+      "financial_loss_amount": 140000.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 10
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Account Takeover",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Bank Transfer",
+      "company_behavior_flags": [
+        "Lack of urgency",
+        "Ineffective fraud prevention"
+      ],
+      "life_impact_categories": [
+        "Unable to pay bills",
+        "Total savings wipeout"
+      ],
+      "consumer_vulnerability_tags": [
+        "Long-term customer"
+      ],
+      "regulatory_issues": [
+        "Regulation E"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Bank of America"
+      ]
+    }
+  },
+  {
+    "id": "3df75f0e-91f0-4658-bd61-ff844c62e28a",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.4,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 1
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Debt Collection Scam",
+      "communication_vector": "Mail",
+      "payment_mechanism": "Utility Bill",
+      "company_behavior_flags": [],
+      "life_impact_categories": [
+        "Credit Score Damage"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "FDCPA Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Credit Bureau"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "6e380d3f-f766-4ae3-a019-8821e294148a",
+    "scalar_metrics": {
+      "financial_loss_amount": 48.0,
+      "sentiment_score": -0.85,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 21,
+      "interaction_count": 4
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Counterfeit Goods Scam",
+      "communication_vector": "Website",
+      "payment_mechanism": "PayPal",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Failure to honor buyer protection"
+      ],
+      "life_impact_categories": [
+        "Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation Z"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "VISA"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "9b03bdf5-215d-448c-98db-c704c6178663",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.5,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 7,
+      "interaction_count": 8
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Phantom Debt Scam",
+      "communication_vector": "Mail",
+      "payment_mechanism": "Debt Collection",
+      "company_behavior_flags": [
+        "Harassment",
+        "Inaccurate reporting"
+      ],
+      "life_impact_categories": [
+        "Mental Distress"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "FDCPA Violation",
+        "FCRA Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Transworld Systems Inc",
+        "Police Department",
+        "FTC"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "752478f8-0c70-456c-ac86-b41cd0dfeca1",
+    "scalar_metrics": {
+      "financial_loss_amount": 6.0,
+      "sentiment_score": -0.65,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 1,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Account Takeover",
+      "communication_vector": "Email",
+      "payment_mechanism": "MoneyGram",
+      "company_behavior_flags": [
+        "Poor security verification",
+        "Refusal to refund fee"
+      ],
+      "life_impact_categories": [
+        "Privacy Breach risk"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "KYC Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "MoneyGram"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "903bbe22-5d53-4a5c-bb02-e9deca0b4739",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 365,
+      "interaction_count": 10
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Deceptive Marketing",
+      "communication_vector": "Mail",
+      "payment_mechanism": "Mortgage",
+      "company_behavior_flags": [
+        "Failure to honor opt-out",
+        "Impersonation"
+      ],
+      "life_impact_categories": [
+        "Harassment"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "TCPA Violation",
+        "MAP Rule"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "932687bd-f6a2-494d-987c-859de66657dc",
+    "scalar_metrics": {
+      "financial_loss_amount": 890.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 120,
+      "interaction_count": 4
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Negative Option Billing",
+      "communication_vector": "Email",
+      "payment_mechanism": "Debt Collection",
+      "company_behavior_flags": [
+        "Billing for unused services",
+        "Account lockout"
+      ],
+      "life_impact_categories": [
+        "Credit Score Damage"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "FDCPA Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "RFGI"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "4e12954c-e745-4705-bd1b-105a69ec6783",
+    "scalar_metrics": {
+      "financial_loss_amount": 9900.0,
+      "sentiment_score": -0.95,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 8
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Smishing",
+      "communication_vector": "Text",
+      "payment_mechanism": "Credit Card",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Conflicting information",
+        "Slow processing"
+      ],
+      "life_impact_categories": [
+        "Significant Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation Z"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "USPS"
+      ],
+      "linked_financial_institutions": [
+        "Wells Fargo"
+      ]
+    }
+  },
+  {
+    "id": "fdfe6eac-a188-41d2-8160-7b1a4d3ea52b",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 7,
+      "interaction_count": 4
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Account Freeze",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Bank Transfer",
+      "company_behavior_flags": [
+        "Fund seizure",
+        "Refusal to close account"
+      ],
+      "life_impact_categories": [
+        "Inability to access loan funds"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Capital One"
+      ]
+    }
+  },
+  {
+    "id": "6b764727-ed33-4c4e-995d-f258aad0d811",
+    "scalar_metrics": {
+      "financial_loss_amount": 5000.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 8,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 6
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Merchant Fraud",
+      "communication_vector": "In-person",
+      "payment_mechanism": "Credit Card",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Ignoring signature discrepancy"
+      ],
+      "life_impact_categories": [
+        "Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation Z"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Bank of America"
+      ]
+    }
+  },
+  {
+    "id": "e3dfd9e8-aea5-45c9-939d-a5ac60dc94f9",
+    "scalar_metrics": {
+      "financial_loss_amount": 90.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 4,
+      "duration_of_ordeal_days": 5,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Misdirected Payment",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Refusal to assist"
+      ],
+      "life_impact_categories": [
+        "Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "11dc00f1-58bd-4143-ad83-7e78b497e31f",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 8,
+      "duration_of_ordeal_days": 3,
+      "interaction_count": 1
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Crypto Theft",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Virtual Currency",
+      "company_behavior_flags": [
+        "No human support"
+      ],
+      "life_impact_categories": [
+        "Asset Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Trust Wallet"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "75ee1211-7096-4e91-8f55-dbde3f010527",
+    "scalar_metrics": {
+      "financial_loss_amount": 6900.0,
+      "sentiment_score": -1.0,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 5
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Rental Scam",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Bank Transfer",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Partial refund only",
+        "Dismissive"
+      ],
+      "life_impact_categories": [
+        "Total savings wipeout"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation E"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Police"
+      ],
+      "linked_financial_institutions": [
+        "Bank of America"
+      ]
+    }
+  },
+  {
+    "id": "e77b956b-dfb4-4397-adc4-10ea710558d8",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Zelle Fraud Policy",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Failure to investigate",
+        "Lack of transparency"
+      ],
+      "life_impact_categories": [
+        "Unprotected vulnerability"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Regulation E"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "CFPB"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "eec8a130-a887-49f3-af23-1e3aca8117a8",
+    "scalar_metrics": {
+      "financial_loss_amount": 500.0,
+      "sentiment_score": -0.95,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 20,
+      "interaction_count": 6
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Phishing",
+      "communication_vector": "Website",
+      "payment_mechanism": "Bank Account",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Conflicting management statements",
+        "Lack of accountability"
+      ],
+      "life_impact_categories": [
+        "Rent Money",
+        "Risk of Homelessness"
+      ],
+      "consumer_vulnerability_tags": [
+        "Unemployed"
+      ],
+      "regulatory_issues": [
+        "Regulation E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Chime Financial"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "85965bba-7c9a-4280-8396-62ee78ff1610",
+    "scalar_metrics": {
+      "financial_loss_amount": 500.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 14,
+      "interaction_count": 5
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Fake Check Scam / Employment Scheme",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Check",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Inadequate Investigation",
+        "Delayed Action"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [
+        "Job Seeker"
+      ],
+      "regulatory_issues": [
+        "Potential Check Clearing Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Chase"
+      ]
+    }
+  },
+  {
+    "id": "32a596c4-5d3a-42ac-b20c-c971bd9c846d",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Authorized Push Payment Fraud",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Inadequate Investigation",
+        "Lack of Transparency"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "4c155de3-26c9-4f96-bff1-d2148629f4be",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.7,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Zelle Fraud Dispute",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Inadequate Investigation"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "0ded8803-8a90-433b-8e04-b05ce2aaa0ba",
+    "scalar_metrics": {
+      "financial_loss_amount": 2500.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 10,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Account Takeover",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Self-Payment / Internal Transfer",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Accused Consumer",
+        "Account Closed"
+      ],
+      "life_impact_categories": [
+        "Banking Access Lost"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "e3a3f179-351b-441d-8db1-28e5ae35b22c",
+    "scalar_metrics": {
+      "financial_loss_amount": 1000.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 90,
+      "interaction_count": 1
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Online Purchase Scam / Non-delivery",
+      "communication_vector": "Email / Web",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Denied Claim"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "4b9a76ac-7872-4fb5-93df-ec0b05119340",
+    "scalar_metrics": {
+      "financial_loss_amount": 120.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 4,
+      "duration_of_ordeal_days": 3650,
+      "interaction_count": 10
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Deceptive Rewards Program",
+      "communication_vector": "In-Person",
+      "payment_mechanism": "Credit Card Benefit",
+      "company_behavior_flags": [
+        "Deceptive Marketing",
+        "Failure to Honor Terms"
+      ],
+      "life_impact_categories": [
+        "Travel Inconvenience"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "UDAAP"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "United Airlines"
+      ],
+      "linked_financial_institutions": [
+        "Chase"
+      ]
+    }
+  },
+  {
+    "id": "06931bc1-5427-48c5-a725-8cd2b890f43f",
+    "scalar_metrics": {
+      "financial_loss_amount": 570.0,
+      "sentiment_score": -0.95,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 120,
+      "interaction_count": 15
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Predatory Billing / Hidden Interest",
+      "communication_vector": "Phone",
+      "payment_mechanism": "ACH / Phone Payment",
+      "company_behavior_flags": [
+        "Coercive Collection",
+        "Poor Customer Service",
+        "Mishandled Documentation"
+      ],
+      "life_impact_categories": [
+        "Credit Score Damage",
+        "Financial Stress"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Fair Credit Reporting Act Violation",
+        "UDAAP"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Comenity Bank"
+      ]
+    }
+  },
+  {
+    "id": "04a6ad92-4cda-4c80-8caa-c8b2b336eb28",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.7,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 4
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Payment Misallocation",
+      "communication_vector": "Phone",
+      "payment_mechanism": "Monthly Payments",
+      "company_behavior_flags": [
+        "Failure to Follow Instructions",
+        "Refusal to Correct Error"
+      ],
+      "life_impact_categories": [
+        "Unnecessary Interest Charges"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "CARD Act Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Citibank"
+      ]
+    }
+  },
+  {
+    "id": "3c6d54fb-a3e4-43b0-a2fb-a2a02f9b3565",
+    "scalar_metrics": {
+      "financial_loss_amount": 59.0,
+      "sentiment_score": -0.5,
+      "urgency_score": 8,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Collection Communication Failure",
+      "communication_vector": "Phone",
+      "payment_mechanism": "Store Credit Card",
+      "company_behavior_flags": [
+        "Refusal to Remove Negative Remark"
+      ],
+      "life_impact_categories": [
+        "Credit Score Damage",
+        "Mortgage Rate Impact"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Comenity Bank"
+      ]
+    }
+  },
+  {
+    "id": "a7da4c97-2dc2-47dc-9e58-4b77124e19e4",
+    "scalar_metrics": {
+      "financial_loss_amount": 100000.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 90,
+      "interaction_count": 10
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Business Email Compromise",
+      "communication_vector": "Email",
+      "payment_mechanism": "ACH",
+      "company_behavior_flags": [
+        "Delayed Action",
+        "Ineffective Communication"
+      ],
+      "life_impact_categories": [
+        "Severe Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "FBI",
+        "State Police"
+      ],
+      "linked_financial_institutions": [
+        "Chase Bank"
+      ]
+    }
+  },
+  {
+    "id": "e7c14b97-1b91-45a8-b782-61f7d0395a3e",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Zelle Dispute Handling",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Inadequate Investigation"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "09751f47-3e54-4276-8472-c02c075c1e38",
+    "scalar_metrics": {
+      "financial_loss_amount": 39000.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 17,
+      "interaction_count": 20
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Unauthorized Transfer / Account Freeze",
+      "communication_vector": "Email",
+      "payment_mechanism": "Cryptocurrency",
+      "company_behavior_flags": [
+        "Account Frozen",
+        "Lack of Response",
+        "Poor Customer Service"
+      ],
+      "life_impact_categories": [
+        "Investment Loss",
+        "Financial Stress"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Coinbase"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "b233af63-fc5c-4862-9a5f-3bbec861888f",
+    "scalar_metrics": {
+      "financial_loss_amount": 400.0,
+      "sentiment_score": -0.95,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 5,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Account Freeze / Funds Withheld",
+      "communication_vector": "App",
+      "payment_mechanism": "Venmo",
+      "company_behavior_flags": [
+        "Account Frozen",
+        "Refusal to Release Funds"
+      ],
+      "life_impact_categories": [
+        "Rent Money",
+        "Homelessness Risk"
+      ],
+      "consumer_vulnerability_tags": [
+        "Tenant"
+      ],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Venmo"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "62026a6e-cb40-41f1-9022-67b4a3b50568",
+    "scalar_metrics": {
+      "financial_loss_amount": 68000.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 9,
+      "duration_of_ordeal_days": 1,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Tech Support Scam / Impersonation",
+      "communication_vector": "Phone",
+      "payment_mechanism": "Cryptocurrency",
+      "company_behavior_flags": [
+        "Poor Security",
+        "Denied Claim"
+      ],
+      "life_impact_categories": [
+        "Severe Financial Loss"
+      ],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Coinbase"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "b3287b71-3f4d-4a2c-a24c-6597f0f1392c",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 5,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Zelle Dispute Handling",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Inadequate Investigation"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "d98c0561-7927-4a56-96a3-1ebc8777f43e",
+    "scalar_metrics": {
+      "financial_loss_amount": 680.0,
+      "sentiment_score": -1.0,
+      "urgency_score": 10,
+      "duration_of_ordeal_days": 60,
+      "interaction_count": 3
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Phishing",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "ACH / Checking Account",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "No Provisional Refund"
+      ],
+      "life_impact_categories": [
+        "Eviction Risk",
+        "Utility Shut off",
+        "Loss of Unemployment Funds"
+      ],
+      "consumer_vulnerability_tags": [
+        "Unemployed"
+      ],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": [
+        "Capital One"
+      ]
+    }
+  },
+  {
+    "id": "950a231f-230d-4b26-a7a0-9d3b69d55c5b",
+    "scalar_metrics": {
+      "financial_loss_amount": 270.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 7,
+      "duration_of_ordeal_days": 20,
+      "interaction_count": 5
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Family Impersonation Scam",
+      "communication_vector": "Phone / Text",
+      "payment_mechanism": "CashApp",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Refusal to Accept Police Report"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "CashApp",
+        "Police Department"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "1b5b5fe8-90ee-4271-bb5e-54000586a008",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.8,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 2
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Zelle Dispute Handling",
+      "communication_vector": "App",
+      "payment_mechanism": "Zelle",
+      "company_behavior_flags": [
+        "Inadequate Investigation"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": [
+        "Reg E Violation"
+      ]
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Zelle"
+      ],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "6ddc7690-d0dc-42f7-94c5-2247f323727b",
+    "scalar_metrics": {
+      "financial_loss_amount": 0.0,
+      "sentiment_score": -0.6,
+      "urgency_score": 6,
+      "duration_of_ordeal_days": 2,
+      "interaction_count": 1
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Misdirected Payment",
+      "communication_vector": "App",
+      "payment_mechanism": "Money Transfer",
+      "company_behavior_flags": [
+        "Lack of Help"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [],
+      "linked_financial_institutions": []
+    }
+  },
+  {
+    "id": "749260dc-2d96-44a6-b10d-2ffec1f51b24",
+    "scalar_metrics": {
+      "financial_loss_amount": 1200.0,
+      "sentiment_score": -0.9,
+      "urgency_score": 8,
+      "duration_of_ordeal_days": 30,
+      "interaction_count": 6
+    },
+    "categorical_dimensions": {
+      "scam_archetype": "Authorized Push Payment Fraud",
+      "communication_vector": "Unknown",
+      "payment_mechanism": "Money Transfer",
+      "company_behavior_flags": [
+        "Denied Claim",
+        "Failure to Contact",
+        "Broken Promises"
+      ],
+      "life_impact_categories": [],
+      "consumer_vulnerability_tags": [],
+      "regulatory_issues": []
+    },
+    "entity_relations": {
+      "third_party_entities": [
+        "Police Department"
+      ],
+      "linked_financial_institutions": [
+        "Ally Bank"
+      ]
+    }
+  }
+]

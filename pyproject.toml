@@ -10,7 +10,9 @@ requires-python = ">=3.11"
 license = {text = "MIT"}
 
 dependencies = [
-    # Add your runtime dependencies here
+    "google-genai>=1.56.0",
+    "pydantic>=2.12.5",
+    "python-dotenv>=1.2.1",
 ]
 
 [project.optional-dependencies]

@@ -1,13 +1,13 @@
-[tool.ruff]
 # Python linter and formatter configuration
-target-version = "py38"
-line-length = 88
+target-version = "py312"
+line-length = 120
 indent-width = 4
 
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default
 select = ["E", "F", "W", "C90", "I", "N", "D", "UP", "ANN", "S", "BLE", "FBT", "B", "A", "COM", "C4", "DTZ", "T10", "EM", "EXE", "ISC", "ICN", "G", "INP", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD", "PGH", "PL", "TRY", "NPY", "RUF"]
 
 ignore = [
+    "T201",  # print statement found
     "D100",  # Missing docstring in public module
     "D104",  # Missing docstring in public package
     "D203",  # 1 blank line required before class docstring (conflicts with D211)
@@ -16,6 +16,7 @@ ignore = [
     "ANN102", # Missing type annotation for cls in classmethod
     "COM812", # Trailing comma missing (conflicts with formatter)
     "ISC001", # Implicitly concatenated string literals on one line (conflicts with formatter)
+    "Q000",  # Single quotes found but double quotes preferred (we prefer single quotes)
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided
@@ -48,7 +49,7 @@ exclude = [
     "temp",
 ]
 
-[tool.ruff.format]
+[format]
 # Use single quotes instead of double quotes
 quote-style = "single"
 
@@ -61,8 +62,8 @@ skip-magic-trailing-comma = false
 # Automatically detect the appropriate line ending
 line-ending = "auto"
 
-[tool.ruff.lint.pydocstyle]
+[lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.lint.isort]
+[lint.isort]
 known-first-party = ["cfpb-exploration"]

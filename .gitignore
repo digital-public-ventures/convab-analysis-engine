@@ -295,3 +295,7 @@ site/
 .AppleDouble
 .LSOverride
 Icon
+
+# temp files
+temp/
+logs/

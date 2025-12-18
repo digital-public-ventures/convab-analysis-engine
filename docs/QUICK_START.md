@@ -6,15 +6,15 @@ Get cfpb-exploration up and running in minutes.
 
 Before you begin, ensure you have:
 
-- [Prerequisite 1] - [Why you need it]
-- [Prerequisite 2] - [Why you need it]
-- [Prerequisite 3] - [Why you need it]
+* \[Prerequisite 1] - \[Why you need it]
+* \[Prerequisite 2] - \[Why you need it]
+* \[Prerequisite 3] - \[Why you need it]
 
 **Operating System Support**:
 
-- ✅ macOS (tested on version X+)
-- ✅ Linux (tested on Ubuntu XX.XX+)
-- ✅ Windows (tested on Windows XX via WSL/native)
+* ✅ macOS (tested on version X+)
+* ✅ Linux (tested on Ubuntu XX.XX+)
+* ✅ Windows (tested on Windows XX via WSL/native)
 
 ## Installation
 
@@ -27,15 +27,15 @@ cd cfpb-exploration
 
 ### 2. Install Dependencies
 
-**[Your Language/Framework]**:
+**\[Your Language/Framework]**:
 
 ```bash
 # Example for different languages:
 
 # Python
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 # or
-poetry install
+uv sync
 
 # Node.js
 npm install
@@ -65,8 +65,8 @@ cp .env.example .env
 
 | Variable | Required | Default | Description    |
 | -------- | -------- | ------- | -------------- |
-| `VAR_1`  | Yes      | -       | [What it does] |
-| `VAR_2`  | No       | `value` | [What it does] |
+| `VAR_1`  | Yes      | -       | \[What it does] |
+| `VAR_2`  | No       | `value` | \[What it does] |
 
 See [`.env.example`](../.env.example) for all available options.
 
@@ -104,7 +104,7 @@ See [`.env.example`](../.env.example) for all available options.
 # Press Ctrl+C to stop
 ```
 
-The application should now be available at: [Your URL]
+The application should now be available at: \[Your URL]
 
 ### Production Mode
 
@@ -116,7 +116,7 @@ See [Deployment Guide](DEPLOYMENT.md) for production deployment instructions.
 
 ## Basic Usage
 
-### Example 1: [Common Task]
+### Example 1: \[Common Task]
 
 ```bash
 # Command to perform common task
@@ -126,7 +126,7 @@ See [Deployment Guide](DEPLOYMENT.md) for production deployment instructions.
 [output]
 ```
 
-### Example 2: [Another Common Task]
+### Example 2: \[Another Common Task]
 
 ```bash
 [command]
@@ -184,9 +184,9 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for detailed guidelines.
 
 ## Troubleshooting
 
-### Problem: [Common Issue 1]
+### Problem: \[Common Issue 1]
 
-**Symptoms**: [What you see]
+**Symptoms**: \[What you see]
 
 **Solution**:
 
@@ -194,11 +194,11 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for detailed guidelines.
 [Fix command]
 ```
 
-### Problem: [Common Issue 2]
+### Problem: \[Common Issue 2]
 
-**Symptoms**: [What you see]
+**Symptoms**: \[What you see]
 
-**Solution**: [Steps to fix]
+**Solution**: \[Steps to fix]
 
 ### Problem: Port Already in Use
 
@@ -217,30 +217,30 @@ netstat -ano | findstr :[PORT]  # Windows
 
 ### Still Having Issues?
 
-- Check [Troubleshooting Guide](TROUBLESHOOTING.md) for more solutions
-- Search [existing issues](https://github.com/jimmoffet/cfpb-exploration/issues)
-- Ask in [Discussions](https://github.com/jimmoffet/cfpb-exploration/discussions)
-- Open a [bug report](https://github.com/jimmoffet/cfpb-exploration/issues/new?template=bug_report.md)
+* Check [Troubleshooting Guide](TROUBLESHOOTING.md) for more solutions
+* Search [existing issues](https://github.com/jimmoffet/cfpb-exploration/issues)
+* Ask in [Discussions](https://github.com/jimmoffet/cfpb-exploration/discussions)
+* Open a [bug report](https://github.com/jimmoffet/cfpb-exploration/issues/new?template=bug_report.md)
 
 ## Next Steps
 
 Now that you're up and running:
 
-- Read the [User Guide](USER_GUIDE.md) for detailed usage
-- Review [Architecture Overview](ARCHITECTURE.md) to understand the system
-- Check out [API Documentation](API.md) for API reference
-- Explore [Architecture Decision Records](../ADRs/README.md) for context on design choices
-- See [ROADMAP.md](../temp/notes/ROADMAP.md) for upcoming features
+* Read the [User Guide](USER_GUIDE.md) for detailed usage
+* Review [Architecture Overview](ARCHITECTURE.md) to understand the system
+* Check out [API Documentation](API.md) for API reference
+* Explore [Architecture Decision Records](../ADRs/README.md) for context on design choices
+* See [ROADMAP.md](../temp/notes/ROADMAP.md) for upcoming features
 
 ## Getting Help
 
-- **Documentation**: [docs/](README.md)
-- **Issues**: [GitHub Issues](https://github.com/jimmoffet/cfpb-exploration/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/jimmoffet/cfpb-exploration/discussions)
-- **Email**: jim@digitalpublic.ventures
+* **Documentation**: [docs/](README.md)
+* **Issues**: [GitHub Issues](https://github.com/jimmoffet/cfpb-exploration/issues)
+* **Discussions**: [GitHub Discussions](https://github.com/jimmoffet/cfpb-exploration/discussions)
+* **Email**: jim@digitalpublic.ventures
 
----
+***
 
-**Last Updated**: {{CURRENT_DATE}}
+**Last Updated**: {{CURRENT\_DATE}}
 
 [Back to Documentation Index](README.md) | [Main README](../README.md)
