@@ -37,8 +37,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Temporary files
-temp/debug/
-temp/output/
+temp/
 *.tmp
 *.temp
 .cache/
@@ -295,7 +294,3 @@ site/
 .AppleDouble
 .LSOverride
 Icon
-
-# temp files
-temp/
-logs/
