@@ -294,3 +294,11 @@ site/
 .AppleDouble
 .LSOverride
 Icon
+
+# local planning
+/plans
+.claude/
+planning/
+
+# Large data files (download from source)
+src/regs_dot_gov_exploration/data/responses.csv

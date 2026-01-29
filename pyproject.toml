@@ -1,7 +1,7 @@
 [project]
-name = "cfpb-exploration"
+name = "sensemaking"
 version = "0.1.0"
-description = "CFPB data exploration and analysis"
+description = "A generic response analysis platform for parsing free-text data from diverse sources"
 authors = [
     {name = "Jim Moffet", email = "jim@digitalpublic.ventures"}
 ]
@@ -13,6 +13,9 @@ dependencies = [
     "google-genai>=1.56.0",
     "pydantic>=2.12.5",
     "python-dotenv>=1.2.1",
+    "httpx>=0.27.0",
+    "pymupdf>=1.24.0",
+    "python-docx>=1.1.0",
 ]
 
 [project.optional-dependencies]
@@ -27,19 +30,20 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jimmoffet/cfpb-exploration"
-Repository = "https://github.com/jimmoffet/cfpb-exploration.git"
-Issues = "https://github.com/jimmoffet/cfpb-exploration/issues"
+Homepage = "https://github.com/jimmoffet/sensemaking"
+Repository = "https://github.com/jimmoffet/sensemaking.git"
+Issues = "https://github.com/jimmoffet/sensemaking/issues"
 
 [project.scripts]
 cfpb-exploration = "cfpb_exploration.__main__:main"
+regs-gov-exploration = "regs_dot_gov_exploration.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.hatchling.build.targets.wheel]
-packages = ["src/cfpb_exploration"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/cfpb_exploration", "src/regs_dot_gov_exploration", "src/utilities"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -49,7 +53,7 @@ python_functions = ["test_*"]
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=cfpb-exploration",
+    "--cov=src",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -94,7 +98,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["cfpb-exploration"]
+known-first-party = ["cfpb_exploration", "regs_dot_gov_exploration", "utilities"]
 
 [tool.mypy]
 python_version = "3.11"

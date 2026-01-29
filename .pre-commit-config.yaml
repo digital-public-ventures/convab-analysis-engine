@@ -58,7 +58,6 @@ repos:
     rev: v1.4.0
     hooks:
       - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
         exclude: |
           (?x)^(
             package-lock\.json|
@@ -92,8 +91,8 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        additional_dependencies: [types-all]
-        args: ['--ignore-missing-imports', '--no-strict-optional']
+        args: ['--ignore-missing-imports', '--no-strict-optional', '--python-version=3.11']
+        exclude: '^\.github/skills/'
 
   # JavaScript/TypeScript-specific hooks (if using Node.js)
   - repo: https://github.com/pre-commit/mirrors-eslint
@@ -115,7 +114,8 @@ repos:
           (?x)^(
             package-lock\.json|
             yarn\.lock|
-            .*\.min\.js
+            .*\.min\.js|
+            \.github/skills/.*\.md
           )$
 
   # Go-specific hooks (if using Go)

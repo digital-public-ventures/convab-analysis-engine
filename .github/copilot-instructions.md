@@ -1,4 +1,10 @@
-# GitHub Copilot Instructions for this Project
+# AGENT INSTRUCTIONS
+
+## Safety rules (workspace hygiene)
+
+- **Always assume changes you didn't make were made by the user**; never undo/revert them without explicit permission.
+- Never delete untracked files without explicit permission.
+- Never delete the `temp/` or `plans/` directories.
 
 ## Terminal Command Best Practices
 
@@ -6,52 +12,59 @@
 
 **Never use `cat > filename << 'EOF' ... EOF` to create scripts or files in the terminal.** Instead use your built-in file creation and editing capabilities FOR ALL FILE CREATION TASKS. Trying to write multi-line files via terminal commands is error-prone and unreliable.
 
-### Background Process Management
+## Critical: Terminal Usage
 
-The VSCode RunInTerminal function's `isBackground` argument does not create a background process. It simply creates a new terminal. It is critical to use `isBackground: true` to create a new terminals when you already have an existing process and you want to sleep or check on it.
+**NEVER** use heredocs (e.g., `cat <<EOF ... EOF`, `python -c '...'`) in any scripts or commands. They are unreliable in this environment. Instead, **ALWAYS** use your built-in file creation and editing tools. This goes for writing files as well as executing multi-line commands in the terminal.
 
-1. **You should prefer writing stdout/stderr to file instead of using `get_terminal_output`**
-   - Stream logs to a logs folder and read from there
-   - Use `get_terminal_output` only for quick status checks
+**ALWAYS** create a script file for any complex multi-line terminal commands, then run that script. This ensures reproducibility and avoids issues with heredocs.
 
-2. **ALWAYS check if a process is running in a terminal before executing new commands**
-   - Use `get_terminal_output` to check the state of any active terminals
-   - Never run commands in a terminal that has a background process running
-   - If there is a process running, use `isBackground: true` to open a new terminal to sleep or check status
+**NEVER** destroy gitignored files. In particular, **NEVER** run `git clean -x` (or `git clean -fdx`) since it deletes ignored local-only files like `AGENTS.md`, `plans/`, and `temp/` artifacts.
 
-3. **Never use `sleep` command without specifying `isBackground: true`**
-   - If you don't use `isBackground: true`, it will interrupt the current process with SIGINT
-   - Instead, use `isBackground: true` to wait asynchronously
+**NEVER** run a command in a terminal that has an active process running.
 
-4. **For sequential operations requiring wait time:**
-   - Always use `isBackground: true` for the second and all future commands
-   - Use `get_terminal_output` to check status
-   - Run subsequent commands in a fresh terminal session that uses `isBackground: true`
+## Critical: Code Writing Requirements
 
-5 **Clean up unused terminals:**
+**NEVER** use `git commit --no-verify`
 
-- After a background process is complete and you have gathered necessary output, close the terminal to free up resources
-- This helps avoid confusion and resource leaks
+**NEVER** remove any paths from `.gitignore` under any circumstances.
 
-## ⚠️ CRITICAL: Knowledge Cutoff Date Warning
+**Local-only planning (DO NOT COMMIT):**
 
-**My knowledge was last updated in April 2024. 18 months have elapsed and it is now December 2025.** This means:
+- `plans/ROADMAP.md` and all other files under `plans/` are intentionally **untracked** (gitignored).
+- Each developer uses these files locally to plan work. They must **not be pushed** and must **not vary by branch**.
+- Do not include `plans/` file changes in commits or PRs.
 
-- **I DO NOT know about bleeding-edge best practices, AI models, API versions (e.g. Airtable, Google-Genai), or changes to libraries**
-- **I MUST use the OpenAI Responses API documentation** in `.github/openai-responses-api-reference/` for all OpenAI-related code
-- **I MUST use web search** to validate assumptions about:
-  - Anything related to AI models and APIs
-  - API endpoint usage (all APIs that are likely to change over 18 months, which is most of them)
-  - Library versions and breaking changes (again 18 months have passed)
-  - Framework updates and best practices
-- **I MUST NOT assume** that chat completions API or any other API I know about is still current
-- **I MUST read existing docs in /docs** in the repository to ensure that I see the most relevant up-to-date information
-- **I MUST document new info I discover via web search** in the /docs folder for future reference
-- **When in doubt, ASK** the user to confirm current standards rather than assuming
+`temp/` is also local-only (gitignored) and may be used for scratch work.
 
-## Documentation Usage Instructions
+1. **Before any file changes**: Check current branch (`git branch --show-current`) - never work on `main`. If the user explicitly instructs you to work on the current branch, even if it's `main`, proceed as instructed.
+2. **Before starting new work**: Review open PRs (`gh pr list --state open`) to avoid duplication
+3. **Ask user to create feature branch**: Stop and wait for user to address branch management.
+4. **Commit regularly!**: Write clear, concise commit messages; one logical change per commit.
+5. **Keep changes PR-sized**: One coherent application change per PR, <400 lines ideally.
+6. **When complete**: Review the diff (actual code diffs for each file changed) between your branch and origin main, draft a PR whose title and description follow following `.github/pull_request_template.md` then mark it as ready and request review.
 
-- **I MUST use the documentation in the `/docs` folder** for any relevant information about the project
-- **I MUST NOT assume** that my prior knowledge about libraries, APIs, or frameworks is current
-- **I MUST read and incorporate** any relevant information from the documentation into my code and responses
-- **I MUST update the documentation** with any new information I discover during web searches or user interactions
+## GitIgnore
+
+**NEVER** remove or modify entries in `.gitignore` without pausing for explicit permission from the user. If you can't pause and ask, always leave `.gitignore` unchanged and stop all tasks.
+
+## Workflow
+
+1. **Before starting work**: Check your local `plans/ROADMAP.md` for the next incomplete task
+2. **When starting a task**: Update your local roadmap row with your branch name and mark `[~]` in progress
+3. **When PR is created**: Record the PR number/link in your local roadmap
+4. **When PR is merged**: Mark the task `[x]` done in your local roadmap
+5. **Always work in order**: Tasks have dependencies; complete earlier tasks first
+
+**Roadmap format:**
+
+```markdown
+| #   | Task                  | Branch            | PR   | Status      |
+| --- | --------------------- | ----------------- | ---- | ----------- |
+| 1.1 | [~] Create Dockerfile | feat/docker-setup | #123 | `in review` |
+```
+
+A task is **only complete** when its PR status is **merged**. Maintain your local roadmap as part of your workflow (but do not commit it).
+
+## PR Comment Review
+
+If the user asks you to "review the comments for a PR", read `.github/pr-manager/SKILL.md` and follow those instructions.
