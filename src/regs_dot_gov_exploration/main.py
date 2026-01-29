@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from ..utilities.llm.response_parser import extract_json_from_response
 from ..utilities.schema_generator import SchemaGenerator
 from .attachment_processor import AttachmentProcessor, combine_narratives
+from .complaint_analyzer import analyze_command
 from .data_processor import DataProcessor
 
 load_dotenv()
@@ -211,6 +212,9 @@ Examples:
 
   # Extract text from attachments
   python -m regs_dot_gov_exploration extract-attachments --rows 5 --verbose
+
+    # Analyze comments with schema
+    python -m regs_dot_gov_exploration analyze --rows 5
         """,
     )
 
@@ -284,6 +288,61 @@ Examples:
         help="Show extracted text previews",
     )
 
+    # Subcommand: analyze
+    analyze_parser = subparsers.add_parser(
+        "analyze", help="Analyze comments and save JSON/CSV outputs"
+    )
+    add_common_args(analyze_parser)
+    analyze_parser.add_argument(
+        "--model-key",
+        type=str,
+        default="flash",
+        choices=["flash", "pro"],
+        help="Model key (default: flash)",
+    )
+    analyze_parser.add_argument(
+        "--thinking-level",
+        type=str,
+        default="MINIMAL",
+        choices=["MINIMAL", "LOW", "MEDIUM", "HIGH"],
+        help="Thinking level (default: MINIMAL)",
+    )
+    analyze_parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=5,
+        help="Batch size for analysis requests (default: 5)",
+    )
+    analyze_parser.add_argument(
+        "--max-batches",
+        type=int,
+        default=None,
+        help="Optional cap on number of batches processed",
+    )
+    analyze_parser.add_argument(
+        "--schema-path",
+        type=str,
+        default=None,
+        help="Path to analysis schema JSON (default: latest in schemas index)",
+    )
+    analyze_parser.add_argument(
+        "--include-attachments",
+        action="store_true",
+        help="Include attachment text in narratives",
+    )
+    analyze_parser.add_argument(
+        "--attachment-timeout",
+        type=float,
+        default=30.0,
+        help="Timeout for attachment downloads (default: 30.0)",
+    )
+    analyze_parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="src/regs_dot_gov_exploration/output",
+        help="Output directory for analysis results",
+    )
+
     args = parser.parse_args()
 
     # Show USE_HEAD status
@@ -297,6 +356,8 @@ Examples:
         asyncio.run(generate_schema_command(args))
     elif args.command == "extract-attachments":
         asyncio.run(extract_attachments_command(args))
+    elif args.command == "analyze":
+        asyncio.run(analyze_command(args))
     else:
         parser.print_help()
 
