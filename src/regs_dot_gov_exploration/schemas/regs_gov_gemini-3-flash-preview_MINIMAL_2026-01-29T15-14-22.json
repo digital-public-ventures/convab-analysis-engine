@@ -1,0 +1,98 @@
+{
+  "schema_name": "Consumer Complaint Narrative Semantic Analysis Schema",
+  "version": "1.0.0",
+  "description": "A multidimensional schema designed to analyze consumer complaint narratives from the CFPB, focusing on life impacts, corporate behavior, and regulatory gaps for visualization in platforms like Tableau.",
+  "categorical_fields": [
+    {
+      "field_name": "primary_impact_domain",
+      "description": "The life area most significantly affected by the issue described in the complaint.",
+      "suggested_values": [
+        "Financial Stability",
+        "Mental & Emotional Wellbeing",
+        "Physical Health",
+        "Housing Security",
+        "Employment/Career",
+        "Credit Accessibility",
+        "Family/Relationship Strain"
+      ],
+      "allow_multiple": true,
+      "hint": "Select all that apply, but try to identify the 'root' impact that drove the consumer to file the complaint."
+    },
+    {
+      "field_name": "alleged_corporate_misconduct_type",
+      "description": "The specific nature of the perceived bad behavior by the company.",
+      "suggested_values": [
+        "Deceptive Marketing",
+        "Hidden Fees/Predatory Pricing",
+        "Administrative Incompetence",
+        "Unresponsive Customer Service",
+        "Data Privacy/Security Breach",
+        "Harassment/Aggressive Collection",
+        "Discriminatory Practices"
+      ],
+      "allow_multiple": true,
+      "hint": "Use this to identify patterns in how companies fail consumers beyond simple error."
+    },
+    {
+      "field_name": "perceived_regulatory_gap",
+      "description": "The consumer's perspective on why the system failed them.",
+      "suggested_values": [
+        "Lack of Oversight",
+        "Loophole Exploitation",
+        "Ineffective Dispute Process",
+        "Complexity of Terms",
+        "No Clear Legal Recourse",
+        "Systemic Industry Norms"
+      ],
+      "allow_multiple": false,
+      "hint": "Look for statements where the consumer expresses that 'there should be a law against this' or 'nobody is watching them'."
+    },
+    {
+      "field_name": "narrative_persona",
+      "description": "The tone or voice adopted by the complainant.",
+      "suggested_values": [
+        "The Victim",
+        "The Advocate/Whistleblower",
+        "The Desperate Seeker",
+        "The Logical Documentarian",
+        "The Outraged Citizen"
+      ],
+      "allow_multiple": false,
+      "hint": "This helps categorize the emotional delivery which can correlate with the severity of the impact."
+    }
+  ],
+  "scalar_fields": [
+    {
+      "field_name": "sentiment_score",
+      "description": "The overall emotional valence of the narrative.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 is extremely negative/hostile, 5 is neutral/analytical, 10 is extremely positive/appreciative (rare in complaints).",
+      "hint": "Most complaints will score between 0-4; use the lower end to distinguish between mild frustration and deep despair."
+    },
+    {
+      "field_name": "severity_of_life_disruption",
+      "description": "The degree to which the issue has altered the consumer's daily life or future prospects.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 is no disruption/minor inconvenience, 5 is moderate stress/significant time loss, 10 is catastrophic/life-altering impact (e.g., bankruptcy, homelessness).",
+      "hint": "This is a key scalar for heat-mapping high-harm incidents in visualization tools."
+    },
+    {
+      "field_name": "corporate_obstruction_level",
+      "description": "How difficult the company made it for the consumer to resolve the issue before they reached out to the CFPB.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 is first-time reporting, 5 is multiple failed contact attempts, 10 is active evasion or 'infinite loops' in customer service.",
+      "hint": "High scores here highlight systemic service failures that may require regulatory intervention."
+    },
+    {
+      "field_name": "narrative_specificity",
+      "description": "The level of detail, evidence, and chronological clarity provided in the text.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 is vague/empty ('See Attached'), 5 is clear summary of events, 10 is exhaustive documentation with dates, names, and proof.",
+      "hint": "Use this to filter for high-quality data points that can serve as 'case studies' in your analysis."
+    }
+  ]
+}

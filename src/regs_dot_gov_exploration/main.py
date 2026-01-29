@@ -86,7 +86,7 @@ async def generate_schema_command(args: argparse.Namespace) -> None:
         use_case = load_use_case()
 
         # Save schema with metadata
-        output_dir = args.output_dir if args.output_dir else "temp/schemas"
+        output_dir = args.output_dir if args.output_dir else "src/regs_dot_gov_exploration/schemas"
         generator.save_schema(
             schema=schema,
             output_dir=output_dir,
@@ -256,8 +256,8 @@ Examples:
     schema_parser.add_argument(
         "--output-dir",
         type=str,
-        default="temp/schemas",
-        help="Directory to save schemas (default: temp/schemas)",
+        default="src/regs_dot_gov_exploration/schemas",
+        help="Directory to save schemas (default: src/regs_dot_gov_exploration/schemas)",
     )
     schema_parser.add_argument(
         "--company",
