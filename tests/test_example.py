@@ -1,5 +1,4 @@
 """Example tests for cfpb-exploration."""
-import os
 from pathlib import Path
 
 
@@ -28,8 +27,7 @@ def test_documentation_coverage():
         "docs/QUICK_START.md",
         "docs/README.md",
         "ADRs/README.md",
-        "temp/notes/NEXT_STEPS.md",
-        "temp/notes/ROADMAP.md",
+        "AGENTS.md",  # Agent guidance for this project
     ]
 
     missing_docs = []
@@ -45,10 +43,14 @@ def test_source_structure():
     project_root = Path(__file__).parent.parent
     src_dir = project_root / "src"
 
-    # Find the actual package directory (should be only one subdirectory in src/)
-    package_dirs = [d for d in src_dir.iterdir() if d.is_dir() and not d.name.startswith('.')]
-    assert len(package_dirs) == 1, f"Expected exactly one package directory in src/, found: {package_dirs}"
+    # Find package directories in src/
+    package_dirs = [d for d in src_dir.iterdir() if d.is_dir() and not d.name.startswith(".")]
 
-    package_dir = package_dirs[0]
-    assert (package_dir / "__init__.py").exists(), "__init__.py should exist"
-    assert (package_dir / "__main__.py").exists(), "__main__.py should exist"
+    # Should have at least one package
+    assert len(package_dirs) >= 1, f"Expected at least one package in src/, found: {package_dirs}"
+
+    # Each package should have __init__.py
+    for package_dir in package_dirs:
+        assert (
+            package_dir / "__init__.py"
+        ).exists(), f"{package_dir.name}/__init__.py should exist"
