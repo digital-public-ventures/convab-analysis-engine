@@ -38,7 +38,7 @@
 
 1. **Before any file changes**: Check current branch (`git branch --show-current`) - never work on `main`. If the user explicitly instructs you to work on the current branch, even if it's `main`, proceed as instructed.
 2. **Before starting new work**: Review open PRs (`gh pr list --state open`) to avoid duplication
-3. **Ask user to create feature branch**: Stop and wait for user to address branch management.
+3. **Create feature branch**: Ensure you are on a new and well-named branch for your task before making any changes
 4. **Commit regularly!**: Write clear, concise commit messages; one logical change per commit.
 5. **Keep changes PR-sized**: One coherent application change per PR, <400 lines ideally.
 6. **When complete**: Review the diff (actual code diffs for each file changed) between your branch and origin main, draft a PR whose title and description follow following `.github/pull_request_template.md` then mark it as ready and request review.

@@ -287,7 +287,7 @@ Examples:
     args = parser.parse_args()
 
     # Show USE_HEAD status
-    use_head = os.getenv("USE_HEAD", "false").lower() in ("true", "1", "yes")
+    use_head = os.getenv("USE_HEAD", "true").lower() in ("true", "1", "yes")
     print(f'USE_HEAD={use_head} (using {"sample" if use_head else "full"} data)')
 
     # Route to appropriate handler

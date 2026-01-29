@@ -2,8 +2,13 @@
 
 import csv
 import json
+import os
 from pathlib import Path
 from typing import Literal
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 MAX_ROWS_SAFETY_LIMIT = 10
 
@@ -11,17 +16,38 @@ MAX_ROWS_SAFETY_LIMIT = 10
 class DataProcessor:
     """Handles loading and processing of CSV data."""
 
-    def __init__(self, csv_path: str):
+    def __init__(self, csv_path: str | None = None):
         """Initialize the data processor.
 
         Args:
-            csv_path: Path to the CSV file
+            csv_path: Path to the CSV file. If None, uses default based on USE_HEAD
+                env var.
         """
+        if csv_path is None:
+            csv_path = self._get_default_csv_path()
+
         self.csv_path = Path(csv_path)
         if not self.csv_path.exists():
-            raise FileNotFoundError(f'CSV file not found: {csv_path}')
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
 
-    def load_sample(self, n_rows: int | Literal['all'] = 5) -> list[dict]:
+    def _get_default_csv_path(self) -> str:
+        """Get the default CSV path based on USE_HEAD environment variable."""
+        use_head = os.getenv("USE_HEAD", "true").lower() in ("true", "1", "yes")
+        base_dir = Path(__file__).parent / "data"
+        head_path = base_dir / "head" / "complaints_1.csv"
+        full_path = base_dir / "complaints_1.csv"
+
+        if use_head:
+            if head_path.exists():
+                return str(head_path)
+            print(
+                "Warning: USE_HEAD is true but head sample not found. "
+                "Falling back to full dataset."
+            )
+
+        return str(full_path)
+
+    def load_sample(self, n_rows: int | Literal["all"] = 5) -> list[dict]:
         """Load a sample of records from CSV.
 
         Args:
@@ -32,13 +58,16 @@ class DataProcessor:
             List of records as dictionaries
         """
         # Apply safety limit
-        if n_rows == 'all' or n_rows > MAX_ROWS_SAFETY_LIMIT:
+        if n_rows == "all" or n_rows > MAX_ROWS_SAFETY_LIMIT:
             n_rows = MAX_ROWS_SAFETY_LIMIT
-            print(f'⚠️  Sample size capped at {MAX_ROWS_SAFETY_LIMIT} rows for safety during development')
+            print(
+                "⚠️  Sample size capped at "
+                f"{MAX_ROWS_SAFETY_LIMIT} rows for safety during development"
+            )
 
         records = []
 
-        with open(self.csv_path, encoding='utf-8') as f:
+        with open(self.csv_path, encoding="utf-8") as f:
             reader = csv.DictReader(f)
 
             for i, row in enumerate(reader):
@@ -49,7 +78,7 @@ class DataProcessor:
                 cleaned_row = {k: v.strip() for k, v in row.items() if v.strip()}
                 records.append(cleaned_row)
 
-        print(f'✓ Loaded {len(records)} records from {self.csv_path.name}')
+        print(f"✓ Loaded {len(records)} records from {self.csv_path.name}")
         return records
 
     def convert_to_json(self, records: list[dict]) -> str:
@@ -73,7 +102,7 @@ class DataProcessor:
         output_file = Path(output_path)
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(output_file, 'w', encoding='utf-8') as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             json.dump(records, f, indent=2)
 
-        print(f'✓ Saved {len(records)} records to {output_path}')
+        print(f"✓ Saved {len(records)} records to {output_path}")

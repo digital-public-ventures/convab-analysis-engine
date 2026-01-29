@@ -6,6 +6,7 @@ import time
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any, cast
 
 from dotenv import load_dotenv
 from google import genai
@@ -18,12 +19,14 @@ from ..utilities.llm.rate_limiter import AsyncRateLimiter
 load_dotenv()
 
 # --- CONFIGURATION ---
-API_KEY = os.environ.get('GEMINI_API_KEY', 'YOUR_API_KEY_HERE')
-INPUT_CSV = 'src/cfpb_exploration/data/complaints_1.csv'
-OUTPUT_DIR = 'src/cfpb_exploration/output'
-TEMP_DIR = 'temp/output'
-TOKEN_USAGE_FILE = 'temp/token_usage.jsonl'  # Shared token usage log  # noqa: S105
-SCHEMA_FILE = 'src/cfpb_exploration/schemas/google_gemini-3-pro_MEDIUM_2025-12-17T15-28-23.json'
+API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_API_KEY_HERE")
+BASE_DATA_DIR = Path(__file__).parent / "data"
+FULL_INPUT_CSV = BASE_DATA_DIR / "complaints_1.csv"
+HEAD_INPUT_CSV = BASE_DATA_DIR / "head" / "complaints_1.csv"
+OUTPUT_DIR = "src/cfpb_exploration/output"
+TEMP_DIR = "temp/output"
+TOKEN_USAGE_FILE = "temp/token_usage.jsonl"  # Shared token usage log  # noqa: S105
+SCHEMA_FILE = "src/cfpb_exploration/schemas/google_gemini-3-pro_MEDIUM_2025-12-17T15-28-23.json"
 
 # BATCH SIZE:
 # the number of rows per batch, each row is ~500 tokens on average
@@ -42,16 +45,29 @@ RESUME_FROM_BATCH = 0
 
 # --- USER SELECTION ---
 # CHANGE THESE VALUES TO SWITCH MODELS
-SELECTED_MODEL_KEY = 'flash'  # Options: "flash" or "pro"
-SELECTED_THINKING_LEVEL = 'LOW'  # Options: MINIMAL (flash only), LOW, MEDIUM, HIGH
+SELECTED_MODEL_KEY = "flash"  # Options: "flash" or "pro"
+SELECTED_THINKING_LEVEL = "LOW"  # Options: MINIMAL (flash only), LOW, MEDIUM, HIGH
 
 # --- SCHEMA LOADER ---
 
 
-def load_schema(schema_path: str) -> dict:
+def resolve_input_csv() -> Path:
+    """Resolve CSV path based on USE_HEAD environment variable."""
+    use_head = os.getenv("USE_HEAD", "true").lower() in ("true", "1", "yes")
+    if use_head:
+        if HEAD_INPUT_CSV.exists():
+            return HEAD_INPUT_CSV
+        print(
+            "Warning: USE_HEAD is true but head sample not found. " "Falling back to full dataset."
+        )
+
+    return FULL_INPUT_CSV
+
+
+def load_schema(schema_path: str) -> dict[str, Any]:
     """Load JSON schema from file."""
-    with Path(schema_path).open(encoding='utf-8') as f:
-        return json.load(f)
+    with Path(schema_path).open(encoding="utf-8") as f:
+        return cast(dict[str, Any], json.load(f))
 
 
 # Load schema at module level
@@ -62,13 +78,13 @@ JSON_SCHEMA = load_schema(SCHEMA_FILE)
 
 def load_prompt(filename: str) -> str:
     """Load a prompt from the prompts directory."""
-    prompt_path = Path(__file__).parent / 'prompts' / filename
-    with prompt_path.open(encoding='utf-8') as f:
+    prompt_path = Path(__file__).parent / "prompts" / filename
+    with prompt_path.open(encoding="utf-8") as f:
         return f.read()
 
 
-SYSTEM_INSTRUCTION = load_prompt('system_prompt.txt')
-USER_PROMPT_TEMPLATE = load_prompt('user_prompt_template.txt')
+SYSTEM_INSTRUCTION = load_prompt("system_prompt.txt")
+USER_PROMPT_TEMPLATE = load_prompt("user_prompt_template.txt")
 
 
 # --- BATCH ANALYSIS WORKER ---
@@ -88,27 +104,27 @@ def flatten_complaint_to_csv_row(complaint: dict, original_row: dict | None = No
     row = dict(original_row) if original_row else {}
 
     # Add id from analysis (should match original)
-    row['id'] = complaint.get('id', '')
+    row["id"] = complaint.get("id", "")
 
     # Flatten scalar metrics
-    scalar_metrics = complaint.get('scalar_metrics', {})
+    scalar_metrics = complaint.get("scalar_metrics", {})
     for key, value in scalar_metrics.items():
         row[key] = value
 
     # Flatten categorical dimensions
-    categorical_dims = complaint.get('categorical_dimensions', {})
+    categorical_dims = complaint.get("categorical_dimensions", {})
     for key, value in categorical_dims.items():
         # Convert lists to pipe-separated strings
         if isinstance(value, list):
-            row[key] = '|'.join(str(v) for v in value)
+            row[key] = "|".join(str(v) for v in value)
         else:
             row[key] = value
 
     # Flatten entity relations
-    entity_relations = complaint.get('entity_relations', {})
+    entity_relations = complaint.get("entity_relations", {})
     for key, value in entity_relations.items():
         if isinstance(value, list):
-            row[key] = '|'.join(str(v) for v in value)
+            row[key] = "|".join(str(v) for v in value)
         else:
             row[key] = value
 
@@ -134,7 +150,7 @@ async def analyze_batch(
 
     try:
         # 2. Execute Request with Automatic Rate Limiting
-        print(f'⏳ Batch {batch_idx}: Preparing request...')
+        print(f"⏳ Batch {batch_idx}: Preparing request...")
 
         response_data, _ = await generate_structured_content(
             client=client,
@@ -148,37 +164,47 @@ async def analyze_batch(
             batch_size=len(batch),
         )
     except (ValueError, ConnectionError, TimeoutError) as e:
-        print(f'🔥 Batch {batch_idx} Failed: {e!s}')
+        print(f"🔥 Batch {batch_idx} Failed: {e!s}")
         return []
 
     # 3. Process & Write Temp Files (JSON and CSV)
     if response_data:
-        analyzed_data = response_data.get('analyzed_complaints', [])
+        analyzed_data = cast(
+            list[dict[str, Any]],
+            response_data.get("analyzed_complaints", []),
+        )
 
         # Write JSON file
-        temp_json_filename = Path(run_temp_dir) / f'batch_{batch_idx}_size{len(batch)}_{int(time.time())}.json'
-        with temp_json_filename.open('w', encoding='utf-8') as f:
+        temp_json_filename = (
+            Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.json"
+        )
+        with temp_json_filename.open("w", encoding="utf-8") as f:
             json.dump(analyzed_data, f, indent=2)
 
         # Write CSV file with merged original + analyzed data
-        temp_csv_filename = Path(run_temp_dir) / f'batch_{batch_idx}_size{len(batch)}_{int(time.time())}.csv'
-        with temp_csv_filename.open('w', encoding='utf-8', newline='') as f:
+        temp_csv_filename = (
+            Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.csv"
+        )
+        with temp_csv_filename.open("w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_fieldnames)
             writer.writeheader()
 
             # Create a mapping of id to original batch item
-            batch_map = {item.get('id', ''): item for item in batch}
+            batch_map = {item.get("id", ""): item for item in batch}
 
             for complaint in analyzed_data:
-                complaint_id = complaint.get('id', '')
+                complaint_id = complaint.get("id", "")
                 original_row = batch_map.get(complaint_id, {})
                 flattened = flatten_complaint_to_csv_row(complaint, original_row)
                 writer.writerow(flattened)
 
-        print(f'✅ Batch {batch_idx}: Success. Saved {len(analyzed_data)} items to {temp_json_filename}')
+        print(
+            f"✅ Batch {batch_idx}: Success. "
+            f"Saved {len(analyzed_data)} items to {temp_json_filename}"
+        )
         return analyzed_data
 
-    print(f'❌ Batch {batch_idx}: Failed to generate valid response.')
+    print(f"❌ Batch {batch_idx}: Failed to generate valid response.")
     return []
 
 
@@ -197,52 +223,56 @@ async def main() -> None:
     Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
     Path(TEMP_DIR).mkdir(parents=True, exist_ok=True)
 
-    print('--- STARTING ANALYSIS ---')
-    print(f'Model: {profile.model_id}')
-    print(f'Limits: {profile.rpm} RPM | {profile.tpm:,} TPM | {profile.rpd} RPD')
-    print(f'Thinking Level: {SELECTED_THINKING_LEVEL}')
+    print("--- STARTING ANALYSIS ---")
+    print(f"Model: {profile.model_id}")
+    print(f"Limits: {profile.rpm} RPM | {profile.tpm:,} TPM | {profile.rpd} RPD")
+    print(f"Thinking Level: {SELECTED_THINKING_LEVEL}")
 
     client = genai.Client(api_key=API_KEY)
     limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd)
 
     # 1. Load Data
     rows = []
+    input_csv = resolve_input_csv()
     try:
-        with Path(INPUT_CSV).open(encoding='utf-8-sig') as f:
+        with input_csv.open(encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 rows.append(row)
     except FileNotFoundError:
-        print('Input file not found.')
+        print("Input file not found.")
         return
 
     # Check if first column is 'id', if not add it with UUIDs
-    if rows and list(rows[0].keys())[0] != 'id':
+    if rows and list(rows[0].keys())[0] != "id":
         print('⚠️  First column is not "id" - adding unique ID column')
         for row in rows:
             # Create ordered dict with id first
-            row_with_id = {'id': str(uuid.uuid4())}
+            row_with_id = {"id": str(uuid.uuid4())}
             row_with_id.update(row)
             # Replace the row contents
             row.clear()
             row.update(row_with_id)
 
-    print(f'Loaded {len(rows)} rows. Batch size: {BATCH_SIZE}')
+    print(f"Loaded {len(rows)} rows from {input_csv}. Batch size: {BATCH_SIZE}")
 
     # 2. Determine CSV fieldnames: original columns + analyzed columns
     # Get original CSV column names
     original_fieldnames = list(rows[0].keys()) if rows else []
 
     # Determine analyzed field names from schema structure
-    analyzed_fieldnames = ['id']
+    analyzed_fieldnames = ["id"]
     sample_schema = (
-        JSON_SCHEMA.get('properties', {}).get('analyzed_complaints', {}).get('items', {}).get('properties', {})
+        JSON_SCHEMA.get("properties", {})
+        .get("analyzed_complaints", {})
+        .get("items", {})
+        .get("properties", {})
     )
-    scalar_props = sample_schema.get('scalar_metrics', {}).get('properties', {})
+    scalar_props = sample_schema.get("scalar_metrics", {}).get("properties", {})
     analyzed_fieldnames.extend(scalar_props.keys())
-    categorical_props = sample_schema.get('categorical_dimensions', {}).get('properties', {})
+    categorical_props = sample_schema.get("categorical_dimensions", {}).get("properties", {})
     analyzed_fieldnames.extend(categorical_props.keys())
-    entity_props = sample_schema.get('entity_relations', {}).get('properties', {})
+    entity_props = sample_schema.get("entity_relations", {}).get("properties", {})
     analyzed_fieldnames.extend(entity_props.keys())
 
     # Combine: original columns first, then new analyzed columns (avoiding duplicates)
@@ -255,24 +285,27 @@ async def main() -> None:
     batches = [rows[i : i + BATCH_SIZE] for i in range(0, len(rows), BATCH_SIZE)]
 
     # Create a unique temp directory for THIS run to avoid pollution
-    run_id = datetime.now(tz=UTC).strftime('%Y%m%d_%H%M%S')
+    run_id = datetime.now(tz=UTC).strftime("%Y%m%d_%H%M%S")
     current_run_dir = Path(TEMP_DIR) / run_id
     current_run_dir.mkdir(parents=True, exist_ok=True)
-    print(f'Created temp directory: {current_run_dir}')
+    print(f"Created temp directory: {current_run_dir}")
 
     # Apply resume logic (skip batches if resuming)
     if RESUME_FROM_BATCH > 0:
-        print(f'⏭️  Resuming: Skipping first {RESUME_FROM_BATCH} batch(es)')
+        print(f"⏭️  Resuming: Skipping first {RESUME_FROM_BATCH} batch(es)")
         batches = batches[RESUME_FROM_BATCH:]
 
     if MAX_BATCHES is not None:
         batches = batches[:MAX_BATCHES]
-        print(f'Limiting to {MAX_BATCHES} batch(es) ({len(batches) * BATCH_SIZE} rows max)')
+        max_rows = len(batches) * BATCH_SIZE
+        print(f"Limiting to {MAX_BATCHES} batch(es) ({max_rows} rows max)")
 
     # Pass current_run_dir and csv_fieldnames to the worker
     # Adjust batch index to account for resume offset
     tasks = [
-        analyze_batch(client, profile, limiter, b, i + 1 + RESUME_FROM_BATCH, current_run_dir, csv_fieldnames)
+        analyze_batch(
+            client, profile, limiter, b, i + 1 + RESUME_FROM_BATCH, current_run_dir, csv_fieldnames
+        )
         for i, b in enumerate(batches)
     ]
 
@@ -283,46 +316,46 @@ async def main() -> None:
     # 4. Consolidate Results
     all_complaints = []
     # Consolidate files ONLY from the current run directory
-    temp_files = list(current_run_dir.glob('*.json'))
-    print(f'\nConsolidating {len(temp_files)} batch files from {current_run_dir}...')
+    temp_files = list(current_run_dir.glob("*.json"))
+    print(f"\nConsolidating {len(temp_files)} batch files from {current_run_dir}...")
 
     for tf in temp_files:
-        with tf.open(encoding='utf-8') as f:
+        with tf.open(encoding="utf-8") as f:
             try:
                 batch_data = json.load(f)
                 all_complaints.extend(batch_data)
             except json.JSONDecodeError:
-                print(f'Skipping corrupt file: {tf}')
+                print(f"Skipping corrupt file: {tf}")
 
     # 5. Consolidate CSV files
-    temp_csv_files = sorted(current_run_dir.glob('*.csv'))
-    print(f'Consolidating {len(temp_csv_files)} CSV batch files from {current_run_dir}...')
+    temp_csv_files = sorted(current_run_dir.glob("*.csv"))
+    print(f"Consolidating {len(temp_csv_files)} CSV batch files from {current_run_dir}...")
 
     # Read all CSV files and consolidate (skip headers after first file)
     all_csv_rows = []
     for csv_file in temp_csv_files:
-        with csv_file.open(encoding='utf-8') as f:
+        with csv_file.open(encoding="utf-8") as f:
             reader = csv.DictReader(f)
             all_csv_rows.extend(list(reader))
 
     # 6. Write Final Output (JSON and CSV)
-    timestamp = datetime.now(tz=UTC).strftime('%Y%m%d_%H%M%S')
+    timestamp = datetime.now(tz=UTC).strftime("%Y%m%d_%H%M%S")
 
     # Create timestamped subfolder for this run's output
     output_run_dir = Path(OUTPUT_DIR) / timestamp
     output_run_dir.mkdir(parents=True, exist_ok=True)
 
-    final_json_filename = f'{SELECTED_MODEL_KEY}_{SELECTED_THINKING_LEVEL}_{timestamp}.json'
+    final_json_filename = f"{SELECTED_MODEL_KEY}_{SELECTED_THINKING_LEVEL}_{timestamp}.json"
     final_json_path = output_run_dir / final_json_filename
 
-    with final_json_path.open('w', encoding='utf-8') as f:
+    with final_json_path.open("w", encoding="utf-8") as f:
         json.dump(all_complaints, f, indent=2)
 
     # Write final CSV
-    final_csv_filename = f'{SELECTED_MODEL_KEY}_{SELECTED_THINKING_LEVEL}_{timestamp}.csv'
+    final_csv_filename = f"{SELECTED_MODEL_KEY}_{SELECTED_THINKING_LEVEL}_{timestamp}.csv"
     final_csv_path = output_run_dir / final_csv_filename
 
-    with final_csv_path.open('w', encoding='utf-8', newline='') as f:
+    with final_csv_path.open("w", encoding="utf-8", newline="") as f:
         if all_csv_rows:
             writer = csv.DictWriter(f, fieldnames=csv_fieldnames)
             writer.writeheader()
@@ -332,16 +365,16 @@ async def main() -> None:
     elapsed_time = time.time() - start_time
     expected_rows = len(batches) * BATCH_SIZE if MAX_BATCHES else len(rows)
 
-    print('\n' + '=' * 60)
+    print("\n" + "=" * 60)
 
     # Check for failures
     failures = []
 
     if not all_complaints:
-        failures.append('❌ No data in final output (empty array)')
+        failures.append("❌ No data in final output (empty array)")
 
     if len(all_complaints) < expected_rows:
-        failures.append(f'❌ Expected {expected_rows} items, got {len(all_complaints)}')
+        failures.append(f"❌ Expected {expected_rows} items, got {len(all_complaints)}")
 
     # Check for non-empty values in at least one complaint
     if all_complaints:
@@ -351,30 +384,35 @@ async def main() -> None:
                 has_content = True
                 break
         if not has_content:
-            failures.append('❌ All complaint objects appear empty')
+            failures.append("❌ All complaint objects appear empty")
 
     # Validate CSV row count matches expected
     csv_row_count = len(all_csv_rows)
     if csv_row_count != expected_rows:
-        failures.append(f'❌ CSV row count mismatch: expected {expected_rows}, got {csv_row_count}')
+        failures.append(f"❌ CSV row count mismatch: expected {expected_rows}, got {csv_row_count}")
 
     if failures:
-        print('❌ JOB FAILED')
-        print('\nFailure Summary:')
+        print("❌ JOB FAILED")
+        print("\nFailure Summary:")
         for failure in failures:
-            print(f'  {failure}')
-        print('\nRoot Cause: Check logs above for API errors, authentication issues, or rate limit problems')
+            print(f"  {failure}")
+        print(
+            "\nRoot Cause: Check logs above for API errors, authentication issues, "
+            "or rate limit problems"
+        )
     else:
-        print('✅ JOB COMPLETE')
+        print("✅ JOB COMPLETE")
 
-    print(f'\nProcessed: {len(rows)} total rows available')
-    print(f'Attempted: {expected_rows} rows ({len(batches)} batch{"es" if len(batches) != 1 else ""})')
-    print(f'Successful Analysis: {len(all_complaints)} JSON items, {csv_row_count} CSV rows')
-    print(f'Time Elapsed: {elapsed_time:.2f}s')
-    print(f'Final JSON Output: {final_json_path}')
-    print(f'Final CSV Output: {final_csv_path}')
-    print('=' * 60)
+    print(f"\nProcessed: {len(rows)} total rows available")
+    print(
+        f'Attempted: {expected_rows} rows ({len(batches)} batch{"es" if len(batches) != 1 else ""})'
+    )
+    print(f"Successful Analysis: {len(all_complaints)} JSON items, {csv_row_count} CSV rows")
+    print(f"Time Elapsed: {elapsed_time:.2f}s")
+    print(f"Final JSON Output: {final_json_path}")
+    print(f"Final CSV Output: {final_csv_path}")
+    print("=" * 60)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

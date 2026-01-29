@@ -98,12 +98,19 @@ class DataProcessor:
 
     def _get_default_csv_path(self) -> str:
         """Get the default CSV path based on USE_HEAD environment variable."""
-        use_head = os.getenv("USE_HEAD", "false").lower() in ("true", "1", "yes")
+        use_head = os.getenv("USE_HEAD", "true").lower() in ("true", "1", "yes")
         base_dir = Path(__file__).parent / "data"
+        head_path = base_dir / "head" / "responses.csv"
+        full_path = base_dir / "responses.csv"
 
         if use_head:
-            return str(base_dir / "head" / "responses.csv")
-        return str(base_dir / "responses.csv")
+            if head_path.exists():
+                return str(head_path)
+            print(
+                "Warning: USE_HEAD is true but head sample not found. Falling back to full dataset."
+            )
+
+        return str(full_path)
 
     def _parse_attachment_urls(self, attachment_string: str) -> list[str]:
         """Parse comma-separated attachment URLs.
