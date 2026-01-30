@@ -215,6 +215,9 @@ Examples:
 
     # Analyze comments with schema
     python -m regs_dot_gov_exploration analyze --rows 5
+
+    # Export parsed head responses
+    python -m regs_dot_gov_exploration export-parsed --rows 5
         """,
     )
 
@@ -240,9 +243,7 @@ Examples:
     add_common_args(list_parser)
 
     # Subcommand: generate-schema
-    schema_parser = subparsers.add_parser(
-        "generate-schema", help="Generate analysis schema from sample data"
-    )
+    schema_parser = subparsers.add_parser("generate-schema", help="Generate analysis schema from sample data")
     add_common_args(schema_parser)
     schema_parser.add_argument(
         "--model",
@@ -271,9 +272,7 @@ Examples:
     )
 
     # Subcommand: extract-attachments
-    extract_parser = subparsers.add_parser(
-        "extract-attachments", help="Extract text from document attachments"
-    )
+    extract_parser = subparsers.add_parser("extract-attachments", help="Extract text from document attachments")
     add_common_args(extract_parser)
     extract_parser.add_argument(
         "--timeout",
@@ -288,10 +287,26 @@ Examples:
         help="Show extracted text previews",
     )
 
-    # Subcommand: analyze
-    analyze_parser = subparsers.add_parser(
-        "analyze", help="Analyze comments and save JSON/CSV outputs"
+    # Subcommand: export-parsed
+    export_parser = subparsers.add_parser(
+        "export-parsed",
+        help="Export parsed responses to a CSV (USE_HEAD only)",
     )
+    export_parser.add_argument(
+        "--rows",
+        type=int,
+        default=10,
+        help="Number of rows to process (default: 10)",
+    )
+    export_parser.add_argument(
+        "--output-path",
+        type=str,
+        default="src/regs_dot_gov_exploration/data/head/parsed_responses.csv",
+        help="Path to save parsed responses CSV",
+    )
+
+    # Subcommand: analyze
+    analyze_parser = subparsers.add_parser("analyze", help="Analyze comments and save JSON/CSV outputs")
     add_common_args(analyze_parser)
     analyze_parser.add_argument(
         "--model-key",
@@ -358,6 +373,13 @@ Examples:
         asyncio.run(extract_attachments_command(args))
     elif args.command == "analyze":
         asyncio.run(analyze_command(args))
+    elif args.command == "export-parsed":
+        if not use_head:
+            print("USE_HEAD must be true to export parsed head responses.")
+            return
+        processor = DataProcessor(None)
+        processor.export_parsed_csv(output_path=args.output_path, n_rows=args.rows)
+        print(f"Parsed responses saved to {args.output_path}")
     else:
         parser.print_help()
 

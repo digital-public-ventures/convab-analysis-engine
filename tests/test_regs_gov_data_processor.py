@@ -2,10 +2,15 @@
 
 import csv
 import os
+import sys
+from pathlib import Path
 
 import pytest
 
-from src.regs_dot_gov_exploration.data_processor import DataProcessor, ResponseRecord
+sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+
+from regs_dot_gov_exploration.data_processor import DataProcessor, ResponseRecord  # noqa: E402
+from utilities.attachment_parser import parse_attachment_urls  # noqa: E402
 
 
 @pytest.fixture
@@ -132,6 +137,11 @@ class TestDataProcessor:
         record_without = next(r for r in records if r.id == "TEST-002")
         assert len(record_without.attachment_urls) == 0
 
+    def test_parse_attachment_urls_utility(self):
+        """Test attachment URL parsing utility."""
+        result = parse_attachment_urls("a.pdf, b.pdf,  ,c.pdf")
+        assert result == ["a.pdf", "b.pdf", "c.pdf"]
+
     def test_metadata_extraction(self, sample_csv):
         """Test metadata field extraction."""
         processor = DataProcessor(csv_path=str(sample_csv))
@@ -165,6 +175,16 @@ class TestDataProcessor:
         json_str = processor.convert_to_json(records)
         assert '"id":' in json_str
         assert '"narrative":' in json_str
+
+    def test_export_parsed_csv(self, sample_csv, tmp_path):
+        """Test exporting parsed CSV output."""
+        output_path = tmp_path / "parsed.csv"
+        processor = DataProcessor(csv_path=str(sample_csv))
+        processor.export_parsed_csv(output_path=str(output_path), n_rows=10)
+
+        content = output_path.read_text(encoding="utf-8")
+        assert "id" in content
+        assert "metadata_json" in content
 
 
 class TestDataProcessorWithSampleData:

@@ -9,9 +9,11 @@ import json
 import os
 import uuid
 from pathlib import Path
-from typing import Literal
+from typing import Literal, cast
 
 from dotenv import load_dotenv
+
+from ..utilities.attachment_parser import parse_attachment_urls
 
 load_dotenv()
 
@@ -106,27 +108,49 @@ class DataProcessor:
         if use_head:
             if head_path.exists():
                 return str(head_path)
-            print(
-                "Warning: USE_HEAD is true but head sample not found. Falling back to full dataset."
-            )
+            print("Warning: USE_HEAD is true but head sample not found. Falling back to full dataset.")
 
         return str(full_path)
 
     def _parse_attachment_urls(self, attachment_string: str) -> list[str]:
-        """Parse comma-separated attachment URLs.
+        """Parse comma-separated attachment URLs."""
+        return cast(list[str], parse_attachment_urls(attachment_string))
+
+    def export_parsed_csv(
+        self,
+        output_path: str,
+        n_rows: int | Literal["all"] = "all",
+    ) -> None:
+        """Export parsed records to a CSV file.
 
         Args:
-            attachment_string: Comma-separated string of URLs
-
-        Returns:
-            List of individual URLs
+            output_path: Path to save the parsed CSV
+            n_rows: Number of rows to export, or "all" for all rows
         """
-        if not attachment_string or not attachment_string.strip():
-            return []
+        records = self.load_records(n_rows=n_rows)
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        # Split by comma and clean up each URL
-        urls = [url.strip() for url in attachment_string.split(",")]
-        return [url for url in urls if url]
+        with open(output_file, "w", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "id",
+                    "narrative",
+                    "attachment_urls",
+                    "metadata_json",
+                ],
+            )
+            writer.writeheader()
+            for record in records:
+                writer.writerow(
+                    {
+                        "id": record.id,
+                        "narrative": record.narrative,
+                        "attachment_urls": "|".join(record.attachment_urls),
+                        "metadata_json": json.dumps(record.metadata, ensure_ascii=False),
+                    }
+                )
 
     def _extract_metadata(self, row: dict) -> dict:
         """Extract metadata fields from a row.
@@ -247,9 +271,7 @@ class DataProcessor:
 
         print(f"Saved {len(records)} records to {output_path}")
 
-    def get_records_with_attachments(
-        self, n_rows: int | Literal["all"] = "all"
-    ) -> list[ResponseRecord]:
+    def get_records_with_attachments(self, n_rows: int | Literal["all"] = "all") -> list[ResponseRecord]:
         """Load only records that have attachments.
 
         Args:
@@ -261,9 +283,7 @@ class DataProcessor:
         all_records = self.load_records(n_rows=n_rows)
         return [r for r in all_records if r.attachment_urls]
 
-    def get_narrative_only_records(
-        self, n_rows: int | Literal["all"] = "all"
-    ) -> list[ResponseRecord]:
+    def get_narrative_only_records(self, n_rows: int | Literal["all"] = "all") -> list[ResponseRecord]:
         """Load only records that have inline comments (no attachments).
 
         Args:

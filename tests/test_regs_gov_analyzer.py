@@ -1,15 +1,17 @@
 """Tests for regs.gov analyzer helpers."""
 
+import sys
 from importlib import import_module
+from pathlib import Path
 from typing import Any, Callable
 
-complaint_analyzer = import_module("src.regs_dot_gov_exploration.complaint_analyzer")
-build_response_schema: Callable[[dict[str, Any]], dict[str, Any]] = getattr(
-    complaint_analyzer, "build_response_schema"
+sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+
+complaint_analyzer = import_module("regs_dot_gov_exploration.complaint_analyzer")
+build_response_schema: Callable[[dict[str, Any]], dict[str, Any]] = getattr(complaint_analyzer, "build_response_schema")
+filter_records_with_narratives: Callable[[list[Any], list[str]], tuple[list[Any], list[str], int]] = getattr(
+    complaint_analyzer, "filter_records_with_narratives"
 )
-filter_records_with_narratives: Callable[
-    [list[Any], list[str]], tuple[list[Any], list[str], int]
-] = getattr(complaint_analyzer, "filter_records_with_narratives")
 flatten_analysis_row: Callable[[dict[str, Any], list[str], list[str]], dict[str, Any]] = getattr(
     complaint_analyzer, "flatten_analysis_row"
 )
