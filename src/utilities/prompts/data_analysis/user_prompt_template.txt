@@ -1,0 +1,3 @@
+Analyze the following public comments. Extract factual data and infer categories based on the comment text. Return a JSON object adhering strictly to the provided schema.
+
+DATA:
