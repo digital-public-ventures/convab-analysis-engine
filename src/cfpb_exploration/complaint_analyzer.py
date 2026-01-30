@@ -57,9 +57,7 @@ def resolve_input_csv() -> Path:
     if use_head:
         if HEAD_INPUT_CSV.exists():
             return HEAD_INPUT_CSV
-        print(
-            "Warning: USE_HEAD is true but head sample not found. " "Falling back to full dataset."
-        )
+        print("Warning: USE_HEAD is true but head sample not found. Falling back to full dataset.")
 
     return FULL_INPUT_CSV
 
@@ -67,7 +65,7 @@ def resolve_input_csv() -> Path:
 def load_schema(schema_path: str) -> dict[str, Any]:
     """Load JSON schema from file."""
     with Path(schema_path).open(encoding="utf-8") as f:
-        return cast(dict[str, Any], json.load(f))
+        return cast("dict[str, Any]", json.load(f))
 
 
 # Load schema at module level
@@ -170,21 +168,17 @@ async def analyze_batch(
     # 3. Process & Write Temp Files (JSON and CSV)
     if response_data:
         analyzed_data = cast(
-            list[dict[str, Any]],
+            "list[dict[str, Any]]",
             response_data.get("analyzed_complaints", []),
         )
 
         # Write JSON file
-        temp_json_filename = (
-            Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.json"
-        )
+        temp_json_filename = Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.json"
         with temp_json_filename.open("w", encoding="utf-8") as f:
             json.dump(analyzed_data, f, indent=2)
 
         # Write CSV file with merged original + analyzed data
-        temp_csv_filename = (
-            Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.csv"
-        )
+        temp_csv_filename = Path(run_temp_dir) / f"batch_{batch_idx}_size{len(batch)}_{int(time.time())}.csv"
         with temp_csv_filename.open("w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_fieldnames)
             writer.writeheader()
@@ -198,10 +192,7 @@ async def analyze_batch(
                 flattened = flatten_complaint_to_csv_row(complaint, original_row)
                 writer.writerow(flattened)
 
-        print(
-            f"✅ Batch {batch_idx}: Success. "
-            f"Saved {len(analyzed_data)} items to {temp_json_filename}"
-        )
+        print(f"✅ Batch {batch_idx}: Success. Saved {len(analyzed_data)} items to {temp_json_filename}")
         return analyzed_data
 
     print(f"❌ Batch {batch_idx}: Failed to generate valid response.")
@@ -263,10 +254,7 @@ async def main() -> None:
     # Determine analyzed field names from schema structure
     analyzed_fieldnames = ["id"]
     sample_schema = (
-        JSON_SCHEMA.get("properties", {})
-        .get("analyzed_complaints", {})
-        .get("items", {})
-        .get("properties", {})
+        JSON_SCHEMA.get("properties", {}).get("analyzed_complaints", {}).get("items", {}).get("properties", {})
     )
     scalar_props = sample_schema.get("scalar_metrics", {}).get("properties", {})
     analyzed_fieldnames.extend(scalar_props.keys())
@@ -303,9 +291,7 @@ async def main() -> None:
     # Pass current_run_dir and csv_fieldnames to the worker
     # Adjust batch index to account for resume offset
     tasks = [
-        analyze_batch(
-            client, profile, limiter, b, i + 1 + RESUME_FROM_BATCH, current_run_dir, csv_fieldnames
-        )
+        analyze_batch(client, profile, limiter, b, i + 1 + RESUME_FROM_BATCH, current_run_dir, csv_fieldnames)
         for i, b in enumerate(batches)
     ]
 
@@ -396,17 +382,12 @@ async def main() -> None:
         print("\nFailure Summary:")
         for failure in failures:
             print(f"  {failure}")
-        print(
-            "\nRoot Cause: Check logs above for API errors, authentication issues, "
-            "or rate limit problems"
-        )
+        print("\nRoot Cause: Check logs above for API errors, authentication issues, or rate limit problems")
     else:
         print("✅ JOB COMPLETE")
 
     print(f"\nProcessed: {len(rows)} total rows available")
-    print(
-        f'Attempted: {expected_rows} rows ({len(batches)} batch{"es" if len(batches) != 1 else ""})'
-    )
+    print(f'Attempted: {expected_rows} rows ({len(batches)} batch{"es" if len(batches) != 1 else ""})')
     print(f"Successful Analysis: {len(all_complaints)} JSON items, {csv_row_count} CSV rows")
     print(f"Time Elapsed: {elapsed_time:.2f}s")
     print(f"Final JSON Output: {final_json_path}")

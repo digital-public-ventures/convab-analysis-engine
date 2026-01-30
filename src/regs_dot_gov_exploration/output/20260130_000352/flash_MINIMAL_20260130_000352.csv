@@ -1,0 +1,6 @@
+id,primary_impact_domain,alleged_corporate_misconduct_type,perceived_regulatory_gap,narrative_persona,sentiment_score,severity_of_life_disruption,corporate_obstruction_level,narrative_specificity
+CFPB-2023-0038-0006,Dental Care|Veterinary Care,,None identified; supportive of current deferred interest model,Long-term satisfied customer,0.9,0.1,0.0,0.8
+CFPB-2023-0038-0007,Employer-sponsored tax advantaged accounts,,Use-it-or-lose-it provisions in FSA regulations,Policy-oriented employee,0.5,0.3,0.0,0.6
+CFPB-2023-0038-0008,Veterinary Care,Aggressive marketing during emotional distress|Deferred interest penalties,Lack of consumer protections against predatory lending in emergency medical settings,Distressed pet owner,0.1,0.8,0.7,0.9
+CFPB-2023-0038-0013,Hospital Care,Profit-sharing between hospitals and lenders,Lack of universal healthcare and regulation of medical financing at point-of-service,Policy critic / General public,0.1,0.5,0.6,0.4
+CFPB-2023-0038-0014,Hospital Care,Replacement of non-profit payment plans with high-interest debt,Predatory point-of-service medical debt contracting,Policy critic / Consumer advocate,0.1,0.6,0.8,0.5

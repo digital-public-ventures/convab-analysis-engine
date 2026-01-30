@@ -40,10 +40,7 @@ class DataProcessor:
         if use_head:
             if head_path.exists():
                 return str(head_path)
-            print(
-                "Warning: USE_HEAD is true but head sample not found. "
-                "Falling back to full dataset."
-            )
+            print("Warning: USE_HEAD is true but head sample not found. Falling back to full dataset.")
 
         return str(full_path)
 
@@ -60,10 +57,7 @@ class DataProcessor:
         # Apply safety limit
         if n_rows == "all" or n_rows > MAX_ROWS_SAFETY_LIMIT:
             n_rows = MAX_ROWS_SAFETY_LIMIT
-            print(
-                "⚠️  Sample size capped at "
-                f"{MAX_ROWS_SAFETY_LIMIT} rows for safety during development"
-            )
+            print(f"⚠️  Sample size capped at {MAX_ROWS_SAFETY_LIMIT} rows for safety during development")
 
         records = []
 

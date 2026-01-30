@@ -1,7 +1,5 @@
 # Shared Agent Instructions
 
-These rules apply to all agent roles (concierge/architect and code-writing workers).
-
 ## Project Overview
 
 **Sensemaking** is a generic response analysis platform for parsing free-text response data from diverse sources (CFPB complaints, regulations.gov comments, surveys, etc.) and extracting structured insights using LLM-powered analysis.
@@ -36,15 +34,13 @@ These paths are intentionally **gitignored** and must never be committed:
 - `plans/NEXT_STEPS.md` - session context and next actions
 - `temp/notes/` - working notes; archive to `temp/notes/archive/YYYY-MM/`
 
-Only the **concierge/architect** updates `plans/ROADMAP.md` and `plans/NEXT_STEPS.md`.
-
 ## Decision Records & Quality Gates
 
 - Architectural decisions live in `ADRs/` (immutable once accepted).
 - Acceptance criteria & verification checklists are in `docs/evaluation/`.
 - Notes/ADR hygiene guidance: `docs/NOTES_AND_ADR_MANAGEMENT.md`.
 
-## Planning & Task Files (Concierge-owned)
+## Planning & Task Files
 
 - ExecPlans live in `plans/` (created via `.github/skills/planner`).
 - ExecPlan filename convention: `plans/execplan-YYYYMMDD-<short-slug>.md`.
@@ -53,8 +49,16 @@ Only the **concierge/architect** updates `plans/ROADMAP.md` and `plans/NEXT_STEP
 
 ## Branch Naming Convention
 
-- Code-writer branches must follow: `cw/<task-id>-<short-slug>` (e.g., `cw/T3-add-schema-cache`).
-- The concierge assigns the exact branch name in each task brief.
+- Branches should follow this format:
+  `<type>/<short-description>`
+
+  **Examples**:
+
+  - `feature/add-regs-gov-analyzer`
+  - `bugfix/fix-data-processor-npe`
+  - `chore/update-dependencies`
+
+- Assign the exact branch name in each task brief.
 
 ## Repo & Tooling Overview
 
@@ -160,6 +164,4 @@ When adding a new data source (e.g., `src/new_source_exploration/`):
 
 ## Role-Specific Instructions
 
-- Concierge/architect: `.github/copilot-instructions.concierge.md`
-- Code-writing worker: `.github/copilot-instructions.worker.md`
-- Skills: `.github/skills/` (use `pr-manager` for PR workflows)
+- Skills: `.github/skills/` (use `pr-manager` for PR workflows and `planner` for task planning)
