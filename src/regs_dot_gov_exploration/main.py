@@ -132,6 +132,7 @@ async def extract_attachments_command(args: argparse.Namespace) -> None:
             attachment_texts = attachment_processor.process_attachments(
                 record.attachment_urls,
                 skip_errors=True,
+                use_ocr=args.use_ocr,
             )
 
             # Combine with inline comment
@@ -286,6 +287,11 @@ Examples:
         action="store_true",
         help="Show extracted text previews",
     )
+    extract_parser.add_argument(
+        "--use-ocr",
+        action="store_true",
+        help="Run OCR on PDF pages when text extraction is empty",
+    )
 
     # Subcommand: export-parsed
     export_parser = subparsers.add_parser(
@@ -350,6 +356,11 @@ Examples:
         type=float,
         default=30.0,
         help="Timeout for attachment downloads (default: 30.0)",
+    )
+    analyze_parser.add_argument(
+        "--use-ocr",
+        action="store_true",
+        help="Run OCR on PDF pages when text extraction is empty",
     )
     analyze_parser.add_argument(
         "--output-dir",

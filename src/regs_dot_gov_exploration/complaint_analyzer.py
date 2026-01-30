@@ -128,9 +128,7 @@ def format_record_text(record: ResponseRecord, narrative: str) -> str:
 def build_prompt(records: list[ResponseRecord], narratives: list[str]) -> str:
     """Build the full prompt text for a batch of records."""
     template = load_user_prompt_template()
-    record_blocks = [
-        format_record_text(record, narrative) for record, narrative in zip(records, narratives)
-    ]
+    record_blocks = [format_record_text(record, narrative) for record, narrative in zip(records, narratives)]
     data_block = "\n---\n".join(record_blocks)
     return f"{template}\n{data_block}\n```"
 
@@ -232,21 +230,15 @@ async def run_analysis(args: argparse.Namespace) -> None:
         print("No records loaded. Check your CSV file.")
         return
 
-    schema_path = (
-        Path(args.schema_path) if args.schema_path else get_latest_schema_path(Path(SCHEMA_INDEX))
-    )
+    schema_path = Path(args.schema_path) if args.schema_path else get_latest_schema_path(Path(SCHEMA_INDEX))
     schema_definition = load_schema(schema_path)
     response_schema = build_response_schema(schema_definition)
 
     categorical_fields = [
-        field.get("field_name")
-        for field in schema_definition.get("categorical_fields", [])
-        if field.get("field_name")
+        field.get("field_name") for field in schema_definition.get("categorical_fields", []) if field.get("field_name")
     ]
     scalar_fields = [
-        field.get("field_name")
-        for field in schema_definition.get("scalar_fields", [])
-        if field.get("field_name")
+        field.get("field_name") for field in schema_definition.get("scalar_fields", []) if field.get("field_name")
     ]
 
     profile = validate_model_config(args.model_key, args.thinking_level)
@@ -262,6 +254,7 @@ async def run_analysis(args: argparse.Namespace) -> None:
             attachment_texts = attachment_processor.process_attachments(
                 record.attachment_urls,
                 skip_errors=True,
+                use_ocr=args.use_ocr,
             )
             combined = combine_narratives(record.narrative, attachment_texts)
             narratives.append(combined if combined else record.narrative)
@@ -271,8 +264,7 @@ async def run_analysis(args: argparse.Namespace) -> None:
     records, narratives, skipped = filter_records_with_narratives(records, narratives)
     if skipped:
         print(
-            "Warning: Skipped records with empty narratives. "
-            "Use --include-attachments to include attachment text."
+            "Warning: Skipped records with empty narratives. " "Use --include-attachments to include attachment text."
         )
     if not records:
         print("No records with usable narrative content. Try --include-attachments.")
@@ -280,9 +272,7 @@ async def run_analysis(args: argparse.Namespace) -> None:
 
     batch_size = args.batch_size
     batches = [records[i : i + batch_size] for i in range(0, len(records), batch_size)]
-    narrative_batches = [
-        narratives[i : i + batch_size] for i in range(0, len(narratives), batch_size)
-    ]
+    narrative_batches = [narratives[i : i + batch_size] for i in range(0, len(narratives), batch_size)]
 
     if args.max_batches is not None:
         batches = batches[: args.max_batches]

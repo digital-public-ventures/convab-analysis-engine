@@ -6,10 +6,14 @@ supporting both HTTP URLs and local file paths.
 
 import io
 from pathlib import Path
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol, cast
 from urllib.parse import urlparse
 
 import httpx
+
+if TYPE_CHECKING:
+    import fitz
+    from paddleocr import PaddleOCR
 
 
 class DocumentExtractor(Protocol):
@@ -35,9 +39,7 @@ class PDFExtractor:
         try:
             import fitz  # pymupdf
         except ImportError as err:
-            raise ImportError(
-                "pymupdf is required for PDF extraction. Install with: uv add pymupdf"
-            ) from err
+            raise ImportError("pymupdf is required for PDF extraction. Install with: uv add pymupdf") from err
 
         text_parts = []
         with fitz.open(stream=content, filetype="pdf") as doc:
@@ -45,6 +47,37 @@ class PDFExtractor:
                 text_parts.append(page.get_text())
 
         return "\n".join(text_parts)
+
+    def extract_with_ocr(self, content: bytes, ocr_engine: "PaddleOCR") -> str:
+        """Extract text from PDF bytes with OCR fallback.
+
+        Args:
+            content: Raw PDF file bytes
+            ocr_engine: PaddleOCR engine instance
+
+        Returns:
+            Extracted text content
+        """
+        try:
+            import fitz  # pymupdf
+        except ImportError as err:
+            raise ImportError("pymupdf is required for PDF extraction. Install with: uv add pymupdf") from err
+
+        text_parts = []
+        with fitz.open(stream=content, filetype="pdf") as doc:
+            for page in doc:
+                text_parts.append(page.get_text())
+
+            combined_text = "\n".join(text_parts).strip()
+            if combined_text:
+                return combined_text
+
+            ocr_text_parts = []
+            for page in doc:
+                pix = page.get_pixmap(dpi=200)
+                ocr_text_parts.append(_ocr_pixmap(pix, ocr_engine))
+
+        return "\n".join(part for part in ocr_text_parts if part)
 
 
 class DOCXExtractor:
@@ -62,13 +95,35 @@ class DOCXExtractor:
         try:
             from docx import Document
         except ImportError as err:
-            raise ImportError(
-                "python-docx is required for DOCX extraction. Install with: uv add python-docx"
-            ) from err
+            raise ImportError("python-docx is required for DOCX extraction. Install with: uv add python-docx") from err
 
         doc = Document(io.BytesIO(content))
         paragraphs = [para.text for para in doc.paragraphs]
         return "\n".join(paragraphs)
+
+
+def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
+    """Run OCR on a PyMuPDF pixmap."""
+    try:
+        import numpy as np
+    except ImportError as err:
+        raise ImportError("numpy is required for OCR. Install with: uv add numpy") from err
+
+    img = np.frombuffer(pixmap.samples, dtype=np.uint8).reshape(
+        pixmap.height,
+        pixmap.width,
+        pixmap.n,
+    )
+    if pixmap.n == 4:
+        img = img[:, :, :3]
+
+    results = ocr_engine.ocr(img, cls=True)
+    text_parts: list[str] = []
+    for page_result in results:
+        for line in page_result:
+            text_parts.append(line[1][0])
+
+    return "\n".join(text_parts)
 
 
 class AttachmentProcessor:
@@ -92,6 +147,19 @@ class AttachmentProcessor:
         """
         self.timeout = timeout
         self._extractor_instances: dict[str, DocumentExtractor] = {}
+        self._ocr_engine: "PaddleOCR | None" = None
+
+    def _get_ocr_engine(self) -> "PaddleOCR":
+        """Get or create a PaddleOCR engine instance."""
+        if self._ocr_engine is None:
+            try:
+                from paddleocr import PaddleOCR as PaddleOCRImpl
+            except ImportError as err:
+                raise ImportError("paddleocr is required for OCR. Install with: uv add paddleocr") from err
+
+            self._ocr_engine = PaddleOCRImpl(use_angle_cls=True, lang="en")
+
+        return self._ocr_engine
 
     def _get_extractor(self, extension: str) -> DocumentExtractor:
         """Get or create an extractor instance for the given extension.
@@ -160,8 +228,7 @@ class AttachmentProcessor:
         headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
             "Accept": (
-                "application/pdf,"
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"
+                "application/pdf," "application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"
             ),
         }
 
@@ -189,7 +256,7 @@ class AttachmentProcessor:
 
         return file_path.read_bytes()
 
-    def extract_text(self, url_or_path: str) -> str:
+    def extract_text(self, url_or_path: str, use_ocr: bool = False) -> str:
         """Extract text from a document at the given URL or path.
 
         Args:
@@ -216,9 +283,13 @@ class AttachmentProcessor:
             content = self._read_file(url_or_path)
 
         # Extract text
+        if use_ocr and extension == ".pdf":
+            ocr_engine = self._get_ocr_engine()
+            return cast(PDFExtractor, extractor).extract_with_ocr(content, ocr_engine)
+
         return extractor.extract(content)
 
-    def extract_text_safe(self, url_or_path: str) -> tuple[str | None, str | None]:
+    def extract_text_safe(self, url_or_path: str, use_ocr: bool = False) -> tuple[str | None, str | None]:
         """Extract text with error handling.
 
         Args:
@@ -230,7 +301,7 @@ class AttachmentProcessor:
             If failed, extracted_text is None.
         """
         try:
-            text = self.extract_text(url_or_path)
+            text = self.extract_text(url_or_path, use_ocr=use_ocr)
             return text, None
         except ImportError as e:
             return None, f"Missing dependency: {e}"
@@ -247,6 +318,7 @@ class AttachmentProcessor:
         self,
         urls: list[str],
         skip_errors: bool = True,
+        use_ocr: bool = False,
     ) -> dict[str, str | None]:
         """Process multiple attachments and extract text from each.
 
@@ -260,7 +332,7 @@ class AttachmentProcessor:
         results: dict[str, str | None] = {}
 
         for url in urls:
-            text, error = self.extract_text_safe(url)
+            text, error = self.extract_text_safe(url, use_ocr=use_ocr)
             if error:
                 print(f"Warning: {error}")
                 if not skip_errors:
