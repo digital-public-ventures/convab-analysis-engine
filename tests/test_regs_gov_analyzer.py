@@ -1,16 +1,20 @@
 """Tests for regs.gov analyzer helpers."""
 
-import sys
-from pathlib import Path
+from importlib import import_module
+from typing import Any, Callable
 
-sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
-
-from regs_dot_gov_exploration.complaint_analyzer import (  # noqa: E402
-    build_response_schema,
-    flatten_analysis_row,
-    get_latest_schema_path,
-    get_use_head,
+complaint_analyzer = import_module("src.regs_dot_gov_exploration.complaint_analyzer")
+build_response_schema: Callable[[dict[str, Any]], dict[str, Any]] = getattr(
+    complaint_analyzer, "build_response_schema"
 )
+filter_records_with_narratives: Callable[
+    [list[Any], list[str]], tuple[list[Any], list[str], int]
+] = getattr(complaint_analyzer, "filter_records_with_narratives")
+flatten_analysis_row: Callable[[dict[str, Any], list[str], list[str]], dict[str, Any]] = getattr(
+    complaint_analyzer, "flatten_analysis_row"
+)
+get_latest_schema_path: Callable[[Any], Any] = getattr(complaint_analyzer, "get_latest_schema_path")
+get_use_head: Callable[[], bool] = getattr(complaint_analyzer, "get_use_head")
 
 
 def test_get_use_head_defaults_true(monkeypatch):
@@ -67,3 +71,21 @@ def test_flatten_analysis_row_handles_lists():
     assert row["multi"] == "a|b"
     assert row["single"] == "c"
     assert row["score"] == 4.2
+
+
+def test_filter_records_with_narratives():
+    """Records without narratives are skipped."""
+    records = [
+        type("Record", (), {"id": "A"})(),
+        type("Record", (), {"id": "B"})(),
+    ]
+    narratives = ["Valid narrative", ""]
+
+    filtered_records, filtered_narratives, skipped = filter_records_with_narratives(
+        records,
+        narratives,
+    )
+
+    assert skipped == 1
+    assert len(filtered_records) == 1
+    assert filtered_narratives == ["Valid narrative"]

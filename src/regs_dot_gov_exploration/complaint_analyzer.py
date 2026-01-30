@@ -52,7 +52,7 @@ def get_latest_schema_path(index_path: Path) -> Path:
 def load_schema(schema_path: Path) -> dict[str, Any]:
     """Load schema JSON from disk."""
     with schema_path.open(encoding="utf-8") as f:
-        return cast(dict[str, Any], json.load(f))
+        return cast("dict[str, Any]", json.load(f))
 
 
 def build_response_schema(schema_definition: dict[str, Any]) -> dict[str, Any]:
@@ -122,7 +122,7 @@ def load_user_prompt_template() -> str:
 def format_record_text(record: ResponseRecord, narrative: str) -> str:
     """Format a single record for prompt inclusion."""
     metadata_json = json.dumps(record.metadata, ensure_ascii=False)
-    return f"Record ID: {record.id}\n" f"Narrative: {narrative}\n" f"Metadata: {metadata_json}\n"
+    return f"Record ID: {record.id}\nNarrative: {narrative}\nMetadata: {metadata_json}\n"
 
 
 def build_prompt(records: list[ResponseRecord], narratives: list[str]) -> str:
@@ -133,6 +133,28 @@ def build_prompt(records: list[ResponseRecord], narratives: list[str]) -> str:
     ]
     data_block = "\n---\n".join(record_blocks)
     return f"{template}\n{data_block}\n```"
+
+
+def filter_records_with_narratives(
+    records: list[ResponseRecord],
+    narratives: list[str],
+) -> tuple[list[ResponseRecord], list[str], int]:
+    """Filter out records with empty narratives.
+
+    Returns filtered records, filtered narratives, and count skipped.
+    """
+    filtered_records: list[ResponseRecord] = []
+    filtered_narratives: list[str] = []
+    skipped = 0
+
+    for record, narrative in zip(records, narratives):
+        if narrative and narrative.strip():
+            filtered_records.append(record)
+            filtered_narratives.append(narrative)
+        else:
+            skipped += 1
+
+    return filtered_records, filtered_narratives, skipped
 
 
 def flatten_analysis_row(
@@ -192,12 +214,19 @@ async def analyze_batch(
 async def run_analysis(args: argparse.Namespace) -> None:
     """Run the regs.gov analysis flow."""
     use_head = get_use_head()
-    print(f"USE_HEAD={use_head} (using {'sample' if use_head else 'full'} data)")
+    print(f'USE_HEAD={use_head} (using {"sample" if use_head else "full"} data)')
 
     processor = DataProcessor(args.csv_path if args.csv_path else None)
     if args.csv_path and use_head:
         print("Warning: USE_HEAD is true but --csv-path was provided.")
-    records = processor.load_records(n_rows=args.rows)
+
+    if args.include_attachments:
+        records = processor.get_records_with_attachments(n_rows=args.rows)
+        if not records:
+            print("No records with attachments found; falling back to narrative-only records.")
+            records = processor.get_narrative_only_records(n_rows=args.rows)
+    else:
+        records = processor.get_narrative_only_records(n_rows=args.rows)
 
     if not records:
         print("No records loaded. Check your CSV file.")
@@ -238,6 +267,16 @@ async def run_analysis(args: argparse.Namespace) -> None:
             narratives.append(combined if combined else record.narrative)
     else:
         narratives = [record.narrative for record in records]
+
+    records, narratives, skipped = filter_records_with_narratives(records, narratives)
+    if skipped:
+        print(
+            "Warning: Skipped records with empty narratives. "
+            "Use --include-attachments to include attachment text."
+        )
+    if not records:
+        print("No records with usable narrative content. Try --include-attachments.")
+        return
 
     batch_size = args.batch_size
     batches = [records[i : i + batch_size] for i in range(0, len(records), batch_size)]
