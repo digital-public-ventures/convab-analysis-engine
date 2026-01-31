@@ -55,6 +55,7 @@ class DataStore:
         - app/data/<hash>/cleaned_data/
         - app/data/<hash>/downloads/
         - app/data/<hash>/schema/
+        - app/data/<hash>/analyzed/
 
         Args:
             content_hash: SHA256 hash of CSV content
@@ -65,6 +66,7 @@ class DataStore:
             - 'cleaned_data': app/data/<hash>/cleaned_data/
             - 'downloads': app/data/<hash>/downloads/
             - 'schema': app/data/<hash>/schema/
+            - 'analyzed': app/data/<hash>/analyzed/
         """
         hash_dir = self.get_hash_dir(content_hash)
         paths = {
@@ -72,10 +74,37 @@ class DataStore:
             "cleaned_data": hash_dir / "cleaned_data",
             "downloads": hash_dir / "downloads",
             "schema": hash_dir / "schema",
+            "analyzed": hash_dir / "analyzed",
         }
         for path in paths.values():
             path.mkdir(parents=True, exist_ok=True)
         return paths
+
+    def get_analyzed_json(self, content_hash: str, filename: str) -> Path | None:
+        """Find analysis JSON output if it exists.
+
+        Args:
+            content_hash: SHA256 hash of original CSV content
+            filename: Expected JSON filename (e.g., analysis.json)
+
+        Returns:
+            Path to analysis JSON file, or None if not found
+        """
+        analyzed_path = self.get_hash_dir(content_hash) / "analyzed" / filename
+        return analyzed_path if analyzed_path.exists() else None
+
+    def get_analyzed_csv(self, content_hash: str, filename: str) -> Path | None:
+        """Find analysis CSV output if it exists.
+
+        Args:
+            content_hash: SHA256 hash of original CSV content
+            filename: Expected CSV filename (e.g., analysis.csv)
+
+        Returns:
+            Path to analysis CSV file, or None if not found
+        """
+        analyzed_path = self.get_hash_dir(content_hash) / "analyzed" / filename
+        return analyzed_path if analyzed_path.exists() else None
 
     def get_cleaned_csv(self, content_hash: str) -> Path | None:
         """Find cleaned CSV if it exists.

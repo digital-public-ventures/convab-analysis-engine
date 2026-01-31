@@ -7,30 +7,23 @@ import string
 from datetime import UTC, datetime
 from typing import Literal, overload
 
-from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from .model_config import MODELS, ModelProfile
+from app.config import TOKEN_USAGE_FILE
+
+from .model_config import MODELS, ModelProfile, get_model_profile, resolve_model_id
 from .rate_limiter import AsyncRateLimiter
 from .token_tracking import record_token_usage
 
-load_dotenv()
-
 logger = logging.getLogger(__name__)
 
-# Model ID mappings
-MODEL_IDS = {
-    "flash": "gemini-3-flash-preview",
-    "pro": "gemini-3-pro-preview",
-}
 
-
-def validate_model_config(model_key: str, thinking_level: str, models_dict: dict | None = None) -> ModelProfile:
+def validate_model_config(model_id_or_key: str, thinking_level: str, models_dict: dict | None = None) -> ModelProfile:
     """Validate model key and thinking level configuration.
 
     Args:
-        model_key: Model key to validate ('flash' or 'pro')
+        model_id_or_key: Model key or full model ID to validate
         thinking_level: Thinking level to validate (MINIMAL, LOW, MEDIUM, HIGH)
         models_dict: Optional dictionary mapping model keys to ModelProfile objects.
                     If None, uses default MODELS dict.
@@ -39,17 +32,17 @@ def validate_model_config(model_key: str, thinking_level: str, models_dict: dict
         ModelProfile object if validation succeeds
 
     Raises:
-        ValueError: If model_key is invalid or thinking_level not supported by model
+        ValueError: If model is invalid or thinking_level not supported by model
     """
     if models_dict is None:
         models_dict = MODELS
 
-    if model_key not in models_dict:
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict)
+    if not profile:
         available_keys = list(models_dict.keys())
-        msg = f"Invalid model key. Choose from: {available_keys}"
+        available_ids = [model.model_id for model in models_dict.values()]
+        msg = f"Invalid model. Choose from keys: {available_keys} or model IDs: {available_ids}"
         raise ValueError(msg)
-
-    profile = models_dict[model_key]
 
     if thinking_level not in profile.allowed_thinking:
         msg = (
@@ -69,7 +62,7 @@ async def generate_structured_content(
     json_schema: dict | None = None,
     system_instruction: str | None = None,
     thinking_level: str | None = None,
-    token_usage_file: str = "temp/token_usage.jsonl",
+    token_usage_file: str = str(TOKEN_USAGE_FILE),
     rate_limiter: AsyncRateLimiter | None = None,
     batch_size: int = 1,
     include_thoughts: bool = False,
@@ -87,7 +80,7 @@ async def generate_structured_content(
     json_schema: dict | None = None,
     system_instruction: str | None = None,
     thinking_level: str | None = None,
-    token_usage_file: str = "temp/token_usage.jsonl",
+    token_usage_file: str = str(TOKEN_USAGE_FILE),
     rate_limiter: AsyncRateLimiter | None = None,
     batch_size: int = 1,
     include_thoughts: bool = False,
@@ -103,7 +96,7 @@ async def generate_structured_content(
     json_schema: dict | None = None,
     system_instruction: str | None = None,
     thinking_level: str | None = None,
-    token_usage_file: str = "temp/token_usage.jsonl",
+    token_usage_file: str = str(TOKEN_USAGE_FILE),
     rate_limiter: AsyncRateLimiter | None = None,
     batch_size: int = 1,
     include_thoughts: bool = False,
@@ -118,7 +111,7 @@ async def generate_structured_content(
         json_schema: Optional JSON schema for structured output
         system_instruction: Optional system instruction to guide model behavior
         thinking_level: Optional thinking level (MINIMAL, LOW, MEDIUM, HIGH)
-        token_usage_file: Path to token usage tracking file (default: temp/token_usage.jsonl)
+        token_usage_file: Path to token usage tracking file (default: app.config.TOKEN_USAGE_FILE)
         rate_limiter: Optional AsyncRateLimiter instance for rate limiting
         batch_size: Number of items being processed (for token estimation, default: 1)
         include_thoughts: Whether to include thinking process in response (default: False)
@@ -132,7 +125,7 @@ async def generate_structured_content(
         - full_response: Full Gemini API response object (only if return_full_response=True)
     """
     # Map short model names to full IDs
-    resolved_model_id = MODEL_IDS.get(model_id, model_id)
+    resolved_model_id = resolve_model_id(model_id, models_dict=MODELS)
 
     # If rate limiter provided, count tokens and wait for rate limits
     acquired = False

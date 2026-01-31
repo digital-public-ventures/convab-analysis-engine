@@ -1,3 +1,0 @@
-Analyze the following consumer complaints. Extract factual data and infer categories based on the narrative. Return a JSON object adhering strictly to the provided schema.
-
-DATA:

@@ -9,17 +9,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
 from google import genai
 from google.genai import errors
 
 from app.config import SCHEMA_MODEL_ID, SCHEMA_THINKING_LEVEL, TOKEN_USAGE_FILE
 from app.llm.gemini_client import generate_structured_content
+from app.llm.model_config import get_model_profile
 from app.llm.rate_limiter import AsyncRateLimiter
 
 from .prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA, SCHEMA_GENERATION_SYSTEM_PROMPT, build_schema_generation_prompt
-
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -54,11 +52,11 @@ class SchemaGenerator:
 
         self.client = genai.Client(api_key=api_key)
 
-        # Set rate limits based on model
-        if "flash" in self.model_id:
-            self.rate_limiter = AsyncRateLimiter(rpm=1000, tpm=1_000_000, rpd=10_000)
-        else:  # pro model
-            self.rate_limiter = AsyncRateLimiter(rpm=25, tpm=1_000_000, rpd=250)
+        profile = get_model_profile(self.model_id)
+        if not profile:
+            raise ValueError(f"Unsupported model ID: {self.model_id}")
+
+        self.rate_limiter = AsyncRateLimiter(rpm=profile.rpm, tpm=profile.tpm, rpd=profile.rpd)
 
     async def generate_schema(self, sample_data: list[dict], use_case: str) -> dict[str, Any]:
         """Generate a tagging schema based on sample data.

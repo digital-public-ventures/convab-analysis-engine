@@ -4,9 +4,8 @@ This directory contains Architecture Decision Records (ADRs) documenting signifi
 
 ## Active ADRs
 
-| ADR                            | Title                                 | Status   | Date             |
-| ------------------------------ | ------------------------------------- | -------- | ---------------- |
-| [001](./001-repo-structure.md) | Repository Structure and Organization | Accepted | {{CURRENT_DATE}} |
+| ADR | Title | Status | Date |
+| --- | ----- | ------ | ---- |
 
 **Note**: This table should be updated as new ADRs are created. ADRs are numbered sequentially (001, 002, 003, etc.).
 
@@ -58,7 +57,7 @@ This directory contains Architecture Decision Records (ADRs) documenting signifi
 
 ADRs should document **architectural decisions** that have significant, long-term impact on the system. Not every decision needs an ADR.
 
-### ✅ Create an ADR for:
+### ✅ Create an ADR for
 
 - **Technology/Framework Choices**: "Use PostgreSQL for primary database", "Use React for frontend framework"
 - **Architectural Patterns**: "Implement repository pattern for data access", "Use event-driven architecture"
@@ -70,7 +69,7 @@ ADRs should document **architectural decisions** that have significant, long-ter
 - **Third-Party Integrations**: Payment gateway selection, email service provider, analytics platform
 - **Build/Deployment Architecture**: CI/CD pipeline design, branching strategy, release process
 
-### ❌ Don't Create an ADR for:
+### ❌ Don't Create an ADR for
 
 - **Implementation Details**: Variable names, code organization within a module
 - **Temporary Decisions**: "Use mock data for testing this week"

@@ -9,6 +9,10 @@ from google import genai
 logger = logging.getLogger(__name__)
 
 
+class RateLimitExceededError(Exception):
+    """Raised when API rate limits are exceeded."""
+
+
 class AsyncRateLimiter:
     """Tracks RPM, TPM, and RPD using a sliding window approach for minute limits
     and a simple counter for daily limits.
@@ -41,7 +45,7 @@ class AsyncRateLimiter:
             estimated_tokens: Estimated total tokens for the request
 
         Raises:
-            Exception: If daily request limit is exceeded
+            RateLimitExceededError: If daily request limit is exceeded
         """
         async with self._lock:
             now = time.time()
@@ -52,7 +56,7 @@ class AsyncRateLimiter:
                 self.day_start = now
 
             if self.daily_request_count >= self.rpd_limit:
-                raise Exception(f"Daily Request Limit ({self.rpd_limit}) Exceeded.")
+                raise RateLimitExceededError(f"Daily request limit ({self.rpd_limit}) exceeded.")
 
             # Prune old timestamps (older than 60s)
             self.request_timestamps = [t for t in self.request_timestamps if now - t < 60]

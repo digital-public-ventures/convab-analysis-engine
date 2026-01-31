@@ -1,5 +1,6 @@
 """Centralized configuration for the app package."""
 
+import os
 from pathlib import Path
 
 # Base directory for the app package
@@ -26,8 +27,15 @@ SCHEMA_DEFAULT_HEAD_SIZE = 5
 SCHEMA_MODEL_ID = "gemini-3-flash-preview"
 SCHEMA_THINKING_LEVEL = "MINIMAL"
 
+# Analysis settings
+ANALYSIS_MODEL_ID = "gemini-3-flash-preview"
+ANALYSIS_THINKING_LEVEL = "MINIMAL"
+ANALYSIS_BATCH_SIZE = 25
+ANALYSIS_JSON_FILENAME = "analysis.json"
+ANALYSIS_CSV_FILENAME = "analysis.csv"
+
 # Token usage tracking
-TOKEN_USAGE_FILE = DATA_DIR / "token_usage.jsonl"
+TOKEN_USAGE_FILE = Path(os.environ.get("TOKEN_USAGE_FILE", str(DATA_DIR / "token_usage.jsonl")))
 
 # Logging format
 LOG_FORMAT = "%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s"

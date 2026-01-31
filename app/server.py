@@ -10,12 +10,24 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import pandas as pd
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 
-from app.config import DOWNLOADS_DIR, LOG_DATE_FORMAT, LOG_FORMAT, SCHEMA_DEFAULT_HEAD_SIZE, SCHEMA_DEFAULT_SAMPLE_SIZE
+from app.analysis import AnalysisRequest, analyze_dataset
+from app.config import (
+    ANALYSIS_CSV_FILENAME,
+    ANALYSIS_JSON_FILENAME,
+    DOWNLOADS_DIR,
+    LOG_DATE_FORMAT,
+    LOG_FORMAT,
+    SCHEMA_DEFAULT_HEAD_SIZE,
+    SCHEMA_DEFAULT_SAMPLE_SIZE,
+)
 from app.processing import AttachmentProcessor, DataStore, clean_csv
 from app.schema import SchemaGenerator
+
+load_dotenv()
 
 logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 logger = logging.getLogger(__name__)
@@ -67,6 +79,23 @@ class DataInfoResponse(BaseModel):
     has_cleaned_csv: bool
     cleaned_file: str | None = None
     has_schema: bool
+
+
+class AnalyzeRequest(BaseModel):
+    """Request model for /analyze endpoint."""
+
+    hash: str = Field(..., min_length=10, description="Hash of the cleaned dataset")
+    use_case: str = Field(..., min_length=10, description="Description of intended analysis")
+    system_prompt: str = Field(..., min_length=10, description="System prompt for analysis")
+
+
+class AnalyzeResponse(BaseModel):
+    """Response model for /analyze endpoint."""
+
+    hash: str
+    cached: bool = False
+    analysis_json: dict
+    analysis_csv: str
 
 
 @asynccontextmanager
@@ -251,6 +280,78 @@ async def get_data_info(hash: str) -> DataInfoResponse:
         has_cleaned_csv=cleaned is not None,
         cleaned_file=cleaned.name if cleaned else None,
         has_schema=schema is not None,
+    )
+
+
+@app.post("/analyze", response_model=AnalyzeResponse)  # type: ignore[misc]
+async def analyze_dataset_endpoint(request: AnalyzeRequest) -> AnalyzeResponse:
+    """Analyze a cleaned CSV with a generated schema and return embedded outputs.
+
+    1. Validate hash exists
+    2. Check for cached analysis JSON + CSV in app/data/<hash>/analyzed/
+    3. If cached, return embedded content
+    4. Otherwise load cleaned CSV and schema.json
+    5. Run analysis batches and save JSON/CSV to analyzed dir
+    """
+    content_hash = request.hash
+
+    if not _data_store.hash_exists(content_hash):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
+        )
+
+    existing_json = _data_store.get_analyzed_json(content_hash, ANALYSIS_JSON_FILENAME)
+    existing_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
+    if existing_json and existing_csv:
+        logger.info("Analysis cache hit for hash: %s...", content_hash[:12])
+        with open(existing_json, encoding="utf-8") as f:
+            analysis_json = json.load(f)
+        analysis_csv = existing_csv.read_text(encoding="utf-8")
+        return AnalyzeResponse(
+            hash=content_hash,
+            cached=True,
+            analysis_json=analysis_json,
+            analysis_csv=analysis_csv,
+        )
+
+    cleaned_csv = _data_store.get_cleaned_csv(content_hash)
+    if not cleaned_csv:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Cleaned CSV not found for hash '{content_hash[:12]}...'. Run /clean first.",
+        )
+
+    schema_path = _data_store.get_schema(content_hash)
+    if not schema_path:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Schema not found for hash '{content_hash[:12]}...'. Run /schema first.",
+        )
+
+    paths = _data_store.ensure_hash_dirs(content_hash)
+
+    try:
+        analysis_json, analysis_csv = await analyze_dataset(
+            AnalysisRequest(
+                cleaned_csv=cleaned_csv,
+                schema_path=schema_path,
+                output_dir=paths["analyzed"],
+                use_case=request.use_case,
+                system_prompt=request.system_prompt,
+            )
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}") from e
+    except Exception as e:
+        logger.error("Analysis error: %s", e)
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}") from e
+
+    return AnalyzeResponse(
+        hash=content_hash,
+        cached=False,
+        analysis_json=analysis_json,
+        analysis_csv=analysis_csv,
     )
 
 

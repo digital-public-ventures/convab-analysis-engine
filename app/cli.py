@@ -4,9 +4,13 @@ import asyncio
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from app.processing import clean_csv
 
 if __name__ == "__main__":
+    load_dotenv()
+
     if len(sys.argv) != 2:
         print("Usage: python -m app.cli <csv_file>")
         sys.exit(1)

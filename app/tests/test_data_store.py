@@ -52,11 +52,13 @@ class TestDataStore:
         assert paths["cleaned_data"].exists()
         assert paths["downloads"].exists()
         assert paths["schema"].exists()
+        assert paths["analyzed"].exists()
 
         assert paths["root"] == tmp_path / test_hash
         assert paths["cleaned_data"] == tmp_path / test_hash / "cleaned_data"
         assert paths["downloads"] == tmp_path / test_hash / "downloads"
         assert paths["schema"] == tmp_path / test_hash / "schema"
+        assert paths["analyzed"] == tmp_path / test_hash / "analyzed"
 
     def test_ensure_hash_dirs_idempotent(self, tmp_path: Path) -> None:
         """Test that calling ensure_hash_dirs twice doesn't fail."""
@@ -131,6 +133,40 @@ class TestDataStore:
         result = store.get_schema(test_hash)
 
         assert result == schema_file
+
+    def test_get_analyzed_json_returns_none_if_missing(self, tmp_path: Path) -> None:
+        """Test get_analyzed_json returns None when missing."""
+        store = DataStore(data_dir=tmp_path)
+
+        result = store.get_analyzed_json("missing_hash", "analysis.json")
+
+        assert result is None
+
+    def test_get_analyzed_json_finds_file(self, tmp_path: Path) -> None:
+        """Test get_analyzed_json finds existing analysis.json."""
+        store = DataStore(data_dir=tmp_path)
+        test_hash = "h" * 64
+
+        paths = store.ensure_hash_dirs(test_hash)
+        json_file = paths["analyzed"] / "analysis.json"
+        json_file.write_text("{}")
+
+        result = store.get_analyzed_json(test_hash, "analysis.json")
+
+        assert result == json_file
+
+    def test_get_analyzed_csv_finds_file(self, tmp_path: Path) -> None:
+        """Test get_analyzed_csv finds existing analysis.csv."""
+        store = DataStore(data_dir=tmp_path)
+        test_hash = "i" * 64
+
+        paths = store.ensure_hash_dirs(test_hash)
+        csv_file = paths["analyzed"] / "analysis.csv"
+        csv_file.write_text("col1,col2\na,b")
+
+        result = store.get_analyzed_csv(test_hash, "analysis.csv")
+
+        assert result == csv_file
 
     def test_hash_exists_false_for_missing(self, tmp_path: Path) -> None:
         """Test hash_exists returns False for non-existent hash."""

@@ -1,0 +1,545 @@
+"""LLM-powered analysis pipeline for cleaned CSV data."""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import TYPE_CHECKING, Any, cast
+
+import pandas as pd
+from google import genai
+
+from app.config import (
+    ANALYSIS_BATCH_SIZE,
+    ANALYSIS_CSV_FILENAME,
+    ANALYSIS_JSON_FILENAME,
+    ANALYSIS_MODEL_ID,
+    ANALYSIS_THINKING_LEVEL,
+    TOKEN_USAGE_FILE,
+)
+from app.llm.gemini_client import generate_structured_content, validate_model_config
+from app.llm.rate_limiter import AsyncRateLimiter
+
+logger = logging.getLogger(__name__)
+
+MAX_PROMPT_RECORD_CHARS = 2000
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+@dataclass(frozen=True)
+class AnalysisRequest:
+    """Inputs required to run an analysis pass."""
+
+    cleaned_csv: Path
+    schema_path: Path
+    output_dir: Path
+    use_case: str
+    system_prompt: str
+
+
+@dataclass(frozen=True)
+class AnalysisConfig:
+    """Configuration for analysis execution."""
+
+    model_id: str = ANALYSIS_MODEL_ID
+    thinking_level: str = ANALYSIS_THINKING_LEVEL
+    batch_size: int = ANALYSIS_BATCH_SIZE
+
+
+@dataclass(frozen=True)
+class AnalysisContext:
+    """Shared context for analysis batch calls."""
+
+    system_prompt: str
+    schema_summary: str
+    use_case: str
+    id_column: str
+    response_schema: dict[str, Any]
+
+
+def _build_analysis_response_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Build a JSON schema for analysis output based on a generated schema.
+
+    Args:
+        schema: Generated schema dictionary with categorical_fields, scalar_fields, key_quotes_fields
+
+    Returns:
+        JSON schema dictionary for structured LLM output
+    """
+    categorical_fields = schema.get("categorical_fields", [])
+    scalar_fields = schema.get("scalar_fields", [])
+    key_quotes_fields = schema.get("key_quotes_fields", [])
+
+    categorical_props: dict[str, Any] = {}
+    for field in categorical_fields:
+        field_name = field.get("field_name", "").strip()
+        if not field_name:
+            continue
+        allow_multiple = bool(field.get("allow_multiple", False))
+        if allow_multiple:
+            categorical_props[field_name] = {
+                "type": "ARRAY",
+                "items": {"type": "STRING"},
+                "nullable": True,
+            }
+        else:
+            categorical_props[field_name] = {
+                "type": "STRING",
+                "nullable": True,
+            }
+
+    scalar_props: dict[str, Any] = {}
+    for field in scalar_fields:
+        field_name = field.get("field_name", "").strip()
+        if not field_name:
+            continue
+        scalar_props[field_name] = {
+            "type": "NUMBER",
+            "nullable": True,
+        }
+
+    key_quotes_props: dict[str, Any] = {}
+    for field in key_quotes_fields:
+        field_name = field.get("field_name", "").strip()
+        if not field_name:
+            continue
+        key_quotes_props[field_name] = {
+            "type": "ARRAY",
+            "items": {"type": "STRING"},
+        }
+
+    return {
+        "type": "OBJECT",
+        "properties": {
+            "records": {
+                "type": "ARRAY",
+                "items": {
+                    "type": "OBJECT",
+                    "properties": {
+                        "record_id": {"type": "STRING"},
+                        "categorical_fields": {
+                            "type": "OBJECT",
+                            "properties": categorical_props,
+                        },
+                        "scalar_fields": {
+                            "type": "OBJECT",
+                            "properties": scalar_props,
+                        },
+                        "key_quotes_fields": {
+                            "type": "OBJECT",
+                            "properties": key_quotes_props,
+                        },
+                    },
+                    "required": ["record_id", "categorical_fields", "scalar_fields", "key_quotes_fields"],
+                },
+            }
+        },
+        "required": ["records"],
+    }
+
+
+def _summarize_schema(schema: dict[str, Any]) -> str:
+    """Create a concise text summary of schema fields for prompting.
+
+    Args:
+        schema: Generated schema dictionary
+
+    Returns:
+        Human-readable schema summary
+    """
+    lines: list[str] = []
+
+    categorical_fields = schema.get("categorical_fields", [])
+    if categorical_fields:
+        lines.append("Categorical fields:")
+        for field in categorical_fields:
+            field_name = field.get("field_name", "").strip()
+            description = field.get("description", "").strip()
+            suggested_values = field.get("suggested_values", [])
+            allow_multiple = field.get("allow_multiple", False)
+            values_text = ", ".join(str(v) for v in suggested_values)
+            lines.append(f"- {field_name}: {description} | values: [{values_text}] | allow_multiple={allow_multiple}")
+
+    scalar_fields = schema.get("scalar_fields", [])
+    if scalar_fields:
+        lines.append("Scalar fields (0-10):")
+        for field in scalar_fields:
+            field_name = field.get("field_name", "").strip()
+            description = field.get("description", "").strip()
+            scale_min = field.get("scale_min", 0)
+            scale_max = field.get("scale_max", 10)
+            lines.append(f"- {field_name}: {description} | scale {scale_min}-{scale_max}")
+
+    key_quotes_fields = schema.get("key_quotes_fields", [])
+    if key_quotes_fields:
+        lines.append("Key quotes fields:")
+        for field in key_quotes_fields:
+            field_name = field.get("field_name", "").strip()
+            description = field.get("description", "").strip()
+            max_quotes = field.get("max_quotes", 1)
+            lines.append(f"- {field_name}: {description} | max_quotes={max_quotes}")
+
+    return "\n".join(lines)
+
+
+def _format_records_for_prompt(records: list[dict[str, Any]]) -> str:
+    """Format record data for inclusion in the prompt.
+
+    Args:
+        records: List of record dictionaries
+
+    Returns:
+        Formatted records string
+    """
+    formatted_records = []
+    for i, record in enumerate(records, 1):
+        record_json = json.dumps(record, indent=2)
+        if len(record_json) > MAX_PROMPT_RECORD_CHARS:
+            record_json = record_json[: MAX_PROMPT_RECORD_CHARS - 3] + "..."
+        formatted_records.append(f"Record {i}:\n{record_json}\n")
+    return "\n".join(formatted_records)
+
+
+def _build_analysis_prompt(
+    use_case: str,
+    schema_summary: str,
+    records: list[dict[str, Any]],
+    id_column: str,
+) -> str:
+    """Build the prompt for a batch of records.
+
+    Args:
+        use_case: Use case description
+        schema_summary: Summary of schema fields
+        records: Batch of records to analyze
+        id_column: Name of the ID column in the CSV
+
+    Returns:
+        Prompt text
+    """
+    return "\n".join(
+        [
+            "Analyze the following records using the provided schema.",
+            "Return ONLY valid JSON that matches the response schema.",
+            "",
+            "Use case:",
+            use_case.strip(),
+            "",
+            "Schema fields:",
+            schema_summary.strip(),
+            "",
+            "Response rules:",
+            f"- Each record must include record_id (from column '{id_column}').",
+            "- Use null when a value cannot be determined.",
+            "- For allow_multiple fields, return a list of strings.",
+            "- For key quotes fields, return an array of quotes (empty array if none).",
+            "",
+            "DATA:",
+            _format_records_for_prompt(records),
+        ]
+    )
+
+
+def _normalize_categorical_fields(
+    raw_fields: dict[str, Any],
+    schema_fields: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Normalize categorical fields to expected shapes."""
+    normalized: dict[str, Any] = {}
+    for field in schema_fields:
+        field_name = field.get("field_name", "").strip()
+        allow_multiple = bool(field.get("allow_multiple", False))
+        value = raw_fields.get(field_name)
+        if allow_multiple:
+            if value is None:
+                normalized[field_name] = None
+            elif isinstance(value, list):
+                normalized[field_name] = [str(v) for v in value]
+            else:
+                normalized[field_name] = [str(value)]
+        elif value is None:
+            normalized[field_name] = None
+        elif isinstance(value, list) and value:
+            normalized[field_name] = str(value[0])
+        else:
+            normalized[field_name] = str(value)
+    return normalized
+
+
+def _normalize_scalar_fields(
+    raw_fields: dict[str, Any],
+    schema_fields: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Normalize scalar fields to floats or nulls."""
+    normalized: dict[str, Any] = {}
+    for field in schema_fields:
+        field_name = field.get("field_name", "").strip()
+        value = raw_fields.get(field_name)
+        if value is None or value == "":
+            normalized[field_name] = None
+        elif isinstance(value, (int, float)):
+            normalized[field_name] = float(value)
+        else:
+            try:
+                normalized[field_name] = float(value)
+            except (TypeError, ValueError):
+                normalized[field_name] = None
+    return normalized
+
+
+def _normalize_key_quotes_fields(
+    raw_fields: dict[str, Any],
+    schema_fields: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Normalize key quote fields to list-of-string arrays."""
+    normalized: dict[str, Any] = {}
+    for field in schema_fields:
+        field_name = field.get("field_name", "").strip()
+        value = raw_fields.get(field_name)
+        if value is None:
+            normalized[field_name] = []
+        elif isinstance(value, list):
+            normalized[field_name] = [str(v) for v in value]
+        else:
+            normalized[field_name] = [str(value)]
+    return normalized
+
+
+def _normalize_records(
+    records: list[dict[str, Any]],
+    schema: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Normalize LLM outputs to match expected schema."""
+    categorical_fields = schema.get("categorical_fields", [])
+    scalar_fields = schema.get("scalar_fields", [])
+    key_quotes_fields = schema.get("key_quotes_fields", [])
+
+    normalized: list[dict[str, Any]] = []
+    for record in records:
+        record_id = str(record.get("record_id", ""))
+        categorical_out = _normalize_categorical_fields(
+            record.get("categorical_fields", {}) or {},
+            categorical_fields,
+        )
+        scalar_out = _normalize_scalar_fields(
+            record.get("scalar_fields", {}) or {},
+            scalar_fields,
+        )
+        quotes_out = _normalize_key_quotes_fields(
+            record.get("key_quotes_fields", {}) or {},
+            key_quotes_fields,
+        )
+
+        normalized.append(
+            {
+                "record_id": record_id,
+                "categorical_fields": categorical_out,
+                "scalar_fields": scalar_out,
+                "key_quotes_fields": quotes_out,
+            }
+        )
+
+    return normalized
+
+
+def _records_to_csv_rows(
+    records: list[dict[str, Any]],
+    schema: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Flatten normalized records into CSV rows.
+
+    Args:
+        records: Normalized records
+        schema: Generated schema dictionary
+
+    Returns:
+        List of flat dictionaries for CSV output
+    """
+    categorical_fields = schema.get("categorical_fields", [])
+    scalar_fields = schema.get("scalar_fields", [])
+    key_quotes_fields = schema.get("key_quotes_fields", [])
+
+    rows: list[dict[str, Any]] = []
+    for record in records:
+        row: dict[str, Any] = {"record_id": record.get("record_id", "")}
+
+        categorical_out = record.get("categorical_fields", {})
+        for field in categorical_fields:
+            field_name = field.get("field_name", "").strip()
+            allow_multiple = bool(field.get("allow_multiple", False))
+            value = categorical_out.get(field_name)
+            if allow_multiple and isinstance(value, list):
+                row[field_name] = "; ".join(str(v) for v in value)
+            else:
+                row[field_name] = value
+
+        scalar_out = record.get("scalar_fields", {})
+        for field in scalar_fields:
+            field_name = field.get("field_name", "").strip()
+            row[field_name] = scalar_out.get(field_name)
+
+        quotes_out = record.get("key_quotes_fields", {})
+        for field in key_quotes_fields:
+            field_name = field.get("field_name", "").strip()
+            quotes = quotes_out.get(field_name)
+            if isinstance(quotes, list):
+                row[field_name] = " | ".join(str(v) for v in quotes)
+            else:
+                row[field_name] = quotes
+
+        rows.append(row)
+
+    return rows
+
+
+async def _analyze_batch(
+    client: genai.Client,
+    limiter: AsyncRateLimiter,
+    context: AnalysisContext,
+    config: AnalysisConfig,
+    records: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Analyze a batch of records using the LLM.
+
+    Args:
+        client: Gemini API client
+        limiter: Async rate limiter
+        context: Analysis context for prompt and schema
+        config: Analysis configuration
+        records: Batch of records
+
+    Returns:
+        List of analyzed record dictionaries
+    """
+    prompt_text = _build_analysis_prompt(
+        context.use_case,
+        context.schema_summary,
+        records,
+        context.id_column,
+    )
+
+    response_data, _ = await generate_structured_content(
+        client=client,
+        prompt_text=prompt_text,
+        model_id=config.model_id,
+        json_schema=context.response_schema,
+        system_instruction=context.system_prompt,
+        thinking_level=config.thinking_level,
+        token_usage_file=str(TOKEN_USAGE_FILE),
+        rate_limiter=limiter,
+        batch_size=len(records),
+    )
+
+    if not response_data:
+        return []
+
+    records_data = response_data.get("records", [])
+    if not isinstance(records_data, list):
+        return []
+
+    return cast("list[dict[str, Any]]", records_data)
+
+
+async def analyze_dataset(
+    request: AnalysisRequest,
+    config: AnalysisConfig | None = None,
+) -> tuple[dict[str, Any], str]:
+    """Analyze a cleaned CSV using a generated schema and return outputs.
+
+    Args:
+        request: AnalysisRequest containing paths and prompts
+        config: Optional AnalysisConfig override
+
+    Returns:
+        Tuple of (analysis_json_dict, analysis_csv_text)
+    """
+    config = config or AnalysisConfig()
+    request.output_dir.mkdir(parents=True, exist_ok=True)
+
+    with request.schema_path.open(encoding="utf-8") as f:
+        schema = json.load(f)
+
+    df = pd.read_csv(request.cleaned_csv)
+    if df.empty:
+        msg = "Cleaned CSV is empty"
+        raise ValueError(msg)
+
+    id_column = df.columns[0]
+    records: list[dict[str, Any]] = []
+    for _, row in df.iterrows():
+        record = row.to_dict()
+        record["record_id"] = str(row[id_column])
+        records.append(record)
+
+    profile = validate_model_config(config.model_id, config.thinking_level)
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        msg = "GEMINI_API_KEY environment variable not set"
+        raise ValueError(msg)
+
+    client = genai.Client(api_key=api_key)
+    limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd)
+
+    response_schema = _build_analysis_response_schema(schema)
+    schema_summary = _summarize_schema(schema)
+
+    batches = [records[i : i + config.batch_size] for i in range(0, len(records), config.batch_size)]
+
+    context = AnalysisContext(
+        system_prompt=request.system_prompt,
+        schema_summary=schema_summary,
+        use_case=request.use_case,
+        id_column=id_column,
+        response_schema=response_schema,
+    )
+
+    analysis_config = AnalysisConfig(
+        model_id=profile.model_id,
+        thinking_level=config.thinking_level,
+        batch_size=config.batch_size,
+    )
+
+    tasks = [
+        _analyze_batch(
+            client=client,
+            limiter=limiter,
+            context=context,
+            config=analysis_config,
+            records=batch,
+        )
+        for batch in batches
+    ]
+
+    results = await asyncio.gather(*tasks)
+
+    flattened = [record for batch in results for record in batch]
+    normalized = _normalize_records(flattened, schema)
+
+    analysis_payload = {
+        "metadata": {
+            "generated_at": datetime.now(tz=UTC).isoformat(),
+            "model_id": profile.model_id,
+            "thinking_level": config.thinking_level,
+            "batch_size": config.batch_size,
+            "record_count": len(normalized),
+            "use_case": request.use_case[:500] if request.use_case else "",
+        },
+        "records": normalized,
+    }
+
+    json_path = request.output_dir / ANALYSIS_JSON_FILENAME
+    with json_path.open("w", encoding="utf-8") as f:
+        json.dump(analysis_payload, f, indent=2)
+
+    csv_rows = _records_to_csv_rows(normalized, schema)
+    csv_df = pd.DataFrame(csv_rows)
+    csv_path = request.output_dir / ANALYSIS_CSV_FILENAME
+    csv_df.to_csv(csv_path, index=False)
+
+    return analysis_payload, csv_path.read_text(encoding="utf-8")
