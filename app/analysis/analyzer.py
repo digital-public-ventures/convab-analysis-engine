@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 MAX_PROMPT_RECORD_CHARS = 2000
 
 if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable
     from pathlib import Path
 
 
@@ -449,12 +450,16 @@ async def _analyze_batch(
 async def analyze_dataset(
     request: AnalysisRequest,
     config: AnalysisConfig | None = None,
+    on_batch: Callable[[list[dict[str, Any]]], Awaitable[None]] | None = None,
+    on_row_count: Callable[[int], Awaitable[None]] | None = None,
 ) -> tuple[dict[str, Any], str]:
     """Analyze a cleaned CSV using a generated schema and return outputs.
 
     Args:
         request: AnalysisRequest containing paths and prompts
         config: Optional AnalysisConfig override
+        on_batch: Optional callback invoked with each normalized batch
+        on_row_count: Optional callback invoked with total record count
 
     Returns:
         Tuple of (analysis_json_dict, analysis_csv_text)
@@ -476,6 +481,8 @@ async def analyze_dataset(
         record = row.to_dict()
         record["record_id"] = str(row[id_column])
         records.append(record)
+    if on_row_count is not None:
+        await on_row_count(len(records))
 
     profile = validate_model_config(config.model_id, config.thinking_level)
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -516,10 +523,13 @@ async def analyze_dataset(
         for batch in batches
     ]
 
-    results = await asyncio.gather(*tasks)
-
-    flattened = [record for batch in results for record in batch]
-    normalized = _normalize_records(flattened, schema)
+    normalized: list[dict[str, Any]] = []
+    for task in asyncio.as_completed(tasks):
+        batch_result = await task
+        normalized_batch = _normalize_records(batch_result, schema)
+        normalized.extend(normalized_batch)
+        if on_batch is not None:
+            await on_batch(normalized_batch)
 
     analysis_payload = {
         "metadata": {

@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import tempfile
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Any, cast
 
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from pydantic import BaseModel, Field
 
 from app.analysis import AnalysisRequest, analyze_dataset
@@ -25,6 +27,7 @@ from app.config import (
     SCHEMA_DEFAULT_SAMPLE_SIZE,
 )
 from app.processing import AttachmentProcessor, DataStore, clean_csv
+from app.processing.job_store import JobStatus, JobStore
 from app.schema import SchemaGenerator
 
 load_dotenv()
@@ -35,6 +38,7 @@ logger = logging.getLogger(__name__)
 # Shared processor with pre-warmed OCR
 _processor: AttachmentProcessor | None = None
 _data_store: DataStore = DataStore()
+_job_store: JobStore = JobStore()
 
 
 def get_processor() -> AttachmentProcessor:
@@ -45,12 +49,16 @@ def get_processor() -> AttachmentProcessor:
 
 
 # Pydantic models for request/response
-class CleanResponse(BaseModel):
-    """Response model for /clean endpoint."""
+class JobStartResponse(BaseModel):
+    """Response model for async job creation."""
 
-    hash: str
-    cleaned_file: str
+    job_id: str
+    status: str
+    job_type: str
+    hash: str | None = None
     cached: bool = False
+    poll_url: str
+    results_url: str
 
 
 class SchemaRequest(BaseModel):
@@ -98,6 +106,29 @@ class AnalyzeResponse(BaseModel):
     analysis_csv: str
 
 
+class JobProgress(BaseModel):
+    completed_rows: int
+    total_rows: int | None
+
+
+class JobStatusResponse(BaseModel):
+    job_id: str
+    status: str
+    job_type: str
+    completed: bool
+    error: str | None
+    progress: JobProgress
+    hash: str | None = None
+
+
+class JobResultsResponse(BaseModel):
+    job_id: str
+    rows: list[dict[str, Any]]
+    next_cursor: str | None
+    has_more: bool
+    completed: bool
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Pre-warm OCR engine on startup."""
@@ -119,62 +150,204 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(title="CSV Cleaner & Schema Generator", lifespan=lifespan)
 
 
-@app.post("/clean", response_model=CleanResponse)  # type: ignore[misc]
-async def clean_csv_endpoint(file: UploadFile = File(...)) -> CleanResponse:
-    """Clean a CSV file and return info about the cleaned version.
+def _build_job_urls(job_id: str) -> tuple[str, str]:
+    return (f"/jobs/{job_id}", f"/jobs/{job_id}/results")
 
-    1. Hash the incoming CSV content
-    2. Check if cleaned CSV exists in app/data/<hash>/cleaned_data/
-    3. If cached, return immediately; otherwise process and cache
-    4. Return JSON with hash and filename
-    """
-    content = await file.read()
-    content_hash = DataStore.hash_content(content)
 
-    logger.debug("Received file: %s (hash: %s...)", file.filename, content_hash[:12])
+def _parse_cursor(cursor: str | None) -> int:
+    if cursor is None or cursor == "":
+        return 0
+    try:
+        value = int(cursor)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Invalid cursor") from exc
+    if value < 0:
+        raise HTTPException(status_code=400, detail="Invalid cursor")
+    return value
 
-    # Check cache
-    existing = _data_store.get_cleaned_csv(content_hash)
-    if existing:
-        logger.info("Cache hit for hash: %s...", content_hash[:12])
-        return CleanResponse(
-            hash=content_hash,
-            cleaned_file=existing.name,
-            cached=True,
-        )
 
-    # Ensure hash directories exist
+def _read_csv_rows(csv_path: Path) -> list[dict[str, Any]]:
+    df = pd.read_csv(csv_path)
+    return cast("list[dict[str, Any]]", df.to_dict(orient="records"))
+
+
+async def _run_clean_job(job_id: str, content: bytes, content_hash: str) -> None:
+    _job_store.mark_running(job_id)
     paths = _data_store.ensure_hash_dirs(content_hash)
 
-    # Save uploaded file to temp location
+    async def _set_total_rows(total_rows: int) -> None:
+        _job_store.set_total_rows(job_id, total_rows)
+
+    async def _add_chunk(rows: list[dict[str, Any]]) -> None:
+        _job_store.add_results(job_id, rows)
+
     with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as tmp:
         tmp.write(content)
         tmp_path = Path(tmp.name)
 
     try:
-        # Create processor with hash-specific downloads directory
         processor = AttachmentProcessor(cache_dir=paths["downloads"])
-        # Share the pre-warmed OCR engine
         processor._ocr_engine = get_processor()._ocr_engine
 
-        # Clean the CSV with hash-specific directories
         cleaned_path = await clean_csv(
             tmp_path,
             processor=processor,
             output_dir=paths["cleaned_data"],
             downloads_dir=paths["downloads"],
+            chunk_size=200,
+            on_chunk=_add_chunk,
+            on_row_count=_set_total_rows,
         )
 
-        logger.info("Cleaned CSV saved: %s", cleaned_path)
-
-        return CleanResponse(
-            hash=content_hash,
-            cleaned_file=cleaned_path.name,
-            cached=False,
-        )
+        record = _job_store.get_job(job_id)
+        if record and record.completed_rows == 0:
+            rows = _read_csv_rows(cleaned_path)
+            _job_store.add_results(job_id, rows)
+            _job_store.set_total_rows(job_id, len(rows))
+        _job_store.mark_completed(job_id)
+    except Exception as exc:  # pragma: no cover - defensive logging
+        logger.exception("Clean job failed: %s", exc)
+        _job_store.mark_failed(job_id, str(exc))
     finally:
-        # Clean up temp file
         tmp_path.unlink(missing_ok=True)
+
+
+async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
+    content_hash = request.hash
+    _job_store.mark_running(job_id)
+
+    async def _set_total_rows(total_rows: int) -> None:
+        _job_store.set_total_rows(job_id, total_rows)
+
+    async def _add_batch(rows: list[dict[str, Any]]) -> None:
+        _job_store.add_results(job_id, rows)
+
+    cleaned_csv = _data_store.get_cleaned_csv(content_hash)
+    if not cleaned_csv:
+        _job_store.mark_failed(job_id, "Cleaned CSV not found")
+        return
+
+    schema_path = _data_store.get_schema(content_hash)
+    if not schema_path:
+        _job_store.mark_failed(job_id, "Schema not found")
+        return
+
+    paths = _data_store.ensure_hash_dirs(content_hash)
+
+    try:
+        await analyze_dataset(
+            AnalysisRequest(
+                cleaned_csv=cleaned_csv,
+                schema_path=schema_path,
+                output_dir=paths["analyzed"],
+                use_case=request.use_case,
+                system_prompt=request.system_prompt,
+            ),
+            on_batch=_add_batch,
+            on_row_count=_set_total_rows,
+        )
+        record = _job_store.get_job(job_id)
+        if record and record.completed_rows == 0:
+            analysis_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
+            if analysis_csv is None:
+                raise FileNotFoundError("analysis.csv not found")
+            rows = _read_csv_rows(analysis_csv)
+            _job_store.add_results(job_id, rows)
+            _job_store.set_total_rows(job_id, len(rows))
+        _job_store.mark_completed(job_id)
+    except Exception as exc:  # pragma: no cover - defensive logging
+        logger.exception("Analyze job failed: %s", exc)
+        _job_store.mark_failed(job_id, str(exc))
+
+
+@app.post("/clean", response_model=JobStartResponse, status_code=202)  # type: ignore[misc]
+async def clean_csv_endpoint(
+    file: UploadFile = File(...),
+    no_cache: bool = Query(default=False),
+) -> JobStartResponse:
+    """Start a CSV cleaning job and return the job id immediately."""
+    content = await file.read()
+    content_hash = DataStore.hash_content(content)
+
+    logger.debug("Received file: %s (hash: %s...)", file.filename, content_hash[:12])
+
+    job = _job_store.create_job("clean", metadata={"hash": content_hash})
+    poll_url, results_url = _build_job_urls(job.job_id)
+
+    existing = _data_store.get_cleaned_csv(content_hash)
+    if existing and not no_cache:
+        logger.info("Cache hit for hash: %s...", content_hash[:12])
+        rows = _read_csv_rows(existing)
+        _job_store.add_results(job.job_id, rows)
+        _job_store.set_total_rows(job.job_id, len(rows))
+        _job_store.mark_completed(job.job_id)
+        return JobStartResponse(
+            job_id=job.job_id,
+            status=job.status,
+            job_type=job.job_type,
+            hash=content_hash,
+            cached=True,
+            poll_url=poll_url,
+            results_url=results_url,
+        )
+
+    asyncio.create_task(_run_clean_job(job.job_id, content, content_hash))
+
+    return JobStartResponse(
+        job_id=job.job_id,
+        status=job.status,
+        job_type=job.job_type,
+        hash=content_hash,
+        cached=False,
+        poll_url=poll_url,
+        results_url=results_url,
+    )
+
+
+@app.get("/jobs/{job_id}", response_model=JobStatusResponse)  # type: ignore[misc]
+async def get_job_status(job_id: str) -> JobStatusResponse:
+    """Get the current status of a background job."""
+    record = _job_store.get_job(job_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    return JobStatusResponse(
+        job_id=record.job_id,
+        status=record.status,
+        job_type=record.job_type,
+        completed=record.status in (JobStatus.COMPLETED, JobStatus.FAILED),
+        error=record.error,
+        progress=JobProgress(
+            completed_rows=record.completed_rows,
+            total_rows=record.total_rows,
+        ),
+        hash=record.metadata.get("hash"),
+    )
+
+
+@app.get("/jobs/{job_id}/results", response_model=JobResultsResponse)  # type: ignore[misc]
+async def get_job_results(
+    job_id: str,
+    cursor: str | None = Query(default=None),
+    limit: int = Query(default=500, ge=1, le=5000),
+) -> JobResultsResponse:
+    """Return completed rows for a job since the provided cursor."""
+    record = _job_store.get_job(job_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    cursor_value = _parse_cursor(cursor)
+    results, has_more = _job_store.get_results_since(job_id, cursor_value, limit)
+    rows = [row.payload for row in results]
+    next_cursor = str(results[-1].sequence_id) if results else (str(cursor_value) if cursor_value else None)
+
+    return JobResultsResponse(
+        job_id=record.job_id,
+        rows=rows,
+        next_cursor=next_cursor,
+        has_more=has_more,
+        completed=record.status in (JobStatus.COMPLETED, JobStatus.FAILED),
+    )
 
 
 @app.post("/schema/{hash}", response_model=SchemaResponse)  # type: ignore[misc]
@@ -283,16 +456,12 @@ async def get_data_info(hash: str) -> DataInfoResponse:
     )
 
 
-@app.post("/analyze", response_model=AnalyzeResponse)  # type: ignore[misc]
-async def analyze_dataset_endpoint(request: AnalyzeRequest) -> AnalyzeResponse:
-    """Analyze a cleaned CSV with a generated schema and return embedded outputs.
-
-    1. Validate hash exists
-    2. Check for cached analysis JSON + CSV in app/data/<hash>/analyzed/
-    3. If cached, return embedded content
-    4. Otherwise load cleaned CSV and schema.json
-    5. Run analysis batches and save JSON/CSV to analyzed dir
-    """
+@app.post("/analyze", response_model=JobStartResponse, status_code=202)  # type: ignore[misc]
+async def analyze_dataset_endpoint(
+    request: AnalyzeRequest,
+    no_cache: bool = Query(default=False),
+) -> JobStartResponse:
+    """Start an analysis job and return the job id immediately."""
     content_hash = request.hash
 
     if not _data_store.hash_exists(content_hash):
@@ -301,57 +470,42 @@ async def analyze_dataset_endpoint(request: AnalyzeRequest) -> AnalyzeResponse:
             detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
         )
 
+    job = _job_store.create_job("analyze", metadata={"hash": content_hash})
+    poll_url, results_url = _build_job_urls(job.job_id)
+
     existing_json = _data_store.get_analyzed_json(content_hash, ANALYSIS_JSON_FILENAME)
     existing_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
-    if existing_json and existing_csv:
+    if existing_json and existing_csv and not no_cache:
         logger.info("Analysis cache hit for hash: %s...", content_hash[:12])
-        with open(existing_json, encoding="utf-8") as f:
-            analysis_json = json.load(f)
-        analysis_csv = existing_csv.read_text(encoding="utf-8")
-        return AnalyzeResponse(
+        rows = _read_csv_rows(existing_csv)
+        _job_store.add_results(job.job_id, rows)
+        _job_store.set_total_rows(job.job_id, len(rows))
+        _job_store.mark_completed(job.job_id)
+        return JobStartResponse(
+            job_id=job.job_id,
+            status=job.status,
+            job_type=job.job_type,
             hash=content_hash,
             cached=True,
-            analysis_json=analysis_json,
-            analysis_csv=analysis_csv,
+            poll_url=poll_url,
+            results_url=results_url,
         )
 
-    cleaned_csv = _data_store.get_cleaned_csv(content_hash)
-    if not cleaned_csv:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Cleaned CSV not found for hash '{content_hash[:12]}...'. Run /clean first.",
+    asyncio.create_task(
+        _run_analyze_job(
+            job_id=job.job_id,
+            request=request,
         )
+    )
 
-    schema_path = _data_store.get_schema(content_hash)
-    if not schema_path:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Schema not found for hash '{content_hash[:12]}...'. Run /schema first.",
-        )
-
-    paths = _data_store.ensure_hash_dirs(content_hash)
-
-    try:
-        analysis_json, analysis_csv = await analyze_dataset(
-            AnalysisRequest(
-                cleaned_csv=cleaned_csv,
-                schema_path=schema_path,
-                output_dir=paths["analyzed"],
-                use_case=request.use_case,
-                system_prompt=request.system_prompt,
-            )
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}") from e
-    except Exception as e:
-        logger.error("Analysis error: %s", e)
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}") from e
-
-    return AnalyzeResponse(
+    return JobStartResponse(
+        job_id=job.job_id,
+        status=job.status,
+        job_type=job.job_type,
         hash=content_hash,
         cached=False,
-        analysis_json=analysis_json,
-        analysis_csv=analysis_csv,
+        poll_url=poll_url,
+        results_url=results_url,
     )
 
 

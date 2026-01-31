@@ -302,3 +302,8 @@ planning/
 
 # Large data files (download from source)
 src/regs_dot_gov_exploration/data/responses.csv
+
+# Directories containing CSV files
+app/data/*
+app/tests/fixtures/8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28/analyzed/integration_test/*
+app/tests/fixtures/8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28/cleaned_data/*

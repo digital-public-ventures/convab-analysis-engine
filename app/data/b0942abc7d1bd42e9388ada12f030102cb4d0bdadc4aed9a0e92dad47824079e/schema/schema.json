@@ -1,0 +1,111 @@
+{
+  "_metadata": {
+    "generated_at": "2026-01-31T11:57:12.836434",
+    "model_id": "gemini-3-flash-preview",
+    "thinking_level": "MINIMAL",
+    "rows_sampled": 4,
+    "use_case": "Analyze customer feedback for sentiment and themes"
+  },
+  "schema_name": "Medical Payment Products Analysis Schema",
+  "version": "1.0.0",
+  "description": "A comprehensive schema for analyzing public comments regarding medical payment products, credit cards, and consumer financing for healthcare.",
+  "categorical_fields": [
+    {
+      "field_name": "Primary Theme",
+      "description": "The main subject matter addressed in the feedback or public submission.",
+      "suggested_values": [
+        "Accessibility & Affordability",
+        "Billing & Transparent Pricing",
+        "Debt Collection Practices",
+        "Interest Rates & Fees",
+        "Credit Reporting Impact",
+        "Personal Experience / Anecdote",
+        "Regulatory Policy Recommendations"
+      ],
+      "allow_multiple": true,
+      "hint": "Select multiple if the comment bridges personal experience with specific policy suggestions."
+    },
+    {
+      "field_name": "Consumer Sentiment",
+      "description": "The overall emotional tone and stance of the respondent toward medical payment products.",
+      "suggested_values": [
+        "Strongly Positive",
+        "Positive",
+        "Neutral/Mixed",
+        "Negative",
+        "Strongly Negative",
+        "Analytical/Objective"
+      ],
+      "allow_multiple": false,
+      "hint": "Differentiate between analytical feedback on policy and emotional feedback on personal financial hardship."
+    },
+    {
+      "field_name": "Medical Service Type",
+      "description": "The specific healthcare sector mentioned in relation to the payment product.",
+      "suggested_values": [
+        "Dental",
+        "Veterinary",
+        "Emergency Care",
+        "Elective Surgery",
+        "General Medical",
+        "Mental Health",
+        "Not Specified"
+      ],
+      "allow_multiple": true,
+      "hint": "Often mentioned in anecdotes about Care Credit or similar deferred-interest products."
+    },
+    {
+      "field_name": "Actionable Insight Type",
+      "description": "Identifies if the comment provides a specific recommendation for the CFPB.",
+      "suggested_values": [
+        "Call for stricter regulation",
+        "Support for existing system",
+        "Request for better disclosure",
+        "Evidence of consumer harm",
+        "N/A"
+      ],
+      "allow_multiple": true,
+      "hint": "Use this to filter for comments that provide concrete evidence or policy requests."
+    }
+  ],
+  "scalar_fields": [
+    {
+      "field_name": "Financial Stress Level",
+      "description": "The degree of financial burden or distress expressed by the respondent.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No financial stress mentioned; 5 = Moderate concern about payments; 10 = Extreme hardship, bankruptcy, or debt crisis.",
+      "hint": "Look for keywords like 'struggle', 'burden', 'overwhelmed', or 'bankruptcy'."
+    },
+    {
+      "field_name": "Product Utility Score",
+      "description": "How helpful or essential the respondent finds these medical payment products to be.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = Product is seen as predatory or harmful; 5 = Product is a neutral necessity; 10 = Product is vital for accessing care.",
+      "hint": "A high score is often found in comments where users mention they could not have received care without the product."
+    },
+    {
+      "field_name": "Policy Urgency",
+      "description": "The perceived need for immediate government intervention expressed in the text.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No change needed; 5 = General interest in oversight; 10 = Immediate demand for reform and protection.",
+      "hint": "Higher scores should be assigned to comments using imperative language like 'must', 'demand', or 'immediately'."
+    }
+  ],
+  "key_quotes_fields": [
+    {
+      "field_name": "Representative Experience Quote",
+      "description": "A snippet capturing the essence of the consumer's personal interaction with the product.",
+      "max_quotes": 2,
+      "hint": "Prioritize quotes that illustrate the 'why' behind the user's sentiment."
+    },
+    {
+      "field_name": "Policy Recommendation Snippet",
+      "description": "Direct quotes where the author suggests specific actions for the agency.",
+      "max_quotes": 1,
+      "hint": "Capture the specific 'ask' of the federal government."
+    }
+  ]
+}

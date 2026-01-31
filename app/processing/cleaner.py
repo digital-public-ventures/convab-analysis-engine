@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Awaitable, Callable
 from pathlib import Path
 
 import pandas as pd
@@ -39,6 +40,9 @@ async def clean_csv(
     processor: AttachmentProcessor | None = None,
     output_dir: Path | None = None,
     downloads_dir: Path | None = None,
+    chunk_size: int | None = None,
+    on_chunk: Callable[[list[dict[str, object]]], Awaitable[None]] | None = None,
+    on_row_count: Callable[[int], Awaitable[None]] | None = None,
 ) -> Path:
     """Clean a CSV file and save to specified directory.
 
@@ -47,6 +51,9 @@ async def clean_csv(
         processor: Optional pre-initialized AttachmentProcessor (for server use)
         output_dir: Directory for cleaned CSV output (default: CLEANED_DATA_DIR)
         downloads_dir: Directory for downloaded attachments (default: DOWNLOADS_DIR)
+        chunk_size: Optional chunk size for incremental processing
+        on_chunk: Optional callback invoked with each cleaned chunk
+        on_row_count: Optional callback invoked with total row count
 
     Returns:
         Path to the cleaned CSV file
@@ -60,6 +67,8 @@ async def clean_csv(
     logger.debug("Reading CSV...")
     df = pd.read_csv(input_path)
     logger.debug("CSV read complete: %d rows, %d columns", len(df), len(df.columns))
+    if on_row_count is not None:
+        await on_row_count(len(df))
 
     if df.empty:
         raise ValueError("CSV file is empty")
@@ -75,7 +84,54 @@ async def clean_csv(
     attachment_cols = [col for col in df.columns if is_attachment_column(df[col])]
     logger.debug("Found %d attachment columns: %s", len(attachment_cols), attachment_cols)
 
-    if attachment_cols:
+    cleaned_frames: list[pd.DataFrame] = []
+
+    if chunk_size:
+        owns_processor = processor is None
+        if owns_processor and attachment_cols:
+            cache_dir = downloads_dir or DOWNLOADS_DIR
+            processor = AttachmentProcessor(cache_dir=cache_dir)
+        try:
+            for start in range(0, len(df), chunk_size):
+                chunk_df = df.iloc[start : start + chunk_size].copy()
+
+                if attachment_cols:
+                    chunk_url_locations: list[tuple[int, str, str]] = []
+                    for col in attachment_cols:
+                        for row_idx, cell in enumerate(chunk_df[col]):
+                            if pd.notna(cell):
+                                urls = [u.strip() for u in str(cell).split(",") if u.strip()]
+                                for url in urls:
+                                    if is_valid_url(url):
+                                        chunk_url_locations.append((row_idx, col, url))
+
+                    unique_urls = list({loc[2] for loc in chunk_url_locations})
+
+                    chunk_extracted_data: dict[tuple[int, str], list[str]] = {}
+                    if unique_urls and processor is not None:
+                        results = await processor.process_attachments_async(unique_urls)
+                        for row_idx, col, url in chunk_url_locations:
+                            key = (row_idx, col)
+                            text = results.get(url)
+                            if text:
+                                chunk_extracted_data.setdefault(key, []).append(text)
+
+                    for col in attachment_cols:
+                        extracted_col = f"{col}_extracted"
+                        chunk_df[extracted_col] = ""
+                        for row_idx in range(len(chunk_df)):
+                            key = (row_idx, col)
+                            if key in chunk_extracted_data:
+                                chunk_df.at[row_idx, extracted_col] = "\n".join(chunk_extracted_data[key])
+
+                if on_chunk is not None:
+                    await on_chunk(chunk_df.to_dict(orient="records"))
+
+                cleaned_frames.append(chunk_df)
+        finally:
+            if owns_processor and processor is not None:
+                processor.close()
+    elif attachment_cols:
         # Collect all URLs with their locations: (row_idx, col, url)
         logger.debug("Collecting URLs from attachment columns...")
         url_locations: list[tuple[int, str, str]] = []
@@ -125,12 +181,24 @@ async def clean_csv(
                         df.at[row_idx, extracted_col] = "\n".join(extracted_data[key])
             logger.debug("Result mapping complete")
 
-    # Remove completely empty columns
-    logger.debug("Removing empty columns...")
-    df = df.dropna(axis=1, how="all")
+        if on_chunk is not None:
+            await on_chunk(df.to_dict(orient="records"))
+        cleaned_frames.append(df)
+    else:
+        if on_chunk is not None:
+            await on_chunk(df.to_dict(orient="records"))
+        cleaned_frames.append(df)
 
-    # Also remove columns where all values are empty strings
-    df = df.loc[:, ~(df.astype(str).eq("").all())]
+    if cleaned_frames:
+        df = pd.concat(cleaned_frames, ignore_index=True)
+
+    if on_chunk is None and chunk_size is None:
+        # Remove completely empty columns
+        logger.debug("Removing empty columns...")
+        df = df.dropna(axis=1, how="all")
+
+        # Also remove columns where all values are empty strings
+        df = df.loc[:, ~(df.astype(str).eq("").all())]
 
     # Save cleaned CSV
     logger.debug("Saving cleaned CSV...")

@@ -1,6 +1,7 @@
 """Integration test for CSV processing endpoint."""
 
 import shutil
+import time
 from collections.abc import Generator
 from pathlib import Path
 from unittest.mock import patch
@@ -13,7 +14,19 @@ from app.processing import AttachmentProcessor, clean_csv
 from app.server import app
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
-TEST_CSV = FIXTURES_DIR / "responses.csv"
+HASH_VALUE = "8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28"  # pragma: allowlist secret
+TEST_CSV = FIXTURES_DIR / HASH_VALUE / "responses.csv"
+
+
+def _poll_job_completion(client: TestClient, job_id: str, timeout_seconds: float = 20.0) -> None:
+    deadline = time.time() + timeout_seconds
+    while time.time() < deadline:
+        status_response = client.get(f"/jobs/{job_id}")
+        assert status_response.status_code == 200
+        if status_response.json().get("completed") is True:
+            return
+        time.sleep(0.25)
+    pytest.fail("Timed out waiting for clean job completion")
 
 
 @pytest.fixture  # type: ignore[misc]
@@ -175,21 +188,19 @@ class TestServerEndpoint:
                 )
 
             # Verify response
-            assert response.status_code == 200, f"Should return 200, got {response.status_code}"
+            assert response.status_code == 202, f"Should return 202, got {response.status_code}"
             assert "application/json" in response.headers["content-type"]
 
             # Verify JSON structure
             data = response.json()
             assert "hash" in data, "Response should contain hash"
-            assert "cleaned_file" in data, "Response should contain cleaned_file"
-            assert "cached" in data, "Response should contain cached flag"
+            assert "job_id" in data, "Response should contain job_id"
+            assert "poll_url" in data, "Response should contain poll_url"
+            assert "results_url" in data, "Response should contain results_url"
 
             # Verify hash is a valid SHA256 (64-char hex string)
             assert len(data["hash"]) == 64, "Hash should be 64 characters"
             assert all(c in "0123456789abcdef" for c in data["hash"]), "Hash should be hex"
-
-            # Verify cleaned_file has expected format
-            assert data["cleaned_file"].endswith(".csv"), "Cleaned file should be CSV"
 
     def test_clean_endpoint_caching(self) -> None:
         """Test that submitting the same file twice returns cached=True."""
@@ -202,15 +213,17 @@ class TestServerEndpoint:
                 "/clean",
                 files={"file": ("responses.csv", content, "text/csv")},
             )
-            assert response1.status_code == 200
+            assert response1.status_code == 202
             data1 = response1.json()
+
+            _poll_job_completion(client, data1["job_id"])
 
             # Second upload with same content
             response2 = client.post(
                 "/clean",
                 files={"file": ("responses.csv", content, "text/csv")},
             )
-            assert response2.status_code == 200
+            assert response2.status_code == 202
             data2 = response2.json()
 
             # Same hash, but second should be cached
@@ -227,8 +240,10 @@ class TestServerEndpoint:
                     files={"file": ("responses.csv", f, "text/csv")},
                 )
 
-            assert clean_response.status_code == 200
-            content_hash = clean_response.json()["hash"]
+            assert clean_response.status_code == 202
+            payload = clean_response.json()
+            content_hash = payload["hash"]
+            _poll_job_completion(client, payload["job_id"])
 
             # Now query the data info endpoint
             info_response = client.get(f"/data/{content_hash}")
@@ -271,7 +286,9 @@ class TestSchemaEndpoint:
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},
                 )
-            content_hash = clean_response.json()["hash"]
+            payload = clean_response.json()
+            content_hash = payload["hash"]
+            _poll_job_completion(client, payload["job_id"])
 
             # Try to generate schema with too-short use_case
             response = client.post(
@@ -290,7 +307,9 @@ class TestSchemaEndpoint:
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},
                 )
-            content_hash = clean_response.json()["hash"]
+            payload = clean_response.json()
+            content_hash = payload["hash"]
+            _poll_job_completion(client, payload["job_id"])
 
             # Verify the endpoint would accept this request format
             # (actual schema generation is tested separately with mocks)
