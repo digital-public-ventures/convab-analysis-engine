@@ -15,9 +15,9 @@ from typing import Any, cast
 from dotenv import load_dotenv
 from google import genai
 
-from ..utilities.llm.gemini_client import generate_structured_content, validate_model_config
-from ..utilities.llm.rate_limiter import AsyncRateLimiter
-from .attachment_processor import AttachmentProcessor, combine_narratives
+from utilities.llm.gemini_client import generate_structured_content, validate_model_config
+from utilities.llm.rate_limiter import AsyncRateLimiter
+
 from .data_processor import DataProcessor, ResponseRecord
 
 load_dotenv()
@@ -206,7 +206,7 @@ async def analyze_batch(
         return []
 
     analyzed = response_data.get("analyzed_comments", [])
-    return cast(list[dict[str, Any]], analyzed)
+    return cast("list[dict[str, Any]]", analyzed)
 
 
 async def run_analysis(args: argparse.Namespace) -> None:
@@ -214,17 +214,11 @@ async def run_analysis(args: argparse.Namespace) -> None:
     use_head = get_use_head()
     print(f'USE_HEAD={use_head} (using {"sample" if use_head else "full"} data)')
 
-    processor = DataProcessor(args.csv_path if args.csv_path else None)
-    if args.csv_path and use_head:
-        print("Warning: USE_HEAD is true but --csv-path was provided.")
+    if args.csv_path:
+        print("Warning: --csv-path is ignored for analyze; using data/head/responses.csv.")
+    processor = DataProcessor(None)
 
-    if args.include_attachments:
-        records = processor.get_records_with_attachments(n_rows=args.rows)
-        if not records:
-            print("No records with attachments found; falling back to narrative-only records.")
-            records = processor.get_narrative_only_records(n_rows=args.rows)
-    else:
-        records = processor.get_narrative_only_records(n_rows=args.rows)
+    records = processor.load_records(n_rows="all")
 
     if not records:
         print("No records loaded. Check your CSV file.")
@@ -247,30 +241,23 @@ async def run_analysis(args: argparse.Namespace) -> None:
 
     system_prompt = load_system_prompt()
 
-    narratives: list[str] = []
-    if args.include_attachments:
-        attachment_processor = AttachmentProcessor(timeout=args.attachment_timeout)
-        for record in records:
-            attachment_texts = attachment_processor.process_attachments(
-                record.attachment_urls,
-                skip_errors=True,
-                use_ocr=args.use_ocr,
-            )
-            combined = combine_narratives(record.narrative, attachment_texts)
-            narratives.append(combined if combined else record.narrative)
-    else:
-        narratives = [record.narrative for record in records]
+    narratives = [record.narrative for record in records]
 
     records, narratives, skipped = filter_records_with_narratives(records, narratives)
     if skipped:
-        print(
-            "Warning: Skipped records with empty narratives. " "Use --include-attachments to include attachment text."
-        )
+        print("Warning: Skipped records with empty narratives.")
     if not records:
         print("No records with usable narrative content. Try --include-attachments.")
         return
 
+    if len(records) < args.rows:
+        print(f"Warning: Requested {args.rows} rows but only {len(records)} usable records found.")
+
+    records = records[: args.rows]
+    narratives = narratives[: args.rows]
+
     batch_size = args.batch_size
+    comment_by_id = {record.id: record.narrative for record in records}
     batches = [records[i : i + batch_size] for i in range(0, len(records), batch_size)]
     narrative_batches = [narratives[i : i + batch_size] for i in range(0, len(narratives), batch_size)]
 
@@ -306,12 +293,14 @@ async def run_analysis(args: argparse.Namespace) -> None:
         json.dump(analyzed_comments, f, indent=2)
 
     csv_path = output_run_dir / f"{args.model_key}_{args.thinking_level}_{timestamp}.csv"
-    csv_fields = ["id", *categorical_fields, *scalar_fields]
+    csv_fields = ["id", "comment_text", *categorical_fields, *scalar_fields]
     with csv_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=csv_fields)
         writer.writeheader()
         for analysis in analyzed_comments:
-            writer.writerow(flatten_analysis_row(analysis, categorical_fields, scalar_fields))
+            row = flatten_analysis_row(analysis, categorical_fields, scalar_fields)
+            row["comment_text"] = comment_by_id.get(row["id"], "")
+            writer.writerow(row)
 
     elapsed = time.time() - start_time
     print(f"Saved {len(analyzed_comments)} analyses in {elapsed:.2f}s to {output_run_dir}")

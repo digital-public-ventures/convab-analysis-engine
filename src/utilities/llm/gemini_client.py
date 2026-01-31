@@ -1,21 +1,20 @@
 """Gemini API client utilities for structured generation."""
 
-from dotenv import load_dotenv
+import json
+import logging
+import random
+import string
+from datetime import UTC, datetime
+from typing import Literal, overload
+
 from google import genai
 from google.genai import types
 
-from .model_config import MODELS, ModelProfile
+from .model_config import MODELS, ModelProfile, resolve_model_id
 from .rate_limiter import AsyncRateLimiter
 from .token_tracking import record_token_usage
 
-load_dotenv()
-
-
-# Model ID mappings
-MODEL_IDS = {
-    'flash': 'gemini-3-flash-preview',
-    'pro': 'gemini-3-pro-preview',
-}
+logger = logging.getLogger(__name__)
 
 
 def validate_model_config(model_key: str, thinking_level: str, models_dict: dict | None = None) -> ModelProfile:
@@ -39,7 +38,7 @@ def validate_model_config(model_key: str, thinking_level: str, models_dict: dict
 
     if model_key not in models_dict:
         available_keys = list(models_dict.keys())
-        msg = f'Invalid model key. Choose from: {available_keys}'
+        msg = f"Invalid model key. Choose from: {available_keys}"
         raise ValueError(msg)
 
     profile = models_dict[model_key]
@@ -47,21 +46,56 @@ def validate_model_config(model_key: str, thinking_level: str, models_dict: dict
     if thinking_level not in profile.allowed_thinking:
         msg = (
             f"Model {profile.model_id} does not support thinking level '{thinking_level}'. "
-            f'Allowed: {profile.allowed_thinking}'
+            f"Allowed: {profile.allowed_thinking}"
         )
         raise ValueError(msg)
 
     return profile
 
 
+@overload
 async def generate_structured_content(
     client: genai.Client,
     prompt_text: str,
-    model_id: str = 'flash',
+    model_id: str = "flash",
     json_schema: dict | None = None,
     system_instruction: str | None = None,
     thinking_level: str | None = None,
-    token_usage_file: str = 'temp/token_usage.jsonl',
+    token_usage_file: str | None = None,
+    rate_limiter: AsyncRateLimiter | None = None,
+    batch_size: int = 1,
+    include_thoughts: bool = False,
+    *,
+    return_full_response: Literal[True],
+) -> tuple[dict | None, dict | None, object]:
+    ...
+
+
+@overload
+async def generate_structured_content(
+    client: genai.Client,
+    prompt_text: str,
+    model_id: str = "flash",
+    json_schema: dict | None = None,
+    system_instruction: str | None = None,
+    thinking_level: str | None = None,
+    token_usage_file: str | None = None,
+    rate_limiter: AsyncRateLimiter | None = None,
+    batch_size: int = 1,
+    include_thoughts: bool = False,
+    return_full_response: Literal[False] = False,
+) -> tuple[dict | None, dict | None]:
+    ...
+
+
+async def generate_structured_content(
+    client: genai.Client,
+    prompt_text: str,
+    model_id: str = "flash",
+    json_schema: dict | None = None,
+    system_instruction: str | None = None,
+    thinking_level: str | None = None,
+    token_usage_file: str | None = None,
     rate_limiter: AsyncRateLimiter | None = None,
     batch_size: int = 1,
     include_thoughts: bool = False,
@@ -76,7 +110,7 @@ async def generate_structured_content(
         json_schema: Optional JSON schema for structured output
         system_instruction: Optional system instruction to guide model behavior
         thinking_level: Optional thinking level (MINIMAL, LOW, MEDIUM, HIGH)
-        token_usage_file: Path to token usage tracking file (default: temp/token_usage.jsonl)
+        token_usage_file: Path to token usage tracking file (default: from TOKEN_USAGE_FILE env var)
         rate_limiter: Optional AsyncRateLimiter instance for rate limiting
         batch_size: Number of items being processed (for token estimation, default: 1)
         include_thoughts: Whether to include thinking process in response (default: False)
@@ -89,11 +123,14 @@ async def generate_structured_content(
         - usage_metadata: Dict with token counts or None if error
         - full_response: Full Gemini API response object (only if return_full_response=True)
     """
-    # Map short model names to full IDs
-    resolved_model_id = MODEL_IDS.get(model_id, model_id)
+    # Resolve model ID from short alias if needed
+    resolved_model_id = resolve_model_id(model_id)
 
     # If rate limiter provided, count tokens and wait for rate limits
+    acquired = False
     if rate_limiter:
+        await rate_limiter.acquire_concurrency()
+        acquired = True
         estimated_input_tokens = await rate_limiter.count_tokens_and_acquire(
             client=client,
             model_id=resolved_model_id,
@@ -101,27 +138,34 @@ async def generate_structured_content(
             system_instruction=system_instruction,
             batch_size=batch_size,
         )
-        print(f'🚀 Sending request ({estimated_input_tokens} input tokens)...')
+        logger.info(f"Sending request ({estimated_input_tokens} input tokens)")
 
     # Build config
     config_params = {}
 
+    config_params["automatic_function_calling"] = types.AutomaticFunctionCallingConfig(disable=True)
+
     if json_schema:
-        config_params['response_mime_type'] = 'application/json'
-        config_params['response_schema'] = json_schema
+        config_params["response_mime_type"] = "application/json"
+        config_params["response_schema"] = json_schema
 
     if system_instruction:
-        config_params['system_instruction'] = system_instruction
+        config_params["system_instruction"] = system_instruction
 
     if thinking_level:
         thinking_level_enum = types.ThinkingLevel[thinking_level.upper()]
-        config_params['thinking_config'] = types.ThinkingConfig(
+        config_params["thinking_config"] = types.ThinkingConfig(
             thinking_level=thinking_level_enum, include_thoughts=include_thoughts
         )
 
     config = types.GenerateContentConfig(**config_params)
 
     try:
+        gen_unique_id = "".join(random.choices(string.ascii_letters, k=8))
+        gen_start = datetime.now(tz=UTC)
+        gen_start_label = gen_start.strftime("%Y-%m-%d %H:%M:%S.") + f"{gen_start.microsecond // 1000:03d}"
+        logger.debug(f"Generating {gen_unique_id} at {gen_start_label}")
+
         # Make API call
         response = await client.aio.models.generate_content(
             model=resolved_model_id,
@@ -134,37 +178,43 @@ async def generate_structured_content(
         if response.text:
             if json_schema:
                 # Parse JSON response
-                import json
-
                 try:
                     response_data = json.loads(response.text)
                 except json.JSONDecodeError:
+                    logger.warning(f"Failed to parse JSON response for {gen_unique_id}")
+                    if return_full_response:
+                        return None, None, response
                     return None, None
             else:
-                response_data = {'text': response.text}
+                response_data = {"text": response.text}
+
+        gen_end = datetime.now(tz=UTC)
+        ms = (gen_end - gen_start).total_seconds() * 1000
+        logger.debug(f"Content {gen_unique_id} received in {ms:.1f} ms")
 
         # Track token usage
         usage_metadata = None
         if response.usage_metadata:
-            total_tokens = response.usage_metadata.total_token_count
-            input_tokens = getattr(response.usage_metadata, 'prompt_token_count', 0)
-            output_tokens = getattr(response.usage_metadata, 'candidates_token_count', 0)
+            total_tokens = response.usage_metadata.total_token_count or 0
+            input_tokens = getattr(response.usage_metadata, "prompt_token_count", 0) or 0
+            output_tokens = getattr(response.usage_metadata, "candidates_token_count", 0) or 0
             thinking_tokens = total_tokens - input_tokens - output_tokens
 
-            record_token_usage(
-                total_tokens=total_tokens,
-                model=resolved_model_id,
-                input_tokens=input_tokens,
-                thinking_tokens=thinking_tokens,
-                output_tokens=output_tokens,
-                token_usage_file=token_usage_file,
-            )
+            if token_usage_file:
+                record_token_usage(
+                    total_tokens=total_tokens,
+                    model=resolved_model_id,
+                    input_tokens=input_tokens,
+                    thinking_tokens=thinking_tokens,
+                    output_tokens=output_tokens,
+                    token_usage_file=token_usage_file,
+                )
 
             usage_metadata = {
-                'total_tokens': total_tokens,
-                'input_tokens': input_tokens,
-                'output_tokens': output_tokens,
-                'thinking_tokens': thinking_tokens,
+                "total_tokens": total_tokens,
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens,
+                "thinking_tokens": thinking_tokens,
             }
 
         if return_full_response:
@@ -172,7 +222,10 @@ async def generate_structured_content(
         return response_data, usage_metadata
 
     except Exception as e:
-        print(f'API Error: {e!s}')
+        logger.error(f"API Error: {e!s}")
         if return_full_response:
             return None, None, None
         return None, None
+    finally:
+        if acquired and rate_limiter:
+            rate_limiter.release_concurrency()

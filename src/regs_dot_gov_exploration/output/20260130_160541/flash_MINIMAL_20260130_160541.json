@@ -1,0 +1,173 @@
+[
+  {
+    "id": "CFPB-2023-0038-0002",
+    "categorical_fields": {
+      "stakeholder_type": "Individual Patient",
+      "vulnerable_population_tags": ["Seniors"],
+      "financial_products_mentioned": ["CareCredit", "Mastercard"],
+      "reported_harms": [
+        "Bait and switch",
+        "Account cancellation without notice",
+        "Limited product utility",
+        "Deceptive marketing"
+      ],
+      "reported_benefits": [],
+      "regulatory_recommendations": [],
+      "medical_service_context": ["Dental", "Dentures"]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.8,
+      "urgency_of_concern": 3,
+      "seriousness_of_life_impact": 2,
+      "equity_disparity_prominence": 1
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0005",
+    "categorical_fields": {
+      "stakeholder_type": "Healthcare Provider",
+      "vulnerable_population_tags": [
+        "Maternal health patients",
+        "Rural communities",
+        "Tribal communities",
+        "Uninsured/Underinsured",
+        "Medicaid beneficiaries"
+      ],
+      "financial_products_mentioned": ["CareCredit", "United Credit", "Installment loans"],
+      "reported_harms": [
+        "High merchant fees",
+        "Merchant credit card processing loss",
+        "Aggressive hospital debt collection",
+        "Lack of insurance plan transparency",
+        "High deductibles causing debt"
+      ],
+      "reported_benefits": [
+        "Faster provider payment",
+        "Patient access to services",
+        "Avoiding small claims court"
+      ],
+      "regulatory_recommendations": [
+        "Faster payment pilots (4 Corner Pilot)",
+        "ISO20022 implementation",
+        "Federal personal health bank accounts",
+        "Alignment of maternity benefits across payers",
+        "Improved price transparency for birth services"
+      ],
+      "medical_service_context": [
+        "Maternity",
+        "Birth Center",
+        "Midwifery",
+        "Pediatrics",
+        "Dental",
+        "Orthodontics"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.4,
+      "urgency_of_concern": 5,
+      "seriousness_of_life_impact": 4,
+      "equity_disparity_prominence": 5
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0010",
+    "categorical_fields": {
+      "stakeholder_type": "Individual Patient",
+      "vulnerable_population_tags": ["Chronic conditions", "Low-income", "Uninsured/Underinsured"],
+      "financial_products_mentioned": ["CareCredit", "Visa"],
+      "reported_harms": [
+        "Deferred interest traps",
+        "Credit score damage",
+        "Financial stress",
+        "Bankruptcy",
+        "High interest rates"
+      ],
+      "reported_benefits": ["Immediate access to care", "Provider payment certainty"],
+      "regulatory_recommendations": [
+        "Mandatory staff training for credit marketing",
+        "Prioritize financial aid screening",
+        "Improve cost transparency via diagnostic codes",
+        "Manage overall healthcare costs"
+      ],
+      "medical_service_context": [
+        "Dental",
+        "Physical Therapy",
+        "Occupational Therapy",
+        "Medical devices",
+        "Chronic care"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.2,
+      "urgency_of_concern": 4,
+      "seriousness_of_life_impact": 5,
+      "equity_disparity_prominence": 3
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0011",
+    "categorical_fields": {
+      "stakeholder_type": "Individual/Expert",
+      "vulnerable_population_tags": [
+        "Behavioral health patients",
+        "Substance use disorder patients",
+        "Low-income",
+        "Minority groups"
+      ],
+      "financial_products_mentioned": ["Medical credit cards", "Installment financing"],
+      "reported_harms": [
+        "Ethical concerns in addiction treatment",
+        "High out-of-pocket costs",
+        "Aggressive loan promotion to vulnerable patients"
+      ],
+      "reported_benefits": [
+        "Financing for innovative treatments",
+        "Defraying costs where insurance is not accepted"
+      ],
+      "regulatory_recommendations": [
+        "Study behavioral health impacts",
+        "Promote Health Savings Accounts (HSAs)",
+        "Increase provider awareness of tax credits",
+        "Review residential treatment financing"
+      ],
+      "medical_service_context": [
+        "Mental Health",
+        "Substance Use Disorder",
+        "Addiction Treatment",
+        "Residential Treatment",
+        "Psychiatry"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": 0,
+      "urgency_of_concern": 4,
+      "seriousness_of_life_impact": 4,
+      "equity_disparity_prominence": 4
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0012",
+    "categorical_fields": {
+      "stakeholder_type": "Advocacy Group/Professional Association",
+      "vulnerable_population_tags": [],
+      "financial_products_mentioned": ["CareCredit"],
+      "reported_harms": [],
+      "reported_benefits": [
+        "Access to dental care",
+        "Practice profitability",
+        "Patient payment flexibility"
+      ],
+      "regulatory_recommendations": [
+        "Maintain availability of credit options",
+        "Support responsible credit products"
+      ],
+      "medical_service_context": ["Dental", "Dentistry"]
+    },
+    "scalar_fields": {
+      "sentiment_score": 0.9,
+      "urgency_of_concern": 2,
+      "seriousness_of_life_impact": 1,
+      "equity_disparity_prominence": 1
+    }
+  }
+]

@@ -9,16 +9,17 @@ import json
 import os
 import uuid
 from pathlib import Path
-from typing import Literal, cast
+from typing import Literal
+from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
-from ..utilities.attachment_parser import parse_attachment_urls
+from utilities.attachment_parser import parse_attachment_urls
 
 load_dotenv()
 
 # Safety limit for development
-MAX_ROWS_SAFETY_LIMIT = 50
+MAX_ROWS_SAFETY_LIMIT = 100
 
 
 class ResponseRecord:
@@ -114,7 +115,7 @@ class DataProcessor:
 
     def _parse_attachment_urls(self, attachment_string: str) -> list[str]:
         """Parse comma-separated attachment URLs."""
-        return cast(list[str], parse_attachment_urls(attachment_string))
+        return parse_attachment_urls(attachment_string)
 
     def export_parsed_csv(
         self,
@@ -151,6 +152,186 @@ class DataProcessor:
                         "metadata_json": json.dumps(record.metadata, ensure_ascii=False),
                     }
                 )
+
+    async def export_parsed_attachments_csv_async(
+        self,
+        output_path: str,
+        n_rows: int | Literal["all"] = "all",
+        download_attachments: bool = True,
+        use_ocr: bool = False,
+        timeout: float = 30.0,
+    ) -> None:
+        """Async export parsed attachment data to a CSV file."""
+        from .attachment_processor import AttachmentProcessor
+
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+
+        attachment_processor = AttachmentProcessor(timeout=timeout) if download_attachments else None
+
+        try:
+            with (
+                open(self.csv_path, encoding="utf-8") as f,
+                open(output_file, "w", encoding="utf-8", newline="") as out,
+            ):
+                reader = csv.DictReader(f)
+                writer = csv.DictWriter(
+                    out,
+                    fieldnames=["document_id", "content_text", "attachment_text"],
+                )
+                writer.writeheader()
+
+                for i, row in enumerate(reader):
+                    if n_rows != "all" and i >= n_rows:
+                        break
+
+                    document_id = row.get(self.ID_COLUMN, "").strip() or self._generate_id()
+                    content_text = row.get(self.NARRATIVE_COLUMN, "").strip()
+                    attachment_string = row.get(self.ATTACHMENT_COLUMN, "")
+                    attachment_urls = self._parse_attachment_urls(attachment_string)
+
+                    if attachment_urls and attachment_processor is not None:
+                        attachment_texts = await attachment_processor.process_attachments_async(
+                            attachment_urls,
+                            skip_errors=True,
+                            use_ocr=use_ocr,
+                        )
+                    else:
+                        attachment_texts = dict.fromkeys(attachment_urls, "")
+
+                    attachment_parts = []
+                    for url in attachment_urls:
+                        filename = Path(urlparse(url).path).name
+                        prefix = f"{Path(filename).stem}: "
+                        text = (attachment_texts.get(url) or "").strip()
+                        if text:
+                            attachment_parts.append(f"{prefix}{text}")
+                        else:
+                            attachment_parts.append(prefix)
+
+                    writer.writerow(
+                        {
+                            "document_id": document_id,
+                            "content_text": content_text,
+                            "attachment_text": "\n".join(attachment_parts),
+                        }
+                    )
+        finally:
+            if attachment_processor is not None:
+                attachment_processor.close()
+
+    async def export_attachments_csv_async(
+        self,
+        output_path: str,
+        n_rows: int | Literal["all"] = "all",
+        download_attachments: bool = True,
+        use_ocr: bool = False,
+        timeout: float = 30.0,
+    ) -> None:
+        """Async export per-attachment extracted text to a CSV file."""
+        from .attachment_processor import AttachmentProcessor
+
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+
+        attachment_processor = AttachmentProcessor(timeout=timeout) if download_attachments else None
+
+        try:
+            with (
+                open(self.csv_path, encoding="utf-8") as f,
+                open(output_file, "w", encoding="utf-8", newline="") as out,
+            ):
+                reader = csv.DictReader(f)
+                writer = csv.DictWriter(out, fieldnames=["url", "extracted_text"])
+                writer.writeheader()
+
+                for i, row in enumerate(reader):
+                    if n_rows != "all" and i >= n_rows:
+                        break
+
+                    attachment_string = row.get(self.ATTACHMENT_COLUMN, "")
+                    attachment_urls = self._parse_attachment_urls(attachment_string)
+
+                    if not attachment_urls:
+                        continue
+
+                    if attachment_processor is not None:
+                        attachment_texts = await attachment_processor.process_attachments_async(
+                            attachment_urls,
+                            skip_errors=True,
+                            use_ocr=use_ocr,
+                        )
+                    else:
+                        attachment_texts = dict.fromkeys(attachment_urls, "")
+
+                    for url in attachment_urls:
+                        writer.writerow(
+                            {
+                                "url": url,
+                                "extracted_text": (attachment_texts.get(url) or "").strip(),
+                            }
+                        )
+        finally:
+            if attachment_processor is not None:
+                attachment_processor.close()
+
+    def export_responses_with_attachments_csv(
+        self,
+        output_path: str,
+        parsed_attachments_path: str,
+        n_rows: int | Literal["all"] = "all",
+    ) -> None:
+        """Export a responses.csv clone with attachment text appended to comments.
+
+        Args:
+            output_path: Path to save the merged responses CSV
+            parsed_attachments_path: Path to parsed_attachments.csv
+            n_rows: Number of rows to export, or "all" for all rows
+        """
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+
+        parsed_path = Path(parsed_attachments_path)
+        if not parsed_path.exists():
+            raise FileNotFoundError(f"Parsed attachments CSV not found: {parsed_attachments_path}")
+
+        with open(parsed_path, encoding="utf-8") as parsed_file:
+            parsed_reader = csv.DictReader(parsed_file)
+            parsed_rows = list(parsed_reader)
+
+        attachment_by_id = {
+            row.get("document_id", "").strip(): row.get("attachment_text", "")
+            for row in parsed_rows
+            if row.get("document_id")
+        }
+
+        with (
+            open(self.csv_path, encoding="utf-8") as source_file,
+            open(output_file, "w", encoding="utf-8", newline="") as out,
+        ):
+            reader = csv.DictReader(source_file)
+            fieldnames = reader.fieldnames or []
+            writer = csv.DictWriter(out, fieldnames=fieldnames)
+            writer.writeheader()
+
+            for i, row in enumerate(reader):
+                if n_rows != "all" and i >= n_rows:
+                    break
+
+                document_id = row.get(self.ID_COLUMN, "").strip()
+                attachment_text = attachment_by_id.get(document_id, "")
+                if not attachment_text and i < len(parsed_rows):
+                    attachment_text = parsed_rows[i].get("attachment_text", "")
+
+                attachment_text = attachment_text.strip()
+                if attachment_text:
+                    existing = row.get(self.NARRATIVE_COLUMN, "").strip()
+                    if existing:
+                        row[self.NARRATIVE_COLUMN] = f"{existing}\n\n{attachment_text}"
+                    else:
+                        row[self.NARRATIVE_COLUMN] = attachment_text
+
+                writer.writerow(row)
 
     def _extract_metadata(self, row: dict) -> dict:
         """Extract metadata fields from a row.

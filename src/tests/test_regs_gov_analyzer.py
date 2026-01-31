@@ -1,22 +1,23 @@
 """Tests for regs.gov analyzer helpers."""
 
 import sys
+from collections.abc import Callable
 from importlib import import_module
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
 complaint_analyzer = import_module("regs_dot_gov_exploration.complaint_analyzer")
-build_response_schema: Callable[[dict[str, Any]], dict[str, Any]] = getattr(complaint_analyzer, "build_response_schema")
-filter_records_with_narratives: Callable[[list[Any], list[str]], tuple[list[Any], list[str], int]] = getattr(
-    complaint_analyzer, "filter_records_with_narratives"
-)
-flatten_analysis_row: Callable[[dict[str, Any], list[str], list[str]], dict[str, Any]] = getattr(
-    complaint_analyzer, "flatten_analysis_row"
-)
-get_latest_schema_path: Callable[[Any], Any] = getattr(complaint_analyzer, "get_latest_schema_path")
-get_use_head: Callable[[], bool] = getattr(complaint_analyzer, "get_use_head")
+build_response_schema: Callable[[dict[str, Any]], dict[str, Any]] = complaint_analyzer.build_response_schema
+filter_records_with_narratives: Callable[
+    [list[Any], list[str]], tuple[list[Any], list[str], int]
+] = complaint_analyzer.filter_records_with_narratives
+flatten_analysis_row: Callable[
+    [dict[str, Any], list[str], list[str]], dict[str, Any]
+] = complaint_analyzer.flatten_analysis_row
+get_latest_schema_path: Callable[[Any], Any] = complaint_analyzer.get_latest_schema_path
+get_use_head: Callable[[], bool] = complaint_analyzer.get_use_head
 
 
 def test_get_use_head_defaults_true(monkeypatch):

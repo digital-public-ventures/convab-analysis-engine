@@ -1,0 +1,162 @@
+[
+  {
+    "id": "CFPB-2023-0038-0002",
+    "categorical_fields": {
+      "stakeholder_type": "Individual Patient",
+      "vulnerable_population_tags": ["Senior"],
+      "financial_products_mentioned": ["Care Credit", "Mastercard"],
+      "reported_harms": [
+        "Bait and switch marketing",
+        "Product uselessness",
+        "Limited network of providers",
+        "Sudden account cancellation"
+      ],
+      "reported_benefits": [],
+      "regulatory_recommendations": [],
+      "medical_service_context": ["Dental", "Dentures"]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.8,
+      "urgency_of_concern": 3,
+      "seriousness_of_life_impact": 2,
+      "equity_disparity_prominence": 1
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0005",
+    "categorical_fields": {
+      "stakeholder_type": "Healthcare Provider",
+      "vulnerable_population_tags": [
+        "Pregnant women",
+        "Low-income",
+        "Rural",
+        "Tribal communities",
+        "Uninsured"
+      ],
+      "financial_products_mentioned": ["Care Credit", "United Credit", "Installment loans"],
+      "reported_harms": [
+        "High merchant fees (5%)",
+        "Lack of banking float for small business",
+        "Aggressive hospital debt collection/litigation",
+        "Debtor's prison concerns"
+      ],
+      "reported_benefits": [
+        "Immediate payment for providers",
+        "Patient access to high-deductible services"
+      ],
+      "regulatory_recommendations": [
+        "Implement ISO20022 for real-time payments",
+        "Government-sponsored personal health bank accounts for maternity ($10k)",
+        "4 Corner Pilots for Faster Payments",
+        "Fix ACA plan design/high deductibles",
+        "Transparency in hospital facility vs professional charges"
+      ],
+      "medical_service_context": [
+        "Maternity",
+        "Birth Center",
+        "Pediatrics",
+        "Dental",
+        "Orthodontics"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.2,
+      "urgency_of_concern": 5,
+      "seriousness_of_life_impact": 4,
+      "equity_disparity_prominence": 5
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0010",
+    "categorical_fields": {
+      "stakeholder_type": "Individual Patient",
+      "vulnerable_population_tags": ["Chronic conditions", "Financially illiterate", "Low-income"],
+      "financial_products_mentioned": ["Care Credit", "Visa"],
+      "reported_harms": [
+        "Deferred interest/skyrocketing rates",
+        "Bankruptcy",
+        "Credit spiral",
+        "Credit rating decline"
+      ],
+      "reported_benefits": [
+        "Point-of-care payment resolution",
+        "Ability to receive care without savings"
+      ],
+      "regulatory_recommendations": [
+        "Training for provider staff before offering products",
+        "Mandatory screening for financial aid before credit offers",
+        "Transparent explanation of costs under diagnostic codes"
+      ],
+      "medical_service_context": [
+        "Dental",
+        "Physical Therapy",
+        "Occupational Therapy",
+        "Medical Devices"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": -0.4,
+      "urgency_of_concern": 4,
+      "seriousness_of_life_impact": 5,
+      "equity_disparity_prominence": 2
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0011",
+    "categorical_fields": {
+      "stakeholder_type": "Government Employee/Individual",
+      "vulnerable_population_tags": [
+        "Mental health patients",
+        "Substance use disorder patients",
+        "Rural",
+        "Racial/Ethnic minorities"
+      ],
+      "financial_products_mentioned": ["Specialty credit cards", "Installment financing"],
+      "reported_harms": [
+        "Ethical crises in rehab industry",
+        "Medical debt accumulation",
+        "Barriers to treatment access"
+      ],
+      "reported_benefits": ["Defraying out-of-pocket costs when insurance is not accepted"],
+      "regulatory_recommendations": [
+        "Further study on behavioral health specialty credit use",
+        "Promote patient eligibility for federal/state tax credits",
+        "Study disparities in residential treatment financing"
+      ],
+      "medical_service_context": [
+        "Mental health",
+        "Substance use disorders",
+        "Addiction treatment",
+        "Ketamine clinics"
+      ]
+    },
+    "scalar_fields": {
+      "sentiment_score": 0.1,
+      "urgency_of_concern": 3,
+      "seriousness_of_life_impact": 4,
+      "equity_disparity_prominence": 4
+    }
+  },
+  {
+    "id": "CFPB-2023-0038-0012",
+    "categorical_fields": {
+      "stakeholder_type": "Advocacy Group",
+      "vulnerable_population_tags": ["Uninsured"],
+      "financial_products_mentioned": ["Care Credit"],
+      "reported_harms": [],
+      "reported_benefits": [
+        "Increased access to care",
+        "Maintains practice profitability",
+        "Option for patients without cash"
+      ],
+      "regulatory_recommendations": ["Maintain availability of practical credit options"],
+      "medical_service_context": ["Dental"]
+    },
+    "scalar_fields": {
+      "sentiment_score": 0.9,
+      "urgency_of_concern": 2,
+      "seriousness_of_life_impact": 3,
+      "equity_disparity_prominence": 1
+    }
+  }
+]

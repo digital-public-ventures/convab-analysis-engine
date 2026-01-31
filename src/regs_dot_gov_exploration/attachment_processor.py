@@ -4,12 +4,16 @@ This module handles downloading and extracting text from document attachments,
 supporting both HTTP URLs and local file paths.
 """
 
+import asyncio
 import io
+import os
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 from urllib.parse import urlparse
 
 import httpx
+
+os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
 
 if TYPE_CHECKING:
     import fitz
@@ -117,13 +121,51 @@ def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
     if pixmap.n == 4:
         img = img[:, :, :3]
 
-    results = ocr_engine.ocr(img, cls=True)
-    text_parts: list[str] = []
-    for page_result in results:
-        for line in page_result:
-            text_parts.append(line[1][0])
+    return _run_ocr(ocr_engine, img)
 
-    return "\n".join(text_parts)
+
+def _extract_text_from_ocr_results(results: object) -> str:
+    text_parts: list[str] = []
+    if hasattr(results, "rec_texts"):
+        text_parts.extend([str(text) for text in getattr(results, "rec_texts", [])])
+        return "\n".join(part for part in text_parts if part)
+    if hasattr(results, "get"):
+        rec_texts = results.get("rec_texts")
+        if isinstance(rec_texts, list):
+            text_parts.extend([str(text) for text in rec_texts])
+            return "\n".join(part for part in text_parts if part)
+    if isinstance(results, list):
+        for page_result in results:
+            if hasattr(page_result, "rec_texts"):
+                text_parts.extend([str(text) for text in getattr(page_result, "rec_texts", [])])
+                continue
+            if hasattr(page_result, "get"):
+                rec_texts = page_result.get("rec_texts")
+                if isinstance(rec_texts, list):
+                    text_parts.extend([str(text) for text in rec_texts])
+                    continue
+            if isinstance(page_result, dict):
+                if "rec_text" in page_result:
+                    text_parts.append(str(page_result.get("rec_text", "")))
+                continue
+            if isinstance(page_result, list):
+                for line in page_result:
+                    if isinstance(line, (list, tuple)) and len(line) > 1:
+                        text_parts.append(str(line[1][0]))
+
+    return "\n".join(part for part in text_parts if part)
+
+
+def _run_ocr(ocr_engine: "PaddleOCR", image: "object") -> str:
+    try:
+        results = ocr_engine.ocr(image, cls=True)
+    except TypeError:
+        try:
+            results = ocr_engine.ocr(image)
+        except Exception:
+            results = ocr_engine.predict(image)
+
+    return _extract_text_from_ocr_results(results)
 
 
 class AttachmentProcessor:
@@ -139,6 +181,9 @@ class AttachmentProcessor:
         ".docx": DOCXExtractor,
     }
 
+    IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tif", ".tiff"}
+    MAX_DOWNLOAD_CONCURRENCY = 200
+
     def __init__(self, timeout: float = 30.0):
         """Initialize the attachment processor.
 
@@ -147,7 +192,8 @@ class AttachmentProcessor:
         """
         self.timeout = timeout
         self._extractor_instances: dict[str, DocumentExtractor] = {}
-        self._ocr_engine: "PaddleOCR | None" = None
+        self._ocr_engine: PaddleOCR | None = None
+        self._http_client: httpx.Client | None = None
 
     def _get_ocr_engine(self) -> "PaddleOCR":
         """Get or create a PaddleOCR engine instance."""
@@ -156,7 +202,7 @@ class AttachmentProcessor:
                 from paddleocr import PaddleOCR as PaddleOCRImpl
             except ImportError as err:
                 raise ImportError("paddleocr is required for OCR. Install with: uv add paddleocr") from err
-
+            os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
             self._ocr_engine = PaddleOCRImpl(use_angle_cls=True, lang="en")
 
         return self._ocr_engine
@@ -200,6 +246,27 @@ class AttachmentProcessor:
         extension = Path(path).suffix.lower()
         return extension
 
+    def _extract_image_text(self, content: bytes) -> str:
+        """Extract text from an image using OCR."""
+        try:
+            import numpy as np
+        except ImportError as err:
+            raise ImportError("numpy is required for OCR. Install with: uv add numpy") from err
+
+        try:
+            from PIL import Image
+        except ImportError as err:
+            raise ImportError("pillow is required for image OCR. Install with: uv add pillow") from err
+
+        ocr_engine = self._get_ocr_engine()
+        image = Image.open(io.BytesIO(content)).convert("RGB")
+        img_array = np.array(image)
+
+        return _run_ocr(ocr_engine, img_array)
+
+    async def _extract_image_text_async(self, content: bytes) -> str:
+        return await asyncio.to_thread(self._extract_image_text, content)
+
     def _is_url(self, url_or_path: str) -> bool:
         """Check if the input is a URL.
 
@@ -224,19 +291,34 @@ class AttachmentProcessor:
         Raises:
             httpx.HTTPError: If the request fails
         """
-        # Use headers to mimic a browser request (some gov sites require this)
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
-            "Accept": (
-                "application/pdf," "application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"
-            ),
-        }
+        client = self._get_http_client()
+        response = client.get(url)
+        response.raise_for_status()
+        content: bytes = response.content
+        return content
 
-        with httpx.Client(timeout=self.timeout, follow_redirects=True, headers=headers) as client:
-            response = client.get(url)
-            response.raise_for_status()
-            content: bytes = response.content
-            return content
+    def _get_http_client(self) -> httpx.Client:
+        if self._http_client is None:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                "Accept": (
+                    "application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,*/*"
+                ),
+            }
+            self._http_client = httpx.Client(
+                timeout=self.timeout,
+                follow_redirects=True,
+                headers=headers,
+            )
+        return self._http_client
+
+    def close(self) -> None:
+        if self._http_client is not None:
+            self._http_client.close()
+            self._http_client = None
+
+    def __del__(self) -> None:
+        self.close()
 
     def _read_file(self, path: str) -> bytes:
         """Read content from a local file.
@@ -256,52 +338,45 @@ class AttachmentProcessor:
 
         return file_path.read_bytes()
 
-    def extract_text(self, url_or_path: str, use_ocr: bool = False) -> str:
-        """Extract text from a document at the given URL or path.
-
-        Args:
-            url_or_path: HTTP URL or local file path to a PDF or DOCX
-
-        Returns:
-            Extracted text content
-
-        Raises:
-            ValueError: If file type is not supported
-            httpx.HTTPError: If URL fetch fails
-            FileNotFoundError: If local file doesn't exist
-        """
-        # Detect file type
+    async def extract_text_async(self, url_or_path: str, use_ocr: bool = False) -> str:
+        """Extract text from a document at the given URL or path (async)."""
         extension = self._detect_extension(url_or_path)
+        if extension in self.IMAGE_EXTENSIONS:
+            if self._is_url(url_or_path):
+                print(f"Fetching: {url_or_path}")
+                content = await asyncio.to_thread(self._fetch_url, url_or_path)
+            else:
+                print(f"Reading: {url_or_path}")
+                content = await asyncio.to_thread(self._read_file, url_or_path)
+
+            return await self._extract_image_text_async(content)
+
         extractor = self._get_extractor(extension)
 
-        # Fetch or read content
         if self._is_url(url_or_path):
             print(f"Fetching: {url_or_path}")
-            content = self._fetch_url(url_or_path)
+            content = await asyncio.to_thread(self._fetch_url, url_or_path)
         else:
             print(f"Reading: {url_or_path}")
-            content = self._read_file(url_or_path)
+            content = await asyncio.to_thread(self._read_file, url_or_path)
 
-        # Extract text
-        if use_ocr and extension == ".pdf":
+        if extension == ".pdf" and use_ocr:
+            extracted = await asyncio.to_thread(extractor.extract, content)
+            if extracted and extracted.strip():
+                return extracted
+
             ocr_engine = self._get_ocr_engine()
-            return cast(PDFExtractor, extractor).extract_with_ocr(content, ocr_engine)
+            return await asyncio.to_thread(
+                cast("PDFExtractor", extractor).extract_with_ocr,
+                content,
+                ocr_engine,
+            )
 
-        return extractor.extract(content)
+        return await asyncio.to_thread(extractor.extract, content)
 
-    def extract_text_safe(self, url_or_path: str, use_ocr: bool = False) -> tuple[str | None, str | None]:
-        """Extract text with error handling.
-
-        Args:
-            url_or_path: HTTP URL or local file path
-
-        Returns:
-            Tuple of (extracted_text, error_message).
-            If successful, error_message is None.
-            If failed, extracted_text is None.
-        """
+    async def extract_text_safe_async(self, url_or_path: str, use_ocr: bool = False) -> tuple[str | None, str | None]:
         try:
-            text = self.extract_text(url_or_path, use_ocr=use_ocr)
+            text = await self.extract_text_async(url_or_path, use_ocr=use_ocr)
             return text, None
         except ImportError as e:
             return None, f"Missing dependency: {e}"
@@ -314,30 +389,32 @@ class AttachmentProcessor:
         except Exception as e:
             return None, f"Extraction failed: {e}"
 
-    def process_attachments(
+    async def process_attachments_async(
         self,
         urls: list[str],
         skip_errors: bool = True,
         use_ocr: bool = False,
+        max_concurrency: int | None = None,
     ) -> dict[str, str | None]:
-        """Process multiple attachments and extract text from each.
-
-        Args:
-            urls: List of URLs or file paths
-            skip_errors: If True, continue processing on errors. If False, raise on first error.
-
-        Returns:
-            Dictionary mapping URL/path to extracted text (or None if extraction failed)
-        """
         results: dict[str, str | None] = {}
+        if not urls:
+            return results
 
-        for url in urls:
-            text, error = self.extract_text_safe(url, use_ocr=use_ocr)
+        concurrency = max_concurrency or self.MAX_DOWNLOAD_CONCURRENCY
+        semaphore = asyncio.Semaphore(concurrency)
+
+        async def _process(url: str) -> tuple[str, str | None, str | None]:
+            async with semaphore:
+                text, error = await self.extract_text_safe_async(url, use_ocr=use_ocr)
+                return url, text, error
+
+        tasks = [asyncio.create_task(_process(url)) for url in urls]
+        for task in asyncio.as_completed(tasks):
+            url, text, error = await task
             if error:
                 print(f"Warning: {error}")
                 if not skip_errors:
                     raise RuntimeError(error)
-
             results[url] = text
 
         return results

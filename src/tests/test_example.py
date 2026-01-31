@@ -1,4 +1,5 @@
 """Example tests for cfpb-exploration."""
+
 from pathlib import Path
 
 
@@ -15,7 +16,7 @@ def test_with_fixture(sample_data):
 
 def test_documentation_coverage():
     """Verify key documentation files exist."""
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).parent.parent.parent
 
     required_docs = [
         "README.md",
@@ -40,7 +41,7 @@ def test_documentation_coverage():
 
 def test_source_structure():
     """Verify src/ directory structure exists."""
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).parent.parent.parent
     src_dir = project_root / "src"
 
     # Find package directories in src/
@@ -51,6 +52,4 @@ def test_source_structure():
 
     # Each package should have __init__.py
     for package_dir in package_dirs:
-        assert (
-            package_dir / "__init__.py"
-        ).exists(), f"{package_dir.name}/__init__.py should exist"
+        assert (package_dir / "__init__.py").exists(), f"{package_dir.name}/__init__.py should exist"

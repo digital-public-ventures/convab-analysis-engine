@@ -12,8 +12,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from ..utilities.llm.response_parser import extract_json_from_response
-from ..utilities.schema_generator import SchemaGenerator
+from utilities.llm.response_parser import extract_json_from_response
+from utilities.schema_generator import SchemaGenerator
+
 from .attachment_processor import AttachmentProcessor, combine_narratives
 from .complaint_analyzer import analyze_command
 from .data_processor import DataProcessor
@@ -68,7 +69,10 @@ async def generate_schema_command(args: argparse.Namespace) -> None:
             company=args.company,
         )
 
-        schema = await generator.generate_schema(sample_data)
+        use_case_path = Path(args.use_case_path)
+        use_case = use_case_path.read_text(encoding="utf-8").strip()
+
+        schema = await generator.generate_schema(sample_data, use_case)
 
         # Extract clean JSON from response (handles wrappers and markdown)
         schema = extract_json_from_response(schema)
@@ -82,9 +86,6 @@ async def generate_schema_command(args: argparse.Namespace) -> None:
 
         # Prepare data description
         data_desc = f"CSV with {len(sample_data)} sampled records from regulations.gov"
-
-        # Load use case from file
-        use_case = load_use_case()
 
         # Save schema with metadata
         output_dir = args.output_dir if args.output_dir else "src/regs_dot_gov_exploration/schemas"
@@ -124,28 +125,31 @@ async def extract_attachments_command(args: argparse.Namespace) -> None:
         # Process attachments
         attachment_processor = AttachmentProcessor(timeout=args.timeout)
 
-        for record in records:
-            print(f"\nProcessing: {record.id}")
-            print(f"  Attachments: {len(record.attachment_urls)}")
+        try:
+            for record in records:
+                print(f"\nProcessing: {record.id}")
+                print(f"  Attachments: {len(record.attachment_urls)}")
 
-            # Extract text from attachments
-            attachment_texts = attachment_processor.process_attachments(
-                record.attachment_urls,
-                skip_errors=True,
-                use_ocr=args.use_ocr,
-            )
+                # Extract text from attachments
+                attachment_texts = await attachment_processor.process_attachments_async(
+                    record.attachment_urls,
+                    skip_errors=True,
+                    use_ocr=args.use_ocr,
+                )
 
-            # Combine with inline comment
-            combined = combine_narratives(record.narrative, attachment_texts)
+                # Combine with inline comment
+                combined = combine_narratives(record.narrative, attachment_texts)
 
-            # Display summary
-            for url, text in attachment_texts.items():
-                status = "extracted" if text else "failed"
-                char_count = len(text) if text else 0
-                print(f"    - {Path(url).name}: {status} ({char_count} chars)")
+                # Display summary
+                for url, text in attachment_texts.items():
+                    status = "extracted" if text else "failed"
+                    char_count = len(text) if text else 0
+                    print(f"    - {Path(url).name}: {status} ({char_count} chars)")
 
-            if args.verbose and combined:
-                print(f"\n  Combined narrative preview:\n  {combined[:500]}...")
+                if args.verbose and combined:
+                    print(f"\n  Combined narrative preview:\n  {combined[:500]}...")
+        finally:
+            attachment_processor.close()
 
     except FileNotFoundError as e:
         print(f"Error: {e}")
@@ -198,6 +202,59 @@ async def list_records_command(args: argparse.Namespace) -> None:
         raise
 
 
+async def merge_parsed_attachments_command(args: argparse.Namespace) -> None:
+    """Handle the merge-parsed-attachments subcommand.
+
+    Args:
+        args: Parsed command line arguments
+    """
+    try:
+        processor = DataProcessor(args.csv_path if args.csv_path else None)
+        await processor.export_parsed_attachments_csv_async(
+            output_path=args.output_path,
+            n_rows=args.rows,
+            download_attachments=not args.no_download,
+            use_ocr=args.use_ocr,
+            timeout=args.attachment_timeout,
+        )
+        print(f"Parsed attachments saved to {args.output_path}")
+
+        processor.export_responses_with_attachments_csv(
+            output_path=args.responses_output_path,
+            parsed_attachments_path=args.output_path,
+            n_rows=args.rows,
+        )
+        print(f"Responses with attachments saved to {args.responses_output_path}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+        raise
+
+
+async def export_attachments_csv_command(args: argparse.Namespace) -> None:
+    """Handle the export-attachments subcommand.
+
+    Args:
+        args: Parsed command line arguments
+    """
+    try:
+        processor = DataProcessor(args.csv_path if args.csv_path else None)
+        await processor.export_attachments_csv_async(
+            output_path=args.output_path,
+            n_rows=args.rows,
+            download_attachments=not args.no_download,
+            use_ocr=args.use_ocr,
+            timeout=args.attachment_timeout,
+        )
+        print(f"Attachments saved to {args.output_path}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+        raise
+
+
 def main() -> None:
     """Main entry point for the regulations.gov exploration CLI."""
     parser = argparse.ArgumentParser(
@@ -208,8 +265,9 @@ Examples:
   # List records (uses USE_HEAD env var for data source)
   python -m regs_dot_gov_exploration list-records --rows 10
 
-  # Generate analysis schema
-  python -m regs_dot_gov_exploration generate-schema --rows 5
+    # Generate analysis schema
+    python -m regs_dot_gov_exploration generate-schema --rows 5 \
+        --use-case-path src/regs_dot_gov_exploration/prompts/use_case.txt
 
   # Extract text from attachments
   python -m regs_dot_gov_exploration extract-attachments --rows 5 --verbose
@@ -219,6 +277,12 @@ Examples:
 
     # Export parsed head responses
     python -m regs_dot_gov_exploration export-parsed --rows 5
+
+    # Merge parsed attachments into responses.csv
+    python -m regs_dot_gov_exploration merge-parsed-attachments --rows 5 --use-ocr
+
+    # Export attachment texts
+    python -m regs_dot_gov_exploration export-attachments --rows 5 --use-ocr
         """,
     )
 
@@ -271,6 +335,12 @@ Examples:
         default="regs_gov",
         help="Company/project identifier for filenames (default: regs_gov)",
     )
+    schema_parser.add_argument(
+        "--use-case-path",
+        type=str,
+        required=True,
+        help="Path to use_case.txt for schema generation",
+    )
 
     # Subcommand: extract-attachments
     extract_parser = subparsers.add_parser("extract-attachments", help="Extract text from document attachments")
@@ -311,6 +381,70 @@ Examples:
         help="Path to save parsed responses CSV",
     )
 
+    # Subcommand: merge-parsed-attachments
+    parsed_attachments_parser = subparsers.add_parser(
+        "merge-parsed-attachments",
+        help="Export parsed attachments and merge into responses CSV",
+    )
+    add_common_args(parsed_attachments_parser)
+    parsed_attachments_parser.add_argument(
+        "--output-path",
+        type=str,
+        default="src/regs_dot_gov_exploration/output/parsed_attachments.csv",
+        help="Path to save parsed attachments CSV",
+    )
+    parsed_attachments_parser.add_argument(
+        "--responses-output-path",
+        type=str,
+        default="src/regs_dot_gov_exploration/output/responses_with_attachments.csv",
+        help="Path to save responses with attachment text",
+    )
+    parsed_attachments_parser.add_argument(
+        "--attachment-timeout",
+        type=float,
+        default=30.0,
+        help="Timeout for attachment downloads (default: 30.0)",
+    )
+    parsed_attachments_parser.add_argument(
+        "--use-ocr",
+        action="store_true",
+        help="Run OCR on PDF pages when text extraction is empty",
+    )
+    parsed_attachments_parser.add_argument(
+        "--no-download",
+        action="store_true",
+        help="Skip downloading attachments and leave attachment text empty",
+    )
+
+    # Subcommand: export-attachments
+    attachments_parser = subparsers.add_parser(
+        "export-attachments",
+        help="Export attachment text to a CSV",
+    )
+    add_common_args(attachments_parser)
+    attachments_parser.add_argument(
+        "--output-path",
+        type=str,
+        default="src/regs_dot_gov_exploration/output/attachments.csv",
+        help="Path to save attachments CSV",
+    )
+    attachments_parser.add_argument(
+        "--attachment-timeout",
+        type=float,
+        default=30.0,
+        help="Timeout for attachment downloads (default: 30.0)",
+    )
+    attachments_parser.add_argument(
+        "--use-ocr",
+        action="store_true",
+        help="Run OCR on PDF pages when text extraction is empty",
+    )
+    attachments_parser.add_argument(
+        "--no-download",
+        action="store_true",
+        help="Skip downloading attachments and leave attachment text empty",
+    )
+
     # Subcommand: analyze
     analyze_parser = subparsers.add_parser("analyze", help="Analyze comments and save JSON/CSV outputs")
     add_common_args(analyze_parser)
@@ -347,22 +481,6 @@ Examples:
         help="Path to analysis schema JSON (default: latest in schemas index)",
     )
     analyze_parser.add_argument(
-        "--include-attachments",
-        action="store_true",
-        help="Include attachment text in narratives",
-    )
-    analyze_parser.add_argument(
-        "--attachment-timeout",
-        type=float,
-        default=30.0,
-        help="Timeout for attachment downloads (default: 30.0)",
-    )
-    analyze_parser.add_argument(
-        "--use-ocr",
-        action="store_true",
-        help="Run OCR on PDF pages when text extraction is empty",
-    )
-    analyze_parser.add_argument(
         "--output-dir",
         type=str,
         default="src/regs_dot_gov_exploration/output",
@@ -391,6 +509,16 @@ Examples:
         processor = DataProcessor(None)
         processor.export_parsed_csv(output_path=args.output_path, n_rows=args.rows)
         print(f"Parsed responses saved to {args.output_path}")
+    elif args.command == "merge-parsed-attachments":
+        if not use_head and args.csv_path is None:
+            print("USE_HEAD must be true to merge parsed attachments without --csv-path.")
+            return
+        asyncio.run(merge_parsed_attachments_command(args))
+    elif args.command == "export-attachments":
+        if not use_head and args.csv_path is None:
+            print("USE_HEAD must be true to export attachments without --csv-path.")
+            return
+        asyncio.run(export_attachments_csv_command(args))
     else:
         parser.print_help()
 

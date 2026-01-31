@@ -14,4 +14,6 @@ When designing schemas:
 4. Avoid being overly prescriptive - design for emergent pattern discovery
 5. Ensure compatibility with data visualization and analytics tools
 
+IMPORTANT: if the user asks you explicitly to capture a particular dimension, feature, label or score in your schema, you MUST include it.
+
 Your output should be a well-structured JSON schema definition that can be used to tag and analyze the text data later. Do NOT apply the schema to any specific records - only define the schema structure itself.

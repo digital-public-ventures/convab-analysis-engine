@@ -1,0 +1,139 @@
+{
+  "_metadata": {
+    "generated_at": "2026-01-31T09:30:17.217269",
+    "model_id": "gemini-3-flash-preview",
+    "thinking_level": "MINIMAL",
+    "rows_sampled": 4,
+    "use_case": "I need help designing a schema for analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.\n\nThe comments come from diverse stakeholders:\n- Individual patients sharing personal experiences with medical cre"
+  },
+  "schema_name": "Medical Payment Product RFI Analysis Schema",
+  "version": "1.0.0",
+  "description": "A comprehensive schema for analyzing public comments on medical credit cards and loans, focusing on stakeholder perspectives, financial harms/benefits, and regulatory recommendations.",
+  "categorical_fields": [
+    {
+      "field_name": "stakeholder_type",
+      "description": "The primary identity or role of the commenter.",
+      "suggested_values": [
+        "Individual Patient",
+        "Healthcare Provider",
+        "Financial Services Entity",
+        "Consumer Advocacy Group",
+        "Healthcare Industry Association",
+        "Legal/Policy Expert",
+        "Government/Regulatory Body"
+      ],
+      "allow_multiple": false,
+      "hint": "Identify the primary voice; if a provider speaks on behalf of patients, still tag as Healthcare Provider."
+    },
+    {
+      "field_name": "vulnerable_population_identifiers",
+      "description": "Identification of specific demographic groups mentioned or represented.",
+      "suggested_values": [
+        "Seniors/Elderly",
+        "Veterans",
+        "Students",
+        "Single Parents",
+        "Low-income households",
+        "Rural Residents",
+        "Disabled Individuals",
+        "Non-native English Speakers"
+      ],
+      "allow_multiple": true,
+      "hint": "Useful for identifying health equity disparities and targeted impacts."
+    },
+    {
+      "field_name": "product_and_entity_mentions",
+      "description": "Specific brands, companies, or financial products mentioned.",
+      "suggested_values": [
+        "CareCredit",
+        "Synchrony",
+        "Wells Fargo Health Advantage",
+        "Comenity",
+        "AccessOne",
+        "Salinas",
+        "In-house hospital financing"
+      ],
+      "allow_multiple": true,
+      "hint": "Capture both the financial institution and the specific product name if available."
+    },
+    {
+      "field_name": "reported_impacts_and_outcomes",
+      "description": "Specific harms or benefits resulting from product use.",
+      "suggested_values": [
+        "Deferred Interest Trap",
+        "Credit Score Damage",
+        "Collection Actions",
+        "Access to Care (Improved)",
+        "Bankruptcy",
+        "Medical Debt Accumulation",
+        "Forced Treatment Delays",
+        "Financial Peace of Mind"
+      ],
+      "allow_multiple": true,
+      "hint": "Critical for answering research questions regarding common harms vs. benefits."
+    },
+    {
+      "field_name": "regulatory_recommendations",
+      "description": "Type of policy action suggested by the commenter.",
+      "suggested_values": [
+        "Ban Deferred Interest",
+        "Mandatory Financial Assistance Screening",
+        "Enhanced Disclosure Requirements",
+        "Interest Rate Caps",
+        "Ban Product Promotion in Clinical Settings",
+        "Stronger Credit Reporting Oversight",
+        "No Action Needed"
+      ],
+      "allow_multiple": true,
+      "hint": "Capture the specific 'ask' of the federal agencies."
+    }
+  ],
+  "scalar_fields": [
+    {
+      "field_name": "sentiment_score",
+      "description": "Overall sentiment toward medical payment products.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = Strongly Negative/Hostile; 5 = Neutral/Mixed; 10 = Strongly Positive/Supportive",
+      "hint": "Use 5 for purely informational or procedural submissions."
+    },
+    {
+      "field_name": "urgency_of_concern",
+      "description": "The degree of immediate action requested or the desperation in the tone.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No urgency/Informational; 10 = Crisis level/Immediate intervention required",
+      "hint": "Look for words like 'urgent', 'immediately', 'crisis', or 'devastating'."
+    },
+    {
+      "field_name": "seriousness_of_life_impact",
+      "description": "The severity of the consequences described (financial or physical).",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No impact; 5 = Moderate financial strain; 10 = Catastrophic (Loss of home, denial of life-saving care)",
+      "hint": "High scores reflect downstream impacts like homelessness or severe health decline."
+    },
+    {
+      "field_name": "financial_assistance_relevance",
+      "description": "Extent to which the comment discusses the availability or lack of hospital financial assistance/charity care.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = Not mentioned; 10 = Primary focus (e.g., product used because charity care was hidden)",
+      "hint": "Helps determine the relationship between payment products and non-profit hospital obligations."
+    }
+  ],
+  "key_quotes_fields": [
+    {
+      "field_name": "narrative_highlight",
+      "description": "The most representative or emotionally-moving snippet from the comment.",
+      "max_quotes": 2,
+      "hint": "Focus on 'I' statements for individuals or 'We recommend' statements for organizations."
+    },
+    {
+      "field_name": "policy_smoking_gun",
+      "description": "A specific quote that clearly outlines a systemic issue or a proposed solution.",
+      "max_quotes": 1,
+      "hint": "Look for quotes that summarize the commenter's core argument or evidence."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Makefile for cfpb-exploration
 # Cross-platform commands for common development tasks
 
-.PHONY: help setup install clean test lint format typecheck build run deploy doctor
+.PHONY: help setup install clean test test-all test-unit lint format typecheck build run deploy doctor
 
 # Default target: show help
 help:
@@ -10,7 +10,9 @@ help:
 	@echo "  make setup       - Initial project setup (install dependencies)"
 	@echo "  make install     - Install/update dependencies"
 	@echo "  make clean       - Remove build artifacts and caches"
-	@echo "  make test        - Run test suite"
+	@echo "  make test        - Run fast tests (excludes slow integration tests)"
+	@echo "  make test-all    - Run all tests (including slow integration tests)"
+	@echo "  make test-unit   - Run unit tests only"
 	@echo "  make lint        - Run linters"
 	@echo "  make format      - Auto-format code"
 	@echo "  make typecheck   - Run type checker"
@@ -54,16 +56,20 @@ clean:
 	# go clean
 	@echo "✓ Cleaned"
 
-# Run tests
+# Run fast tests (excludes slow integration tests)
 test:
-	@echo "🧪 Running tests..."
-	# Python example:
-	# pytest tests/ -v
-	# Node.js example:
-	# npm test
-	# Go example:
-	# go test ./...
-	@echo "✓ Tests passed"
+	@echo "🧪 Running fast tests..."
+	uv run pytest -m "not slow"
+
+# Run all tests including slow integration tests
+test-all:
+	@echo "🧪 Running all tests (including slow)..."
+	uv run pytest
+
+# Run unit tests only
+test-unit:
+	@echo "🧪 Running unit tests..."
+	uv run pytest -m "unit"
 
 # Run linters
 lint:
@@ -157,5 +163,5 @@ pre-commit: format lint typecheck test
 	@echo "✓ Pre-commit checks passed - ready to commit!"
 
 # CI/CD target - run all checks
-ci: lint typecheck test
+ci: lint typecheck test-all
 	@echo "✓ CI checks passed"

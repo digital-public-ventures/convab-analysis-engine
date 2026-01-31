@@ -186,6 +186,53 @@ class TestDataProcessor:
         assert "id" in content
         assert "metadata_json" in content
 
+    def test_save_json(self, sample_csv, tmp_path):
+        """Test saving records to JSON file."""
+        output_path = tmp_path / "output.json"
+        processor = DataProcessor(csv_path=str(sample_csv))
+        records = processor.load_records(n_rows=10)
+        processor.save_json(records, str(output_path))
+
+        assert output_path.exists()
+        import json
+
+        with open(output_path, encoding="utf-8") as f:
+            data = json.load(f)
+        assert len(data) == 2
+        assert data[0]["id"] == "TEST-001"
+
+    def test_get_records_with_attachments(self, sample_csv):
+        """Test filtering records that have attachments."""
+        processor = DataProcessor(csv_path=str(sample_csv))
+        records = processor.get_records_with_attachments(n_rows=10)
+
+        assert len(records) == 1
+        assert records[0].id == "TEST-001"
+        assert len(records[0].attachment_urls) == 2
+
+    def test_get_narrative_only_records(self, sample_csv):
+        """Test filtering records with narrative but no attachments."""
+        processor = DataProcessor(csv_path=str(sample_csv))
+        records = processor.get_narrative_only_records(n_rows=10)
+
+        assert len(records) == 1
+        assert records[0].id == "TEST-002"
+        assert records[0].narrative == "Another test comment with no attachments."
+        assert len(records[0].attachment_urls) == 0
+
+    def test_generate_id_format(self, sample_csv):
+        """Test that generated IDs have expected format."""
+        processor = DataProcessor(csv_path=str(sample_csv))
+        generated_id = processor._generate_id()
+
+        assert generated_id.startswith("generated-")
+        assert len(generated_id) == len("generated-") + 12
+
+    def test_file_not_found_raises_error(self, tmp_path):
+        """Test that missing CSV file raises FileNotFoundError."""
+        with pytest.raises(FileNotFoundError):
+            DataProcessor(csv_path=str(tmp_path / "nonexistent.csv"))
+
 
 class TestDataProcessorWithSampleData:
     """Tests using the actual sample data from the module."""
@@ -221,3 +268,149 @@ class TestDataProcessorWithSampleData:
         for record in records:
             for url in record.attachment_urls:
                 assert url.startswith("https://downloads.regulations.gov/")
+
+
+@pytest.mark.unit
+class TestParseAttachmentUrlsEdgeCases:
+    """Edge case tests for the parse_attachment_urls utility."""
+
+    def test_single_url(self):
+        """Test parsing a single URL."""
+        result = parse_attachment_urls("https://example.com/doc.pdf")
+        assert result == ["https://example.com/doc.pdf"]
+
+    def test_empty_string(self):
+        """Test parsing an empty string."""
+        result = parse_attachment_urls("")
+        assert result == []
+
+    def test_whitespace_only(self):
+        """Test parsing whitespace-only string."""
+        result = parse_attachment_urls("   ")
+        assert result == []
+
+    def test_multiple_commas_no_content(self):
+        """Test parsing string with only commas."""
+        result = parse_attachment_urls(",,,")
+        assert result == []
+
+    def test_urls_with_leading_trailing_whitespace(self):
+        """Test that whitespace is trimmed from URLs."""
+        result = parse_attachment_urls("  a.pdf  ,  b.pdf  ")
+        assert result == ["a.pdf", "b.pdf"]
+
+    def test_preserves_url_order(self):
+        """Test that URL order is preserved."""
+        result = parse_attachment_urls("c.pdf,a.pdf,b.pdf")
+        assert result == ["c.pdf", "a.pdf", "b.pdf"]
+
+    def test_handles_tabs_and_newlines(self):
+        """Test handling of various whitespace characters."""
+        result = parse_attachment_urls("a.pdf,\tb.pdf,\nc.pdf")
+        assert result == ["a.pdf", "b.pdf", "c.pdf"]
+
+
+@pytest.mark.unit
+class TestAsyncExportMethodsMocked:
+    """Mock-based tests for async export methods (fast, no real I/O)."""
+
+    @pytest.fixture
+    def sample_csv_with_attachments(self, tmp_path):
+        """Create a minimal CSV with attachment URLs for testing."""
+        csv_path = tmp_path / "test.csv"
+        with open(csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=["Document ID", "Document Type", "Comment", "Attachment Files"],
+            )
+            writer.writeheader()
+            writer.writerow(
+                {
+                    "Document ID": "TEST-001",
+                    "Document Type": "Public Submission",
+                    "Comment": "Test comment",
+                    "Attachment Files": "https://example.com/doc.pdf",
+                }
+            )
+        return csv_path
+
+    @pytest.mark.asyncio
+    async def test_export_parsed_attachments_csv_async_without_download(
+        self,
+        sample_csv_with_attachments,
+        tmp_path,
+    ):
+        """Test async export with download_attachments=False (no network calls)."""
+        output_path = tmp_path / "output.csv"
+        processor = DataProcessor(csv_path=str(sample_csv_with_attachments))
+
+        await processor.export_parsed_attachments_csv_async(
+            output_path=str(output_path),
+            n_rows=1,
+            download_attachments=False,
+        )
+
+        assert output_path.exists()
+        with open(output_path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        assert len(rows) == 1
+        assert rows[0]["document_id"] == "TEST-001"
+
+    @pytest.mark.asyncio
+    async def test_export_attachments_csv_async_without_download(
+        self,
+        sample_csv_with_attachments,
+        tmp_path,
+    ):
+        """Test per-attachment export with download_attachments=False."""
+        output_path = tmp_path / "attachments.csv"
+        processor = DataProcessor(csv_path=str(sample_csv_with_attachments))
+
+        await processor.export_attachments_csv_async(
+            output_path=str(output_path),
+            n_rows=1,
+            download_attachments=False,
+        )
+
+        assert output_path.exists()
+        with open(output_path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        assert len(rows) == 1
+        assert rows[0]["url"] == "https://example.com/doc.pdf"
+        assert rows[0]["extracted_text"] == ""
+
+    def test_export_responses_with_attachments_csv(self, sample_csv_with_attachments, tmp_path):
+        """Test merging attachment text into responses."""
+        # First create a parsed attachments file
+        parsed_path = tmp_path / "parsed.csv"
+        with open(parsed_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=["document_id", "content_text", "attachment_text"],
+            )
+            writer.writeheader()
+            writer.writerow(
+                {
+                    "document_id": "TEST-001",
+                    "content_text": "Test comment",
+                    "attachment_text": "doc: Extracted PDF content",
+                }
+            )
+
+        output_path = tmp_path / "merged.csv"
+        processor = DataProcessor(csv_path=str(sample_csv_with_attachments))
+        processor.export_responses_with_attachments_csv(
+            output_path=str(output_path),
+            parsed_attachments_path=str(parsed_path),
+            n_rows=1,
+        )
+
+        assert output_path.exists()
+        with open(output_path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        assert len(rows) == 1
+        assert "Test comment" in rows[0]["Comment"]
+        assert "Extracted PDF content" in rows[0]["Comment"]

@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from src.regs_dot_gov_exploration.attachment_processor import (
+from regs_dot_gov_exploration.attachment_processor import (
     AttachmentProcessor,
     DOCXExtractor,
     PDFExtractor,
@@ -147,17 +147,19 @@ class TestAttachmentProcessor:
         with pytest.raises(FileNotFoundError):
             processor._read_file("/nonexistent/path/file.pdf")
 
-    def test_extract_text_safe_returns_error_for_unsupported_type(self):
+    @pytest.mark.asyncio
+    async def test_extract_text_safe_returns_error_for_unsupported_type(self):
         """Test that unsupported file types return error message."""
         processor = AttachmentProcessor()
 
-        text, error = processor.extract_text_safe("document.txt")
+        text, error = await processor.extract_text_safe_async("document.txt")
         assert text is None
         assert error is not None
         assert "Unsupported" in error
 
     @patch.object(AttachmentProcessor, "_fetch_url")
-    def test_extract_text_from_url(self, mock_fetch, tmp_path):
+    @pytest.mark.asyncio
+    async def test_extract_text_from_url(self, mock_fetch, tmp_path):
         """Test extracting text from a URL."""
         import fitz
 
@@ -170,13 +172,14 @@ class TestAttachmentProcessor:
         mock_fetch.return_value = pdf_bytes
 
         processor = AttachmentProcessor()
-        text, error = processor.extract_text_safe("https://example.com/doc.pdf")
+        text, error = await processor.extract_text_safe_async("https://example.com/doc.pdf")
 
         assert error is None
         assert "URL content test" in text
         mock_fetch.assert_called_once_with("https://example.com/doc.pdf")
 
-    def test_extract_text_from_local_file(self, tmp_path):
+    @pytest.mark.asyncio
+    async def test_extract_text_from_local_file(self, tmp_path):
         """Test extracting text from a local PDF file."""
         import fitz
 
@@ -188,12 +191,13 @@ class TestAttachmentProcessor:
         doc.close()
 
         processor = AttachmentProcessor()
-        text, error = processor.extract_text_safe(str(pdf_path))
+        text, error = await processor.extract_text_safe_async(str(pdf_path))
 
         assert error is None
         assert "Local file content" in text
 
-    def test_process_attachments(self, tmp_path):
+    @pytest.mark.asyncio
+    async def test_process_attachments(self, tmp_path):
         """Test processing multiple attachments."""
         import fitz
 
@@ -209,7 +213,7 @@ class TestAttachmentProcessor:
             doc.close()
 
         processor = AttachmentProcessor()
-        results = processor.process_attachments([str(pdf1), str(pdf2)])
+        results = await processor.process_attachments_async([str(pdf1), str(pdf2)])
 
         assert len(results) == 2
         assert "Document 1 content" in results[str(pdf1)]

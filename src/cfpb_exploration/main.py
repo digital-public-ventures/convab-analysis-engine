@@ -5,8 +5,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from ..utilities.llm.response_parser import extract_json_from_response
-from ..utilities.schema_generator import SchemaGenerator
+from utilities.llm.response_parser import extract_json_from_response
+from utilities.schema_generator import SchemaGenerator
+
 from .data_processor import DataProcessor
 
 load_dotenv()
@@ -39,11 +40,12 @@ async def generate_schema_command(args: argparse.Namespace) -> None:
             return
 
         # Generate schema
-        generator = SchemaGenerator(
-            model_id=args.model, thinking_level=args.thinking_level, company=args.company
-        )
+        generator = SchemaGenerator(model_id=args.model, thinking_level=args.thinking_level, company=args.company)
 
-        schema = await generator.generate_schema(sample_data)
+        use_case_path = Path(args.use_case_path)
+        use_case = use_case_path.read_text(encoding="utf-8").strip()
+
+        schema = await generator.generate_schema(sample_data, use_case)
 
         # Extract clean JSON from response (handles wrappers and markdown)
         schema = extract_json_from_response(schema)
@@ -57,9 +59,6 @@ async def generate_schema_command(args: argparse.Namespace) -> None:
 
         # Prepare data description
         data_desc = f"CSV with {len(sample_data)} sampled records"
-
-        # Load use case from file
-        use_case = load_use_case()
 
         # Save schema with metadata
         output_dir = args.output_dir if args.output_dir else "temp/schemas"
@@ -83,18 +82,14 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Subcommand: generate-schema
-    schema_parser = subparsers.add_parser(
-        "generate-schema", help="Generate a tagging schema from sample data"
-    )
+    schema_parser = subparsers.add_parser("generate-schema", help="Generate a tagging schema from sample data")
     schema_parser.add_argument(
         "--csv-path",
         type=str,
         default=None,
         help="Path to CSV file (default: auto-detect based on USE_HEAD env var)",
     )
-    schema_parser.add_argument(
-        "--rows", type=int, default=5, help="Number of rows to sample (default: 5, max: 10)"
-    )
+    schema_parser.add_argument("--rows", type=int, default=5, help="Number of rows to sample (default: 5, max: 10)")
     schema_parser.add_argument(
         "--model",
         type=str,
@@ -119,6 +114,12 @@ if __name__ == "__main__":
         type=str,
         default="cfpb",
         help="Company/project identifier for filenames (default: cfpb)",
+    )
+    schema_parser.add_argument(
+        "--use-case-path",
+        type=str,
+        required=True,
+        help="Path to use_case.txt for schema generation",
     )
 
     # Subcommand: prompt (original functionality)

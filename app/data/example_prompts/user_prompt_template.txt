@@ -1,0 +1,3 @@
+Analyze the following public comments. Extract factual data/quotes and infer labels and scores based on the comment text and associated metadata. Return a JSON object adhering strictly to the provided schema.
+
+DATA:

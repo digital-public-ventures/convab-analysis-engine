@@ -1,0 +1,6 @@
+id,Primary Grievance Category,Impact Domain,Service Context,Institutional Critique,Narrative Perspective,Sentiment Score,Financial Pressure Intensity,Coercion Level,Policy Relevance,Complexity of Terms
+CFPB-2023-0038-0002,Product Terms and Marketing,Financial Access|Consumer Deception,Dental Services,Lender Practice,Patient,-0.8,0.4,0.2,0.5,0.7
+CFPB-2023-0038-0005,Systemic Inefficiency,Health Equity|Provider Financial Health|Insurance Reimbursement,Maternity and Birth Services,Insurance Companies|Non-Profit Hospitals|Regulatory Bodies,Healthcare Provider,-0.5,0.9,0.4,1.0,0.8
+CFPB-2023-0038-0010,Financial Harm,Credit Health|Mental Health|Access to Care,General Medical and Dental,Lender Practice|Insurance Transparency,Patient,-0.4,0.8,0.6,0.9,0.9
+CFPB-2023-0038-0011,Regulatory Gap,Behavioral Health Access|Socioeconomic Disparities,Mental Health and Substance Use Disorder,Insurance Under-coverage,Individual,0.0,0.7,0.3,0.8,0.6
+CFPB-2023-0038-0012,Market Benefits,Access to Care|Provider Financial Health,Dental Services,Regulatory Overreach,Professional Association,0.9,0.2,0.1,0.7,0.3
