@@ -164,53 +164,32 @@ def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
 def _extract_text_from_ocr_results(results: object) -> str:
     """Extract text from PaddleOCR results.
 
-    Handles multiple result formats from different PaddleOCR versions:
-    - Object with rec_texts attribute
-    - Dict with rec_texts key
-    - List of page results (each can be object, dict, or nested list)
-    - Legacy format: list of [bbox, (text, confidence)] tuples
+    Expected PaddleOCR format (v2.7+):
+    - List of pages
+    - Each page is a list of [bbox, (text, confidence)] tuples
 
     Args:
-        results: OCR results in any supported format
+        results: OCR results returned by PaddleOCR
 
     Returns:
         Extracted text with lines joined by newlines
     """
+    if not isinstance(results, list):
+        return ""
+
     text_parts: list[str] = []
-    if hasattr(results, "rec_texts"):
-        text_parts.extend([str(text) for text in getattr(results, "rec_texts", [])])
-        return "\n".join(part for part in text_parts if part)
-    if hasattr(results, "get"):
-        rec_texts = results.get("rec_texts")
-        if isinstance(rec_texts, list):
-            text_parts.extend([str(text) for text in rec_texts])
-            return "\n".join(part for part in text_parts if part)
-    if isinstance(results, list):
-        for page_result in results:
-            if hasattr(page_result, "rec_texts"):
-                text_parts.extend([str(text) for text in getattr(page_result, "rec_texts", [])])
-                continue
-            if hasattr(page_result, "get"):
-                rec_texts = page_result.get("rec_texts")
-                if isinstance(rec_texts, list):
-                    text_parts.extend([str(text) for text in rec_texts])
-                    continue
-            if isinstance(page_result, dict):
-                if "rec_text" in page_result:
-                    text_parts.append(str(page_result.get("rec_text", "")))
-                continue
-            if isinstance(page_result, list):
-                for line in page_result:
-                    if isinstance(line, (list, tuple)) and len(line) > 1:
-                        text_parts.append(str(line[1][0]))
+    for page_result in results:
+        if not isinstance(page_result, list):
+            continue
+        for line in page_result:
+            if isinstance(line, (list, tuple)) and len(line) > 1:
+                text_parts.append(str(line[1][0]))
 
     return "\n".join(part for part in text_parts if part)
 
 
 def _run_ocr(ocr_engine: "PaddleOCR", image: object) -> str:
     """Run OCR on an image using PaddleOCR.
-
-    Handles API changes across PaddleOCR versions by trying multiple method signatures.
 
     Args:
         ocr_engine: PaddleOCR engine instance
@@ -219,14 +198,7 @@ def _run_ocr(ocr_engine: "PaddleOCR", image: object) -> str:
     Returns:
         Extracted text from the image
     """
-    try:
-        results = ocr_engine.ocr(image, cls=True)
-    except TypeError:
-        try:
-            results = ocr_engine.ocr(image)
-        except Exception:
-            results = ocr_engine.predict(image)
-
+    results = ocr_engine.ocr(image, cls=True)
     return _extract_text_from_ocr_results(results)
 
 
@@ -267,6 +239,14 @@ class AttachmentProcessor:
             self._ocr_engine = PaddleOCRImpl(use_angle_cls=True, lang="en")
 
         return self._ocr_engine
+
+    def get_ocr_engine(self) -> "PaddleOCR":
+        """Return a shared OCR engine instance."""
+        return self._get_ocr_engine()
+
+    def set_shared_ocr_engine(self, engine: "PaddleOCR") -> None:
+        """Set a pre-initialized OCR engine for reuse."""
+        self._ocr_engine = engine
 
     def _get_extractor(self, extension: str) -> DocumentExtractor:
         """Get or create an extractor instance for the given extension.

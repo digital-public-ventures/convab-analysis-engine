@@ -31,7 +31,7 @@ def get_model_pricing(model_id: str) -> Pricing | None:
     """
     profile = get_model_profile(model_id, models_dict=MODELS)
     if profile and profile.pricing:
-        return cast(Pricing, profile.pricing)
+        return cast("Pricing", profile.pricing)
 
     return PRICING_BY_MODEL_ID.get(model_id)
 

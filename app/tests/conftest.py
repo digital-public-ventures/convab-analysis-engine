@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def sample_csv_content() -> bytes:
     """Sample CSV content for testing."""
     return b"""id,text,category
@@ -15,7 +15,7 @@ def sample_csv_content() -> bytes:
 """
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def mock_schema() -> dict:
     """Mock schema response for testing."""
     return {
@@ -49,7 +49,7 @@ def mock_schema() -> dict:
     }
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def sample_data_records() -> list[dict]:
     """Sample data records for schema generation tests."""
     return [
@@ -59,7 +59,7 @@ def sample_data_records() -> list[dict]:
     ]
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def test_fixtures_dir() -> Path:
     """Path to test fixtures directory."""
     return Path(__file__).parent / "fixtures"

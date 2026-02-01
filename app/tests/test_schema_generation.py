@@ -10,7 +10,7 @@ import pytest
 class TestSchemaGenerator:
     """Unit tests for SchemaGenerator class."""
 
-    @pytest.mark.asyncio  # type: ignore[misc]
+    @pytest.mark.asyncio
     async def test_generate_schema_constructs_correct_prompt(
         self, sample_data_records: list[dict], mock_schema: dict
     ) -> None:
@@ -40,7 +40,7 @@ class TestSchemaGenerator:
                 assert call_kwargs["json_schema"] is not None
                 assert "categorical_fields" in str(call_kwargs["json_schema"])
 
-    @pytest.mark.asyncio  # type: ignore[misc]
+    @pytest.mark.asyncio
     async def test_generate_schema_returns_valid_structure(
         self, sample_data_records: list[dict], mock_schema: dict
     ) -> None:
@@ -65,7 +65,7 @@ class TestSchemaGenerator:
                 assert isinstance(schema["scalar_fields"], list)
                 assert isinstance(schema["key_quotes_fields"], list)
 
-    @pytest.mark.asyncio  # type: ignore[misc]
+    @pytest.mark.asyncio
     async def test_generate_schema_raises_on_empty_response(self, sample_data_records: list[dict]) -> None:
         """Test that ValueError is raised when API returns empty response."""
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
@@ -101,7 +101,7 @@ class TestSchemaGenerator:
             assert result.exists()
             assert result.name == "schema.json"
 
-            with open(result) as f:
+            with result.open() as f:
                 saved = json.load(f)
 
             assert saved["schema_name"] == "Test Schema"
@@ -124,7 +124,7 @@ class TestSchemaGenerator:
                 rows_sampled=15,
             )
 
-            with open(result) as f:
+            with result.open() as f:
                 saved = json.load(f)
 
             metadata = saved["_metadata"]
@@ -134,7 +134,7 @@ class TestSchemaGenerator:
             assert metadata["rows_sampled"] == 15
             assert "sentiment" in metadata["use_case"].lower()
 
-    @pytest.mark.asyncio  # type: ignore[misc]
+    @pytest.mark.asyncio
     async def test_generate_schema_propagates_exception(self, sample_data_records: list[dict]) -> None:
         """Test that exceptions from API calls are properly propagated."""
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
@@ -192,7 +192,7 @@ class TestSchemaGenerator:
                 rows_sampled=5,
             )
 
-            with open(result) as f:
+            with result.open() as f:
                 saved = json.load(f)
 
             # Use case should be truncated to 500 chars

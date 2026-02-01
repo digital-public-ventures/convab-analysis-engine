@@ -29,7 +29,7 @@ def _poll_job_completion(client: TestClient, job_id: str, timeout_seconds: float
     pytest.fail("Timed out waiting for clean job completion")
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def test_cache_dir(tmp_path: Path) -> Path:
     """Create a temporary cache directory with pre-populated downloads."""
     cache_dir = tmp_path / "downloads"
@@ -47,7 +47,7 @@ def test_cache_dir(tmp_path: Path) -> Path:
     return cache_dir
 
 
-@pytest.fixture  # type: ignore[misc]
+@pytest.fixture
 def processor(test_cache_dir: Path) -> Generator[AttachmentProcessor, None, None]:
     """Create an AttachmentProcessor with the test cache directory."""
     proc = AttachmentProcessor(cache_dir=test_cache_dir)
@@ -58,8 +58,37 @@ def processor(test_cache_dir: Path) -> Generator[AttachmentProcessor, None, None
 class TestCSVProcessing:
     """Integration tests for CSV processing functionality."""
 
-    @pytest.mark.asyncio  # type: ignore[misc]
-    async def test_clean_csv_processes_attachments(self, test_cache_dir: Path, processor: AttachmentProcessor) -> None:
+    @pytest.mark.asyncio
+    async def test_clean_csv_invokes_callbacks(self, tmp_path: Path) -> None:
+        """Ensure clean_csv calls on_row_count and on_chunk during processing."""
+        csv_path = tmp_path / "sample.csv"
+        csv_path.write_text("id,data\n1,a\n2,b\n3,c\n4,d\n", encoding="utf-8")
+
+        chunks: list[list[dict[str, object]]] = []
+        row_counts: list[int] = []
+
+        async def on_chunk(rows: list[dict[str, object]]) -> None:
+            chunks.append(rows)
+
+        async def on_row_count(total: int) -> None:
+            row_counts.append(total)
+
+        await clean_csv(
+            csv_path,
+            output_dir=tmp_path,
+            downloads_dir=tmp_path,
+            chunk_size=2,
+            on_chunk=on_chunk,
+            on_row_count=on_row_count,
+        )
+
+        assert row_counts == [4]
+        assert len(chunks) == 2
+        assert len(chunks[0]) == 2
+        assert len(chunks[1]) == 2
+
+    @pytest.mark.asyncio
+    async def test_clean_csv_processes_attachments(self, processor: AttachmentProcessor) -> None:
         """Test that clean_csv correctly processes a CSV with attachments.
 
         This test verifies:
@@ -98,8 +127,8 @@ class TestCSVProcessing:
         # Clean up output file
         output_path.unlink(missing_ok=True)
 
-    @pytest.mark.asyncio  # type: ignore[misc]
-    async def test_caching_prevents_redownload(self, test_cache_dir: Path, processor: AttachmentProcessor) -> None:
+    @pytest.mark.asyncio
+    async def test_caching_prevents_redownload(self, processor: AttachmentProcessor) -> None:
         """Test that caching prevents re-downloading and re-extracting files.
 
         Processes the same CSV twice and verifies cache hits on second run.
@@ -125,8 +154,8 @@ class TestCSVProcessing:
         # The pre-populated cache should provide hits
         assert len(cache_hits) >= 0, "Cache should be checked"
 
-    @pytest.mark.asyncio  # type: ignore[misc]
-    async def test_all_document_types_extracted(self, test_cache_dir: Path, processor: AttachmentProcessor) -> None:
+    @pytest.mark.asyncio
+    async def test_all_document_types_extracted(self, processor: AttachmentProcessor) -> None:
         """Test that PDF, DOCX, and image files are all processed."""
         # Read the test CSV to find attachment URLs
         df = pd.read_csv(TEST_CSV)
@@ -181,7 +210,7 @@ class TestServerEndpoint:
         """
         with TestClient(app) as client:
             # Upload the test CSV
-            with open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, "rb") as f:
                 response = client.post(
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},
@@ -206,7 +235,7 @@ class TestServerEndpoint:
         """Test that submitting the same file twice returns cached=True."""
         with TestClient(app) as client:
             # First upload
-            with open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, "rb") as f:
                 content = f.read()
 
             response1 = client.post(
@@ -234,7 +263,7 @@ class TestServerEndpoint:
         """Test the /data/{hash} endpoint returns correct info."""
         with TestClient(app) as client:
             # First, upload a file to get a hash
-            with open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, "rb") as f:
                 clean_response = client.post(
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},
@@ -281,7 +310,7 @@ class TestSchemaEndpoint:
         """Test that /schema endpoint validates use_case minimum length."""
         with TestClient(app) as client:
             # First upload a file to get a valid hash
-            with open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, "rb") as f:
                 clean_response = client.post(
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},
@@ -302,7 +331,7 @@ class TestSchemaEndpoint:
         # This test just validates the request structure is accepted
         # We don't actually call the LLM to avoid API costs in tests
         with TestClient(app) as client:
-            with open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, "rb") as f:
                 clean_response = client.post(
                     "/clean",
                     files={"file": ("responses.csv", f, "text/csv")},

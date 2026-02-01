@@ -21,6 +21,9 @@ DOCUMENT_EXTENSIONS = frozenset({".pdf", ".docx"})
 DEFAULT_TIMEOUT = 30.0
 MAX_DOWNLOAD_CONCURRENCY = 200
 
+# Cleaning settings
+CLEAN_CHUNK_SIZE = 50
+
 # Schema generation settings
 SCHEMA_DEFAULT_SAMPLE_SIZE = 10
 SCHEMA_DEFAULT_HEAD_SIZE = 5

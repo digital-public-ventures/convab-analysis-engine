@@ -95,7 +95,8 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        args: ['--ignore-missing-imports', '--no-strict-optional', '--python-version=3.11']
+        args: ['--config-file=mypy.ini']
+        pass_filenames: false
         exclude: '^\.github/skills/'
 
   # JavaScript/TypeScript-specific hooks (if using Node.js)

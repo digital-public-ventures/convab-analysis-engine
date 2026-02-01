@@ -1,52 +1,33 @@
 {
-    "compilerOptions": {
-        // Language and Environment
-        "target": "ES2022",
-        "lib": [
-            "ES2022",
-            "DOM",
-            "DOM.Iterable"
-        ],
-        "module": "ESNext",
-        "jsx": "react-jsx",
-        // Module Resolution
-        "moduleResolution": "bundler",
-        "resolveJsonModule": true,
-        "allowImportingTsExtensions": true,
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "./src/*"
-            ]
-        },
-        // Type Checking
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUncheckedIndexedAccess": true,
-        // Emit
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true,
-        "outDir": "./dist",
-        "removeComments": true,
-        "noEmit": true,
-        // Interop Constraints
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "isolatedModules": true,
-        // Skip Lib Check
-        "skipLibCheck": true
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./app/*"]
     },
-    "include": [
-        "src/**/*",
-        "tests/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist",
-        "build"
-    ]
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": ["app/**/*", "app/tests/**/*"],
+  "exclude": ["node_modules", "dist", "build"]
 }

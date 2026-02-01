@@ -17,6 +17,7 @@ ignore = [
     "COM812", # Trailing comma missing (conflicts with formatter)
     "ISC001", # Implicitly concatenated string literals on one line (conflicts with formatter)
     "Q000",  # Single quotes found but double quotes preferred (we prefer single quotes)
+    "SIM102", # Use a single `if` statement instead of nested `if` statements
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided
@@ -65,5 +66,5 @@ line-ending = "auto"
 [lint.pydocstyle]
 convention = "google"
 
-[lint.isort]
-known-first-party = ["cfpb-exploration"]
+[lint.per-file-ignores]
+"*/tests/*" = ["S101", "PLR2004", "PLC0415"]

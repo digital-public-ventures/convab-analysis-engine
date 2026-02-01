@@ -6,20 +6,22 @@ import asyncio
 import json
 import logging
 import tempfile
-from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, cast
 
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile
-from pydantic import BaseModel, Field
+from fastapi import FastAPI, File, HTTPException
+from fastapi import Path as PathParam
+from fastapi import Query, UploadFile
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.analysis import AnalysisRequest, analyze_dataset
 from app.config import (
     ANALYSIS_CSV_FILENAME,
     ANALYSIS_JSON_FILENAME,
+    CLEAN_CHUNK_SIZE,
     DOWNLOADS_DIR,
     LOG_DATE_FORMAT,
     LOG_FORMAT,
@@ -30,22 +32,39 @@ from app.processing import AttachmentProcessor, DataStore, clean_csv
 from app.processing.job_store import JobStatus, JobStore
 from app.schema import SchemaGenerator
 
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterator, Coroutine
+
 load_dotenv()
 
 logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 logger = logging.getLogger(__name__)
 
-# Shared processor with pre-warmed OCR
-_processor: AttachmentProcessor | None = None
+UPLOAD_FILE = File(...)
+NO_CACHE_QUERY = Query(default=False)
+CURSOR_QUERY = Query(default=None)
+LIMIT_QUERY = Query(default=500, ge=1, le=5000)
+
+_background_tasks: set[asyncio.Task[None]] = set()
 _data_store: DataStore = DataStore()
 _job_store: JobStore = JobStore()
 
 
+class ProcessorNotInitializedError(RuntimeError):
+    """Raised when the OCR processor is not initialized."""
+
+    def __init__(self) -> None:
+        """Initialize the error with a default message."""
+        message = "Processor not initialized"
+        super().__init__(message)
+
+
 def get_processor() -> AttachmentProcessor:
     """Get the shared processor instance."""
-    if _processor is None:
-        raise RuntimeError("Processor not initialized")
-    return _processor
+    processor = getattr(app.state, "processor", None)
+    if processor is None:
+        raise ProcessorNotInitializedError
+    return cast("AttachmentProcessor", processor)
 
 
 # Pydantic models for request/response
@@ -72,12 +91,11 @@ class SchemaRequest(BaseModel):
 class SchemaResponse(BaseModel):
     """Response model for /schema endpoint."""
 
+    model_config = ConfigDict(populate_by_name=True)
+
     hash: str
     cached: bool = False
     schema_data: dict = Field(..., alias="schema")
-
-    class Config:
-        populate_by_name = True
 
 
 class DataInfoResponse(BaseModel):
@@ -107,11 +125,15 @@ class AnalyzeResponse(BaseModel):
 
 
 class JobProgress(BaseModel):
+    """Progress details for a background job."""
+
     completed_rows: int
     total_rows: int | None
 
 
 class JobStatusResponse(BaseModel):
+    """Response model for job status requests."""
+
     job_id: str
     status: str
     job_type: str
@@ -122,6 +144,8 @@ class JobStatusResponse(BaseModel):
 
 
 class JobResultsResponse(BaseModel):
+    """Response model for job result pagination."""
+
     job_id: str
     rows: list[dict[str, Any]]
     next_cursor: str | None
@@ -132,22 +156,29 @@ class JobResultsResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Pre-warm OCR engine on startup."""
-    global _processor
-
     logger.info("Starting server, pre-warming OCR engine...")
-    _processor = AttachmentProcessor(cache_dir=DOWNLOADS_DIR)
+    processor = AttachmentProcessor(cache_dir=DOWNLOADS_DIR)
     # Force OCR engine initialization
-    _processor._get_ocr_engine()
+    processor.get_ocr_engine()
+    app.state.processor = processor
     logger.info("OCR engine ready")
 
     yield
 
     logger.info("Shutting down, closing processor...")
-    _processor.close()
-    _processor = None
+    processor = getattr(app.state, "processor", None)
+    if processor is not None:
+        processor.close()
+    app.state.processor = None
 
 
 app = FastAPI(title="CSV Cleaner & Schema Generator", lifespan=lifespan)
+
+
+def _create_background_task(coro: Coroutine[object, object, None]) -> None:
+    task = asyncio.create_task(coro)
+    _background_tasks.add(task)
+    task.add_done_callback(_background_tasks.discard)
 
 
 def _build_job_urls(job_id: str) -> tuple[str, str]:
@@ -187,26 +218,21 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str) -> None
 
     try:
         processor = AttachmentProcessor(cache_dir=paths["downloads"])
-        processor._ocr_engine = get_processor()._ocr_engine
+        processor.set_shared_ocr_engine(get_processor().get_ocr_engine())
 
         cleaned_path = await clean_csv(
             tmp_path,
             processor=processor,
             output_dir=paths["cleaned_data"],
             downloads_dir=paths["downloads"],
-            chunk_size=200,
+            chunk_size=CLEAN_CHUNK_SIZE,
             on_chunk=_add_chunk,
             on_row_count=_set_total_rows,
         )
-
-        record = _job_store.get_job(job_id)
-        if record and record.completed_rows == 0:
-            rows = _read_csv_rows(cleaned_path)
-            _job_store.add_results(job_id, rows)
-            _job_store.set_total_rows(job_id, len(rows))
+        logger.info("Cleaned CSV saved to: %s", cleaned_path)
         _job_store.mark_completed(job_id)
     except Exception as exc:  # pragma: no cover - defensive logging
-        logger.exception("Clean job failed: %s", exc)
+        logger.exception("Clean job failed")
         _job_store.mark_failed(job_id, str(exc))
     finally:
         tmp_path.unlink(missing_ok=True)
@@ -246,24 +272,17 @@ async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
             on_batch=_add_batch,
             on_row_count=_set_total_rows,
         )
-        record = _job_store.get_job(job_id)
-        if record and record.completed_rows == 0:
-            analysis_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
-            if analysis_csv is None:
-                raise FileNotFoundError("analysis.csv not found")
-            rows = _read_csv_rows(analysis_csv)
-            _job_store.add_results(job_id, rows)
-            _job_store.set_total_rows(job_id, len(rows))
         _job_store.mark_completed(job_id)
     except Exception as exc:  # pragma: no cover - defensive logging
-        logger.exception("Analyze job failed: %s", exc)
+        logger.exception("Analyze job failed")
         _job_store.mark_failed(job_id, str(exc))
 
 
-@app.post("/clean", response_model=JobStartResponse, status_code=202)  # type: ignore[misc]
+@app.post("/clean", response_model=JobStartResponse, status_code=202)
 async def clean_csv_endpoint(
-    file: UploadFile = File(...),
-    no_cache: bool = Query(default=False),
+    file: UploadFile = UPLOAD_FILE,
+    *,
+    no_cache: bool = NO_CACHE_QUERY,
 ) -> JobStartResponse:
     """Start a CSV cleaning job and return the job id immediately."""
     content = await file.read()
@@ -291,7 +310,7 @@ async def clean_csv_endpoint(
             results_url=results_url,
         )
 
-    asyncio.create_task(_run_clean_job(job.job_id, content, content_hash))
+    _create_background_task(_run_clean_job(job.job_id, content, content_hash))
 
     return JobStartResponse(
         job_id=job.job_id,
@@ -304,7 +323,7 @@ async def clean_csv_endpoint(
     )
 
 
-@app.get("/jobs/{job_id}", response_model=JobStatusResponse)  # type: ignore[misc]
+@app.get("/jobs/{job_id}", response_model=JobStatusResponse)
 async def get_job_status(job_id: str) -> JobStatusResponse:
     """Get the current status of a background job."""
     record = _job_store.get_job(job_id)
@@ -325,11 +344,11 @@ async def get_job_status(job_id: str) -> JobStatusResponse:
     )
 
 
-@app.get("/jobs/{job_id}/results", response_model=JobResultsResponse)  # type: ignore[misc]
+@app.get("/jobs/{job_id}/results", response_model=JobResultsResponse)
 async def get_job_results(
     job_id: str,
-    cursor: str | None = Query(default=None),
-    limit: int = Query(default=500, ge=1, le=5000),
+    cursor: str | None = CURSOR_QUERY,
+    limit: int = LIMIT_QUERY,
 ) -> JobResultsResponse:
     """Return completed rows for a job since the provided cursor."""
     record = _job_store.get_job(job_id)
@@ -350,10 +369,10 @@ async def get_job_results(
     )
 
 
-@app.post("/schema/{hash}", response_model=SchemaResponse)  # type: ignore[misc]
+@app.post("/schema/{hash}", response_model=SchemaResponse)
 async def generate_schema_endpoint(
-    hash: str,
     request: SchemaRequest,
+    content_hash: str = PathParam(..., alias="hash"),
 ) -> SchemaResponse:
     """Generate a tagging schema for a previously cleaned CSV.
 
@@ -364,30 +383,30 @@ async def generate_schema_endpoint(
     5. Call SchemaGenerator with sample data
     """
     # Validate hash exists
-    if not _data_store.hash_exists(hash):
+    if not _data_store.hash_exists(content_hash):
         raise HTTPException(
             status_code=404,
-            detail=f"Dataset with hash '{hash[:12]}...' not found. Run /clean first.",
+            detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
         )
 
     # Check for existing schema
-    existing_schema = _data_store.get_schema(hash)
+    existing_schema = _data_store.get_schema(content_hash)
     if existing_schema:
-        logger.info("Schema cache hit for hash: %s...", hash[:12])
-        with open(existing_schema, encoding="utf-8") as f:
+        logger.info("Schema cache hit for hash: %s...", content_hash[:12])
+        with existing_schema.open(encoding="utf-8") as f:
             schema_data = json.load(f)
         return SchemaResponse(
-            hash=hash,
+            hash=content_hash,
             cached=True,
             schema=schema_data,
         )
 
     # Get cleaned CSV
-    cleaned_csv = _data_store.get_cleaned_csv(hash)
+    cleaned_csv = _data_store.get_cleaned_csv(content_hash)
     if not cleaned_csv:
         raise HTTPException(
             status_code=404,
-            detail=f"Cleaned CSV not found for hash '{hash[:12]}...'. Run /clean first.",
+            detail=f"Cleaned CSV not found for hash '{content_hash[:12]}...'. Run /clean first.",
         )
 
     # Read and sample data
@@ -400,10 +419,7 @@ async def generate_schema_endpoint(
     # Get random sample (excluding head rows)
     remaining_df = df.iloc[request.head_size :]
     sample_count = min(request.sample_size, len(remaining_df))
-    if sample_count > 0:
-        random_rows = remaining_df.sample(n=sample_count).to_dict("records")
-    else:
-        random_rows = []
+    random_rows = remaining_df.sample(n=sample_count).to_dict("records") if sample_count > 0 else []
 
     sample_data = head_rows + random_rows
     logger.info(
@@ -419,12 +435,12 @@ async def generate_schema_endpoint(
         schema = await generator.generate_schema(sample_data, request.use_case)
     except ValueError as e:
         raise HTTPException(status_code=500, detail=f"Schema generation failed: {e}") from e
-    except Exception as e:
-        logger.error("Schema generation error: %s", e)
-        raise HTTPException(status_code=500, detail=f"Schema generation failed: {e}") from e
+    except Exception as exc:
+        logger.exception("Schema generation error")
+        raise HTTPException(status_code=500, detail=f"Schema generation failed: {exc}") from exc
 
     # Save schema
-    paths = _data_store.ensure_hash_dirs(hash)
+    paths = _data_store.ensure_hash_dirs(content_hash)
     generator.save_schema(
         schema=schema,
         schema_dir=paths["schema"],
@@ -433,33 +449,34 @@ async def generate_schema_endpoint(
     )
 
     return SchemaResponse(
-        hash=hash,
+        hash=content_hash,
         cached=False,
         schema=schema,
     )
 
 
-@app.get("/data/{hash}", response_model=DataInfoResponse)  # type: ignore[misc]
-async def get_data_info(hash: str) -> DataInfoResponse:
+@app.get("/data/{hash}", response_model=DataInfoResponse)
+async def get_data_info(content_hash: str = PathParam(..., alias="hash")) -> DataInfoResponse:
     """Get information about a processed dataset."""
-    if not _data_store.hash_exists(hash):
+    if not _data_store.hash_exists(content_hash):
         raise HTTPException(status_code=404, detail="Dataset not found")
 
-    cleaned = _data_store.get_cleaned_csv(hash)
-    schema = _data_store.get_schema(hash)
+    cleaned = _data_store.get_cleaned_csv(content_hash)
+    schema = _data_store.get_schema(content_hash)
 
     return DataInfoResponse(
-        hash=hash,
+        hash=content_hash,
         has_cleaned_csv=cleaned is not None,
         cleaned_file=cleaned.name if cleaned else None,
         has_schema=schema is not None,
     )
 
 
-@app.post("/analyze", response_model=JobStartResponse, status_code=202)  # type: ignore[misc]
+@app.post("/analyze", response_model=JobStartResponse, status_code=202)
 async def analyze_dataset_endpoint(
     request: AnalyzeRequest,
-    no_cache: bool = Query(default=False),
+    *,
+    no_cache: bool = NO_CACHE_QUERY,
 ) -> JobStartResponse:
     """Start an analysis job and return the job id immediately."""
     content_hash = request.hash
@@ -491,7 +508,7 @@ async def analyze_dataset_endpoint(
             results_url=results_url,
         )
 
-    asyncio.create_task(
+    _create_background_task(
         _run_analyze_job(
             job_id=job.job_id,
             request=request,
@@ -512,4 +529,4 @@ async def analyze_dataset_endpoint(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
