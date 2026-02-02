@@ -25,25 +25,32 @@ def mock_schema() -> dict:
         "categorical_fields": [
             {
                 "field_name": "sentiment",
+                "required": True,
                 "description": "Overall sentiment",
                 "suggested_values": ["positive", "negative", "neutral"],
                 "allow_multiple": False,
+                "nullable": False,
+                "min_items": 1,
             }
         ],
         "scalar_fields": [
             {
                 "field_name": "urgency",
+                "required": True,
                 "description": "Urgency level",
                 "scale_min": 0,
                 "scale_max": 10,
                 "scale_interpretation": "0=not urgent, 10=extremely urgent",
+                "nullable": False,
             }
         ],
         "key_quotes_fields": [
             {
                 "field_name": "notable_quotes",
+                "required": True,
                 "description": "Most impactful or emotionally-moving statements",
                 "max_quotes": 2,
+                "min_items": 1,
             }
         ],
     }

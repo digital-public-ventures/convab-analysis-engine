@@ -185,8 +185,6 @@ def _extract_text_from_ocr_results(results: list[dict]) -> str:
     text_parts: list[str] = []
 
     for page_result in results:
-        if not isinstance(page_result, dict):
-            continue
         rec_texts = page_result.get("rec_texts", [])
         if isinstance(rec_texts, list):
             text_parts.extend(str(text) for text in rec_texts if text)
@@ -430,9 +428,7 @@ class AttachmentProcessor:
 
         return file_path.read_bytes()
 
-    async def extract_text_async(
-        self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False
-    ) -> str:
+    async def extract_text_async(self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False) -> str:
         """Extract text from a document at the given URL or path (async).
 
         Args:

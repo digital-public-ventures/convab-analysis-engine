@@ -2,6 +2,9 @@
 
 import asyncio
 import logging
+import math
+import re
+import string
 import time
 
 from google import genai
@@ -126,9 +129,9 @@ class AsyncRateLimiter:
             Estimated total tokens (input + estimated output)
         """
         content = system_instruction + prompt_text if system_instruction else prompt_text
-
-        token_resp = await client.aio.models.count_tokens(model=model_id, contents=content)
-        estimated_input_tokens = int(token_resp.total_tokens or 0)
+        split_pattern = rf"[{re.escape(string.punctuation)}\s]+"
+        words = [word for word in re.split(split_pattern, content) if word]
+        estimated_input_tokens = max(1, math.ceil(len(words) / 0.75))
 
         estimated_total_tokens = estimated_input_tokens + (estimated_output_tokens_per_item * batch_size)
 

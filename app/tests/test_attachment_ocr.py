@@ -9,13 +9,8 @@ from app.processing.attachment import _extract_text_from_ocr_results, _run_ocr
 
 def test_extract_text_from_ocr_results_expected_format() -> None:
     results = [
-        [
-            ([[0, 0], [10, 0], [10, 10], [0, 10]], ("Hello", 0.99)),
-            ([[0, 20], [10, 20], [10, 30], [0, 30]], ("World", 0.98)),
-        ],
-        [
-            ([[0, 40], [10, 40], [10, 50], [0, 50]], ("Second", 0.97)),
-        ],
+        {"rec_texts": ["Hello", "World"], "rec_scores": [0.99, 0.98]},
+        {"rec_texts": ["Second"], "rec_scores": [0.97]},
     ]
 
     assert _extract_text_from_ocr_results(results) == "Hello\nWorld\nSecond"
@@ -29,10 +24,10 @@ def test_run_ocr_uses_engine_ocr() -> None:
     calls: list[dict[str, Any]] = []
 
     class FakeOCR:
-        def ocr(self, image: object, cls: bool = False) -> list[list[tuple[object, tuple[str, float]]]]:
-            calls.append({"image": image, "cls": cls})
-            return [[([0, 0], ("Text", 0.9))]]
+        def predict(self, image: object) -> list[dict[str, Any]]:
+            calls.append({"image": image})
+            return [{"rec_texts": ["Text"], "rec_scores": [0.9]}]
 
     image = object()
     assert _run_ocr(FakeOCR(), image) == "Text"
-    assert calls == [{"image": image, "cls": True}]
+    assert calls == [{"image": image}]

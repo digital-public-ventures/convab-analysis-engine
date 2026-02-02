@@ -6,6 +6,7 @@ import asyncio
 import json
 import logging
 import tempfile
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
@@ -243,6 +244,12 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_c
 async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
     content_hash = request.hash
     _job_store.mark_running(job_id)
+    job_started_at = time.monotonic()
+    logger.debug(
+        "Analyze job %s started for hash %s...",
+        job_id,
+        content_hash[:12],
+    )
 
     async def _set_total_rows(total_rows: int) -> None:
         _job_store.set_total_rows(job_id, total_rows)
@@ -262,6 +269,13 @@ async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
 
     paths = _data_store.ensure_hash_dirs(content_hash)
 
+    logger.debug(
+        "Analyze job %s using cleaned_csv=%s schema=%s",
+        job_id,
+        cleaned_csv,
+        schema_path,
+    )
+
     try:
         await analyze_dataset(
             AnalysisRequest(
@@ -275,6 +289,11 @@ async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
             on_row_count=_set_total_rows,
         )
         _job_store.mark_completed(job_id)
+        logger.debug(
+            "Analyze job %s completed in %.2fs",
+            job_id,
+            time.monotonic() - job_started_at,
+        )
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception("Analyze job failed")
         _job_store.mark_failed(job_id, str(exc))

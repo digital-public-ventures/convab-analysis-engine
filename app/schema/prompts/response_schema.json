@@ -23,6 +23,10 @@
             "type": "string",
             "description": "Name of the categorical field"
           },
+          "required": {
+            "type": "boolean",
+            "description": "Whether this field must be populated"
+          },
           "description": {
             "type": "string",
             "description": "What this field captures"
@@ -38,12 +42,28 @@
             "type": "boolean",
             "description": "Whether multiple values can be selected"
           },
+          "nullable": {
+            "type": "boolean",
+            "description": "Whether this field can be null"
+          },
+          "min_items": {
+            "type": "integer",
+            "description": "Minimum items required when allow_multiple is true"
+          },
           "hint": {
             "type": "string",
             "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
           }
         },
-        "required": ["field_name", "description", "suggested_values", "allow_multiple"]
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "suggested_values",
+          "allow_multiple",
+          "nullable",
+          "min_items"
+        ]
       }
     },
     "scalar_fields": {
@@ -55,6 +75,10 @@
           "field_name": {
             "type": "string",
             "description": "Name of the scalar field"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether this field must be populated"
           },
           "description": {
             "type": "string",
@@ -72,12 +96,24 @@
             "type": "string",
             "description": "Explanation of what the scale values mean"
           },
+          "nullable": {
+            "type": "boolean",
+            "description": "Whether this field can be null"
+          },
           "hint": {
             "type": "string",
             "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
           }
         },
-        "required": ["field_name", "description", "scale_min", "scale_max", "scale_interpretation"]
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "scale_min",
+          "scale_max",
+          "scale_interpretation",
+          "nullable"
+        ]
       }
     },
     "key_quotes_fields": {
@@ -90,6 +126,10 @@
             "type": "string",
             "description": "Name of the key quotes field"
           },
+          "required": {
+            "type": "boolean",
+            "description": "Whether this field must be populated"
+          },
           "description": {
             "type": "string",
             "description": "What kinds of quotes to extract"
@@ -98,12 +138,16 @@
             "type": "integer",
             "description": "Maximum number of quotes to extract per record"
           },
+          "min_items": {
+            "type": "integer",
+            "description": "Minimum quotes required for this field"
+          },
           "hint": {
             "type": "string",
             "description": "Instructions for identifying and selecting quotes"
           }
         },
-        "required": ["field_name", "description", "max_quotes"]
+        "required": ["field_name", "required", "description", "max_quotes", "min_items"]
       }
     }
   },

@@ -64,6 +64,12 @@ class TestSchemaGenerator:
                 assert isinstance(schema["categorical_fields"], list)
                 assert isinstance(schema["scalar_fields"], list)
                 assert isinstance(schema["key_quotes_fields"], list)
+                for field in schema["categorical_fields"]:
+                    assert field.get("required") is True
+                for field in schema["scalar_fields"]:
+                    assert field.get("required") is True
+                for field in schema["key_quotes_fields"]:
+                    assert field.get("required") is True
 
     @pytest.mark.asyncio
     async def test_generate_schema_raises_on_empty_response(self, sample_data_records: list[dict]) -> None:

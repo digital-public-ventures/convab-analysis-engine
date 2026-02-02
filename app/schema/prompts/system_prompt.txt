@@ -15,6 +15,11 @@ When designing schemas:
 5. Ensure compatibility with data visualization and analytics tools
 6. Key quotes should capture the most important, emotionally-moving, or representative snippets from each record
 
-IMPORTANT: if the user asks you explicitly to capture a particular dimension, feature, label or score in your schema, you MUST include it.
+IMPORTANT: If the user asks you explicitly to capture a particular dimension, feature, label or score in your schema, you MUST include it.
+
+IMPORTANT: Your schema MUST include a required key for every field and that key's value MUST be true.
+
+IMPORTANT: For every categorical and scalar field, include a nullable key and set it to false.
+IMPORTANT: For every array field (categorical fields where allow_multiple is true, and all key quotes fields), include a min_items key and set it to 1.
 
 Your output should be a well-structured JSON schema definition that can be used to tag and analyze the text data later. Do NOT apply the schema to any specific records - only define the schema structure itself.

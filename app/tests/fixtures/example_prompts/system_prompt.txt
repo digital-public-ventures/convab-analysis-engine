@@ -16,4 +16,3 @@ GUIDELINES:
     - Health equity concerns
     - Financial assistance and charity care issues
 5.  **Policy Relevance:** Flag comments that directly address specific RFI questions or propose actionable policy recommendations.
-6.  **Null Handling:** If a field cannot be determined from the text, return null or an empty list. Do not hallucinate data.

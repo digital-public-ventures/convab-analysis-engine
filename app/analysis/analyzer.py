@@ -6,8 +6,10 @@ import asyncio
 import json
 import logging
 import os
+import time
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
 
 import pandas as pd
@@ -27,10 +29,12 @@ from app.llm.rate_limiter import AsyncRateLimiter
 logger = logging.getLogger(__name__)
 
 MAX_PROMPT_RECORD_CHARS = 2000
+PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+ANALYSIS_PROMPT_TEMPLATE = (PROMPTS_DIR / "analysis_prompt.txt").read_text(encoding="utf-8")
+CRITICAL_GUIDELINES = (PROMPTS_DIR / "critical_guidelines.txt").read_text(encoding="utf-8")
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
-    from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -224,26 +228,12 @@ def _build_analysis_prompt(
     Returns:
         Prompt text
     """
-    return "\n".join(
-        [
-            "Analyze the following records using the provided schema.",
-            "Return ONLY valid JSON that matches the response schema.",
-            "",
-            "Use case:",
-            use_case.strip(),
-            "",
-            "Schema fields:",
-            schema_summary.strip(),
-            "",
-            "Response rules:",
-            f"- Each record must include record_id (from column '{id_column}').",
-            "- Use null when a value cannot be determined.",
-            "- For allow_multiple fields, return a list of strings.",
-            "- For key quotes fields, return an array of quotes (empty array if none).",
-            "",
-            "DATA:",
-            _format_records_for_prompt(records),
-        ]
+    return ANALYSIS_PROMPT_TEMPLATE.format(
+        use_case=use_case.strip(),
+        schema_summary=schema_summary.strip(),
+        id_column=id_column,
+        critical_guidelines=CRITICAL_GUIDELINES.strip(),
+        records=_format_records_for_prompt(records),
     )
 
 
@@ -405,6 +395,7 @@ async def _analyze_batch(
     context: AnalysisContext,
     config: AnalysisConfig,
     records: list[dict[str, Any]],
+    batch_index: int | None = None,
 ) -> list[dict[str, Any]]:
     """Analyze a batch of records using the LLM.
 
@@ -418,6 +409,17 @@ async def _analyze_batch(
     Returns:
         List of analyzed record dictionaries
     """
+    batch_label = f"batch={batch_index}" if batch_index is not None else "batch=?"
+    input_ids = [str(record.get("record_id", "")) for record in records]
+    logger.debug(
+        "Starting analyze %s with %d records (id sample=%s)",
+        batch_label,
+        len(records),
+        input_ids[:5],
+    )
+
+    started_at = time.monotonic()
+
     prompt_text = _build_analysis_prompt(
         context.use_case,
         context.schema_summary,
@@ -438,11 +440,45 @@ async def _analyze_batch(
     )
 
     if not response_data:
+        duration = time.monotonic() - started_at
+        logger.warning("Analyze %s returned empty response data (%.2fs)", batch_label, duration)
         return []
 
     records_data = response_data.get("records", [])
     if not isinstance(records_data, list):
+        duration = time.monotonic() - started_at
+        logger.warning("Analyze %s returned non-list records payload (%.2fs)", batch_label, duration)
         return []
+
+    output_ids = [str(record.get("record_id", "")) for record in records_data]
+    if len(output_ids) != len(input_ids):
+        missing_ids = sorted(set(input_ids) - set(output_ids))
+        extra_ids = sorted(set(output_ids) - set(input_ids))
+        logger.warning(
+            "Analyze %s returned %d/%d records (missing=%d, extra=%d)",
+            batch_label,
+            len(output_ids),
+            len(input_ids),
+            len(missing_ids),
+            len(extra_ids),
+        )
+        if missing_ids:
+            logger.warning(
+                "Analyze %s missing record_ids sample: %s",
+                batch_label,
+                missing_ids[:10],
+            )
+            logger.debug("Analyze %s missing record_ids: %s", batch_label, missing_ids)
+        if extra_ids:
+            logger.warning(
+                "Analyze %s extra record_ids sample: %s",
+                batch_label,
+                extra_ids[:10],
+            )
+            logger.debug("Analyze %s extra record_ids: %s", batch_label, extra_ids)
+
+    duration = time.monotonic() - started_at
+    logger.debug("Completed analyze %s with %d records (%.2fs)", batch_label, len(output_ids), duration)
 
     return cast("list[dict[str, Any]]", records_data)
 
@@ -465,16 +501,31 @@ async def analyze_dataset(
         Tuple of (analysis_json_dict, analysis_csv_text)
     """
     config = config or AnalysisConfig()
+    analysis_started_at = time.monotonic()
+    logger.debug(
+        "Starting analysis (batch_size=%d, model_id=%s, thinking=%s)",
+        config.batch_size,
+        config.model_id,
+        config.thinking_level,
+    )
     request.output_dir.mkdir(parents=True, exist_ok=True)
 
+    load_schema_started_at = time.monotonic()
     with request.schema_path.open(encoding="utf-8") as f:
         schema = json.load(f)
+    logger.debug("Loaded schema in %.2fs", time.monotonic() - load_schema_started_at)
 
+    load_csv_started_at = time.monotonic()
     df = pd.read_csv(request.cleaned_csv)
     if df.empty:
         msg = "Cleaned CSV is empty"
         raise ValueError(msg)
 
+    logger.debug("Loaded cleaned CSV in %.2fs", time.monotonic() - load_csv_started_at)
+
+    logger.debug("Loaded cleaned CSV with %d rows and %d columns", len(df), len(df.columns))
+
+    record_build_started_at = time.monotonic()
     id_column = df.columns[0]
     records: list[dict[str, Any]] = []
     for _, row in df.iterrows():
@@ -483,6 +534,7 @@ async def analyze_dataset(
         records.append(record)
     if on_row_count is not None:
         await on_row_count(len(records))
+    logger.debug("Prepared %d records in %.2fs", len(records), time.monotonic() - record_build_started_at)
 
     profile = validate_model_config(config.model_id, config.thinking_level)
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -493,10 +545,20 @@ async def analyze_dataset(
     client = genai.Client(api_key=api_key)
     limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd)
 
+    prompt_prep_started_at = time.monotonic()
     response_schema = _build_analysis_response_schema(schema)
     schema_summary = _summarize_schema(schema)
+    logger.debug("Prepared prompt inputs in %.2fs", time.monotonic() - prompt_prep_started_at)
 
+    batch_prep_started_at = time.monotonic()
     batches = [records[i : i + config.batch_size] for i in range(0, len(records), config.batch_size)]
+    logger.debug(
+        "Prepared %d analysis batches (batch_size=%d, last_batch=%d)",
+        len(batches),
+        config.batch_size,
+        len(batches[-1]) if batches else 0,
+    )
+    logger.debug("Batch preparation took %.2fs", time.monotonic() - batch_prep_started_at)
 
     context = AnalysisContext(
         system_prompt=request.system_prompt,
@@ -512,6 +574,7 @@ async def analyze_dataset(
         batch_size=config.batch_size,
     )
 
+    task_prep_started_at = time.monotonic()
     tasks = [
         _analyze_batch(
             client=client,
@@ -519,17 +582,41 @@ async def analyze_dataset(
             context=context,
             config=analysis_config,
             records=batch,
+            batch_index=index,
         )
-        for batch in batches
+        for index, batch in enumerate(batches, start=1)
     ]
+    logger.debug("Spawned %d batch tasks in %.2fs", len(tasks), time.monotonic() - task_prep_started_at)
 
     normalized: list[dict[str, Any]] = []
+    batch_completion_started_at = time.monotonic()
+    first_batch_at: float | None = None
     for task in asyncio.as_completed(tasks):
         batch_result = await task
+        if first_batch_at is None:
+            first_batch_at = time.monotonic()
+            logger.debug("First batch completed in %.2fs", first_batch_at - batch_completion_started_at)
         normalized_batch = _normalize_records(batch_result, schema)
         normalized.extend(normalized_batch)
         if on_batch is not None:
             await on_batch(normalized_batch)
+    logger.debug("All batches completed in %.2fs", time.monotonic() - batch_completion_started_at)
+
+    if len(normalized) != len(records):
+        logger.warning(
+            "Normalized %d records from %d input rows",
+            len(normalized),
+            len(records),
+        )
+    else:
+        logger.debug(
+            "Normalized %d records from %d input rows",
+            len(normalized),
+            len(records),
+        )
+
+    total_duration = time.monotonic() - analysis_started_at
+    logger.debug("Analysis completed in %.2fs", total_duration)
 
     analysis_payload = {
         "metadata": {

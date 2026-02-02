@@ -46,8 +46,9 @@ async def test_analyze_dataset_invokes_callbacks(tmp_path: Path, monkeypatch: py
         context: object,
         config: AnalysisConfig,
         records: list[dict[str, object]],
+        batch_index: int | None = None,
     ) -> list[dict[str, object]]:
-        _ = (client, limiter, context, config)
+        _ = (client, limiter, context, config, batch_index)
         return [
             {
                 "record_id": record.get("record_id"),

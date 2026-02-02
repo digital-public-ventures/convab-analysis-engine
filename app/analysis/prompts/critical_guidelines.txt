@@ -1,0 +1,5 @@
+CRITICAL GUIDELINES:
+
+- **Null Handling:** You must return non-null values for all scalar fields. If unsure, return a neutral value (middle value in range).
+- **Missing Categories:** For multi-select categorical fields, never return empty arrays. Use ["Unknown"] when you cannot determine a value.
+- **Quotes:** For key quotes fields, never return empty arrays. Use ["unavailable"] when no quote is available.
