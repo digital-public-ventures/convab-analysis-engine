@@ -161,44 +161,58 @@ def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
     return _run_ocr(ocr_engine, img)
 
 
-def _extract_text_from_ocr_results(results: object) -> str:
-    """Extract text from PaddleOCR results.
+def _extract_text_from_ocr_results(results: list[dict]) -> str:
+    """Extract text from PaddleOCR v3.x predict() results.
 
-    Expected PaddleOCR format (v2.7+):
-    - List of pages
-    - Each page is a list of [bbox, (text, confidence)] tuples
+    IMPORTANT: This function is designed for PaddleOCR 3.x ONLY.
+    DO NOT add support for other versions. If a different version is detected,
+    the application should fail at startup with a clear version mismatch error.
+    See _check_paddleocr_version() for version enforcement.
+
+    PaddleOCR 3.x predict() returns: list[dict] where each dict contains:
+    - 'rec_texts': list[str] - recognized text strings
+    - 'rec_scores': list[float] - confidence scores
 
     Args:
-        results: OCR results returned by PaddleOCR
+        results: OCR results from PaddleOCR.predict()
 
     Returns:
         Extracted text with lines joined by newlines
     """
-    if not isinstance(results, list):
+    if not results:
         return ""
 
     text_parts: list[str] = []
-    for page_result in results:
-        if not isinstance(page_result, list):
-            continue
-        for line in page_result:
-            if isinstance(line, (list, tuple)) and len(line) > 1:
-                text_parts.append(str(line[1][0]))
 
-    return "\n".join(part for part in text_parts if part)
+    for page_result in results:
+        if not isinstance(page_result, dict):
+            continue
+        rec_texts = page_result.get("rec_texts", [])
+        if isinstance(rec_texts, list):
+            text_parts.extend(str(text) for text in rec_texts if text)
+
+    return "\n".join(text_parts)
 
 
 def _run_ocr(ocr_engine: "PaddleOCR", image: object) -> str:
-    """Run OCR on an image using PaddleOCR.
+    """Run OCR on an image using PaddleOCR v3.x predict() method.
+
+    IMPORTANT: This function uses PaddleOCR 3.x API ONLY.
+    DO NOT add fallback logic for other versions. If the API doesn't work,
+    it means the wrong PaddleOCR version is installed and should be fixed
+    at the dependency level, not worked around in code.
 
     Args:
-        ocr_engine: PaddleOCR engine instance
+        ocr_engine: PaddleOCR engine instance (must be v3.x)
         image: Image as numpy array
 
     Returns:
         Extracted text from the image
+
+    Raises:
+        AttributeError: If predict() method doesn't exist (wrong version)
     """
-    results = ocr_engine.ocr(image, cls=True)
+    results = ocr_engine.predict(image)
     return _extract_text_from_ocr_results(results)
 
 
@@ -229,14 +243,35 @@ class AttachmentProcessor:
         self._http_client: httpx.Client | None = None
 
     def _get_ocr_engine(self) -> "PaddleOCR":
-        """Get or create a PaddleOCR engine instance."""
+        """Get or create a PaddleOCR engine instance.
+
+        IMPORTANT: This method requires PaddleOCR 3.x.
+        DO NOT add fallback logic for older versions. If initialization fails,
+        it indicates a dependency issue that should be fixed by ensuring the
+        correct PaddleOCR version is installed, not by adding version-specific
+        workarounds.
+
+        Raises:
+            ImportError: If paddleocr is not installed
+            RuntimeError: If PaddleOCR version is not 3.x
+        """
         if self._ocr_engine is None:
             try:
+                import paddleocr
                 from paddleocr import PaddleOCR as PaddleOCRImpl
             except ImportError as err:
                 raise ImportError("paddleocr is required for OCR. Install with: uv add paddleocr") from err
+
+            # Enforce PaddleOCR 3.x - DO NOT add version fallbacks
+            version = getattr(paddleocr, "__version__", "unknown")
+            if not version.startswith("3."):
+                raise RuntimeError(
+                    f"PaddleOCR version 3.x is required, but version {version} is installed. "
+                    f"Please run: uv add 'paddleocr>=3.0.0,<4.0.0'"
+                )
+
             os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
-            self._ocr_engine = PaddleOCRImpl(use_angle_cls=True, lang="en")
+            self._ocr_engine = PaddleOCRImpl(use_textline_orientation=True, lang="en")
 
         return self._ocr_engine
 
@@ -395,21 +430,30 @@ class AttachmentProcessor:
 
         return file_path.read_bytes()
 
-    async def extract_text_async(self, url_or_path: str, use_ocr: bool = False) -> str:
-        """Extract text from a document at the given URL or path (async)."""
-        logger.debug("EXTRACT START: %s", url_or_path)
+    async def extract_text_async(
+        self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False
+    ) -> str:
+        """Extract text from a document at the given URL or path (async).
 
-        # Check extracted text cache first
-        if self.cache_dir:
+        Args:
+            url_or_path: URL or file path to extract from
+            use_ocr: Whether to use OCR fallback for PDFs
+            no_cache_ocr: If True, skip the extracted text cache and re-extract
+                          (but still cache the new result for future use)
+        """
+        logger.debug("EXTRACT START: %s (no_cache_ocr=%s)", url_or_path, no_cache_ocr)
+
+        # Check extracted text cache first (unless no_cache_ocr is set)
+        if self.cache_dir and not no_cache_ocr:
             cached_text = get_cached_text(url_or_path, self.cache_dir)
             if cached_text is not None:
                 logger.debug("TEXT CACHE HIT: %s (%d chars)", url_or_path, len(cached_text))
                 return cached_text
 
-        # Cache miss - extract text
+        # Cache miss or no_cache_ocr - extract text
         result = await self._extract_text_uncached(url_or_path, use_ocr)
 
-        # Cache the extracted text
+        # Cache the extracted text (always cache, even if no_cache_ocr was set)
         if self.cache_dir and result:
             save_text_to_cache(url_or_path, result, self.cache_dir)
             logger.debug("TEXT CACHED: %s", url_or_path)
@@ -459,18 +503,21 @@ class AttachmentProcessor:
         logger.debug("TEXT EXTRACT END: %s (%d chars)", url_or_path, len(result))
         return result
 
-    async def extract_text_safe_async(self, url_or_path: str, use_ocr: bool = False) -> tuple[str | None, str | None]:
+    async def extract_text_safe_async(
+        self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False
+    ) -> tuple[str | None, str | None]:
         """Extract text with error handling, returning (text, error) tuple.
 
         Args:
             url_or_path: URL or file path to extract from
             use_ocr: Whether to use OCR fallback for PDFs
+            no_cache_ocr: If True, skip the extracted text cache and re-extract
 
         Returns:
             Tuple of (extracted_text, None) on success, or (None, error_message) on failure
         """
         try:
-            text = await self.extract_text_async(url_or_path, use_ocr=use_ocr)
+            text = await self.extract_text_async(url_or_path, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
             return text, None
         except ImportError as e:
             return None, f"Missing dependency: {e}"
@@ -489,6 +536,7 @@ class AttachmentProcessor:
         skip_errors: bool = True,
         use_ocr: bool = False,
         max_concurrency: int | None = None,
+        no_cache_ocr: bool = False,
     ) -> dict[str, str | None]:
         """Process multiple attachment URLs concurrently.
 
@@ -497,6 +545,7 @@ class AttachmentProcessor:
             skip_errors: If True, continue on failures; if False, raise on first error
             use_ocr: Whether to use OCR fallback for PDFs
             max_concurrency: Maximum concurrent downloads (defaults to MAX_DOWNLOAD_CONCURRENCY)
+            no_cache_ocr: If True, skip the extracted text cache and re-extract
 
         Returns:
             Dictionary mapping URL to extracted text (or None on failure)
@@ -507,13 +556,13 @@ class AttachmentProcessor:
 
         concurrency = max_concurrency or MAX_DOWNLOAD_CONCURRENCY
         semaphore = asyncio.Semaphore(concurrency)
-        logger.debug("BATCH START: %d URLs, concurrency=%d", len(urls), concurrency)
+        logger.debug("BATCH START: %d URLs, concurrency=%d, no_cache_ocr=%s", len(urls), concurrency, no_cache_ocr)
 
         completed = 0
 
         async def _process(url: str) -> tuple[str, str | None, str | None]:
             async with semaphore:
-                text, error = await self.extract_text_safe_async(url, use_ocr=use_ocr)
+                text, error = await self.extract_text_safe_async(url, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
                 return url, text, error
 
         tasks = [asyncio.create_task(_process(url)) for url in urls]

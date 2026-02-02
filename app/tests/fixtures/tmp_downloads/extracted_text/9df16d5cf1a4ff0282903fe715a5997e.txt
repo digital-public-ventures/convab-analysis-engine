@@ -1,0 +1,448 @@
+350 Fifth Avenue, 34th Floor 
+New York, NY 10118-3299 
+Tel: +1-212-290-4700 
+Fax: +1-212-736-1300; 917-591-3452 
+ 
+ 
+ 
+September 8, 2023 
+ 
+Submitted via Regulations.gov 
+ 
+Comment Intake 
+Request for Information Regarding Medical Payment Products  
+Consumer Financial Protection Bureau 
+1700 G Street NW 
+Washington, DC 20552 
+ 
+ 
+Re:  Request for Information Regarding Medical Payment Products 
+Docket Numbers CFPB–2023–0038; CMS–2023–0106; TREAS–DO–2023–0008 
+ 
+To Whom It May Concern: 
+ 
+We are writing on behalf of Human Rights Watch to submit the following comments and 
+recommendations to the Consumer Financial Protection Bureau (CFPB), Department of Health and Human 
+Services (HHS), and Department of the Treasury (Treasury) (collectively, the “agencies”), in response to 
+their July 12, 2023 “Request for Information Regarding Medical Payment Products” (RFI).1  
+ 
+Human Rights Watch is an independent, international non-governmental organization that investigates 
+and reports on rights violations in over 100 countries worldwide. We document and report on human 
+rights abuses and direct advocacy toward governments, armed groups, and businesses, pressing them to 
+change or enforce their laws, policies, and practices to respect, protect, and fulfil human rights for all.   
+ 
+In recent years, we have published several reports on economic barriers to accessing health care in the 
+United States.2 Our most recent report, “In Sheep’s Clothing: United States’ Poorly Regulated Nonprofit 
+Hospitals Undermine Health Care Access,” released in June 2023, documented how the US government’s 
+failure to adequately regulate private nonprofit hospitals and to provide quality hospital care alternatives 
+undermines the human right to health.3  
+ 
+ 
+1 Consumer Financial Protection Bureau, Centers for Medicare & Medicaid Services, and Department of the Treasury, “Request 
+for Information Regarding Medical Payment Products,” 88 Fed. Reg. 44281, 44281 (July 12, 2023), 
+https://www.federalregister.gov/documents/2023/07/12/2023-14726/request-for-information-regarding-medical-payment-
+products.  
+2 See, for example, Human Rights Watch, In Sheep’s Clothing: United States’ Poorly Regulated Nonprofit Hospitals Undermine 
+Health Care Access (2023), https://www.hrw.org/report/2023/06/15/sheeps-clothing/united-states-poorly-regulated-nonprofit-
+hospitals-undermine; Human Rights Watch, “If I’m Out of Insulin, I’m Going to Die”: United States’ Lack of Regulation Fuels Crisis 
+of Unaffordable Insulin (2022), https://www.hrw.org/report/2022/04/12/if-im-out-insulin-im-going-die/united-states-lack-
+regulation-fuels-crisis; Human Rights Watch, “We Need Access”: Ending Preventable Deaths from Cervical Cancer in Rural 
+Georgia (2022), https://www.hrw.org/report/2022/01/20/we-need-access/ending-preventable-deaths-cervical-cancer-rural-
+georgia.   
+3 “US: Nonprofit Hospitals Chase Low-Income Patients on Debts: Weak Government Oversight Fueling Care Crisis,” Human Rights 
+Watch, June 15, 2023, https://www.hrw.org/news/2023/06/15/us-nonprofit-hospitals-chase-low-income-patients-debts.  
+
+2 
+ 
+Accordingly, Human Rights Watch strongly supports the agencies’ effort to better regulate the rights-
+impacting practices of private entities involved in the healthcare system and in the collection of medical 
+debt. However, our research has made clear that more closely aligning the US healthcare system with the 
+country’s international human rights obligations will require the agencies, acting on behalf of the US 
+government, to address the structural drivers of medical debt, rather than just treating its symptoms.  
+ 
+As the agencies’ RFI makes clear, the US healthcare system has persistent problems with both high out-of-
+pocket costs for accessing health care and the indebtedness that these costs create.4 Our research has 
+shown how, together, these form sometimes insurmountable barriers to accessing health care and 
+adversely affect people’s enjoyment of other human rights, including the rights to housing, food, and 
+education.5  
+ 
+Hospital services, in particular, significantly contribute to the country’s medical debt crisis, with a March 
+2023 survey conducted by the Urban Institute finding that about 73 percent of adults with past-due 
+medical debt reported owing at least some of that debt to hospitals.6 But nearly 60 percent of the more 
+than 5,000 community hospitals across the US are privately operated nonprofits, which collectively receive 
+public subsidies worth billions each year, largely in the form of state and federal tax exemptions, in 
+exchange for providing “community benefits” like free or reduced-price health care.7 
+ 
+4 Because of this absence of universally accessible and adequate health care for everyone, in 2021, about 20 percent of US 
+adults experienced a major, unexpected medical expense that had a median out-of-pocket cost between $1,000 and $1,900. 
+“Economic Well-Being of US Households in 2021,” Board Of Governors of the Federal Reserve System, May 2022, p. 38, 
+https://www.federalreserve.gov/publications/files/2021-report-economic-well-being-us-households-202205.pdf. As a result of 
+these out-of-pocket costs, about 41 percent of US adults had some form of outstanding debt due to medical or dental bills in 
+2022, while 24 percent of adults were either past due or unable to pay their health care bills at the time of the were surveyed. 
+Lunna Lopes, Audrey Kearney, Alex Montero, Liz Hamel, and Mollyann Brodie, “Health Care Debt in the U.S.: The Broad 
+Consequences of Medical and Dental Bills,” Kaiser Family Foundation, June 16, 2022, https://www.kff.org/reportsection/kff-
+health-care-debt-survey-main-findings/. 
+5 See Note 2, above. See also Munira Z. Gunja, Evan D. Gumas, Reginald D. Williams II, “US Health Care from a Global 
+Perspective, 2022: Accelerating Spending, Worsening Outcomes,” The Commonwealth Fund, January 31, 2023, 
+https://www.commonwealthfund.org/publications/issue-briefs/2023/jan/us-health-care-global-perspective-2022 (comparing 
+rates of cost-related rationing and deferment of medical treatment in the US to other countries in the Organisation for Economic 
+Co-operation and Development); David U. Himmelstein, Samuel L. Dickman, Danny McCormick, et al., “Prevalence and Risk 
+Factors for Medical Debt and Subsequent Changes in Social Determinants of Health in the US,” Journal of the American Medical 
+Association Network Open, September 16, 2022, Vol. 5, No. 9, 
+https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2796358 (analyzing more than 142,000 survey results from the 
+US Census Bureau and finding that people who acquired medical debt between 2017 and 2019 were about 2.2 times more likely 
+to become food insecure and nearly 3 times more likely to experience an eviction or foreclosure). 
+6 Michael Karpman, “Most Adults with Past-Due Medical Debt Owe Money to Hospitals,” Urban Institute, March 13, 2023, 
+https://www.urban.org/research/publication/most-adults-past-due-medical-debt-owe-money-hospitals. See also Consumer 
+Financial Protection Bureau, “Medical Debt Burden in the United States,” February 2022, 
+https://files.consumerfinance.gov/f/documents/cfpb_medical-debt-burden-in-the-united-states_report_2022-03.pdf 
+(discussing throughout how hospital practices contribute to medical debt in the US). 
+7 The American Hospital Association’s annual survey of community hospitals found that 2,960 of the 5,139 community hospitals 
+across the US in 2022 were organized as not-for-profit entities. American Hospital Association, “Fast Facts on US Hospitals, 
+2022,” January 2022, https://www.aha.org/statistics/fast-facts-us-hospitals. Although the Internal Revenue Service (IRS) 
+considers a hospital’s provision of charity care to be a significant factor indicating their “community benefit,” qualifying for tax 
+exemption under Rev. Rul. 69-545, 1969-2 C.B. 117 does not technically require this so-called “charity care.” See US Internal 
+Revenue Service, “Rev. Rul. 69-545, 1969-2 C.B. 117,” 1969, https://www.irs.gov/pub/irs-tege/rr69-545.pdf; US Government 
+Accountability Office, “Tax Administration: Opportunities Exist to Improve Oversight of Hospitals’ Tax Exempt Status,” September 
+2020, p. 7, https://www.gao.gov/assets/gao-20-679.pdf (accessed April 18, 2023); US Internal Revenue Service, “Charitable 
+Hospitals - General Requirements for Tax-Exemption Under Section 501(c)(3),” July 15, 2022, https://www.irs.gov/charities-non-
+profits/charitable-hospitals-general-requirements-for-tax-exemption-under-section-501c3 (“Rev. Rul. 56-185, modified by Rev. 
+ 
+
+3 
+ 
+ 
+The US heavily relies on these privately operated nonprofit hospitals’ so-called “charity care” to increase 
+access to health care for patients who cannot pay for hospital services, particularly for the tens of millions 
+of people in the US who are uninsured.8 But given the high prevalence of hospital-related medical debt in 
+the US, this charity-dependent model of hospital services is clearly not working.9  
+ 
+However, the agencies have the authority to initiate new rulemaking that can significantly improve this 
+system, reducing the actual prevalence of — and not just the effects of — medical debt. Accordingly, while 
+the RFI focuses primarily on medical payment products, we are encouraged by the agencies’ call for 
+additional information about the practices of these tax-exempt institutions. 
+ 
+Drawing from our research in the US, this submission responds to these calls for additional information, 
+outlining debt-producing practices of tax-exempt hospitals that should be regulated to improve access to 
+health care. 
+ 
+I. 
+“Treasury-Specific Questions” - II(d)(5)  
+ 
+“What are best practices for hospitals publishing and making patients 
+aware of financial assistance programs (beyond compliance with the widely 
+publicized requirements found in the section 501(r) regulations)?”10 
+ 
+Despite existing publication and notification requirements under section 501(r) of the Internal Revenue 
+Code (IRC), nonprofit hospitals’ charity care practices regularly fail to ensure that patients who should 
+qualify for free or reduced-price care under their self-defined financial assistance policies actually receive 
+this treatment.11 Rather, as documented in our June 2023 report, these tax-exempt hospitals sometimes 
+bill, and even sue, patients who should have been eligible for charity care.12 
+ 
+ 
+Rul. 69-545, set forth more restrictive requirements for exemption of hospitals under Section 501(c)(3)… Though a hospital is no 
+longer required to operate under those requirements, doing so continues to be a significant factor indicating that the hospital is 
+operated for the benefit of the community.”). 
+8 For more information on charity care requirements, see generally Congressional Research Service, “Hospital Charity Care and 
+Related Reporting Requirements Under Medicare and the Internal Revenue Code,” June 28, 2018, 
+https://sgp.fas.org/crs/misc/IF10918.pdf. More than 8 percent of the US population, or approximately 30 million people, did not 
+have any health insurance in 2021. Compare Katherine Keisler-Starkey and Lisa N. Bunch, “Health Insurance Coverage in the 
+United States: 2021,” US Census Bureau, September 14, 2021, https://www.census.gov/library/publications/2022/demo/p60-
+278.html (“In 2021, 8.3 percent of people, or 27.2 million, did not have health insurance at any point during the year”) with 
+“Health Insurance Coverage of the Total Population,” Kaiser Family Foundation, https://www.kff.org/other/stateindicator/total-
+population (citing US Census Bureau, “American Community Survey,” 2021, https://www.census.gov/programs-surveys/acs) 
+(estimating that 8.6 percent of the US population was uninsured in 2023)). For more discussion about the lack of health 
+insurance coverage in the US, see Human Rights Watch, In Sheep’s Clothing, pp. 10-14.  
+9 See Note 6, above.  
+10 88 Fed. Reg. at 44290.  
+11 See “Requirements for 501(c)(3) Hospitals Under the Affordable Care Act – Section 501(r),” Internal Revenue Service, July 15, 
+2022, https://www.irs.gov/charities-non-profits/charitable-organizations/requirements-for-501c3-hospitals-under-the-
+affordable-care-act-section-501r.  
+12 See Human Rights Watch, In Sheep’s Clothing, pp. 41-55.  
+
+4 
+ 
+There are several reasons why patients who should be eligible for charity care may not receive it.13 But 
+research and investigations, much of which is compiled in our 2023 report on US nonprofit hospitals, 
+indicates that many such exclusions are driven more by hospital practices than patient choices.14 
+ 
+Notably, many of these exclusion-producing hospital practices may already be prohibited under the 
+agencies’ existing regulations around financial assistance. But as a 2022 research brief by the CFPB found, 
+there is “little evidence that compliance with financial assistance rules is systematically monitored and 
+enforced at the federal level.”15 This conclusion is largely supported by a 2020 Government Accountability 
+Office study, which similarly found lax Internal Revenue Service (IRS) oversight and enforcement of tax-
+exempt hospitals.16  
+ 
+Accordingly, if Treasury is interested in improving patients’ access to tax-exempt hospitals’ financial 
+assistance, a first step would be to increase the auditing and enforcement of nonprofit hospitals’ 
+compliance with existing 501(r) obligations. Treasury should also strengthen and clarify these obligations, 
+which are currently far too vague to adequately guide effective enforcement.17 
+ 
+As such, we urge Treasury to provide clearer guidance around tax-exempt hospitals’ charity care 
+obligations, including by specifying minimum financial eligibility criteria. We also recommend that 
+Treasury amend the definition of “community benefit” by reinstating the previously explicit requirement 
+that a nonprofit hospital “must be operated to the extent of its financial ability for those not able to pay 
+for the services rendered.”18 
+ 
+Treasury should also consider amending IRS rules that excuse any hospital’s violation of section 501(r), so 
+long as a correction is made and the violation was “neither willful nor egregious.”19 As it can be difficult 
+to establish that a nonprofit hospital willfully intended to violate these rules when it, for example, sued 
+patients who should have been eligible for charity care under its own policies, the ability of the IRS to 
+penalize and deter violators is severely limited. As recommended in our 2023 report, we urge Treasury to 
+change this standard to focus on the harm caused by these violations, rather than the intent of the 
+violator.20 
+ 
+Treasury should also consider other changes to policy and practice that would better ensure nonprofit 
+hospitals’ compliance with charity care policies, including: 
+ 
+ 
+13 See, for example, Andrea Bopp Stark and Jenifer Bosco, “An Ounce of Prevention: A Review of Hospital Financial Assistance 
+Policies in the States,” National Consumer Law Center, November 2021, https://www.nclc.org/wp-
+content/uploads/2022/09/Rpt_Ounce_of_Prevention.pdf.  
+14 See Human Rights Watch, In Sheep’s Clothing, pp. 41-55.  
+15 Susan Singer, Eric Wilson and Tavi Carare, “Understanding Required Financial Assistance in Medical Care,” US Consumer 
+Financial Protection Bureau, July 28, 2022, https://www.consumerfinance.gov/data-research/research-reports/understanding-
+required-financial-assistance-in-medical-care/  (accessed April 18, 2023). 
+16 US Government Accountability Office, “Tax Administration: Opportunities Exist to Improve Oversight of Hospitals’ Tax-Exempt 
+Status,” September 2020, pp. 21-22, https://www.gao.gov/assets/gao-20-679.pdf,  
+17 See Human Rights Watch, In Sheep’s Clothing, pp. 22-26.  
+18 Internal Revenue Service, ”Rev. Ruling 56-185, 1956-1, CB 202,“ https://www.irs.gov/pub/irs-tege/rr56-185.pdf.  Cf. Internal 
+Revenue Service, “Rev. Rul. 69-545, 1969-2 C.B. 117,” 1969, https://www.irs.gov/pub/irs-tege/rr69-545.pdf.  
+19  26 CFR § 1.501(r); ; “Billing and Collections – Section 501(r)(6),” US Internal Revenue Service, July 15, 2022, 
+https://www.irs.gov/charities-non-profits/billing-and-collections-section-501r6.  
+20 Human Rights Watch, In Sheep’s Clothing, pp. 5-6.  
+
+5 
+ 
+• 
+Requiring hospitals to use, and assist with the use of, a uniform and easily accessible 
+financial assistance application, available in languages used by the communities served. 
+• 
+Requiring nonprofit hospitals to submit their financial assistance policies within their 
+community health needs assessments.  
+• 
+Publicly disclosing section 501(r) violations and requiring that violating hospitals publish 
+a public remediation plan. 
+• 
+Prohibiting certain non-financial eligibility limitations, such as residency or lawful 
+presence requirements, along with other barriers to providing assistance for people who 
+are underinsured, including blanket bans against patients with insurance. 
+ 
+II. 
+“Treasury-Specific Questions” - II(d)(1)  
+ 
+“What policy actions should Treasury consider taking to address 
+problematic practices … including debt collection … to conform with the 
+existing tax laws and regulations pertaining to tax-exempt hospitals?”21 
+ 
+One of the requirements of IRC section 501(r) mandates that nonprofit hospitals make a “reasonable 
+effort” to determine if a patient is eligible for charity care under the hospital's policy before engaging in 
+so-called “extraordinary collection actions,” such as initiating a legal or judicial process against them or 
+selling their debts to third-party debt collectors.22 As currently implemented, these extraordinary 
+collection actions regulations are clearly failing to protect patients.  
+ 
+According to a nationally representative review of consumer credit reports conducted by the Urban 
+Institute in 2022, about one in eight people in the US had medical debt in collections.23 While it is unclear 
+exactly how much of this medical debt in collections comes from nonprofit hospitals, which account for 
+most community hospitals in the US, available research indicates that they are major contributors.24  
+ 
+For example, our 2023 report compiled media accounts and studies from across the US that documented 
+tens of thousands of lawsuits brought by nonprofit hospitals against patients in recent years.25 
+ 
+As Human Rights Watch has documented, many courts across the US routinely award default judgments 
+in these kinds of debt collection cases, issuing no-questions-asked judgments without requiring 
+meaningful evidence.26 As such, once a patients’ debt enters this stage of collections, they may rapidly 
+find themselves on the other side of a rubber-stamped legal judgment that can cause significant financial 
+hardship.  
+ 
+21 88 Fed. Reg. at44290. 
+22 “Billing and Collections – Section 501(r)(6),” US Internal Revenue Service, July 15, 2022, https://www.irs.gov/charities-non-
+profits/billing-and-collections-section-501r6.  
+23 Urban Institute, “Debt in America: An Interactive Map,” June 23, 2022, https://apps.urban.org/features/debt-interactive-
+map/?type=medical&variable=medcoll.  
+24 For example, a 2021 study of nearly 20 years of court records in Wisconsin, conducted by researchers from Yale and Stanford 
+University, found that nonprofit hospitals in the state were actually more likely to sue patients to collect on medical debt than 
+for-profit hospitals over this period. Zack Cooper, James Han, and Neale Mahoney, “Hospital Lawsuits over Unpaid Bills 
+Increased by 37 Percent in Wisconsin from 2001 to 2018,” Health Affairs, December 2021, Vol. 40, No. 12, 
+https://www.healthaffairs.org/doi/10.1377/hlthaff.2021.01130.  
+25 See Human Rights Watch, In Sheep’s Clothing, pp. 45-55 
+26 Human Rights Watch, “Rubber Stamp Justice: US Courts, Debt Buying Corporations, and the Poor,” January 20, 2016, 
+https://www.hrw.org/node/285470/ (“Many individual courts issue thousands or even tens of thousands of no questions asked 
+default judgments in favor of debt buyers every year”). 
+
+6 
+ 
+ 
+Treasury can dramatically improve compliance with these existing extraordinary collection actions 
+regulations by, as noted in the section above, increasing its auditing and oversight of nonprofit hospitals, 
+which currently suffers from a deficit of enforcement activities.27  
+ 
+In addition to increased enforcement, Treasury should consider amending IRS rules to strengthen the 
+definition of “reasonable efforts” under IRC section 501(r)(6).28 For example, IRS could require tax-exempt 
+hospitals to provide additional, specific evidentiary support proving that they have made a “reasonable 
+effort,” or may entirely shift the burden of this standard, requiring that tax-exempt hospitals make a 
+reasonable effort to disprove a patients’ presumed eligibility for financial assistance before engaging in 
+extraordinary collection actions. 
+ 
+Treasury should also consider other changes to policy and practice that would better ensure nonprofit 
+hospitals’ compliance with extraordinary collection actions rules, including:  
+ 
+• 
+Prohibiting tax-exempt hospitals from engaging in particularly rights-impacting practices 
+relating to extraordinary collection actions, such as foreclosures, wage garnishments, 
+bank account seizures, and the charging of interest on medical debt.  
+• 
+Requiring that all parties involved in extraordinary collection actions for medical debts 
+accrued at tax-exempt hospitals (e.g., third-party debt collectors) share the burden of 
+proving their “reasonable efforts” to determine that an individual against whom they are 
+seeking debts is not eligible for financial assistance under the hospital organization’s 
+charity care policies.  
+• 
+Publicly disclosing section 501(r) violations and requiring that violating hospitals publish 
+a public remediation plan. 
+ 
+III. 
+HHS-Specific Questions 
+ 
+“How might HHS improve patient understanding of options for covering the 
+cost of medical treatments? At what points in the care process could 
+patients be provided with information about their financial obligations and 
+payment options?”29 
+ 
+In the context of hospital services, the most fundamental way that HHS can improve patients’ 
+understanding of options for covering the cost of their medical treatment would be for it to use its 
+authority to increase the accessibility of hospital financial assistance.  
+ 
+In particular, the Centers for Medicare and Medicaid Services (CMS), within HHS, should increase 
+enforcement of the requirement that hospitals “provide all or a portion of services free of charge to 
+patients who meet the hospital’s charity care policy.”30  
+ 
+ 
+27 See Notes 15-16, above.  
+28 Billing and Collections – Section 501(r)(6),” US Internal Revenue Service, July 15, 2022, https://www.irs.gov/charities-non-
+profits/billing-and-collections-section-501r6.  
+29 88 Fed. Reg. at 44289. 
+30 Congressional Research Service, “Hospital Charity Care and Related Reporting Requirements Under Medicare and the Internal 
+Revenue Code,” June 28, 2018, https://sgp.fas.org/crs/misc/IF10918.pdf.  
+
+7 
+ 
+CMS should also require that hospitals comply with relevant consumer financial protection laws, such as 
+the Dodd-Frank Wall Street Reform and Consumer Protection Act and IRC section 501(r), within the 
+definition of “applicable Federal laws” under 42 CFR § 482.11(a), in order to receive compensation from 
+CMS under the Conditions of Participation and Conditions for Coverage to continue participating in the 
+Medicare and Medicaid programs. CMS could also extend these Conditions of Participation to prohibit 
+particularly rights-impacting practices relating to extraordinary collection actions, such as foreclosures, 
+wage garnishments, bank account seizures, and the charging of interest on medical debt. 
+ 
+IV. 
+Conclusion 
+ 
+Under international human rights law, everyone has the right to enjoy the highest attainable standard of 
+health.31 To realize this right, governments should ensure equal access to quality health care for all, 
+regardless of a person’s ability to pay.32 The agencies, as agents of the US government, share its obligations 
+to respect, protect, and fulfil this and all other human rights.33  
+ 
+Our research in the US has made clear that the federal government’s failure to adequately regulate private 
+nonprofit hospitals allows many to operate more like for-profit corporations, charging high fees and 
+aggressively pursuing medical bills against people who cannot pay, including through lawsuits and selling 
+debt to third-party debt collectors.34 As a result of this inadequate regulation, unscrupulous nonprofit 
+hospitals can hide among their responsible peers, benefiting from their public perception and tax-status 
+as charitable institutions while engaging in extractive and exploitative practices that undermine human 
+rights.35 
+ 
+We urge the agencies to make clear in their words and actions that health care is a right, not a privilege, 
+reflecting both domestic and international US engagements. In the short term, we encourage the agencies 
+to do this by enacting new rulemaking to ensure, at a minimum, that nonprofit hospitals’ charity care is, 
+in practice, easily obtainable, and adequately inclusive and robust to reflect community need. 
+ 
+Thank you for this opportunity to provide comment. We would be happy to provide additional information, 
+and also welcome the opportunity to further discuss these issues and our research. If you would like to 
+arrange such a meeting, please contact Matt McConnell (mcconnm@hrw.org) and Jack Spehn 
+(spehnj@hrw.org).  
+ 
+ 
+Matt McConnell 
+ 
+Researcher 
+Economic Justice and Rights 
+Human Rights Watch 
+Jack Spehn 
+ 
+Associate 
+Economic Justice and Rights 
+Human Rights Watch 
+ 
+ 
+ 
+ 
+31 UN Committee on Economic, Social and Cultural Rights, General Comment No. 14, The Right to the Highest Attainable 
+Standard of Health, UN Doc. E/C.12/2000/4, August 11, 2000, para. 1,  https://www.refworld.org/pdfid/4538838d0.pdf. 
+32 Ibid.  
+33 Ibid.  
+34 Human Rights Watch, In Sheep’s Clothing, pp. 29-37, 41-55.  
+35 Ibid, pp. 45-55.  
+
+8 
+ 
+V. 
+Appendix 
+Summary of Recommendations for Treasury:  
+• 
+Increase the auditing and enforcement of nonprofit hospitals’ compliance with existing 
+501(r) obligations. 
+• 
+Strengthen and clarify nonprofit hospitals’ 501(r) obligations, which are currently far too 
+vague to adequately guide effective enforcement, including by specifying minimum 
+financial eligibility criteria.  
+• 
+Strengthen requirements for satisfying the “community benefit” standard by reinstating 
+the previously explicit requirement that a nonprofit hospital “must be operated to the 
+extent of its financial ability for those not able to pay for the services rendered.”  
+• 
+Amend IRS rules that excuse any hospital’s violation of section 501(r), so long as a 
+correction is made and the violation was “neither willful nor egregious,” to focus on the 
+harm caused by these violations, rather than the intent of the violator. 
+• 
+Strengthen the definition of “reasonable efforts” under IRC section 501(r)(6).  
+• 
+Require tax-exempt hospitals to use, and assist with the use of, a uniform and easily 
+accessible financial assistance application, available in languages used by the 
+communities served. 
+• 
+Require tax-exempt hospitals to submit their financial assistance policies within their 
+community health needs assessments.  
+• 
+Publicly disclose section 501(r) violations and require that violating hospitals publish a 
+public remediation plan. 
+• 
+Prohibit tax-exempt hospitals from engaging in certain non-financial eligibility limitations, 
+such as residency or lawful presence requirements, along with other barriers to providing 
+assistance for people who are underinsured, including blanket bans against patients with 
+insurance. 
+• 
+Prohibit tax-exempt hospitals from engaging in particularly rights-impacting practices 
+relating to extraordinary collection actions, such as foreclosures, wage garnishments, 
+bank account seizures, and the charging of interest on medical debt.  
+• 
+Require that all parties involved in extraordinary collection actions for medical debts 
+accrued at tax-exempt hospitals (e.g., third-party debt collectors) share the burden of 
+proving their “reasonable efforts” to determine that an individual against whom they are 
+seeking debts is not eligible for financial assistance under the hospital organization’s 
+charity care policies.  
+ 
+Summary of Recommendations for HHS: 
+• 
+Increase enforcement of CMS’ requirement that hospitals “provide all or a portion of 
+services free of charge to patients who meet the hospital’s charity care policy.”   
+• 
+Amend CMS’ Conditions of Participation and Conditions for Coverage to require 
+compliance with IRC section 501(r) and other relevant consumer financial protection laws, 
+such as the Dodd-Frank Wall Street Reform and Consumer Protection Act, within the 
+definition of “applicable Federal laws” under 42 CFR § 482.11(a).  
+• 
+CMS could also extend these Conditions of Participation to prohibit particularly rights-
+impacting practices relating to extraordinary collection actions, such as foreclosures, wage 
+garnishments, bank account seizures, and the charging of interest on medical debt. 
+ 
+ 

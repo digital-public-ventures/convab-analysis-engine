@@ -41,7 +41,8 @@ logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT, datefmt=LOG_DATE_FOR
 logger = logging.getLogger(__name__)
 
 UPLOAD_FILE = File(...)
-NO_CACHE_QUERY = Query(default=False)
+NO_CACHE_QUERY = Query(default=False, description="Skip checking for existing cleaned CSV")
+NO_CACHE_OCR_QUERY = Query(default=False, description="Skip cached OCR results and re-extract")
 CURSOR_QUERY = Query(default=None)
 LIMIT_QUERY = Query(default=500, ge=1, le=5000)
 
@@ -202,7 +203,7 @@ def _read_csv_rows(csv_path: Path) -> list[dict[str, Any]]:
     return cast("list[dict[str, Any]]", df.to_dict(orient="records"))
 
 
-async def _run_clean_job(job_id: str, content: bytes, content_hash: str) -> None:
+async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_cache_ocr: bool = False) -> None:
     _job_store.mark_running(job_id)
     paths = _data_store.ensure_hash_dirs(content_hash)
 
@@ -228,6 +229,7 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str) -> None
             chunk_size=CLEAN_CHUNK_SIZE,
             on_chunk=_add_chunk,
             on_row_count=_set_total_rows,
+            no_cache_ocr=no_cache_ocr,
         )
         logger.info("Cleaned CSV saved to: %s", cleaned_path)
         _job_store.mark_completed(job_id)
@@ -283,8 +285,16 @@ async def clean_csv_endpoint(
     file: UploadFile = UPLOAD_FILE,
     *,
     no_cache: bool = NO_CACHE_QUERY,
+    no_cache_ocr: bool = NO_CACHE_OCR_QUERY,
 ) -> JobStartResponse:
-    """Start a CSV cleaning job and return the job id immediately."""
+    """Start a CSV cleaning job and return the job id immediately.
+
+    Args:
+        file: CSV file to clean
+        no_cache: If True, skip checking for existing cleaned CSV and re-process
+                  (but still use cached OCR results for attachments)
+        no_cache_ocr: If True, also skip cached OCR results and re-extract all attachments
+    """
     content = await file.read()
     content_hash = DataStore.hash_content(content)
 
@@ -310,7 +320,7 @@ async def clean_csv_endpoint(
             results_url=results_url,
         )
 
-    _create_background_task(_run_clean_job(job.job_id, content, content_hash))
+    _create_background_task(_run_clean_job(job.job_id, content, content_hash, no_cache_ocr=no_cache_ocr))
 
     return JobStartResponse(
         job_id=job.job_id,

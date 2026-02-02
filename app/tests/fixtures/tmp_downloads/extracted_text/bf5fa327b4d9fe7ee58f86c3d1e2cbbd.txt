@@ -1,0 +1,186 @@
+Neighborhood Trust Financial Partners’ Comment in Response to Request for
+Information Regarding Medical Payment Products
+Docket No. CFPB-2023-0038
+Key Takeaways
+●
+The medical payment product market has grown significantly in recent years with almost $23
+billion in healthcare expenses being put on cards or loans with deferred interest terms from
+2018 to 2020. CareCredit, the focus of our research, currently has 11.7 million cardholders in
+2023 up from 4.4 million cardholders 2013.
+●
+30% of Neighborhood Trust clients who have had a CareCredit tradeline for at least 24 months –
+the longest 0% APR promotional period that CareCredit offers – still had a balance. This means
+they are likely currently being charged 29.99% APR on their original balance, even after 2 years
+of making payments.
+●
+Clients with a CareCredit account at baseline carried a median balance of $1,081.
+●
+CareCredit is commonly used for veterinary and dental expenses. This may reflect a gap in
+insurance products and/or suggest that these providers are more likely to recommend medical
+payment products to their patients.
+Recommendations
+1.
+Strengthen consumer protection regulations against deferred interest. This ideally would mean
+banning deferred interest altogether or perhaps, if a borrower only owes X% of their original
+balance when a promotional period ends, the lender can only charge interest on X%.
+2.
+Require medical payment products to include the monthly payment needed to pay off the full
+balance within the 0% APR promotional period, in addition to the minimum.
+3.
+Mandate hospitals to vet for financial assistance eligibility, or implement presumptive eligibility
+before being allowed to recommend a medical payment product. Also ensure Medicaid
+applications are offered as readily as CareCredit applications to those who are presumed eligible.
+4.
+Push for increased access to affordable dental insurance, including through both employers and
+the marketplace.
+5.
+Explore pet insurance products and their cost effectiveness relative to CareCredit, to determine
+which is the better option for pet-owners and regulate as needed to rebalance this market.
+6.
+Consider a government-sponsored billing system so medical providers can still offload their
+billing and collection efforts, while also reducing the market demand for medical credit cards.
+7.
+Lastly, be mindful of overregulating CareCredit and similar products in the near term, to avoid
+deferred care as an unintended consequence.
+
+Market Summary
+As the CFPB reported, the medical payment product market has grown significantly in recent years.
+“People used cards or loans with deferred interest terms to pay for almost $23 billion in healthcare
+expenses, and over 17 million medical purchases, from 2018 to 2020.” CareCredit, the focus of our
+research, currently has 11.7 million cardholders in 2023 up from 4.4 million cardholders 2013.
+IBIS World reports that the three biggest players in the medical patient financing industry are Synchrony
+Financial's CareCredit, Citigroup Inc. and Wells Fargo & Company, with more small financing companies
+entering the market each year and reducing market concentration - making these products potentially
+harder to regulate and contain over time.
+CareCredit offers two products that are both subject to credit approval: a short-term option with a
+promotional 0% APR repayment period of 6-24 months, after which deferred interest kicks in on the
+original balance at 29.99%; and a longer-term option for up to 60 months with fixed monthly payments
+and “reduced APR” (17.90-20.90%). The longer-term option is only available for higher expenses, while
+the short-term option offers a 0% APR promo period starting at $200.
+Eligible expenses listed on CareCredit’s website include: Animal/Pet Care; Chiropractic Procedures;
+Dental Procedures; Dermatology Procedures; Surgery Center Procedures; Health Systems & Hospitals;
+Labs & Diagnostics Procedures; Funeral Expenses; Primary & Urgent Care Procedures; and several more.
+This list of eligible expenses and the range of provider-types who have partnered with CareCredit reflects
+the scope of non-hospital providers who are not covered by financial assistance policies. Additionally,
+many of these categories reflect non-elective care or services. This means that providers are offering
+CareCredit to individuals at the point-of-sale for emergency and/or critical services, when they are most
+vulnerable and likely without other options for care or payment. And this debt has serious implications:
+among Neighborhood Trust survey respondents with current medical debt, 57% reported cutting back
+spending on basic needs and 60% reported worsened mental health as a result of their medical debt.
+CareCredit Analysis
+Among Neighborhood Trust clients, 777 (10%) of them had a CareCredit tradeline on their credit report
+when they first signed up for coaching (i.e. at baseline), 36% of whom had a balance greater than $0. The
+median baseline balance for those with balances >$0 was $1,081, and the median high credit amount
+was $2,500 (which reflects the highest balance ever carried on the account. This is often the
+origination amount, but not always). The median monthly payment was $42.
+The prevalence of CareCredit tradelines among our clients has stayed relatively level, with 8% of clients
+having a CareCredit account in 2018 and 10% in 2023, with the highest prevalence of 13% in 2022.
+Among clients who have had a CareCredit tradeline for at least 24 months, 30% of them still had a
+balance after 24 months of opening the card. 24 months represents the most generous 0% APR
+
+promotional period CareCredit offers. This means that nearly a third of CareCredit holders who’ve had
+the card for at least 2 years, still carried a balance and were likely paying deferred interest on their
+original balance at a 29.99% APR. Even if they were enrolled in a long-term product, they would be
+paying a minimum of 17.90% interest.
+To illustrate: if a patient opened a CareCredit short-term card with a starting balance of $2,500 (the
+median high credit amount) and paid a minimum payment of $50 per month, they would still have a
+balance of $1,300 after 24 months. If they continued paying $50/month until the balance reached $0,
+then by the end of paying off the card they would’ve paid approximately $1,183 in deferred interest and
+a total of $3,683 over 75 months (more than 6 years).
+Approval for a CareCredit card does entail a credit check, which helps explain why Neighborhood Trust
+clients with CareCredit tended to have stronger credit profiles. Those with CareCredit had an average
+baseline credit score of 654 and 50% had prime credit scores, relative to clients without CareCredit who
+had an average baseline credit score of 624 and only 28% had prime credit scores. Only 28% of clients
+with CareCredit have debt in collections, while 44% of those without CareCredit have debt in collections.
+We found that among clients who mentioned what type of expenses they used CareCredit to pay for,
+they primarily used the card for veterinary and/or dental expenses. This may reflect a gap in insurance
+products; while individuals might have sufficient healthcare coverage, they're treating these credit
+products as a substitute for dental or pet insurance. It might also signal that veterinary clinics and dental
+providers are more likely to make referrals to or recommend medical payment products like CareCredit.
+“Yeah, I have a CareCredit card with past vet bills on it. Every time the dogs would go [to the vet] that
+account would go up again. And now that I just finished paying off a credit card that was in collections,
+I'll probably start working towards [CareCredit] next because I've owed like 2,500 on that forever.”
+Additionally, several clients described their relationship with their CareCredit account as a form of
+insurance, and were resistant to the idea of cutting off their access to this line of credit.
+For example: “I want to keep the CareCredit because I have $3,500 available for my cat if it gets sick.”
+Note that these findings are not necessarily representative of overall spending trends as these were only
+individuals who explained how they used (or continue to use) their CareCredit account. It’s possible that
+those who use the card for primary care or other medical expenses are less open to sharing the details of
+their card usage. Other less commonly mentioned expenditures included: braces for children,
+emergency medical costs, eyeglasses, and lab tests.
+Relative to Neighborhood Trust’s overall clientbase, our clients with CareCredit cards were more likely
+to be white or Latino/a, earn higher annual incomes, be female, older, and have attained higher levels
+of education. These categories also correlate with stronger credit profiles, which is likely to explain these
+trends – not a higher need for affordable medical payment options among these groups relative to lower
+income, Black / African American, younger, or less educated populations.
+
+Notably, three clients had CareCredit on their credit report due to co-signing for a friend or family
+member, signaling that there is in fact demand among people with weaker credit profiles for these
+medical financing products, they may just have more difficulty accessing them.
+While we didn’t have a direct measure for capturing how often patients use CareCredit to pay bills that
+are incorrect or could be defrayed by lower-cost alternatives, we do collect self-reported data on
+benefits access. As a proxy measure, we found that 16% of clients with CareCredit also receive SNAP
+benefits, which is likely to correlate with eligibility for financial assistance at a minimum, or perhaps
+Medicaid. These individuals are likely to have either used CareCredit for expenses that do not have any
+financial assistance policies, such as veterinary care, dental care, or lab tests; or their provider offered
+them a medical finance product without doing their due diligence around financial assistance eligibility.
+Only 10% of clients with CareCredit had their account charged off or sent to collections, which is lower
+than the rate of clients with non-CareCredit credit cards that are charged off or in collections (36%).
+However, for those who did have their CareCredit account sent to collections, it created confusion and
+hurt their credit profiles. For example, one client used CareCredit to pay for a dental crown and then
+became unemployed so was unable to continue paying down the balance. Eventually it went to
+collections, and she explained that it changed hands three times and as a result “I really didn't know who
+to contact, because when I called CareCredit, they said it wasn't with them.”
+Overall, our clients with CareCredit largely appeared to understand how the product works and accepted
+them as a normal feature of the healthcare system, reflecting how normalized short-term credit debt
+and medical debt have become, despite their harmful impacts on financial, mental and physical health.
+Conclusion
+With recent regulatory updates to how medical debt collections can report on credit reports, it’s clear
+that the Biden Administration understands the negative impacts of medical debt and the importance of
+disentangling medical debt from the credit reporting system. While medical payment products like
+CareCredit are, in some ways, helping to democratize access to healthcare, they are also exacerbating
+the integration of the financial system’s profit-driven principles into the healthcare system. Better
+regulating these products is an important step to mitigating the impact of medical debt on financial,
+mental and physical health; alongside more sweeping changes to reduce individuals’ responsibility to pay
+for medical care out of pocket.
+We believe that to improve these products in the interim, the CFPB, HHS, and the Treasury ought to
+improve the terms of repayment to ensure consumers understand promotional periods and are
+equipped to pay off the balance without interest, and ban or more strongly regulate deferred interest.
+To reduce demand for these products in the long term and minimize the damage they have on
+consumers’ overall health, we also recommend mandating presumptive eligibility for financial assistance
+
+to prevent those who are eligible from erroneously ending up with a medical credit card; increase
+affordability and access to dental insurance; investigate pet insurance products currently on the market
+to determine if greater competition or regulation is needed; and create a government-sponsored billing
+system to shrink the market for medical payment products, while still meeting providers’ demand for
+outsourced billing.
+Products like CareCredit are a symptom of a challenging and exploitative healthcare system – not the
+root of the problem. While interim regulations are important for harm-mitigation, these products are
+providing many low-income consumers with access to healthcare and related services that they
+otherwise might not have. It’s critical that the agencies bear in mind the reliance people currently have
+on medical payment products when taking action, to avoid pushing the most vulnerable consumers into
+even worse, more predatory options in the near term.
+Neighborhood Trust Overview & Methodology
+Neighborhood Trust is a national nonprofit social enterprise and marketplace innovator whose purpose
+is to transform workplaces and financial services to better meet the financial needs of low-wage workers.
+We create financial security for low-wage workers by delivering trusted financial coaching that enables
+them to reduce debt, improve cash flow and build savings as a buffer against financial shocks. We also
+leverage our core financial coaching operation to translate our data and trusted relationships with
+workers into actionable insights that fuel innovative new products, services and benefits, and drive
+market-level change.
+The people we serve, and who share their data with us, have a median income of $40,000. 88% are
+employed in some capacity. 94% have debt at baseline with a median total debt balance of $35,831, and
+a median of $3,373 in credit card debt. In a survey of our clients, 70% currently have medical debt. 75%
+identify as women, 49% identify as Black or African American, 25% Hispanic or Latino and 22% Caucasian
+or White.
+To put together this comment, our Data and Insights Team explored 275 hours of transcribed recorded
+financial coaching sessions with low-income workers who all had a CareCredit tradeline on their most
+recent credit report. Among the 393 clients with a CareCredit tradeline, 220 had a recorded session.
+Within this group, 38 individuals shared some sort of insight into their experience with CareCredit during
+a recorded session, and 24 shared the type of expenses they used (or still use) the card for. We focused
+on CareCredit because they have the largest market share among medical-specific credit cards, offered at
+over 260,000 providers (and counting), and because they are the most clearly labeled on credit reports
+among the largest lenders of medical payment products. We also conducted quantitative analyses using
+data collected from the credit reports and intake forms of this same group of financial coaching clients.
+Please feel free to reach out to rsilbermarker@neighborhoodtrust.org with any follow up questions or
+for further discussion.

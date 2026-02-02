@@ -1,0 +1,2272 @@
+ 
+ 
+ 
+ 
+1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Thomas D. Policelli 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+CEO, HPS/PayMedix 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1000 North Water Street, 11th floor 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Milwaukee, WI  53202 
+ 
+September 10, 2023 
+ 
+ 
+Consumer Financial Protection Bureau 
+ 
+Center for Medicare and Medicaid Services 
+1700 G Street, NW 
+ 
+ 
+ 
+ 
+Department of Health and Human Services 
+Washington, DC  20552 
+ 
+ 
+ 
+PO Box 8010 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Baltimore, MD  21244-8010 
+ 
+United States Department of Treasury 
+1500 Pennsylvania Avenue, NW 
+Washington, DC 20220 
+ 
+Submitted via www.regulations.gov 
+ 
+Docket Numbers:   
+CFPB-2023-0038 
+ 
+ 
+ 
+CMS-2023-0106 
+ 
+ 
+ 
+TREAS-DO-2323-0008 
+ 
+To whom it may concern: 
+ 
+Thank you for the opportunity to provide input to the Consumer Financial Protection Bureau 
+(CFPB), U.S. Department of Health and Human Services, and U.S. Department of Treasury (the 
+“Agencies”) regarding medical payment products (Request for Information published in the 
+Federal Register dated July 12, 2023).  
+ 
+The Agencies should be lauded for their examination of the way in which medical payment 
+products are being utilized beyond their original purpose for assisting with costs generated from 
+out-of-network and elective care. (The RFI defines “medical payment products” as those “being 
+administered by financial services companies, who manage the billing and collections process 
+for these products and earn revenue through interest and fees”.) 
+ 
+The expanded use of medical payment products imposes an even greater financial burden on 
+many patients, limits their creditworthiness, and raises overall healthcare costs. The Agencies 
+should ensure full transparency for all medical credit cards, installment loans, and other medical 
+payment products that carry interest charges and consumer fees and can cause significant 
+increases in cost of care. Further, the Agencies should ensure that consumers have clear 
+
+ 
+ 
+ 
+ 
+2
+information regarding charity care eligibility and preserve their ability to negotiate bills and 
+secure adjustments.  
+ 
+We have a crisis of healthcare affordability in the U.S., which is a bigger topic and which a 
+myriad of public policy and private market solutions have attempted to address. In the 
+meantime, it is necessary for patients to pay for their rapidly rising portion of healthcare costs, 
+especially in-network allowed charges such as deductibles and co-pays. The good news is that 
+new products have entered the market and created a stronger and more equitable outcome for 
+consumers. Innovative private companies such as PayMedix offer consumer-friendly alternatives 
+which simplify the medical billing experience, treat all patients equitably and with dignity, and 
+eliminate additional costs for patients and family members. 
+ 
+Contents 
+ 
+1. 
+Background ............................................................................................................................. 2 
+2. 
+The PayMedix Guaranteed Universal Billing and Payment Service ........................................ 5 
+a) Reducing Employee Financial Stress ................................................................................ 6 
+b) Health Equity .................................................................................................................... 7 
+c) Patient Benefits I: Simplified Billing Process .................................................................... 8 
+d) Patient Benefits II: Reduced Cost and Risk ...................................................................... 9 
+e) Provider Benefits I: No Promotional Role ........................................................................ 9 
+f) Provider Benefits II: Reduced Administrative Burden.................................................... 10 
+g) Charity Care .................................................................................................................... 11 
+h) Disputed Medical Bills .................................................................................................... 11 
+i) Consumer Protections.................................................................................................... 11 
+3. 
+Response to RFI Questions.................................................................................................... 12 
+a) General Questions .......................................................................................................... 19 
+b) CFPB-Specific Questions................................................................................................. 32 
+c) HHS-Specific Questions .................................................................................................. 36 
+d) Treasury-Specific Questions ........................................................................................... 41 
+4. 
+Conclusion ............................................................................................................................. 44 
+ 
+1. Background 
+ 
+U.S. healthcare expenditures, as measured by the annual National Health Expenditure data 
+published by CMS, totaled $4.3 trillion in 2021. This represents 18% of U.S. GDP, up from 13% in 
+
+ 
+ 
+ 
+ 
+3
+2000, 9% in 1980 and 5% in 1960.1 While the portion of total U.S. healthcare costs not covered 
+by insurance and therefore paid “out of pocket” by patients declined on average from 47% in 
+1960 to 10% in 2021, the total dollars owed by patients has grown 5.9% annually over the same 
+period, which is nearly twice the rate of U.S economic growth. In 2021, the NHE data shows out 
+of pocket spending grew 10.4% to $433.2 billion. 
+ 
+The crisis of healthcare affordability is well documented, and all stakeholders have had to adapt. 
+Employers have increasingly shifted rising costs to employees through High Deductible Health 
+Plans (HDHPs), higher co-pays and higher monthly premiums. Healthcare providers have 
+tightened up claims processing over the years, and as the amounts due from consumers 
+continues to rise, they have introduced easier ways for patients to pay (online portals, card on 
+file, text-to-pay) and extended payment terms. Unfortunately, the financing options 
+implemented by providers at times have hurt consumers’ ability to negotiate bills and amounts 
+due, reduced their access to financial assistance/ charity care, and brought in unfavorable 
+financing terms (interest charges and fees) that are not transparent to patients. This has further 
+reduced access to care. 
+ 
+In 2022, four in ten adults (43%) said that they or a household member put off or postponed 
+needed health care due to cost.2 When they do receive care, patients are stressed by paying the 
+bill. In a recent study, over one-half of Americans said that in the last six months paying for 
+medical bills has been stressful (52%) and that stress has had some impact on their physical or 
+mental health (92%).3 
+ 
+Another recent report indicated how widespread the problem has become, with 23.5% of 
+middle-class people (nearly 17 million) having medical debt in 2020, which was more than the 
+22% of lower-income population.4 Making matters worse, healthcare providers may offer so-
+called “in-house payment plans” to patients to pay off their hospital charges over time, and 
+then turn around and deny care to patients who have unpaid balances outstanding.5 
+ 
+It is also important to make sure consumers understand their medical bills, and can dispute 
+hospital, physician, and other charges when they believe they are incorrect. In one recent study, 
+59% of providers rated patient financial literacy as “poor” despite their own investments in 
+patient educational materials and financial counselors. 6 A separate study found that 56% of 
+ 
+1 NHE website and “NHE Fact Sheet” (2021 data), available at https://www.cms.gov/research-statistics-data-and-
+systems/statistics-trends-and-reports/nationalhealthexpenddata/nhe-fact-sheet.  
+2 Peterson-KFF Health System Tracker, “How does cost affect access to healthcare?” (Jan. 2023), available at 
+https://www.healthsystemtracker.org/chart-collection/cost-affect-access-care/.  
+3 PayMedix, “Healthcare Payments and Financial Disparities Study” (Jun. 2023), available at 
+https://paymedix.com/wp-content/uploads/2023/06/PayMedix-National-Survey-Key-Finding-Final.pdf.  
+4 Third Way, “Medical Debt Hits the Heart of the Middle Class” (Aug. 2023), available at 
+https://www.thirdway.org/report/medical-debt-hits-the-heart-of-the-middle-class.  
+5 New York Times, “This Nonprofit Health System Cuts Off Patients With Medical Debt” (Jun. 2023), available at 
+https://www.nytimes.com/2023/06/01/business/allina-health-hospital-debt.html.  
+6 “Study Finds Healthcare Providers Looking to Outsource Revenue Cycle Management Processes” (Apr. 2023), 
+available at https://www.carecredit.com/pressrelease/cwh-advisors-patientpay-research/.  
+
+ 
+ 
+ 
+ 
+4
+Americans feel “completely lost” when it comes to understanding their health plans.7 In one 
+consumer survey, 38% of patients said their medical bills were somewhat confusing or 
+extremely confusing.8 Any solutions to help patients afford healthcare should include help to 
+improve patients’ abilities to understand what they owe and advocate for themselves on the 
+financial side of healthcare. 
+ 
+This is especially important because medical billing errors occur frequently – half of 
+respondents to a recent study reported incorrect charges of at least $200, and a quarter saw a 
+difference of more than $500 on their bills.9 When patients use medical payment products, 
+including credit cards and installment loans that convert medical debt to consumer debt, they 
+often lose the ability to go back and ask for adjustments to incorrectly billed amounts. In fact, 
+once a billed amount moves over to a medical payment product, some interpretations hold that 
+this represents a consumer's commitment that the charge was justified.10 Effectively once an 
+incorrect billed amount is paid on a medical credit card or installment product, some of those 
+payment products require the patient to ultimately pay that incorrect amount, even if the 
+patient was erroneously overbilled. 
+ 
+There are programs available to help lower-income patients pay their medical bills, including 
+each non-profit hospital’s own financial assistance policies and enrollment in state Medicaid 
+plans. However, healthcare providers often do a poor job making patients aware of these 
+options, and they continue to send bills to patients who could potentially qualify for assistance. 
+One study demonstrated that almost half of non-profit hospitals sent medical bills to patients 
+whose incomes are low enough to qualify for charity care, accounting for $2.7 billion in medical 
+expenses which would have been written off according to the hospital’s own policies if the 
+patients had applied for assistance.11  
+ 
+Historically, consumer healthcare costs in the commercial market (i.e., those not in a 
+government health care program) have been dealt with in two ways: 
+ 
+ 
+ 
+ 
+7 “More than Half of Americans Confused by Health Insurance, Including HSAs” (Feb. 2021), available at 
+https://www.bendhsa.com/newsroom/more-than-half-of-americans-confused-by-health-insurance-including-hsas.  
+8 “Nearly 40% of Americans Confused by Medical Bills” (Dec. 2022), available at https://akasa.com/press/nearly-
+40-of-americans-confused-by-medical-bills/.  
+9 “New Research Reveals Consumer Frustrations with Healthcare Billing and Lack of Processes for Correcting Errors” 
+(Jan. 2023), available at https://www.zelis.com/news/new-research-reveals-consumer-frustrations-with-
+healthcare-billing/.  
+10 NPR, “Doctors And Hospitals Tell Patients: Show Us The Money Before Treatment” (Dec. 2016), available at 
+https://www.npr.org/sections/health-shots/2016/12/07/504589131/doctors-and-hospitals-tell-patients-show-us-
+the-money-before-treatment.  
+11 KFF Health News, “Patients Eligible For Charity Care Instead Get Big Bills” (Oct. 2019), available at 
+https://kffhealthnews.org/news/patients-eligible-for-charity-care-instead-get-big-bills/. 
+
+ 
+ 
+ 
+ 
+5
+1. In-network allowed charges.  These are the copays, deductibles, and out-of-pocket 
+amounts for which consumers are responsible under their employer-provided health 
+coverage and which received the best-negotiated price with healthcare providers 
+o A combination of the provider, insurer, and employer could offer financial 
+assistance to consumers to pay their portion (e.g., payment plans, HRAs/ FSAs/ 
+HSAs, health/ wellness incentive accounts, etc.) 
+o Assistance was both guaranteed and universal for all consumers regardless their 
+individual financial status 
+o Consumers have a financial incentive to seek out cost-effective care 
+ 
+2. Out-of-network and elective care.  This is care that consumers choose to consume even 
+though it will cost them more money and/or is not a covered medical benefit (e.g., 
+cosmetic surgery) 
+o If financed, the consumer could individually seek a credit product, or the 
+healthcare provider could partner with a financial services firm to offer that 
+function 
+o Consumers are individually underwritten, and whether credit is offered and if so 
+on what terms varies significantly 
+o Consumer interest and fees are typically a key component of these products 
+ 
+Medical payment products as defined in the RFI were traditionally sold for use in the out-of-
+network and elective care, and they filled a role in that arena.  More recently, though, these 
+medical payment products are being utilized to finance in-network allowed costs after 
+insurance.   
+ 
+Many, including PayMedix, view this expansion of medical payment products as problematic.  
+Any product for in-network allowed charges that does not apply to all individuals (regardless 
+of their creditworthiness) and provide full coverage up to a patient’s out-of-pocket maximum 
+is cherry-picking consumers with higher credit ratings.  This approach diminishes universal 
+access to care, increases health inequity, and drives up overall healthcare costs.  A better 
+approach for assisting consumers with their in-network allowed charges is a “Guaranteed 
+Universal Billing and Payment Service.”  We define and explain this term in Section 2.   
+ 
+2. The PayMedix Guaranteed Universal Billing and Payment Service 
+ 
+An alternative model exists that does not place additional financial burden on patients, 
+preserves their creditworthiness, and treats all patients equitably and with dignity. This 
+Guaranteed Universal Billing and Payment Service is being utilized by a growing number of 
+
+ 
+ 
+ 
+ 
+6
+patients and is addressing the payment challenges faced by patients covered by health plans – 
+since 58% of provider bad debt is from patients with health insurance, a 5x increase in 3 years.12 
+ 
+In this model, employers contract with a third party to reimburse healthcare providers for the 
+out-of-pocket portion of the in-network medical bill owed by their employees. The third-party, 
+for example PayMedix, is then responsible for collecting the out-of-pocket amount owed from 
+the patient, who receives the PayMedix SuperEOB combining all billing and EOB information 
+from healthcare providers they visit in one consolidated monthly statement.13 Patients see 
+immediately what they owe, how to pay it, and how to get credit if they need it in the form of 
+extended payment options. The provider is not involved in collecting balances due from these 
+patients. 
+ 
+Guaranteed.  Payment is guaranteed to the providers on behalf of all consumers. 
+ 
+Universal.  All employees and their dependents are automatically included, and all in-network 
+costs up to the full out-of-pocket maximum can be included.  No one is excluded for any reason. 
+ 
+Billing.  All of the consumer’s medical bills and EOBs are reconciled automatically and are 
+replaced by a simple monthly summary statement. 
+ 
+Payment.  Consumers can pay one bill that covers all of the participating providers, and if they 
+need to pay over time then they can automatically get a no-fee, 0% interest payment plan. 
+ 
+Service.  Since PayMedix is funded by employers and providers, it is provided at no cost to the 
+consumer. 
+ 
+a) Reducing Employee Financial Stress 
+ 
+Employers can play a large role in helping employees reduce the stress of healthcare billing. 60% 
+of employees say their employers are responsible for providing financial strategies to help them 
+manage expenses, while 72% of corporate benefits managers are interested in a simplified 
+medical payments solution, especially payment options that are flexible and offer 0% or low 
+interest. 14 Since the PayMedix Guaranteed Universal Billing and Payment Service guarantees 0% 
+interest credit for all patients and has no consumer fees, it is an excellent fit for both benefits 
+managers and employees. 
+ 
+ 
+12 “Hospital collection rates for self-pay patient accounts” (Aug. 2022), available at https://www.crowe.com/-
+/media/crowe/llp/widen-media-files-folder/h/hospital-collection-rates-for-self-pay-patient-accounts-report-
+chc2305-001a.pdf.  
+13 Employees are able to use the PayMedix simplified billing service for medical claims generated with healthcare 
+providers who are in-network for their health plan, and also in the PayMedix network.  
+14 PayMedix, “Healthcare Payments and Financial Disparities Study” (Jun. 2023), available at 
+https://paymedix.com/wp-content/uploads/2023/06/PayMedix-National-Survey-Key-Finding-Final.pdf.  
+
+ 
+ 
+ 
+ 
+7
+Employers offer the PayMedix Guaranteed Universal Billing and Payment Service to their 
+employees to supplement their commercial group health benefit plan, and provide a benefit to 
+employees who have moved to a High Deductible Health Plans (HDHPs). Patients with a HDHP 
+incur higher out of pocket medical expenses until they meet their annual deductible. Unlike 
+medical payment products that are offered to some patients after they receive care, all patients 
+enrolled in PayMedix know before they receive care that they have the flexibility and benefits of 
+the PayMedix service. This certainty removes a stubborn and persistent source of a barrier to 
+care and allows the patient to proceed with needed medical services. 
+ 
+The characteristics and demographics of participating employees in the PayMedix billing service 
+are representative of the full cross section of the employer’s workforce. The billing solution is 
+the same for the CEO of the firm as it is for an entry level hire. The PayMedix billing service is 
+uniform across the participating workforce of each client. This includes core service features 
+such as the configuration of the consolidated bill (“SuperEOB”), and the flexibility of the 
+employee to choose the most appropriate bill repayment plan based on their individual 
+financial situation.  
+ 
+Since participants know they will be provided care without providers checking to see if they can 
+afford it or have outstanding medical debt, PayMedix improves access to care.  The United 
+States has seen a recent spike in later-stage disease because consumers were unable or 
+unwilling to receive regular care during COVID; people now show up with Stage 4 cancer instead 
+of getting caught earlier.  This dynamic has always been the case for those with concerns about 
+how they would be able to pay their portion of in-network allowed charges.  PayMedix removes 
+that concern – its employer clients have seen annual medical trend in the 2.5-3.4% range for 
+years, or about half the market norm.  When people know they can access care, they get more 
+care when they need it.  This saves the healthcare system overall as well as improves the health 
+status of the individual patients.    
+ 
+b) Health Equity 
+ 
+It is estimated the 43% of Americans avoid seeking care when they need it15 cut back on 
+medications to treat chronic conditions like diabetes or fail to follow through on important 
+imaging and other tests that can save lives. They do this because they don’t have the means to 
+pay for care.  
+ 
+An important feature of the PayMedix model is that unlike medical credit cards and installment 
+loans targeted for post-service medical expenses, PayMedix does not require each patient to 
+apply or be approved to qualify for the service. There is no review of employee credit history 
+during enrollment, and no looking at other data sources that would be used to risk score 
+patients and then adjust pricing and other terms at the individual level. Thus, PayMedix does 
+not ‘cherry pick’ low-risk patients or seduce high-risk patients with gimmicky teaser rates. When 
+an employer selects PayMedix as a benefit, all its employees are offered credit up to their 
+ 
+15 Ibid. 
+
+ 
+ 
+ 
+ 
+8
+annual in-network out of pocket maximum with 0% interest and no fees to the patient.  The cost 
+of the service is borne by the providers and employers.   
+ 
+While a medical credit card typically offers its revolving line of credit to very few subprime 
+consumers (<620 credit score), 25% of PayMedix participants are in the subprime category. This 
+includes 10% with a credit score less than 480.  Most of these individuals would not access 
+needed care without a Guaranteed Universal Billing and Payment Service like PayMedix, which 
+would suboptimize health outcomes and drive up overall healthcare costs since patients will 
+end up sicker and ultimately utilize more expensive care.    
+ 
+Medical payment products often find patients at a moment of great weakness – e.g., when they 
+find out that they need surgery - without the ability to evaluate options or make a thoughtful 
+financial decision. With the PayMedix program already in place, participants need never worry 
+about provider-facilitated medical payment product being offered to them when they can least 
+afford to make a bad choice. There is no need since PayMedix will have automatically already 
+handled the transaction.  This is good for the patient, good for the healthcare provider, and 
+good for society at large.  
+ 
+c) Patient Benefits I: Simplified Billing Process 
+ 
+Financial literacy with healthcare billing and insurance remains a chronic and systemic problem 
+in the United States, with an estimated two-thirds of Americans unable to correctly define 
+healthcare concepts and products like insurance premiums, co-payments, deductibles.16 This 
+confusion and lack of knowledge contributes to consumers delaying payment to providers, as 
+they are often uncertain if the balance due is fully adjudicated and final. In the PayMedix 
+solution, consumers are presented with a simplified, yet comprehensive consolidated bill 
+(SuperEOB). This statement clearly summarizes the balance after insurance from all adjudicated 
+medical claims, as well as the total amount of payments that have already been made to in-
+network providers on the employee’s behalf. This single monthly statement combines the detail 
+of an Explanation of Benefits (EOB) with the attributes of a conventional “monthly billing 
+statement.”   
+ 
+This simplification is critical.  Today, the healthcare system overall spends a fortune to inundate 
+consumers with complicated information that does not reconcile or make sense to most 
+consumers.  Those who can and will pay their medical bills do so, but only eventually.  
+Experienced consumers know that most of what they receive will not make sense and that they 
+should wait until it is all sorted out.  In other words, we as a healthcare system have trained 
+consumers to ignore us.   
+ 
+Healthcare cost and quality improvement require consumers to be engaged.  Each provider 
+implementing yet another billing or payment point solution could incrementally increase each 
+ 
+16 Forbes, “U.S. Consumers Often Lack Literacy In Healthcare Finances” (Jun. 2021), available at 
+https://www.forbes.com/sites/joshuacohen/2021/06/01/us-consumers-often-lack-literacy-in-healthcare-finances/. 
+
+ 
+ 
+ 
+ 
+9
+of their financial results for a time, but the overall increase in the volume of consumer billing 
+and payment outreach is driving consumers away.  Think of someone getting surgery – the 
+surgeon, the anesthesiologist, radiologist, pathologist, and facility will all bill and ping the 
+consumer multiple times with a confusing array of often conflicting information.  Without a 
+simple, single Source of Truth like the PayMedix SuperEOB, consumers are left confused, and 
+providers are left to spend a fortune on increasingly intrusive and expensive collection efforts 
+that still do not generate great yield.  
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service includes making the patient’s 
+out of pocket payment to healthcare providers on behalf of the employee. The consumer then 
+pays PayMedix for the out-of-pocket amount that has been paid on their behalf. The consumer 
+can reimburse PayMedix in full upfront or can create a payment plan to repay PayMedix over 
+time. Unlike medical credit cards or installment loan products, repayment plans include no 
+interest charges, late fees, hidden costs tied to defined promotional offers or retro-effective 
+interest schemes if payment dates are missed. The employee is simply reimbursing for the face 
+value of the medical bills already paid on their behalf by PayMedix. There is no cost to the 
+employee to participate in the PayMedix solution. This is offered as an employer-subsidized 
+program to all employees regardless their salaries, demographics, or credit histories. 
+ 
+d) Patient Benefits II: Reduced Cost and Risk 
+ 
+The PayMedix model does not charge any interest or fees to patients. There are no hidden fees, 
+no teaser rates, and no deferred accrued interest. The cost of the PayMedix billing simplification 
+service is covered by employers and healthcare providers. Employers pay a fee to offer this 
+service to their employees. Providers receive a discounted amount of the post-adjudication 
+patient balance and receive guaranteed payment from PayMedix. Patients pay nothing extra, 
+and nothing in the PayMedix model contributes to increases in healthcare costs or medical 
+inflation.  
+ 
+If a patient needs a payment plan, PayMedix develops a payment plan that works for the 
+individual’s particular needs and covers all the costs. This never includes interest charges, late 
+fees, origination fees or any other additional expenses for the patient. 
+ 
+PayMedix also supports all employer programs to encourage employees to seek less expensive 
+care. This may include, for example, bundled payment programs, zero or low co-pay services at 
+more efficient providers, and incentive programs (e.g., healthy living/ wellness or going to 
+efficient providers). 
+ 
+e) Provider Benefits I: No Promotional Role 
+ 
+Medical credit cards and installment loans targeted for healthcare expenses are complicated 
+financial products. Historically, patients have tended to place a high level of trust in their 
+clinicians and their staff. As a result, companies offering medical payment products have often 
+
+ 
+ 
+ 
+ 
+10 
+relied on the provider to introduce and even recommend their products to patients. Promoting 
+or at least attempts to guide their patients on selecting the most appropriate medical billing 
+oversteps the standard administrative and collections responsibilities of a provider organization. 
+It introduces the risk that a patient may receive unwanted or unneeded care that they cannot 
+afford.  
+ 
+PayMedix and similar models are not medical payment products and do not involve the 
+provider’s staff in driving enrollment or communicating the benefits of participation to patients. 
+PayMedix is a simplified billing service offered by employers to all employees, with no 
+incentives, inducements, or other features to motivate providers to push patients into 
+unnecessary care or extra financing costs. 
+ 
+f) Provider Benefits II: Reduced Administrative Burden 
+ 
+Administrative expenses in the U.S. healthcare system take many forms, but one of the most 
+prominent is the process of validating and tabulating amounts owed from providing patient 
+care, and then sending bills and collecting amounts due from patients. Hospitals, physician 
+offices, surgery centers, labs, imaging centers, and other clinical facilities have invested in 
+people and technology tools to accomplish these tasks.  
+ 
+While the adoption of new revenue cycle technology and service solutions by clinical facilities 
+has eased some of the burden of processing medical insurance claims, collecting balances owed 
+by consumers remains a universal and expensive challenge for healthcare providers. Billing 
+teams have invested in portal technologies to enable patient self-service, added payment 
+innovations such as “card on file” to securely store credit card information for future payments, 
+and started to utilize text messaging and robo-dialing to reach patients with overdue balances. 
+Medical billing staff spend an enormous amount of time and money chasing patients with 
+outstanding balances, and risk negatively impacting their patient relationships with the use of 
+intrusive communication tools. 
+ 
+The PayMedix model reduces the administrative strain and costs of patient collections for an 
+individual provider and avoids damaging the provider-patient relationship. In exchange for a 
+modest fee to participate in the PayMedix simplified billing solution, providers avoid incurring 
+the costs associated with collecting overdue balance from patients participating in the PayMedix 
+model. Providers send fewer billing statements and make fewer phone calls and are able to use 
+their resources to focus on clinical care and ensure the best possible patient outcomes. 
+Providers also appreciate that the PayMedix model is a non-recourse arrangement, so they have 
+certainty of payment with no risk that non-performing patient accounts will “boomerang” back 
+to their balance sheet.  
+ 
+Furthermore, the PayMedix model helps to reduce the cost of patient collections across all 
+participating providers. PayMedix centralizes patient collection activities in one organization and 
+operates a compassionate, efficient collection process at scale. This lowers the unit cost of 
+
+ 
+ 
+ 
+ 
+11 
+overall patient collections below what each provider would achieve doing these activities on 
+their own. 
+ 
+g) Charity Care 
+ 
+Unlike medical credit cards and installment loans targeted for medical expenses, providers 
+assume no role in enrolling patients in the PayMedix service. Participating patients are enrolled 
+in PayMedix through their employers. The providers play no role in introducing or incenting 
+patients to participate in the PayMedix service.  
+ 
+This means providers have no conflicted interests when identifying and helping their patients 
+access other local, regional, or federal financial assistance programs. Importantly, the financial 
+assistance process is not hindered by the patient’s participation in the PayMedix billing solution 
+service. Furthermore, PayMedix helps consumers gather the necessary information and apply 
+for financial assistance from healthcare providers. As of July 2023, PayMedix has assisted 
+patients in qualifying for $750,000 of charity care for over 5,000 individual medical claims. This 
+advocacy offered by PayMedix is communicated on the firm’s SuperEOB and elsewhere, and in 
+these cases -- and with the consumer's permission -- PayMedix can assemble documents and 
+aggregate key qualifying information to the health system on behalf of and with no fee to the 
+consumer. PayMedix is not aware of examples in which medical credit cards and installment 
+loan vendors intervene for their customers to identify charity care relief. 
+ 
+h) Disputed Medical Bills  
+With the PayMedix billing simplification service, patients can always challenge a bill. The 
+PayMedix customer service team will support the patient in understanding and ultimately 
+disputing any bill with which they disagree. Most customer disputes center on whether the 
+claims should have been paid in the first place. Determining the correct answer to this question 
+is the responsibility of the health plan. PayMedix will work with the health plan and the 
+consumer if the consumer believes a claim should not have been paid and their out-of-pocket 
+amount should have been $0. If the consumer is correct, then PayMedix will process any 
+adjustments and refund the appropriate amount of money to the consumer.  
+i) Consumer Protections 
+ 
+While the three major U.S. credit reporting companies recently agreed to remove medical debt 
+of less than $500 from credit reports, this only begins to address the way these balances affect 
+patient credit. According to the U.S. Census, in 2017, 19% of U.S. households carried medical 
+debt and the median amount owed was $2,000.17 One source estimates that most Americans 
+ 
+17 U.S. Census, “19% of U.S. Households Could Not Afford to Pay for Medical Care Right Away” (Apr. 2021), available 
+at https://www.census.gov/library/stories/2021/04/who-had-medical-debt-in-united-states.html.  
+
+ 
+ 
+ 
+ 
+12 
+with medical debt owe over $1,000.18 A substantial number of Americans will still see medical 
+debt negatively affect both their credit scores and their ability to access financing for any needs. 
+It is necessary to find solutions to address the high cost of health care without pushing more 
+consumers to take on onerous and high-interest debt.  
+ 
+Unpaid balances are also considered medical debt in the PayMedix model, not consumer debt 
+as is the case with many types of medical payment products. 
+ 
+3. Response to RFI Questions 
+ 
+To better understand the medical payment product market, the agencies seek data and 
+comments on the interest and fee costs of these products (including both interest rates and 
+total accrued interest), the application and approval process for these products, and trends of 
+medical payment product use.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. “Medical payment products” is defined in the RFI as those “being administered 
+by financial services companies, who manage the billing and collections process for these 
+products and earn revenue through interest and fees.”  We do not charge patients any interest 
+or fees.  We would suggest adding the word “limited” before “products” in this definition since 
+many medical payment products are limited to certain individuals (e.g., those with higher credit 
+scores), limited in duration (e.g., 12 months), and/or limited by a dollar cap (e.g., $2,000).  The 
+PayMedix model has none of those limitations.   
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service does not charge any interest or 
+fees to patients. There are no hidden fees, no teaser rates, and no deferred accrued interest. The 
+cost of the PayMedix service is covered by employers and healthcare providers. Employers pay a 
+fee to offer this service to all their employees. Providers receive a discounted amount of the post-
+adjudication patient balance and receive guaranteed payment from PayMedix. Patients pay 
+nothing extra, and nothing in the PayMedix service contributes to increases in healthcare costs 
+or medical inflation. If a patient needs a payment plan, PayMedix develops a payment plan that 
+works for the individual’s particular needs and covers all of the costs. This never includes interest 
+charges, late fees, origination fees or any other additional expenses for the patient. 
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service does not exclude any consumer 
+at employer clients for any reason, including credit score.  All in-network allowed charges are 
+included, all the way to the out-of-pocket maximum.  Payment plans are customized for each 
+individual, with PayMedix average currently 17 months. 
+ 
+ 
+18 KFF-Peterson Health System Tracker, “The state of the U.S. health system in 2022 and the outlook for 2023” (Dec. 
+2022), available at https://www.healthsystemtracker.org/brief/the-state-of-the-u-s-health-system-in-2022-and-
+the-outlook-for-2023/.  
+
+ 
+ 
+ 
+ 
+13 
+The agencies also seek information as to the total outstanding consumer debt on medical 
+credit cards, medical installment loans, and other medical payment products.  
+ 
+No response provided. 
+ 
+Data regarding the characteristics and demographics of medical payment products users is 
+also welcome, such as whether users are insured or uninsured, whether certain populations 
+or income groups are more likely to use these products, and whether use is concentrated in 
+certain geographies or for patients seeking particular kinds of care.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service is offered to consumers with 
+health insurance. These consumers receive their health insurance through an employer’s group 
+health insurance plan. An important feature of the PayMedix service is that unlike medical credit 
+cards and installment loans targeted for post-service medical expenses, PayMedix does not 
+require each patient to apply or be approved to qualify for the service. There is no review of 
+employee credit history during enrollment, and no looking at other data sources that would be 
+used to risk score patients and then adjust pricing and other terms at the individual level. Thus, 
+PayMedix does not ‘cherry pick’ low-risk patients or seduce high-risk patients with gimmicky 
+teaser rates. When an employer selects PayMedix as a benefit, all of its employees are offered 
+credit up to their annual out of pocket maximum with 0% interest and no fees to the patient. 
+While a medical credit card typically offers its revolving line of credit to very few subprime 
+consumers (<620 credit score), 25% of PayMedix participants are in the subprime category. This 
+includes 10% with a credit score less than 480. 
+ 
+The agencies also seek to better understand the level of concentration in the medical 
+payment product market, the ownership of medical payment product companies (including 
+ownership by health care providers, health insurance issuers, or private equity firms), and the 
+implications of these factors for competition and consumer choice.  
+ 
+No response provided. 
+ 
+To that end, the agencies seek specific information on the types of financial entities that offer 
+medical credit cards and loans. 
+ 
+No response provided. 
+ 
+The agencies seek to understand to what extent medical credit cards and loans may hamper 
+financial assistance and access to benefits, and any options for regulators to reduce such 
+barriers.  
+ 
+
+ 
+ 
+ 
+ 
+14 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.  
+ 
+Unlike medical credit cards and installment loans targeted for medical expenses, providers 
+assume no role in enrolling patients in a Guaranteed Universal Billing and Payment Service like 
+PayMedix. Participating patients are enrolled in PayMedix through their employers. The 
+providers play no role in introducing or incenting patients to participate in the PayMedix service.  
+ 
+This means providers have no conflicted interests when identifying and helping their patients 
+access other local, regional, or federal financial assistance programs. Importantly, the financial 
+assistance process is not hindered by the patient’s participation in the PayMedix service. 
+Furthermore, PayMedix helps participating consumers gather the necessary information and 
+apply for financial assistance from healthcare providers. This is provided at no cost to the 
+consumers.  As of July 2023, PayMedix has assisted patients in qualifying for $750,000 of charity 
+care for over 5,000 individual medical claims. This advocacy offered by PayMedix is 
+communicated on the firm’s SuperEOB and elsewhere, and in these cases -- and with the 
+consumer's permission -- PayMedix can assemble documents and aggregate key qualifying 
+information to the health system on behalf of the consumer. PayMedix is not aware of examples 
+in which medical credit cards and installment loan vendors intervene for their customers to 
+identify charity care relief. 
+ 
+The agencies also seek to understand the extent to which health care providers, including tax-
+exempt hospitals, screen patients for public or private insurance eligibility, financial assistance 
+eligibility, or other benefits before offering them medical credit cards or loans.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. PayMedix does offer a Guaranteed Universal Billing and Payment Service.  In this 
+model, all providers simply confirm private insurance eligibility.  PayMedix is available to all 
+members of an employer’s health plan, and the providers do not ‘offer’ the consumers anything.  
+The consumers were already enrolled via their employer before ever getting care.   
+ 
+It is unclear to PayMedix how providers could determine financial assistance eligibility before 
+providing care.  So much information is typically required – some that will not even be known by 
+the provider at the point of care – that care delivery would be slowed, and consumers’ health 
+would be put at further risk if providers were to be required to determine financial assistance 
+eligibility before providing care.   
+ 
+In the PayMedix model, there are no delays in delivering care and providers do not need to 
+attempt to determine financial assistance eligibility up front.  Providers simply confirm 
+consumers’ PayMedix eligibility and then know that that consumer balance will either be paid or 
+that PayMedix will have, with the consumer’s permission, helped the consumer get financial 
+assistance from the provider.  This service is provided at no cost to consumers.   
+ 
+
+ 
+ 
+ 
+ 
+15 
+The agencies additionally seek comment on how frequently patients discover billing errors 
+after signing up for a medical payment product, the main sources of billing errors, and how 
+paying medical bills via a medical payment product affects patients’ ability to dispute those 
+bills. The agencies seek comment on how to ensure that patients retain their rights to 
+challenge inaccurate bills regardless of payment method. 
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+PayMedix does offer a Guaranteed Universal Billing and Payment Service.  With the PayMedix 
+model, patients can always challenge a bill. The PayMedix customer service team will support 
+the patient in understanding and ultimately disputing any bill with which they disagree. Most 
+customer disputes center on whether the claims should have been paid in the first 
+place. Determining the correct answer to this question is the responsibility of the health plan. 
+PayMedix works with the health plan and the consumer if the consumer believes a claim should 
+not have been paid and their out-of-pocket amount should have been $0. If the consumer is 
+correct, then PayMedix will process any adjustments and refund the appropriate amount of 
+money to the consumer. 
+ 
+It should be noted that consumer confusion can also play a role here.  Typically, consumers are 
+inundated with EOBs (“Explanations of Benefits”) from their insurance plan, medical bills and 
+“this is not a bill” statements from each provider they used.  Much of the information appears 
+contradictory or incomplete to consumers, and so they wait to see how it all sorts out over time. 
+ 
+In the PayMedix model, the consolidated monthly statement incorporates the information that 
+populates standard EOBs as well as that on provider bills.  It is all in one place, and reconciled for 
+the consumer.  The consumer can certainly challenge any charge, as explained elsewhere in 
+these comments.  It is clear, however, exactly what the charge truly was. 
+ 
+The agencies also seek comment on incentives offered by financial companies to health care 
+providers for their promotion of medical payment products, including revenue-sharing and 
+other incentives.  
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service and similar models do not 
+involve the provider’s staff in driving enrollment or communicating the benefits of participation 
+to patients. The PayMedix service is offered by employers to all employees, with no incentives, 
+inducements, or other features to motivate providers to push patients into unnecessary care or 
+extra financing costs. 
+ 
+The agencies are also interested in any training or other support that medical payment 
+product companies offer to providers. The agencies are interested in whether such incentives 
+or support might implicate the Federal anti-kickback statute or other laws or regulations.  
+ 
+
+ 
+ 
+ 
+ 
+16 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+Provider staff is trained to understand the different billing process for patients who participate in 
+the PayMedix Guaranteed Universal Billing and Payment Service, and those who do not utilize 
+PayMedix. When patients utilize the PayMedix service, the providers simply need to A) confirm 
+eligibility as they normally do, B) provide care for all PayMedix members without needing to 
+arrange for consumer payment, and C) receive full payment.  PayMedix handles collecting the 
+balance due from the patient for the portion of the medical charge that is owed by the patient 
+after insurance has paid its part.  
+ 
+PayMedix does not pay incentives or fees to providers. 
+ 
+The agencies also seek information regarding how plans and issuers’ billing and 
+reimbursement practices affect health care providers’ decisions to offer and promote medical 
+payment products. 
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+The agencies seek additional information on the prices or versions of standard charges offered 
+to patients who use these products, and whether these charges are adequately disclosed in 
+accordance with hospital price transparency requirements and No Surprises Act good faith 
+estimate requirements.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service is offered by employers, not 
+providers. There are no fees or interest charged to consumers.  Since the PayMedix service and 
+similar models do not involve the provider’s staff in driving enrollment or communicating the 
+benefits of participation to patients, and since there are no consumer fees or interest being 
+charged, there are no disclosures from the provider to the patient.  
+ 
+The agencies seek information on whether medical payment product companies are operating 
+outside of protections against credit reporting of medical collections items and against 
+extraordinary collection actions by tax-exempt hospitals.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+In the PayMedix Guaranteed Universal Billing and Payment Service model, unpaid balances are 
+considered medical debt, not consumer debt as is the case with many types of medical payment 
+products. 
+
+ 
+ 
+ 
+ 
+17 
+ 
+Finally, the agencies seek to better understand how notice and consent requirements for post-
+stabilization and non-emergency health care items or services under the No Surprises Act 
+intersect with providers’ promotion of medical credit cards and loans to out-of-network 
+patients. 
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service is offered by employers, not 
+providers. Since the PayMedix service and similar models do not involve the provider’s staff in 
+driving enrollment or communicating the benefits of participation to patients, there are no 
+notice or consent requirements for the provider to give patients in the PayMedix model. There 
+are also no fees or interest being charged to consumers in the PayMedix model. 
+ 
+In general, the agencies welcome any information that allows us to better understand the 
+impact of medical payment products on patients’ physical, mental, and financial health.  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. “Medical payment products” is defined in the RFI as those “being administered 
+by financial services companies, who manage the billing and collections process for these 
+products and earn revenue through interest and fees.”  We do not charge patients any interest 
+or fees.  We would suggest adding the word “limited” before “products” in this definition since 
+many medical payment products are limited to certain individuals (e.g., those with higher credit 
+scores), limited in duration (e.g., 12 months), and/or limited by a dollar cap (e.g., $2,000).  The 
+PayMedix model has none of those limitations.   
+ 
+Given the above, most medical payment products will not help many consumers due to the 
+limitations inherent in most of them.  A Guaranteed Universal Billing and Payment Service like 
+PayMedix, however, will.  The starts by including ALL consumers at a given employer regardless 
+their individual credit ratings.  The result is clear -- while a medical credit card typically offers its 
+revolving line of credit to very few subprime consumers (<620 credit score), 25% of PayMedix 
+participants are in the subprime category. This includes 10% with a credit score less than 480.  
+Most of these individuals would not access needed care without a Guaranteed Universal Billing 
+and Payment Service like PayMedix.   
+ 
+Providing access to care for lower-income individuals obviously improves their physical, mental, 
+and financial health.   The ultimate data point regarding this is that PayMedix employer clients 
+have seen annual trend increases of 2.5-3.4% -- about half what the market has experienced 
+overall.  When people can get all of the care when they need it, health care issues are handled 
+earlier.  This improves consumers’ health but also saves them and their employers money.   
+ 
+Operationally, the PayMedix Guaranteed Universal Billing and Payment Service brings multiple 
+benefits to the patient, including a monthly billing statement that displays all medical charges 
+
+ 
+ 
+ 
+ 
+18 
+for the participant and family members. PayMedix’s service includes zero interest or fees due 
+from the patient and offers payment plans customized to the unique circumstances of the family, 
+which helps patients have lower cost of care. Employees have no incentive or encouragement to 
+use more expensive providers or consume unnecessary care outside of their in-network 
+providers. PayMedix is offered to all employees equally, provides an opportunity to dispute and 
+correct erroneous charges, and supports patients in applying for financial assistance at no cost 
+to the consumer. The PayMedix service helps all consumers afford the care they need, thus 
+helping improve their physical and mental health. 
+ 
+The agencies also welcome suggestions of actions Federal agencies could take to address 
+harms caused by medical payment products and related issues connected to medical billing 
+and collections or medical debt more generally.  
+ 
+The Agencies should be lauded for their examination of the expanded use of medical payment 
+products that impose an even greater financial burden on many patients, limit their 
+creditworthiness, and raise overall healthcare costs. CFPB in particular should ensure full 
+transparency for all medical credit cards, installment loans, and other medical payment 
+products that carry interest charges and consumer fees and can cause significant increases in 
+cost of care. Further, the Agencies should ensure that consumers have clear information 
+regarding charity care eligibility and preserve their ability to negotiate bills and secure 
+adjustments.  
+ 
+We strongly urge the Agencies to consider the positive benefits of alternative offerings to 
+traditional medical payment products. One such model that resolves many of the legitimate 
+regulatory concerns of the medical credit card and installment loan category is the Guaranteed 
+Universal Billing and Payment Service offered as an employer solution.  
+ 
+Suggested actions: 
+1. Encourage U.S. employers to play a bigger role in helping employees get access to the 
+care they need, including improved ways to pay for the patient’s share of medical 
+charges 
+a. Provide tax advantages for offering Guaranteed Universal Billing and Payment 
+Services to employees 
+2. Clarify the definition of medical payment products to include the word “limited” 
+a. Medical payment products is defined in the RFI as those “being administered by 
+financial services companies, who manage the billing and collections process for 
+these products and earn revenue through interest and fees”.  We would suggest 
+adding the word “limited” before “products” in this definition since many medical 
+payment products are limited to certain individuals (e.g., those with higher credit 
+scores), limited in duration (e.g., 12 months), and/or limited by a dollar cap (e.g., 
+$2000) 
+i. Any limitations like those above should be fully and prominently disclosed 
+to consumers, providers, and employers 
+
+ 
+ 
+ 
+ 
+19 
+b. Consider further differentiating between financial products designed for limited 
+or focused use for out-of-network or elective services and solutions designed to 
+address consumer amounts due for in-network allowed charges after insurance 
+i. For example, this could be as simple as not allowing any product with 
+limitations such as those listed in 1.a above to be used for in-network 
+allowed charges that go through insurance first 
+ii. Similarly, products that charge consumers interest or fees for in-network 
+allowed charges could be disallowed 
+3. Focus federal rulemaking on simplifying information provided to consumers. 
+a. It would be easy but counter-productive to significantly expand claim-by-claim 
+disclosures to consumers. In healthcare, consumers are already overwhelmed and 
+end up tuning it all out 
+b. Instead, focus on consumers not transactions. 
+i. For example, allow consumers to set their preferences for communications 
+1. For investment accounts (e.g., at Schwab or Fidelity), consumers 
+can elect to consolidate mandated reporting, assign access and 
+reporting to a spouse, elect electronic not paper delivery, etc. 
+2. Once preferences are set by the consumer, their agent can execute 
+their instructions on their behalf 
+ii. Review the intersection of state and federal disclosure requirements. 
+1. Conflicting or overlapping requirements force market participants 
+to conservatively include absolutely anything that could be 
+required somewhere.  This drives more cost as well as consumer 
+confusion 
+a. It is far better to make sure consumers regularly know the 
+top 5 things that will likely impact them than repeatedly try 
+to tell them the 50 things that might possibly matter very 
+occasionally.  Consumers may well take action based on 
+the former, but will tune out and miss the key takeaways 
+from the latter 
+4. Make it clear that any debt that is the result of in-network, post-insurance medical costs 
+should still be considered medical debt regardless of what product financed it.  All the 
+rules regarding medical debt should still apply in this case 
+ 
+a) General Questions 
+ 
+Market Level Inquiries 
+ 
+1. What are the benefits, costs, and risks of medical payment products for consumers, health 
+care providers, and companies offering these products?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. “Medical payment products” is defined in the RFI as those “being administered 
+by financial services companies, who manage the billing and collections process for these 
+
+ 
+ 
+ 
+ 
+20 
+products and earn revenue through interest and fees.”  We do not charge patients any interest 
+or fees.  We would suggest adding the word “limited” before “products” in this definition since 
+many medical payment products are limited to certain individuals (e.g., those with higher credit 
+scores), limited in duration (e.g., 12 months), and/or limited by a dollar cap (e.g., $2,000).  The 
+PayMedix model has none of those limitations.   
+ 
+What PayMedix offers instead is a Guaranteed Universal Billing and Payment Service.  This 
+alternative model to medical payment products does not place additional financial burden on 
+patients, preserves their creditworthiness, and treats all patients equitably and with dignity. This 
+billing simplification service is being utilized by a growing number of patients. This model is 
+addressing the payment challenges faced by patients covered by health plans, since 58% of 
+provider bad debt is from patients with health insurance, a 5x increase in 3 years.19 
+ 
+In this model, employers contract with a third party to reimburse healthcare providers for the 
+out-of-pocket portion of the bill owed by their employees after they receive medical care. The 
+third-party, for example PayMedix, is then responsible for collecting the out-of-pocket amount 
+owed from the patient, who receives the PayMedix SuperEOB combining all billing and EOB 
+information from all in-network providers they visit — no matter how many or how often — in 
+one consolidated monthly statement. Patients see immediately what they owe, how to pay it, 
+and how to get credit if they need it in the form of extended payment options. The provider is 
+not involved in collecting balances due from these patients. 
+ 
+Employers offer the PayMedix Guaranteed Universal Billing and Payment Service to their 
+employees to enhance their commercial group health insurance, and in particular provide a 
+benefit to employees who have moved to a High Deductible Health Plans (HDHPs). Patients with 
+a HDHP incur higher out of pocket medical expenses until they meet their annual deductible. 
+Unlike medical payment products that are offered to patients after they receive care, patients 
+enrolled in PayMedix know before they receive care that they have the flexibility and benefits of 
+the PayMedix model. This certainty removes a stubborn and persistent source of a barrier care 
+and allows the patient to proceed with needed medical services. 
+ 
+For the employer, the PayMedix model provides an employee benefit that simplifies paying for 
+in-network, out-of-pocket medical expenses for its workforce and reduces the stress and 
+confusion that can further contribute to employee physical health issues. The characteristics and 
+demographics of participating employees in the PayMedix billing service are representative of 
+the full cross section of the employer’s workforce. The billing solution is the same for the CEO of 
+the company as it is for an entry level hire.  
+ 
+The PayMedix service brings multiple benefits to the patient, including a monthly billing 
+statement that displays all medical charges for the participant and family members. PayMedix’s 
+ 
+19 “Hospital collection rates for self-pay patient accounts” (Aug. 2022), available at https://www.crowe.com/-
+/media/crowe/llp/widen-media-files-folder/h/hospital-collection-rates-for-self-pay-patient-accounts-report-
+chc2305-001a.pdf.  
+
+ 
+ 
+ 
+ 
+21 
+service includes zero interest or fees due from the patient and offers payment plans customized 
+to the unique circumstances of the family, which helps patients have lower cost of care. 
+Employees have no incentive or encouragement to use more expensive providers or consume 
+unnecessary care outside of their in-network providers. PayMedix is offered to all employees 
+equally, provides an opportunity to dispute and correct erroneous charges, and supports 
+patients in applying for financial assistance. The PayMedix service helps consumers afford the 
+care they need, thus helping improve their physical and mental health. 
+ 
+From the perspective of providers, the PayMedix model provides prompt pay for all in network 
+patient balances for each participant opted into the billing simplification service through their 
+employer’s benefit program.  The provider can focus on clinical and other operational 
+responsibilities of running their practice. They do not promote the PayMedix model to patients, 
+nor does it interfere with charity care or financial assistance programs, and therefore there is 
+less chance that providers will offer unaffordable care that patients neither need nor want.  
+ 
+2. What are the terms of medical payment products, including interest rates and fees?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.  “Medical payment products” is defined in the RFI as those “being administered 
+by financial services companies, who manage the billing and collections process for these 
+products and earn revenue through interest and fees.”  We would suggest adding the word 
+“limited” before “products” in this definition since many medical payment products are limited 
+to certain individuals (e.g., those with higher credit scores), limited in duration (e.g., 12 months), 
+and/or limited by a dollar cap (e.g., $2,000).  Limiting terms like these increase barriers to care 
+for those less well-off, worsening their health and driving up healthcare costs system-wide.  
+ 
+Unlike medical credit cards and installment loans and other medical payment products, the 
+PayMedix Guaranteed Universal Billing and Payment Service does not charge any interest or 
+fees to patients. There are no hidden fees, no teaser rates, and no deferred accrued interest. The 
+cost of the PayMedix service is covered by employers and healthcare providers. Patients pay 
+nothing extra, and removes barriers to accessing early-stage care and produces significant 
+savings over time. If a patient needs a payment plan, PayMedix develops a payment plan that 
+works for the individual’s particular needs and covers all of the costs. This never includes interest 
+charges, late fees, origination fees or any other additional expenses for the patient.  There are 
+no dollar caps or limits to the duration of a payment plan. 
+ 
+3. How much debt do consumers carry on medical credit cards and loans in total, and what is 
+the average individual debt level?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+4. How concentrated is the medical payment product market, and what role do private equity 
+firms play in this market?  
+
+ 
+ 
+ 
+ 
+22 
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+5. Are there specific populations (e.g., race, socioeconomic status, gender identity, sexual 
+orientation, age, language, etc.) or geographic regions that experience disproportionately 
+higher utilization of medical payment products?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+PayMedix does offer a Guaranteed Universal Billing and Payment Service. Unlike medical credit 
+cards and installment loans targeted for post-service medical expenses, PayMedix does not 
+require each patient to apply or be approved to qualify for the service. There is no review of 
+employee credit history during enrollment and no looking at other data sources that would be 
+used to risk score patients and then adjust pricing and other terms at the individual level. Thus, 
+PayMedix does not “cherry pick” low-risk patients or seduce high-risk patients with gimmicky 
+teaser rates. When an employer selects PayMedix as a benefit, all of its employees are offered 
+credit up to their annual in-network out of pocket maximum with 0% interest and no fees to the 
+patient. 
+ 
+While a medical credit card typically offers its revolving line of credit to very few subprime 
+consumers (<620 credit score), 25% of PayMedix participants are in the subprime category. This 
+includes 10% with a credit score less than 480.  
+ 
+Medical payment products often find patients at a moment of great weakness – when told they 
+need surgery, for example - without the ability to evaluate options or make a thoughtful 
+financial decision. With the PayMedix service already in place, participants need never worry 
+about provider-facilitated financing being offered to them when they can least afford to make a 
+bad choice. This is good for the patient, good for the healthcare provider, and good for society at 
+large.  
+ 
+6. What are the health equity impacts of medical payment products and related billing and 
+collection policies and practices?  
+ 
+See response to Question 5 in General Questions, Market Level Inquiries for the health equity 
+impact of the PayMedix Guaranteed Universal Billing and Payment Service. 
+ 
+i. Do medical payment products affect members of specific underserved communities 
+differently, including members of Tribal communities and geographically isolated 
+communities?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+
+ 
+ 
+ 
+ 
+23 
+ 
+The PayMedix service includes every member of an employer or group plan equally.  No income, 
+demographic, geographic or personal differences among members matter, and all receive the 
+same service and terms.   
+ 
+ii. Do certain products or policies present opportunities to better serve members of 
+underserved communities?  
+ 
+No response provided. 
+ 
+7. Patients can pay for care in many different ways, such as by medical credit card or loan, 
+general purpose credit card, insurance, or through a zero-interest payment plan. What are 
+the costs and benefits for health care providers of offering each of these methods? Are there 
+situations where one method of payment is more advantageous than another?  
+ 
+Historically, consumer healthcare costs in the commercial market (i.e., those not in a 
+government health care program) have been dealt with in two ways: 
+ 
+- 
+In-network allowed charges.  These are the co-pays, deductibles, and out-of-pocket 
+amounts for which consumers are responsible under their employer-provided health 
+coverage and which received the best-negotiated price with providers 
+o A combination of the provider, insurer, and employer could offer financial 
+assistance to consumers in order to pay their portion (e.g., payment plans, 
+HRAs/FSAs/HSAs, health/wellness incentive accounts, etc.) 
+o Assistance was both guaranteed and universal for all consumers regardless their 
+individual financial status 
+o Consumers had a financial incentive to seek out cost-effective care 
+ 
+- 
+Out-of-network and elective care.  This is care that consumers choose to consume even 
+though it will cost them more money and/or is not a covered medical benefit (e.g., 
+cosmetic surgery) 
+o If financed, the consumer could individually seek a credit product, or the provider 
+could partner with a financial services firm to offer that function 
+o Consumers are individually underwritten, and whether credit is offered and if so 
+on what terms varies significantly 
+o Consumer interest and fees are typically a key component of these products 
+ 
+In the RFI, the Agencies defined medical payment products as those “being administered by 
+financial services companies, who manage the billing and collections process for these 
+products and earn revenue through interest and fees.”  These were the types of products that 
+traditionally were sold for use in the out-of-network and elective care, and they filled a role in 
+that arena.  More recently, though, these medical payment products have been brought to 
+finance the in-network costs after insurance.   
+ 
+
+ 
+ 
+ 
+ 
+24 
+Many, including PayMedix, view this expansion of medical payment products as problematic.  
+Any product for in-network allowed charges that does not apply to all individuals (regardless 
+of their creditworthiness) and provide full coverage up to a patient’s out-of-pocket maximum 
+is cherry-picking consumers with higher credit ratings.  This approach diminishes universal 
+access to care, increases health inequity, and drives up overall healthcare costs.  A better 
+approach for assisting consumers with their in-network allowed charges is a “Guaranteed 
+Universal Billing and Payment Service”.  We define and explain this term below.  
+ 
+This Guaranteed Universal Billing and Payment Service is being utilized by a growing number of 
+patients and is addressing the payment challenges faced by patients covered by health plans – 
+since 58% of provider bad debt is from patients with health insurance, a 5x increase in 3 years.20 
+In this model, employers contract with a third party to reimburse healthcare providers for the 
+out-of-pocket portion of the in-network bill owed by their employees after they receive medical 
+care. The third-party, for example PayMedix, is then responsible for collecting the out-of-pocket 
+amount owed from the patient, who receives the PayMedix SuperEOB combining all billing and 
+EOB information from healthcare providers they visit in one easy-to-read, consolidated monthly 
+statement21. Patients see immediately what they owe, how to pay it, and how to get credit if 
+they need it in the form of extended payment options. The provider is not involved in collecting 
+balances due from these patients.  This alternative model does not place additional financial 
+burden on patients, preserves their creditworthiness, and treats all patients equitably and with 
+dignity. 
+ 
+A breakdown of the components is as follows: 
+ 
+Guaranteed.  Full payment is guaranteed to the providers on behalf of all consumers 
+ 
+Universal.   All employees and their dependents are automatically included, and all in-network 
+costs up to the full out-of-pocket maximum can be included.  No one is excluded for any reason. 
+ 
+Billing.  All of the consumer’s provider bills and EOBs are reconciled automatically and are 
+replaced by a simple monthly summary statement 
+ 
+Payment.  Consumers can pay one bill that covers all of the participating providers, and if they 
+need to pay over time then they can automatically get a no-fee, 0% interest payment plan 
+ 
+Service.  Since PayMedix is funded by employers and providers, it is provided at no cost to the 
+consumers 
+ 
+ 
+20 “Hospital collection rates for self-pay patient accounts” (Aug. 2022), available at https://www.crowe.com/-
+/media/crowe/llp/widen-media-files-folder/h/hospital-collection-rates-for-self-pay-patient-accounts-report-
+chc2305-001a.pdf.  
+21 Employees are able to use the Guaranteed Universal Billing and Payment Service for medical claims generated 
+with healthcare providers who are in-network for their health plan, and also in the PayMedix network.  
+
+ 
+ 
+ 
+ 
+25 
+The Guaranteed Universal Billing and Payment Service approach also helps drive overall system 
+efficiency.  Administrative expenses in the U.S. healthcare system take many forms, but one of 
+the most prominent is the process of validating and tabulating amounts owed from providing 
+patient care, and then sending bills and collecting amounts due from patients. Hospitals, 
+physician offices, surgery centers, labs, imaging centers, and other clinical facilities have 
+invested in people and technology tools to accomplish these tasks.  
+ 
+While the adoption of new revenue cycle technology and service solutions by clinical facilities 
+has eased some of the burden of processing medical insurance claims, collecting balances owed 
+by consumers remains a universal and expensive challenge for healthcare providers. Billing 
+teams have invested in portal technologies to enable patient self-service, added payment 
+innovations such as “card on file” to securely store credit card information for future payments, 
+and started to utilize text messaging and robo-dialing to reach patients with overdue balances. 
+Medical billing staff spend an enormous amount of time and money chasing patients with 
+outstanding balances, and risk negatively impacting their patient relationships with the use of 
+intrusive communication tools. 
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service reduces the administrative 
+strain and costs of patient collections for an individual healthcare provider and avoids damaging 
+the provider-patient relationship. In exchange for a modest fee to participate in the PayMedix 
+simplified billing solution, providers avoid incurring the costs associated with collecting overdue 
+balance from patients participating in the PayMedix model. Providers send fewer billing 
+statements, make fewer phone calls, and are able to use their resources to focus on clinical care 
+and ensure the best possible patient outcomes. Providers also appreciate that the PayMedix 
+model is a non-recourse arrangement, so they have certainty of payment with no risk that non-
+performing patient accounts will “boomerang” back to their balance sheet.  
+ 
+The PayMedix model helps to reduce the cost of patient collections across all participating 
+providers. PayMedix centralizes patient collection activities in one organization and operates a 
+compassionate, efficient collection process at scale. This lowers the unit cost of overall patient 
+collections below what each provider would achieve doing these activities on their own. 
+ 
+8. What incentives do financial services companies offer health care providers, including 
+revenue-sharing or other financial or non-financial incentives?  
+ 
+PayMedix does not offer a medical payment product, thus the following are based on the 
+company’s overall market observations. 
+ 
+By contrast, a Guaranteed Universal Billing and Payment Service and similar models do not 
+involve the provider’s staff in driving enrollment or communicating the benefits of participation 
+to patients. The PayMedix service is offered by employers to all employees, with no incentives, 
+inducements or other features to motivate providers to push patients into unnecessary care or 
+extra financing costs. 
+ 
+
+ 
+ 
+ 
+ 
+26 
+9. How do medical payment products and health insurance coverage interact? Do group 
+health plan or health insurance issuer practices contribute to uptake of medical payment 
+products by patients and providers? 
+ 
+Employers offer the PayMedix Guaranteed Universal Billing and Payment Service to their 
+employees to enhance their commercial group health insurance, and in particular provide a 
+benefit to employees who have moved to a High Deductible Health Plans (HDHPs). Patients with 
+a HDHP incur higher out of pocket medical expenses until they meet their annual deductible. 
+Unlike medical payment products that are offered to patients after they receive care, patients 
+enrolled in PayMedix know before they receive care that they have the flexibility and benefits of 
+the PayMedix model. This certainty removes a stubborn and persistent source of a barrier care 
+and allows the patient to proceed with needed medical services. 
+ 
+The characteristics and demographics of participating employees in the PayMedix service are 
+representative of the full cross section of the employer’s workforce. The PayMedix service is the 
+same for the CEO of the firm as it is for an entry level hire. This includes core service features 
+such as the configuration of the consolidated bill (SuperEOB), and the flexibility of the employee 
+to choose the most appropriate bill repayment plan based on their individual financial situation. 
+ 
+i. How many days do providers typically have to wait to be paid by plans or issuers versus by 
+medical payment product companies or general purpose credit card companies? What 
+factors, such as administrative requirements or clinical reviews, contribute to any differential 
+resolution timelines? 
+ 
+PayMedix does not offer a medical payment product, thus the following are based on the 
+company’s overall market observations. 
+ 
+Many providers have told PayMedix representatives that various solutions under the RFI 
+definition of “medical payment products” contain surprise fees for them. These are often 
+characterized as “interchange fees” or “electronic payment fees”, and providers can get charged 
+them in order to get paid they money they are already owed a little bit faster.   
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service does not charge providers any 
+interchange or electronic payment fees or any surprise fees to participating PayMedix providers.  
+PayMedix has one fully disclosed fee that covers everything related to billing, payment and bad 
+debt risk for all consumers at every employer client.   
+ 
+ii. Does a patient’s use of a medical payment product exempt them from certain consumer 
+protections, provider requirements, or group health plan or health insurance issuer 
+requirements? Are different types of health coverage treated differently? 
+ 
+While the three major U.S. credit reporting companies recently agreed to remove medical debt 
+of less than $500 from credit reports, this only begins to address the way these balances affect 
+patient credit. According to the U.S. Census, in 2017, 19% of U.S. households carried medical 
+
+ 
+ 
+ 
+ 
+27 
+debt and the median amount owed was $2,000.22 One source estimates that most Americans 
+with medical debt owe over $1,000.23 A substantial number of Americans will still see medical 
+debt negatively affect both their credit scores and their ability to access financing for any needs. 
+It is necessary to find solutions to address the high cost of health care without pushing more 
+consumers to take on onerous and high-interest debt.  
+ 
+Unpaid balances are considered medical debt in the PayMedix model, not consumer debt as is 
+the case with many types of medical payment products. 
+ 
+10. Does health care provider organizational structure, including ownership by private equity, 
+affect providers’ decisions to offer and promote these products? 
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+Provider organizational structure does not matter for the PayMedix Guaranteed Universal 
+Billing and Payment Service. PayMedix and similar models do not involve the provider’s staff in 
+driving enrollment or communicating the benefits of participation to patients. PayMedix is 
+offered by employers to their employees, with no incentives, inducements, or other features to 
+motivate providers to push patients into unnecessary care or extra financing costs. 
+ 
+11. What are some best practices for health care providers who offer medical payment 
+products in avoiding adverse financial and health impacts for patients?  
+ 
+As discussed in the answer to Question 7, best practices for providers include: 
+ 
+- 
+Do not offer or promote medical payment products for the consumer portion of in-
+network allowed charges that are covered by insurance 
+o Solutions like a Guaranteed Universal Billing and Payment Service offer a superior 
+alternative for consumers, providers, and employers 
+- 
+Do not require payment before care is rendered for services that will be largely covered 
+by insurance 
+o Estimates of consumer balances due are difficult to determine due to changed 
+coding details as well as timing of the submission of that particular claim versus 
+others 
+o Demanding a form of payment up front deters those who are concerned about 
+how to pay for that care 
+ 
+ 
+22 U.S. Census, “19% of U.S. Households Could Not Afford to Pay for Medical Care Right Away” (Apr. 2021), available 
+at https://www.census.gov/library/stories/2021/04/who-had-medical-debt-in-united-states.html.  
+23 KFF-Peterson Health System Tracker, “The state of the U.S. health system in 2022 and the outlook for 2023” (Dec. 
+2022), available at https://www.healthsystemtracker.org/brief/the-state-of-the-u-s-health-system-in-2022-and-
+the-outlook-for-2023/.  
+
+ 
+ 
+ 
+ 
+28 
+i. Are there specific tactics or practices that are well tailored and adapted for use by health 
+care professionals in and serving underserved communities, including Tribal communities and 
+geographically isolated communities? 
+ 
+No response provided. 
+ 
+ii. What actions should the agencies take to develop and encourage uptake of these 
+established best practices? 
+ 
+No response provided. 
+ 
+iii. Are there examples of actions or best practices at the State or local level to which the 
+Federal government should look? 
+ 
+No response provided. 
+ 
+12. To what extent are patients using medical payment products to pay bills that are 
+incorrect, or that could be covered or defrayed by lower-cost alternatives?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+With the PayMedix Guaranteed Universal Billing and Payment Service, patients can always 
+challenge a bill. The PayMedix customer service team will support the patient in understanding 
+and ultimately disputing any bill with which they disagree. Most customer disputes center on 
+whether the claims should have been paid in the first place. Determining the correct answer to 
+this question is the responsibility of the health plan. PayMedix will work with the health plan 
+and the consumer if the consumer believes a claim should not have been paid and their out-of-
+pocket amount should have been $0. If the consumer is correct, then PayMedix will process any 
+adjustments and refund the appropriate amount of money to the consumer. 
+ 
+Because providers play no role in introducing or incenting patients to participate in the 
+PayMedix service, they have no conflicted interests when identifying and helping their patients 
+access other local, regional, or federal financial assistance programs. Furthermore, PayMedix 
+helps consumers gather the necessary information and apply for financial assistance from 
+healthcare providers. As of July 2023, PayMedix has assisted patients in qualifying for $750,000 
+of charity care for over 5,000 individual medical claims. This advocacy offered by PayMedix is 
+communicated on the firm’s SuperEOB and elsewhere, and in these cases -- and with the 
+consumer's permission and at no cost to the consumer -- PayMedix can assemble documents 
+and aggregate key qualifying information to the health system on behalf of the consumer. 
+PayMedix is not aware of examples in which medical credit cards and installment loan vendors 
+intervene for their customers to identify charity care relief. 
+ 
+
+ 
+ 
+ 
+ 
+29 
+i. What billing errors may patients commonly encounter?  
+ 
+Most customer disputes center on whether the claims should have been paid in the first 
+place. Determining the correct answer to this question is the responsibility of the health plan. 
+PayMedix will work with the health plan and the consumer if the consumer believes a claim 
+should not have been paid and their out-of-pocket amount should have been $0. If the consumer 
+is correct, then PayMedix will process any adjustments and refund the appropriate amount of 
+money to the consumer. 
+ 
+ii. How does using a medical payment product affect patients’ rights to dispute incorrect bills?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+With the PayMedix Guaranteed Universal Billing and Payment Service, patients can always 
+challenge a bill. The PayMedix customer service team will support the patient in understanding 
+and ultimately disputing any bill with which they disagree. 
+ 
+iii. Are certain groups of patients, such as members of specific underserved communities, 
+more likely to experience medical billing errors or issues resolving disputes over bills paid 
+using medical payment products?  
+ 
+No response provided. 
+ 
+13. What actions should agencies consider taking to better understand the effects of medical 
+payment products on consumers and the health care industry, educate consumers and 
+providers about the risks of these products, and collect complaints?  
+ 
+No response provided. 
+ 
+i. What are some sources of data on medical payment products? What additional data are 
+needed to understand the impact of medical payment products on patients and the health 
+care industry?  
+ 
+No response provided. 
+ 
+ii. What data collection, data analysis, and research actions should agencies take?  
+ 
+No response provided. 
+ 
+iii. Are there different or other actions that agencies should consider for underserved 
+communities, including Tribal communities and geographically isolated communities?  
+ 
+No response provided. 
+
+ 
+ 
+ 
+ 
+30 
+ 
+iv. What types of consumer complaints have States and localities received?  
+ 
+No response provided. 
+ 
+14. Where medical payment products are causing harm, what are some specific levers for 
+regulatory oversight and enforcement by Federal agencies that regulate financial products or 
+health care providers?  
+ 
+No response provided. 
+ 
+i. Are there specific areas for Federal enforcement actions?  
+ 
+No response provided. 
+ 
+ii. Are there examples of regulation or enforcement at the State or local level to which the 
+Federal government should look?  
+ 
+No response provided. 
+ 
+iii. What complementary legislative actions are worth exploring? Where may additional 
+statutory authority be needed?  
+ 
+No response provided. 
+ 
+Individual Inquiries  
+ 
+1. Have medical payment products ever been marketed to you, including by your health care 
+provider? If so, please describe your experience and how the products were marketed to you. 
+Were other options, such as financial assistance, marketed or explained at the same time?  
+ 
+No response provided. 
+ 
+2. If you have used a medical credit card or loan to pay for your care, what was your 
+experience with the product?  
+ 
+No response provided. 
+ 
+a. What benefits or harms did you experience?  
+ 
+No response provided. 
+ 
+b. Was your health affected by your use of a medical credit card or loan?  
+ 
+
+ 
+ 
+ 
+ 
+31 
+No response provided. 
+ 
+c. How much did interest and fee charges add to the cost of your care?  
+ 
+No response provided. 
+ 
+d. How did using a medical credit card or loan affect your credit score and your ability to 
+access credit?  
+ 
+No response provided. 
+ 
+e. Would you use a medical credit card or loan to cover medical expenses again? Why or why 
+not?  
+ 
+No response provided. 
+ 
+3. Have you ever tried to dispute a medical bill you paid using a medical credit card or loan? If 
+so, please describe your experience.  
+No response provided. 
+ 
+4. Have you ever had an overdue bill on a medical credit card or loan sent to collections? How 
+quickly was the bill sent to collections? Did your experience with collections affect your credit 
+score, your access to medical care, or your health?  
+ 
+No response provided. 
+ 
+5. Have you ever felt pressured to pay for care using a medical payment product or general 
+purpose credit card when you believed that was not in your best interest? If so, please 
+describe your experience.  
+ 
+No response provided. 
+ 
+6. Have you ever used or been pressured to use a medical credit card or loan to pay a bill that 
+you believe should have been covered by your health insurance? If so, please describe your 
+experience.  
+ 
+No response provided. 
+ 
+7. Have you ever used or been pressured to use a medical credit card or loan to pay a bill that 
+you believe should have been covered by your health care provider’s financial assistance 
+policy? If so, please describe your experience.  
+ 
+No response provided. 
+ 
+
+ 
+ 
+ 
+ 
+32 
+8. Has your knowledge about the availability of medical credit cards or loans led you to 
+believe that health insurance might not be necessary, or not acquire health insurance?  
+ 
+No response provided. 
+ 
+b) CFPB-Specific Questions  
+ 
+1. What actions should the CFPB consider taking to address problematic practices related to 
+medical credit cards or loans, including debt collection and credit reporting practices?  
+ 
+The Agencies should be lauded for their examination of the expanded use of medical payment 
+products that impose an even greater financial burden on many patients, limit their 
+creditworthiness, and raise overall healthcare costs. CFPB in particular should ensure full 
+transparency for all medical credit cards, installment loans, and other medical payment 
+products that carry interest charges and consumer fees and can cause significant increases in 
+cost of care. Further, the Agencies should ensure that consumers have clear information 
+regarding charity care eligibility and preserve their ability to negotiate bills and secure 
+adjustments.  
+ 
+We strongly urge the Agencies to consider the positive benefits of alternative offerings to 
+traditional medical payment products. One such model that resolves many of the legitimate 
+regulatory concerns of the medical credit card and installment loan category is the Guaranteed 
+Universal Billing and Payment Service offered as an employer solution.  
+ 
+Suggested actions: 
+1. Encourage U.S. employers to play a bigger role in helping employees get access to the 
+care they need, including improved ways to pay for the patient’s share of medical 
+charges 
+a. Provide tax advantages for offering Guaranteed Universal Billing and Payment 
+Services to employees 
+2. Clarify the definition of medical payment products to include the word “limited” 
+a. Medical payment products is defined in the RFI as those “being administered by 
+financial services companies, who manage the billing and collections process for 
+these products and earn revenue through interest and fees”.  We would suggest 
+adding the word “limited” before “products” in this definition since many medical 
+payment products are limited to certain individuals (e.g., those with higher credit 
+scores), limited in duration (e.g., 12 months), and/or limited by a dollar cap (e.g., 
+$2000) 
+i. Any limitations like those above should be fully and prominently disclosed 
+to consumers, providers, and employers 
+b. Consider further differentiating between financial products designed for limited 
+or focused use for out-of-network or elective services and solutions designed to 
+address consumer amounts due for in-network allowed charges after insurance 
+
+ 
+ 
+ 
+ 
+33 
+i. For example, this could be as simple as not allowing any product with 
+limitations such as those listed in 1.a above to be used for in-network 
+allowed charges that go through insurance first 
+ii. Similarly, products that charge consumers interest or fees for in-network 
+allowed charges could be disallowed 
+3. Focus federal rulemaking on simplifying information provided to consumers. 
+a. It would be easy but counter-productive to significantly expand claim-by-claim 
+disclosures to consumers. In healthcare, consumers are already overwhelmed and 
+end up tuning it all out 
+b. Instead, focus on consumers not transactions. 
+i. For example, allow consumers to set their preferences for communications 
+1. For investment accounts (e.g., at Schwab or Fidelity), consumers 
+can elect to consolidate mandated reporting, assign access and 
+reporting to a spouse, elect electronic not paper delivery, etc. 
+2. Once preferences are set by the consumer, their agent can execute 
+their instructions on their behalf 
+ii. Review the intersection of state and federal disclosure requirements. 
+1. Conflicting or overlapping requirements force market participants 
+to conservatively include absolutely anything that could be 
+required somewhere.  This drives more cost as well as consumer 
+confusion 
+a. It is far better to make sure consumers regularly know the 
+top 5 things that will likely impact them than repeatedly try 
+to tell them the 50 things that might possibly matter very 
+occasionally.  Consumers may well take action based on 
+the former, but will tune out and miss the key takeaways 
+from the latter 
+4. Make it clear that any debt that is the result of in-network, post-insurance medical costs 
+should still be considered medical debt regardless of what product financed it.  All the 
+rules regarding medical debt should still apply in this case 
+ 
+2. How do firms offering medical financial products typically market to providers?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+The PayMedix Guaranteed Universal Billing and Payment Solution and similar models do not 
+involve the provider’s staff in driving enrollment or communicating the benefits of participation 
+to patients. PayMedix is offered by employers to their employees, with no incentives, 
+inducements, or other features to motivate providers to push patients into unnecessary care or 
+extra financing costs. 
+ 
+
+ 
+ 
+ 
+ 
+34 
+3. How do creditors and their affiliates underwrite loans to patients? What specific factors 
+(e.g., age, type of medical procedure, credit score, etc.) are considered in underwriting?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+An important feature of the PayMedix Guaranteed Universal Billing and Payment Service is that 
+unlike medical credit cards and installment loans targeted for post-service medical expenses, 
+PayMedix does not require each patient to apply or be approved to qualify for the service. There 
+is no review of employee credit history during enrollment and no looking at other data sources 
+that would be used to risk score patients and then adjust pricing and other terms at the 
+individual level. Thus, PayMedix does not ‘cherry pick’ low-risk patients or seduce high-risk 
+patients with gimmicky teaser rates. When an employer selects PayMedix as a benefit, all of its 
+employees are offered credit up to their annual out of pocket maximum for all in-network 
+allowed charges with 0% interest and no fees to the patient. 
+ 
+While a medical credit card typically offers its revolving line of credit to very few subprime 
+consumers (<620 credit score), 25% of PayMedix participants are in the subprime category. This 
+includes 10% with a credit score less than 480. 
+ 
+4. Do consumers understand the risks of paying medical bills via a medical credit card, 
+installment loan, or other commercial payment product, including lowered ability to 
+negotiate their bill with their provider?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service makes the patient’s out of 
+pocket payment to healthcare providers on behalf of the patient. The patient then pays 
+PayMedix for the out-of-pocket amount that has been paid on their behalf. The patient can 
+reimburse PayMedix in full or can create a payment plan to repay PayMedix over time. Unlike 
+medical credit cards or installment loan products, repayment plans include no interest charges, 
+late fees, hidden costs tied to defined promotional offers or retro-effective interest schemes if 
+payment dates are missed. The patient is simply reimbursing for the face value of the medical 
+bills already paid on their behalf by PayMedix. There is no cost to the patient to participate in 
+the PayMedix service. This is offered as an employer-subsidized benefit to all employees 
+regardless of their individual salary, demographics or credit history. 
+ 
+If a patient needs a payment plan, PayMedix develops a payment plan that works for the 
+individual’s particular needs and covers all of the costs. This never includes interest charges, late 
+fees, origination fees or any other additional expenses for the patient.  It can extend to the 
+appropriate time period for that particular consumer.  Currently, PayMedix members with 
+payment plans average 17 months with a balance of $2311.  If they all were in a medical 
+payment product instead – which presumes that they all would have been approved, which is 
+
+ 
+ 
+ 
+ 
+35 
+highly unlikely – then they would need 22 months to pay off the balance at the same monthly 
+payment pace, and have incurred over $575 in interest if at a 25% annual rate.   
+ 
+PayMedix also helps consumers gather the necessary information and apply for financial 
+assistance from healthcare providers. As of July 2023, PayMedix has assisted patients in 
+qualifying for $750,000 of charity care for over 5,000 individual medical claims. This advocacy 
+offered by PayMedix is communicated on the firm’s SuperEOB and elsewhere, and in these cases 
+-- and with the consumer's permission -- PayMedix can assemble documents and aggregate key 
+qualifying information to the health system on behalf of the consumer. Medical credit cards and 
+installment loan vendors to our knowledge do not intervene for their customers to identify 
+charity care relief. 
+ 
+With the PayMedix service, patients can always challenge a bill. The PayMedix customer service 
+team will support the patient in understanding and ultimately disputing any bill with which they 
+disagree. Most customer disputes center on whether the claims should have been paid in the 
+first place. Determining the correct answer to this question is the responsibility of the health 
+plan. PayMedix will work with the health plan and the consumer if the consumer believes a 
+claim should not have been paid and their out-of-pocket amount should have been $0. If the 
+consumer is correct, then PayMedix will process any adjustments and refund the appropriate 
+amount of money to the consumer. 
+ 
+5. To what extent are alleged debts placed on medical credit cards and loans sent to debt 
+collectors? How do medical payment product companies’ debt collection practices differ from 
+those of health care providers, and are any issuer or provider debt collection practices posing 
+risks to consumers?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+6. How can the CFPB use its authorities to ensure people with medical bills in collections, 
+including medical payment product debt, are screened for eligibility for financial assistance 
+and other benefits?  
+ 
+No response provided. 
+ 
+7. How are health care providers and financial companies using credit or “propensity to pay” 
+scores to determine patients’ eligibility for financial assistance or medical payment products? 
+What are the implications for compliance with the Fair Credit Reporting Act or other CFPB 
+authorities?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.   
+ 
+ 
+
+ 
+ 
+ 
+ 
+36 
+An important feature of the PayMedix model is that unlike medical credit cards and installment 
+loans targeted for post-service medical expenses, PayMedix does not require each patient to 
+apply or be approved to qualify for the service. There is no review of employee credit history 
+during enrollment and no looking at other data sources that would be used to risk score patients 
+and then adjust pricing and other terms at the individual level. Thus, PayMedix does not ‘cherry 
+pick’ low-risk patients or seduce high-risk patients with gimmicky teaser rates. When an 
+employer selects PayMedix as a benefit, all of its employees are offered credit up to their annual 
+out of pocket maximum with 0% interest and no fees to the patient. 
+ 
+While a medical credit card typically offers its revolving line of credit to very few subprime 
+consumers (<620 credit score), 25% of PayMedix participants are in the subprime category. This 
+includes 10% with a credit score less than 480. 
+ 
+PayMedix helps consumers gather the necessary information and apply for financial assistance 
+from healthcare providers at no cost to the consumer. As of July 2023, PayMedix has assisted 
+patients in qualifying for $750,000 of charity care for over 5,000 individual medical claims. This 
+advocacy offered by PayMedix is communicated on the firm’s SuperEOB and elsewhere, and in 
+these cases -- and with the consumer's permission -- PayMedix can assemble documents and 
+aggregate key qualifying information to the health system on behalf of the consumer. PayMedix 
+is not aware of examples in which medical credit cards and installment loan vendors intervene 
+for their customers to identify charity care relief. 
+ 
+8. When hospitals write off a patient’s debt as uncollectible or “bad debt” and cease attempts 
+to collect, do they notify patients that collection attempts will cease? Would patients benefit 
+from such notifications, and would such notifications reduce hospital revenue?  
+ 
+No response provided. 
+ 
+c) HHS-Specific Questions  
+ 
+1. What actions should HHS consider taking to address problematic practices related to 
+medical credit cards or loans, particularly as they relate to patients eligible for or enrolled in 
+Medicare, Medicaid, or the Children’s Health Insurance Program, or patients enrolled in 
+Affordable Care Act Marketplace plans?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. Also, PayMedix currently only serves the commercial group market, and 
+therefore does not have experience with Medicare, Medicaid, or the Children’s Health Insurance 
+Program, or patients enrolled in Affordable Care Act Marketplace plans.   
+ 
+
+ 
+ 
+ 
+ 
+37 
+Nevertheless, it is important to note that HHS has recently issued initial guidance regarding the 
+implementation of “smoothing” for Medicare drug plans.24  In effect, health plans must offer 
+financing for drug costs to their Medicare members who have drug coverage, and that financing 
+must go all the way to the $2,000 individual cap.  All members are to be eligible for this 
+program, and no interest or consumer fees are to be charged. 
+ 
+Conceptually, this is similar to what the PayMedix Guaranteed Universal Billing and Payment 
+Service has been doing for 15 years.  PayMedix has transacted $5 billion through this 
+mechanism, has very high client retention and consumer satisfaction, and has reduced financial 
+barriers to care.   
+ 
+As implementation of the new Medicare drug cost “smoothing” program proceeds, HHS should 
+carefully evaluate which elements of ‘medical payment products’ would be appropriate and 
+which may not. Health plans and consumers will need clear guidance.   
+ 
+2. What types of health insurance (Medicare, Medicaid, private insurance, etc.) are 
+particularly associated with the likelihood that an individual is offered or makes use of 
+medical credit cards and loans, and how does the type of health coverage affect relevant 
+provider billing practices? 
+ 
+Employers offer the PayMedix Guaranteed Universal Billing and Payment Service to their 
+employees to enhance their benefits program, and in particular provide assistance to employees 
+who have moved to a High Deductible Health Plans (HDHPs). Patients with a HDHP incur higher 
+out of pocket medical expenses until they meet their annual deductible. The PayMedix service is 
+not currently offered to participants in Medicare, Medicaid or non-group commercial plans. 
+ 
+3. Are there particular health care provider types that are most associated with being offered 
+or offering medical payment products, and are these providers receiving directed payments 
+or other incentives through State Medicaid programs?  
+ 
+The PayMedix Guaranteed Universal Billing and Payment Service and similar models do not 
+involve the provider’s staff in driving enrollment or communicating the benefits of participation 
+to patients. The PayMedix service is not offered in the Medicaid market. 
+ 
+4. Has the No Surprises Act and its surprise billing protections affected the prevalence and use 
+of medical credit cards and loans, and if so, how?  
+ 
+The No Surprises Act and its surprise billing protections have not affected the PayMedix 
+Guaranteed Universal Billing and Payment Service, since providers are not involved in promoting 
+ 
+24 Health Affairs, “Smoothing Medicare Part D Out-Of-Pocket Costs Under The Inflation Reduction Act” (Feb. 2023), 
+available at https://www.healthaffairs.org/content/forefront/smoothing-part-d-out-pocket-costs-under-inflation-
+reduction-act. 
+
+ 
+ 
+ 
+ 
+38 
+the PayMedix service to patients and have no role in disclosures or price transparency rules.  
+PayMedix also charges no fees or interest to consumers.   
+ 
+i. Has the notice and consent process been used to promote medical cards and loans to 
+patients seeking health care items or services from out-of-network providers/facilities, and if 
+so, how? For example, in instances where the No Surprises Act permits providers and 
+facilities to seek notice and obtain consent from an insured patient to waive their balance 
+billing and cost-sharing protections under the No Surprises Act, are providers and facilities 
+impermissibly attaching or incorporating medical card or loan documents or information to 
+the notice and consent forms, or giving them to the patient at the same time as the notice 
+and consent forms?  
+ 
+No response provided. 
+ 
+ii. What steps are health care providers and facilities putting into place to ensure that bills 
+paid through medical payment products do not violate surprise billing requirements and that 
+patients who use medical payment products retain their No Surprises Act rights?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+5. How does or might the use of medical credit cards and loans affect the amount and timing 
+of cost sharing a patient covered through Medicare, Medicaid, and/or the Affordable Care Act 
+Marketplace owes for a covered service?  
+ 
+No response provided. 
+ 
+i. Are there any observable differences in cost sharing among patients belonging to 
+underserved communities, such as Tribal communities or geographically isolated 
+communities?  
+ 
+No response provided. 
+ 
+6. Hospital Price Transparency: What prices or versions of standard charges (e.g., cash prices) 
+are offered to patients who sign up for a medical credit card or installment loan? What steps 
+are taken by health care providers to ensure these charges are adequately disclosed in 
+accordance with hospital price transparency requirements? Do these charges reflect and 
+specifically identify facility fees?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+
+ 
+ 
+ 
+ 
+39 
+7. How might HHS improve patient understanding of options for covering the cost of medical 
+treatments? At what points in the care process could patients be provided with information 
+about their financial obligations and payment options?  
+ 
+HHS has made good initial progress with its price transparency efforts.   
+ 
+The question regarding consumers’ financial obligations – what percentage of that total cost 
+they may owe – is complicated by timing.  Depending upon where a consumer is with respect to 
+deductible and out-of-pocket accumulators, the order in which a series of claims may be 
+submitted by the various providers to the insurance company/TPA and the order in which they 
+are adjudicated can impact the amount of patient obligation remaining for each claim.  Putting 
+a “hold” on the consumer balance – similar to how a hotel can put a “hold” on one’s credit card 
+when checking in – is impractical when the whole billing and adjudication process can easily 
+take a month.   
+ 
+Consumers today simply do not understand what their EOBs really mean and how they do or do 
+not reconcile with the bills and estimates that they receive from providers. Giving that volume of 
+incomprehensible information to consumers earlier in the process is unlikely to be helpful to 
+them. 
+ 
+As a result, PayMedix has chosen to focus on post-adjudication balances owed by patients. 
+PayMedix replaces the volume of EOBs and provider bills with one simple, monthly statement 
+that summarizes everything that happened.  PayMedix members greatly value having One 
+Source of Truth and knowing exactly what they do have as a financial obligation.  With that 
+clear understanding, consumers can then focus on determining their payment options. 
+ 
+Anti-Kickback Statute  
+ 
+8. What financial relationships exist between medical payment product companies and 
+health care providers? For example, do companies provide financial incentives to providers 
+who enroll patients in medical payment products? Do providers pay financial companies to 
+collect patients’ overdue balances? Or do providers have arrangements with financial 
+companies to indemnify the company in whole or in part if the patient defaults, such as an 
+arrangement that when patients default on their debt to the financial company, the debt 
+reverts to the provider?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+The cost of the PayMedix Guaranteed Universal Billing and Payment Service is covered by 
+employers and healthcare providers. The PayMedix model is a non-recourse arrangement, so 
+providers have no risk that non-performing patient accounts will revert back to their balance 
+sheet. 
+ 
+
+ 
+ 
+ 
+ 
+40 
+9. Do health care providers or financial institutions market or recommend medical credit 
+cards or loans to Federal health care program beneficiaries (e.g. Medicare, Medicaid, 
+Affordable Care Act Marketplace, or Children’s Health Insurance Program enrollees)? Is the 
+use of these products limited to certain types of health care items or services, such as items 
+and services that are not reimbursable by Medicare or another third-party payor?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+The PayMedix Guaranteed Universal Billing and Payment Solution and similar models do not 
+involve the provider’s staff in driving enrollment or communicating the benefits of participation 
+to patients. PayMedix is offered by employers to their employees, with no incentives, 
+inducements or other features to motivate providers to push patients into unnecessary care or 
+extra financing costs.  PayMedix does not serve Medicare, Medicaid, ACA Marketplace or CHIP 
+enrollees. 
+ 
+10. Do medical payment product companies recommend certain health care providers to 
+their users? Do companies limit where or how patients use medical credit cards?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+Patients receive the full benefits of the PayMedix Guaranteed Universal Billing and Payment 
+Service when they visit providers who have agreed to participate in the PayMedix provider 
+network.   
+ 
+11. Is the health care provider (or the medical payment product company) offsetting some of 
+the patient’s medical debt or providing any other incentives to the patient (e.g., travel 
+rewards for charges to the card)?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. 
+ 
+In the PayMedix Guaranteed Universal Billing and Payment Service, employers contract with 
+PayMedix for PayMedix to reimburse healthcare providers for the out-of-pocket portion of the 
+in-network charges owed by their employees after they receive medical care. PayMedix is then 
+responsible for collecting the out-of-pocket amount owed from the patient, who receives the 
+PayMedix SuperEOB combining all billing and EOB information from all in-network providers 
+they visit — no matter how many or how often — in one consolidated monthly statement. 
+Patients see immediately what they owe, how to pay it, and how to get credit if they need it in 
+the form of extended payment options. There are currently no offsets to the patient’s medical 
+debt or incentives to the patient from PayMedix.  
+ 
+
+ 
+ 
+ 
+ 
+41 
+d) Treasury-Specific Questions  
+ 
+1. What policy actions should Treasury consider taking to address problematic practices 
+related to medical credit cards or loans, including debt collection and credit reporting 
+practices, to conform with the existing tax laws and regulations pertaining to tax-exempt 
+hospitals?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.  
+ 
+2. Should a tax-exempt hospital’s signing patients up for medical payment products be 
+considered similar to a tax-exempt hospital’s selling medical debt, such that the special rules 
+that only exclude debt sales from being extraordinary collection actions if certain 
+requirements are met would be applied to these payment products?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model. In general, whether a consumer receivable is, in effect, factored on the front end 
+or the back end of the process should not matter. It would be reasonable to presume that the 
+same special rules would apply.  See above to the Introduction section for a description of the 
+PayMedix model. 
+ 
+3. How would applying the debt sale special rules to payment products change hospitals and 
+payment product providers’ current practices, especially those related to financial assistance 
+eligibility screening, extraordinary collection actions, interest rates, and recall or return of 
+balances owed by FAP-eligible individuals?  
+ 
+No response provided.   
+ 
+4. How do tax-exempt hospitals’ promotion of medical payment products compare to their 
+operationalization of the requirement that their financial assistance policies be widely 
+publicized?  
+ 
+No response provided. 
+ 
+5. What are best practices for hospitals publishing and making patients aware of financial 
+assistance programs (beyond compliance with the widely publicized requirements found in 
+the section 501(r) regulations)?  
+ 
+No response provided. 
+ 
+6. Are medical payment product companies advertising their products as delivering 
+community benefits or as a form of financial assistance?  
+ 
+No response provided. 
+
+ 
+ 
+ 
+ 
+42 
+ 
+7. Are tax-exempt hospitals claiming that their promotion of medical payment products 
+delivers community benefits or provides financial assistance, including in their filings of Form 
+990, Schedule H?  
+ 
+No response provided. 
+ 
+8. Does the availability of medical payment products generally benefit the community or 
+assist patients financially?  
+ 
+PayMedix does not offer a medical payment product, as defined in the RFI, and cannot comment 
+on that model.  More generally, however, PayMedix can offer the following perspective and 
+potential actions regarding the broader market: 
+ 
+Historically, consumer healthcare costs in the commercial market (i.e., those not in a 
+government health care program) have been dealt with in two ways: 
+ 
+- 
+In-network allowed charges.  These are the co-pays, deductibles, and out-of-pocket 
+amounts for which consumers are responsible under their employer-provided health 
+coverage and which received the best-negotiated price with providers 
+o A combination of the provider, insurer, and employer could offer financial 
+assistance to consumers in order to pay their portion (e.g., payment plans, 
+HRAs/FSAs/HSAs, health/wellness incentive accounts, etc.) 
+o Assistance was both guaranteed and universal for all consumers regardless their 
+individual financial status 
+o Consumers had a financial incentive to seek out cost-effective care 
+ 
+- 
+Out-of-network and elective care.  This is care that consumers choose to consume even 
+though it will cost them more money and/or is not a covered medical benefit (e.g., 
+cosmetic surgery) 
+o If financed, the consumer could individually seek a credit product, or the provider 
+could partner with a financial services firm to offer that function 
+o Consumers are individually underwritten, and whether credit is offered and if so 
+on what terms vary significantly 
+o Consumer interest and fees are typically a key component of these products 
+ 
+In the RFI, the Agencies defined medical payment products as those “being administered by 
+financial services companies, who manage the billing and collections process for these 
+products and earn revenue through interest and fees.”  These were the types of products that 
+traditionally were sold for use in the out-of-network and elective care, and they filled a role in 
+that arena.  More recently, though, these medical payment products have been brought to 
+finance the in-network costs after insurance.   
+ 
+
+ 
+ 
+ 
+ 
+43 
+Many, including PayMedix, view this expansion of medical payment products as problematic.  
+Any product for in-network allowed charges that does not apply to all individuals (regardless 
+of their creditworthiness) and provide full coverage up to a patient’s out-of-pocket maximum 
+is cherry-picking consumers.  This approach diminishes universal access to care, increases 
+health inequity, and drives up overall healthcare costs.  A better approach for assisting 
+consumers with their in-network allowed charges is a “Guaranteed Universal Billing and 
+Payment Service”.  We define and explain this term below.  
+ 
+This Guaranteed Universal Billing and Payment Service is being utilized by a growing number of 
+patients and is addressing the payment challenges faced by patients covered by health plans – 
+since 58% of provider bad debt is from patients with health insurance, a 5x increase in 3 years.25 
+In this model, employers contract with a third party to reimburse healthcare providers for the 
+out-of-pocket portion of the in-network bill owed by their employees after they receive medical 
+care. The third-party, for example PayMedix, is then responsible for collecting the out-of-pocket 
+amount owed from the patient, who receives the PayMedix SuperEOB combining all billing and 
+EOB information from healthcare providers they visit in one easy-to-read, consolidated monthly 
+statement26. Patients see immediately what they owe, how to pay it, and how to get credit if 
+they need it in the form of extended payment options. The provider is not involved in collecting 
+balances due from these patients.  This alternative model does not place additional financial 
+burden on patients, preserves their creditworthiness, and treats all patients equitably and with 
+dignity. 
+ 
+A breakdown of the components is as follows: 
+ 
+Guaranteed.  Payment is guaranteed to the providers on behalf of all consumers. 
+ 
+Universal.  All employees and their dependents are automatically included, and all in-network 
+costs up to the full out-of-pocket maximum can be included.  No one is excluded for any reason. 
+ 
+Billing.  All of the consumer’s medical bills and EOBs are reconciled automatically and are 
+replaced by a simple monthly summary statement. 
+ 
+Payment.  Consumers can pay one bill that covers all of the participating providers, and if they 
+need to pay over time then they can automatically get a no-fee, 0% interest payment plan. 
+ 
+Service.  Since PayMedix is funded by employers and providers, it is provided at no cost to the 
+consumer. 
+ 
+ 
+ 
+25 “Hospital collection rates for self-pay patient accounts” (Aug. 2022), available at https://www.crowe.com/-
+/media/crowe/llp/widen-media-files-folder/h/hospital-collection-rates-for-self-pay-patient-accounts-report-
+chc2305-001a.pdf.  
+26 Employees are able to use the Guaranteed Universal Billing and Payment Service for medical claims generated 
+with healthcare providers who are in-network for their health plan, and also in the PayMedix network.  
+
+ 
+ 
+ 
+ 
+44 
+The PayMedix service brings multiple benefits to the patient, including a monthly billing 
+statement that displays all medical charges for the participant and family members. PayMedix’s 
+service includes zero interest or fees due from the patient and offers payment plans customized 
+to the unique circumstances of the family, which helps patients have lower cost of care. 
+Employees have no incentive or encouragement to use more expensive providers or consume 
+unnecessary care outside of their in-network providers. PayMedix is offered to all employees 
+equally, provides an opportunity to dispute and correct erroneous charges, and supports 
+patients in applying for financial assistance. The PayMedix service helps consumers afford the 
+care they need, thus helping improve their physical and mental health. 
+ 
+For the consumer portion due from in-network allowed charges after insurance, PayMedix does 
+not believe that medical payment products generally benefit the community or generally assist 
+patients financially.  For that, the Guaranteed Universal Billing and Payment Service does deliver 
+community and consumer benefit. 
+ 
+PayMedix does believe that medical payment products have been successfully used for out-of-
+network care, elective services, and non-medical coverage (e.g., Lasik or dental care).  Having 
+them properly continue in that arena could be appropriate.   
+ 
+4. Conclusion 
+ 
+We strongly urge that the CFPB, HHS and Department of Treasury consider the positive benefits 
+of alternative offerings to traditional medical payment products for the consumer portion of in-
+network allowed charges after insurance. One such model that resolves many of the legitimate 
+regulatory concerns of the medical credit card and installment loan category is the Guaranteed 
+Universal Billing and Payment Service offered as an employer benefit solution. PayMedix is an 
+example of a vendor operating in this emerging category. PayMedix’s model is attractive for 
+each of the stakeholders served. 
+ 
+The PayMedix service brings multiple benefits to the patient, including a monthly billing 
+statement that displays all medical charges for the participant and family members. PayMedix’s 
+service includes zero interest or fees due from the patient and offers payment plans customized 
+to the unique circumstances of the family, which helps patients have lower cost of care. 
+Employees have no incentive or encouragement to use more expensive providers or consume 
+unnecessary care outside of their in-network providers. PayMedix is offered to all employees 
+equally, provides an opportunity to dispute and correct erroneous charges, and supports 
+patients in applying for financial assistance. The PayMedix service helps all consumers afford the 
+care they need, thus helping improve their physical and mental health. 
+ 
+From the perspective of providers, the PayMedix model provides prompt pay for all in-network 
+patient balances for each participant opted into the billing simplification service through their 
+employer.  The provider can focus on clinical and other operational responsibilities of running 
+
+ 
+ 
+ 
+ 
+45 
+their practice. They do not promote the PayMedix model to patients, nor does it interfere with 
+charity care or financial assistance programs.  
+ 
+For the employer, the PayMedix model provides to employees a product that simplifies paying 
+for in-network, out-of-pocket medical expenses for its workforce and reduces the stress and 
+confusion that can further contribute to employee physical health issues.  In addition, PayMedix 
+employer clients have seen annual medical trend increases of 2.5-3.4% -- about half what the 
+market has experienced overall.  When people can get the care they need it when they need it, 
+health care issues are handled earlier.  This not only improves consumers’ health but also saves 
+them and their employers money.   
+ 
+Out of pocket healthcare costs present a significant and urgent issue for many Americans. While 
+traditional medical credit cards and installment loans are widely used today, they also present 
+several issues for consumers when used for care traditionally financed by employers, insurers, 
+and providers.  It is important that the Agencies recognize alternative, innovative models to 
+lower overall medical billing costs and to ensure that all consumers can afford the care they 
+need.  
+ 
+ 
+PayMedix understands that our model is unusual and innovative.  We would be happy to meet 
+with the agencies to discuss in more detail how we can work together to help consumers get 
+access to the healthcare they need. 
+ 
+We may be contacted at the following: 
+1000 North Water St., Suite 1100 
+Milwaukee, WI  53202 
+ 
+www.paymedix.com 
+ 
+Jourdan Miller 
+jmiller@hps.md 
+ 
+ 
+ 

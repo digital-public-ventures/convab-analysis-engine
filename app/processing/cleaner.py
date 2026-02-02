@@ -43,6 +43,7 @@ async def clean_csv(
     chunk_size: int | None = None,
     on_chunk: Callable[[list[dict[str, object]]], Awaitable[None]] | None = None,
     on_row_count: Callable[[int], Awaitable[None]] | None = None,
+    no_cache_ocr: bool = False,
 ) -> Path:
     """Clean a CSV file and save to specified directory.
 
@@ -54,6 +55,7 @@ async def clean_csv(
         chunk_size: Optional chunk size for incremental processing
         on_chunk: Optional callback invoked with each cleaned chunk
         on_row_count: Optional callback invoked with total row count
+        no_cache_ocr: If True, skip OCR text cache and re-extract (but still cache results)
 
     Returns:
         Path to the cleaned CSV file
@@ -94,6 +96,7 @@ async def clean_csv(
         try:
             for start in range(0, len(df), chunk_size):
                 chunk_df = df.iloc[start : start + chunk_size].copy()
+                chunk_df.reset_index(drop=True, inplace=True)  # Reset index for local row_idx access
 
                 if attachment_cols:
                     chunk_url_locations: list[tuple[int, str, str]] = []
@@ -109,7 +112,7 @@ async def clean_csv(
 
                     chunk_extracted_data: dict[tuple[int, str], list[str]] = {}
                     if unique_urls and processor is not None:
-                        results = await processor.process_attachments_async(unique_urls)
+                        results = await processor.process_attachments_async(unique_urls, no_cache_ocr=no_cache_ocr)
                         for row_idx, col, url in chunk_url_locations:
                             key = (row_idx, col)
                             text = results.get(url)
@@ -156,7 +159,7 @@ async def clean_csv(
                 cache_dir = downloads_dir or DOWNLOADS_DIR
                 processor = AttachmentProcessor(cache_dir=cache_dir)
             try:
-                results = await processor.process_attachments_async(unique_urls)
+                results = await processor.process_attachments_async(unique_urls, no_cache_ocr=no_cache_ocr)
             finally:
                 if owns_processor:
                     processor.close()

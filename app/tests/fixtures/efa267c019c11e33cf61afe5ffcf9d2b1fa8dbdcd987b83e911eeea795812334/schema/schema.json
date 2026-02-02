@@ -1,0 +1,133 @@
+{
+  "_metadata": {
+    "generated_at": "2026-02-01T12:17:05.427056",
+    "model_id": "gemini-3-flash-preview",
+    "thinking_level": "MINIMAL",
+    "rows_sampled": 15,
+    "use_case": "I need help designing a schema for analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.\n\nThe comments come from diverse stakeholders:\n- Individual patients sharing personal experiences with medical cre"
+  },
+  "schema_name": "Medical Payment Products Public Comment Schema",
+  "version": "1.0.0",
+  "description": "A comprehensive schema designed to analyze stakeholder feedback regarding medical credit cards and installment loans, focusing on consumer harm, policy recommendations, and health equity.",
+  "categorical_fields": [
+    {
+      "field_name": "Stakeholder Type",
+      "description": "Primary identity of the commenter providing the submission.",
+      "suggested_values": [
+        "Individual Patient",
+        "Healthcare Provider",
+        "Financial Services Provider",
+        "Consumer Advocacy Organization",
+        "Healthcare Industry Association",
+        "Legal/Policy Expert",
+        "Government Agency/Representative"
+      ],
+      "allow_multiple": false,
+      "hint": "Use 'Consumer Advocacy Organization' for non-profits representing public interests and 'Legal/Policy Expert' for academic or individual legal scholars."
+    },
+    {
+      "field_name": "Vulnerable Population Identifiers",
+      "description": "Specific demographic groups or vulnerable statuses mentioned in the narrative.",
+      "suggested_values": [
+        "Veteran",
+        "Senior/Elderly",
+        "Student",
+        "Single Parent",
+        "Low-Income",
+        "Disabled",
+        "Uninsured/Underinsured",
+        "Rural Resident",
+        "Racial/Ethnic Minority"
+      ],
+      "allow_multiple": true,
+      "hint": "Tag only if explicitly mentioned or strongly implied by the context of the personal experience."
+    },
+    {
+      "field_name": "Product and Entity Mentions",
+      "description": "Specific financial products or companies identified in the comment.",
+      "suggested_values": [
+        "Medical Credit Card",
+        "Installment Loan",
+        "Deferred Interest Product",
+        "CareCredit",
+        "Synchrony",
+        "Wells Fargo",
+        "AccessOne",
+        "Hospital-Branded Financing"
+      ],
+      "allow_multiple": true,
+      "hint": "Include both generic product categories and specific brand names."
+    },
+    {
+      "field_name": "Reported Outcomes and Impacts",
+      "description": "Downstream consequences of using or being offered medical payment products.",
+      "suggested_values": [
+        "Credit Score Damage",
+        "Debt Collection Activity",
+        "Delayed Medical Care",
+        "Financial Assistance Denial",
+        "Bankruptcy",
+        "Aggressive Marketing",
+        "Successful Procedure Access",
+        "Simplified Billing"
+      ],
+      "allow_multiple": true,
+      "hint": "Distinguish between financial impacts and health outcome impacts."
+    },
+    {
+      "field_name": "Policy and Regulatory Recommendations",
+      "description": "Specific actions suggested for the CFPB, HHS, or Treasury.",
+      "suggested_values": [
+        "Ban Deferred Interest",
+        "Mandatory Financial Assistance Screening",
+        "Enhanced Disclosure Requirements",
+        "Interest Rate Caps",
+        "Ban Medical Debt on Credit Reports",
+        "Stricter Provider Oversight",
+        "Maintain Market Access"
+      ],
+      "allow_multiple": true,
+      "hint": "Capture the regulatory 'ask' even if phrased as a general suggestion."
+    }
+  ],
+  "scalar_fields": [
+    {
+      "field_name": "Product Sentiment Score",
+      "description": "The overall attitude toward medical payment products.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = Extremely Negative/Harmful, 5 = Neutral/Balanced, 10 = Extremely Positive/Beneficial",
+      "hint": "Individual patients often score at extremes, while associations may be more neutral or positive."
+    },
+    {
+      "field_name": "Urgency and Distress Level",
+      "description": "The level of emotional distress or situational urgency conveyed in the comment.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = Calm/Analytical, 5 = Concerned, 10 = Crisis/Severe Emotional Distress",
+      "hint": "Look for descriptors of anxiety, fear, or immediate financial ruin."
+    },
+    {
+      "field_name": "Seriousness of Life Impact",
+      "description": "The magnitude of the disruption caused by the medical payment product to the commenter's life.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No impact, 5 = Moderate inconvenience, 10 = Life-altering consequences (e.g., loss of home, permanent debt)",
+      "hint": "Focus on the objective severity of the consequences described."
+    }
+  ],
+  "key_quotes_fields": [
+    {
+      "field_name": "Representative Narrative Snippet",
+      "description": "A quote that captures the core personal experience or the primary argument of the stakeholder.",
+      "max_quotes": 2,
+      "hint": "Prioritize quotes that illustrate the 'human' element of the financial impact."
+    },
+    {
+      "field_name": "Core Policy Recommendation Quote",
+      "description": "The most succinct phrasing of the commenter's regulatory suggestion or position.",
+      "max_quotes": 1,
+      "hint": "Focus on the 'I recommend' or 'The Bureau should' statements."
+    }
+  ]
+}
