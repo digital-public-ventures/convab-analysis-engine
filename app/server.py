@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import csv
 import json
 import logging
 import tempfile
@@ -26,9 +27,14 @@ from app.config import (
     DOWNLOADS_DIR,
     LOG_DATE_FORMAT,
     LOG_FORMAT,
+    POST_PROCESSING_SUBDIR,
     SCHEMA_DEFAULT_HEAD_SIZE,
     SCHEMA_DEFAULT_SAMPLE_SIZE,
+    TAG_FIX_DEDUPED_CSV_FILENAME,
+    TAG_FIX_MAPPINGS_FILENAME,
+    TAG_FIX_STREAM_CHUNK_SIZE,
 )
+from app.post_processing import TagFixOutput, run_tag_fix
 from app.processing import AttachmentProcessor, DataStore, clean_csv
 from app.processing.job_store import JobStatus, JobStore
 from app.schema import SchemaGenerator
@@ -126,6 +132,12 @@ class AnalyzeResponse(BaseModel):
     analysis_csv: str
 
 
+class TagFixRequest(BaseModel):
+    """Request model for /tag-fix endpoint."""
+
+    hash: str = Field(..., min_length=10, description="Hash of the analyzed dataset")
+
+
 class JobProgress(BaseModel):
     """Progress details for a background job."""
 
@@ -204,9 +216,31 @@ def _read_csv_rows(csv_path: Path) -> list[dict[str, Any]]:
     return cast("list[dict[str, Any]]", df.to_dict(orient="records"))
 
 
+def _add_csv_results(job_id: str, csv_path: Path, chunk_size: int) -> int:
+    total_rows = 0
+    with csv_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        batch: list[dict[str, Any]] = []
+        for row in reader:
+            batch.append(cast("dict[str, Any]", row))
+            total_rows += 1
+            if len(batch) >= chunk_size:
+                _job_store.add_results(job_id, batch)
+                batch = []
+        if batch:
+            _job_store.add_results(job_id, batch)
+    return total_rows
+
+
 async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_cache_ocr: bool = False) -> None:
     _job_store.mark_running(job_id)
     paths = _data_store.ensure_hash_dirs(content_hash)
+    logger.debug(
+        "Clean job cache dirs: downloads=%s cleaned=%s no_cache_ocr=%s",
+        paths["downloads"],
+        paths["cleaned_data"],
+        no_cache_ocr,
+    )
 
     async def _set_total_rows(total_rows: int) -> None:
         _job_store.set_total_rows(job_id, total_rows)
@@ -296,6 +330,43 @@ async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
         )
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception("Analyze job failed")
+        _job_store.mark_failed(job_id, str(exc))
+
+
+async def _run_tag_fix_job(job_id: str, request: TagFixRequest) -> None:
+    content_hash = request.hash
+    _job_store.mark_running(job_id)
+    job_started_at = time.monotonic()
+    logger.debug("Tag-fix job %s started for hash %s...", job_id, content_hash[:12])
+
+    analysis_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
+    if not analysis_csv:
+        _job_store.mark_failed(job_id, "Analysis CSV not found")
+        return
+
+    schema_path = _data_store.get_schema(content_hash)
+    if not schema_path:
+        _job_store.mark_failed(job_id, "Schema not found")
+        return
+
+    output_dir = _data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
+
+    try:
+        result: TagFixOutput = await run_tag_fix(
+            schema_path=schema_path,
+            analysis_csv_path=analysis_csv,
+            output_dir=output_dir,
+        )
+        total_rows = _add_csv_results(job_id, result.deduped_csv_path, TAG_FIX_STREAM_CHUNK_SIZE)
+        _job_store.set_total_rows(job_id, total_rows)
+        _job_store.mark_completed(job_id)
+        logger.debug(
+            "Tag-fix job %s completed in %.2fs",
+            job_id,
+            time.monotonic() - job_started_at,
+        )
+    except Exception as exc:  # pragma: no cover - defensive logging
+        logger.exception("Tag-fix job failed")
         _job_store.mark_failed(job_id, str(exc))
 
 
@@ -539,6 +610,59 @@ async def analyze_dataset_endpoint(
 
     _create_background_task(
         _run_analyze_job(
+            job_id=job.job_id,
+            request=request,
+        )
+    )
+
+    return JobStartResponse(
+        job_id=job.job_id,
+        status=job.status,
+        job_type=job.job_type,
+        hash=content_hash,
+        cached=False,
+        poll_url=poll_url,
+        results_url=results_url,
+    )
+
+
+@app.post("/tag-fix", response_model=JobStartResponse, status_code=202)
+async def tag_fix_endpoint(
+    request: TagFixRequest,
+    *,
+    no_cache: bool = NO_CACHE_QUERY,
+) -> JobStartResponse:
+    """Start a tag-fix job and return the job id immediately."""
+    content_hash = request.hash
+
+    if not _data_store.hash_exists(content_hash):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
+        )
+
+    job = _job_store.create_job("tag-fix", metadata={"hash": content_hash})
+    poll_url, results_url = _build_job_urls(job.job_id)
+
+    output_dir = _data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
+    deduped_csv = output_dir / TAG_FIX_DEDUPED_CSV_FILENAME
+    mappings_path = output_dir / TAG_FIX_MAPPINGS_FILENAME
+    if deduped_csv.exists() and mappings_path.exists() and not no_cache:
+        total_rows = _add_csv_results(job.job_id, deduped_csv, TAG_FIX_STREAM_CHUNK_SIZE)
+        _job_store.set_total_rows(job.job_id, total_rows)
+        _job_store.mark_completed(job.job_id)
+        return JobStartResponse(
+            job_id=job.job_id,
+            status=job.status,
+            job_type=job.job_type,
+            hash=content_hash,
+            cached=True,
+            poll_url=poll_url,
+            results_url=results_url,
+        )
+
+    _create_background_task(
+        _run_tag_fix_job(
             job_id=job.job_id,
             request=request,
         )

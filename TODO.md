@@ -6,6 +6,7 @@
 - Figure out why schema use case is shortened
 - schema prompt should permit the llm at add max_items to categorical arrays (some like stakeholder type might want to be min 1 max 1)
 - Make sure entity names end up in entity mentions wherever the author says them (i.e. don't do "Third-Party Debt Collector" if there's a name given)
+- canonicalize semicolons for tag separation in text fields
 
 stakeholder_type (8 labels):
 

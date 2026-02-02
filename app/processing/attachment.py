@@ -318,6 +318,7 @@ class AttachmentProcessor:
 
         # Get extension from path
         extension = Path(path).suffix.lower()
+        logger.debug("DETECT EXTENSION: %s -> %s (path=%s)", url_or_path, extension, path)
         return extension
 
     def _extract_image_text(self, content: bytes) -> str:
@@ -352,7 +353,9 @@ class AttachmentProcessor:
             True if it's an HTTP/HTTPS URL
         """
         parsed = urlparse(url_or_path)
-        return parsed.scheme in ("http", "https")
+        is_url = parsed.scheme in ("http", "https")
+        logger.debug("IS URL: %s -> %s (scheme=%s)", url_or_path, is_url, parsed.scheme)
+        return is_url
 
     def _fetch_url(self, url: str) -> bytes:
         """Fetch content from a URL, using cache if available.
@@ -368,10 +371,13 @@ class AttachmentProcessor:
         """
         # Check cache first
         if self.cache_dir:
+            logger.debug("DOWNLOAD CACHE DIR: %s", self.cache_dir)
             cached = get_cached_content(url, self.cache_dir)
             if cached is not None:
                 logger.debug("CACHE HIT: %s (%d bytes)", url, len(cached))
                 return cached
+        else:
+            logger.debug("DOWNLOAD CACHE SKIP: no cache_dir set for %s", url)
 
         # Fetch from URL
         logger.debug("FETCH START: %s", url)
@@ -437,7 +443,12 @@ class AttachmentProcessor:
             no_cache_ocr: If True, skip the extracted text cache and re-extract
                           (but still cache the new result for future use)
         """
-        logger.debug("EXTRACT START: %s (no_cache_ocr=%s)", url_or_path, no_cache_ocr)
+        logger.debug(
+            "EXTRACT START: %s (no_cache_ocr=%s cache_dir=%s)",
+            url_or_path,
+            no_cache_ocr,
+            self.cache_dir,
+        )
 
         # Check extracted text cache first (unless no_cache_ocr is set)
         if self.cache_dir and not no_cache_ocr:
@@ -445,6 +456,10 @@ class AttachmentProcessor:
             if cached_text is not None:
                 logger.debug("TEXT CACHE HIT: %s (%d chars)", url_or_path, len(cached_text))
                 return cached_text
+        elif not self.cache_dir:
+            logger.debug("TEXT CACHE SKIP: no cache_dir set for %s", url_or_path)
+        elif no_cache_ocr:
+            logger.debug("TEXT CACHE SKIP: no_cache_ocr=True for %s", url_or_path)
 
         # Cache miss or no_cache_ocr - extract text
         result = await self._extract_text_uncached(url_or_path, use_ocr)
@@ -453,6 +468,8 @@ class AttachmentProcessor:
         if self.cache_dir and result:
             save_text_to_cache(url_or_path, result, self.cache_dir)
             logger.debug("TEXT CACHED: %s", url_or_path)
+        elif self.cache_dir:
+            logger.debug("TEXT CACHE NOT WRITTEN: empty result for %s", url_or_path)
 
         return result
 

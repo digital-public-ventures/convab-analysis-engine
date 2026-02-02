@@ -16,6 +16,11 @@ RAW_DATA_DIR = DATA_DIR / "raw"
 ATTACHMENT_EXTENSIONS = frozenset({".pdf", ".jpg", ".jpeg", ".png", ".docx"})
 IMAGE_EXTENSIONS = frozenset({".png", ".jpg", ".jpeg", ".tif", ".tiff"})
 DOCUMENT_EXTENSIONS = frozenset({".pdf", ".docx"})
+UNSUPPORTED_ATTACHMENT_EXTENSIONS = frozenset(
+    f'.{ext.strip().lstrip(".")}'
+    for ext in os.environ.get("UNSUPPORTED_ATTACHMENT_EXTENSIONS", "").split(",")
+    if ext.strip()
+)
 
 # HTTP settings
 DEFAULT_TIMEOUT = 30.0
@@ -36,6 +41,12 @@ ANALYSIS_THINKING_LEVEL = "MINIMAL"
 ANALYSIS_BATCH_SIZE = 5
 ANALYSIS_JSON_FILENAME = "analysis.json"
 ANALYSIS_CSV_FILENAME = "analysis.csv"
+
+# Post-processing settings
+POST_PROCESSING_SUBDIR = "post-processing"
+TAG_FIX_DEDUPED_CSV_FILENAME = "analysis_deduped.csv"
+TAG_FIX_MAPPINGS_FILENAME = "mappings.json"
+TAG_FIX_STREAM_CHUNK_SIZE = 500
 
 # Token usage tracking
 TOKEN_USAGE_FILE = Path(os.environ.get("TOKEN_USAGE_FILE", str(DATA_DIR / "token_usage.jsonl")))

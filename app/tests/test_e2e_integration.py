@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import shutil
 import time
 from http import HTTPStatus
 from pathlib import Path
@@ -16,7 +17,12 @@ from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 
 from app import server as server_module
-from app.config import ANALYSIS_CSV_FILENAME, ANALYSIS_JSON_FILENAME
+from app.config import (
+    ANALYSIS_CSV_FILENAME,
+    ANALYSIS_JSON_FILENAME,
+    TAG_FIX_DEDUPED_CSV_FILENAME,
+    TAG_FIX_MAPPINGS_FILENAME,
+)
 from app.processing import DataStore
 from app.processing.job_store import JobStore
 from app.server import app
@@ -332,3 +338,53 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
     analysis_json = json.loads(json_path.read_text(encoding="utf-8"))
     if not analysis_json.get("records"):
         pytest.fail("analysis JSON records were empty")
+
+
+def test_tag_fix_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Run tag-fix endpoint for a known hash and validate outputs."""
+    logging.basicConfig(level=logging.DEBUG)
+    load_dotenv()
+    _clear_fixtures_outputs(FIXTURES_ROOT, HARDCODED_HASH, "post_processing")
+    if not os.environ.get("GEMINI_API_KEY"):
+        pytest.fail("GEMINI_API_KEY environment variable not set")
+
+    data_store = DataStore(data_dir=FIXTURES_ROOT)
+    monkeypatch.setattr(server_module, "_data_store", data_store)
+    monkeypatch.setattr(server_module, "_job_store", JobStore())
+    monkeypatch.setattr(server_module, "POST_PROCESSING_SUBDIR", "post_processing")
+
+    analysis_csv = FIXTURES_ROOT / HARDCODED_HASH / "analyzed" / ANALYSIS_CSV_FILENAME
+    if not analysis_csv.exists():
+        pytest.fail("analysis.csv fixture was missing for hardcoded hash")
+
+    post_processing_dir = FIXTURES_ROOT / HARDCODED_HASH / "post_processing"
+    post_processing_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(analysis_csv, post_processing_dir / TAG_FIX_DEDUPED_CSV_FILENAME)
+    (post_processing_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
+        json.dumps({"seeded": True}),
+        encoding="utf-8",
+    )
+
+    with TestClient(app) as client:
+        tag_fix_response = client.post(
+            "/tag-fix",
+            json={"hash": HARDCODED_HASH},
+        )
+        if tag_fix_response.status_code != HTTPStatus.ACCEPTED:
+            pytest.fail(f"Expected 202 status, got {tag_fix_response.status_code}")
+
+        tag_fix_payload = tag_fix_response.json()
+        if tag_fix_payload.get("cached") is not True:
+            pytest.fail("Expected cached response for tag-fix")
+        tag_fix_job_id = tag_fix_payload.get("job_id")
+        if not tag_fix_job_id:
+            pytest.fail("Tag-fix response missing job_id")
+
+        _poll_until_complete(client, tag_fix_job_id)
+
+        results_response = client.get(f"/jobs/{tag_fix_job_id}/results")
+        if results_response.status_code != HTTPStatus.OK:
+            pytest.fail(f"Expected 200 status, got {results_response.status_code}")
+        results_payload = results_response.json()
+        if not results_payload.get("rows"):
+            pytest.fail("Expected tag-fix rows in results")

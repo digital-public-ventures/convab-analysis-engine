@@ -16,7 +16,8 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import server as server_module
-from app.config import DATA_DIR
+from app.config import DATA_DIR, POST_PROCESSING_SUBDIR, TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
+from app.post_processing import TagFixOutput
 from app.processing.job_store import JobStore
 from app.server import app
 
@@ -81,6 +82,19 @@ def _seed_analysis_outputs(content_hash: str) -> None:
     shutil.copy(FIXTURE_SCHEMA, hash_dir / "schema" / "schema.json")
     shutil.copy(FIXTURE_ANALYSIS_DIR / "analysis.csv", hash_dir / "analyzed" / "analysis.csv")
     shutil.copy(FIXTURE_ANALYSIS_DIR / "analysis.json", hash_dir / "analyzed" / "analysis.json")
+
+
+def _seed_tag_fix_outputs(content_hash: str) -> None:
+    output_dir = DATA_DIR / content_hash / POST_PROCESSING_SUBDIR
+    output_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(
+        FIXTURE_ANALYSIS_DIR / "analysis.csv",
+        output_dir / TAG_FIX_DEDUPED_CSV_FILENAME,
+    )
+    (output_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
+        json.dumps({"seeded": True}),
+        encoding="utf-8",
+    )
 
 
 def _expect_status(response: object, expected: HTTPStatus) -> None:
@@ -426,6 +440,99 @@ class TestAsyncJobHandling:
 
         if not state["marked_after_add"]:
             pytest.fail("Expected completion after results were added")
+
+    def test_tag_fix_job_returns_cursor_paginated_results(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Start a tag-fix job and retrieve results with cursor pagination."""
+
+        async def fake_run_tag_fix(**kwargs: object) -> TagFixOutput:
+            output_dir = kwargs["output_dir"]
+            analysis_csv_path = kwargs["analysis_csv_path"]
+            output_dir.mkdir(parents=True, exist_ok=True)
+            deduped_path = output_dir / TAG_FIX_DEDUPED_CSV_FILENAME
+            shutil.copy(analysis_csv_path, deduped_path)
+            mappings_path = output_dir / TAG_FIX_MAPPINGS_FILENAME
+            mappings_path.write_text(json.dumps({"seeded": True}), encoding="utf-8")
+            return TagFixOutput(mappings_path=mappings_path, deduped_csv_path=deduped_path)
+
+        monkeypatch.setattr(server_module, "run_tag_fix", fake_run_tag_fix)
+
+        with TestClient(app) as client:
+            with TEST_CSV.open("rb") as handle:
+                clean_response = client.post(
+                    "/clean",
+                    files={"file": ("responses.csv", handle, "text/csv")},
+                )
+
+            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            clean_payload = clean_response.json()
+            content_hash = clean_payload["hash"]
+
+            _poll_until_complete(client, clean_payload["job_id"])
+            _seed_analysis_outputs(content_hash)
+
+            tag_fix_response = client.post(
+                "/tag-fix",
+                json={"hash": content_hash},
+            )
+
+            _expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
+            tag_fix_payload = tag_fix_response.json()
+            _expect_truthy(tag_fix_payload.get("job_id"), "Expected job_id in tag-fix response")
+
+            tag_fix_job_id = tag_fix_payload["job_id"]
+            _poll_until_complete(client, tag_fix_job_id)
+
+            results_response = client.get(f"/jobs/{tag_fix_job_id}/results")
+            _expect_status(results_response, HTTPStatus.OK)
+            results_payload = results_response.json()
+            _expect_truthy(results_payload.get("rows"), "Expected tag-fix rows")
+            if results_payload.get("completed") is not True:
+                pytest.fail("Expected completed to be true")
+
+            cursor = results_payload.get("next_cursor")
+            _expect_truthy(cursor, "Expected cursor in tag-fix results")
+
+            follow_up = client.get(f"/jobs/{tag_fix_job_id}/results", params={"cursor": cursor})
+            _expect_status(follow_up, HTTPStatus.OK)
+            follow_payload = follow_up.json()
+            if follow_payload.get("rows") != []:
+                pytest.fail("Expected no new rows after cursor")
+            if follow_payload.get("completed") is not True:
+                pytest.fail("Expected completed to be true")
+
+    def test_tag_fix_endpoint_returns_cached_results(self) -> None:
+        """Cached tag-fix outputs should return immediately with results."""
+        with TestClient(app) as client:
+            with TEST_CSV.open("rb") as handle:
+                clean_response = client.post(
+                    "/clean",
+                    files={"file": ("responses.csv", handle, "text/csv")},
+                )
+
+            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            clean_payload = clean_response.json()
+            content_hash = clean_payload["hash"]
+            _poll_until_complete(client, clean_payload["job_id"])
+
+            _seed_analysis_outputs(content_hash)
+            _seed_tag_fix_outputs(content_hash)
+
+            tag_fix_response = client.post(
+                "/tag-fix",
+                json={"hash": content_hash},
+            )
+
+            _expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
+            if tag_fix_response.json().get("cached") is not True:
+                pytest.fail("Expected cached response for tag-fix")
+
+            tag_fix_job_id = tag_fix_response.json()["job_id"]
+            _poll_until_complete(client, tag_fix_job_id)
+
+            results_response = client.get(f"/jobs/{tag_fix_job_id}/results")
+            _expect_status(results_response, HTTPStatus.OK)
+            results_payload = results_response.json()
+            _expect_truthy(results_payload.get("rows"), "Expected cached tag-fix rows")
 
     def test_clean_no_cache_bypasses_cached(self, tmp_path: Path) -> None:
         """Ensure no_cache forces a fresh clean job even when cached."""

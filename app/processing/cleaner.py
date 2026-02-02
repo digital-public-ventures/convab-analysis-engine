@@ -5,10 +5,11 @@ from __future__ import annotations
 import logging
 from collections.abc import Awaitable, Callable
 from pathlib import Path
+from urllib.parse import urlparse
 
 import pandas as pd
 
-from app.config import ATTACHMENT_EXTENSIONS, CLEANED_DATA_DIR, DOWNLOADS_DIR
+from app.config import ATTACHMENT_EXTENSIONS, CLEANED_DATA_DIR, DOWNLOADS_DIR, UNSUPPORTED_ATTACHMENT_EXTENSIONS
 
 from .attachment import AttachmentProcessor, is_valid_url
 
@@ -33,6 +34,17 @@ def is_attachment_column(series: pd.Series) -> bool:
     # Check if at least one value is a valid URL
     has_valid_url = series.astype(str).apply(is_valid_url).any()
     return bool(has_valid_url)
+
+
+def _is_supported_attachment_url(url: str) -> bool:
+    extension = Path(urlparse(url).path).suffix.lower()
+    if not extension:
+        return False
+    if extension not in ATTACHMENT_EXTENSIONS:
+        return False
+    if extension in UNSUPPORTED_ATTACHMENT_EXTENSIONS:
+        return False
+    return True
 
 
 async def clean_csv(
@@ -65,6 +77,13 @@ async def clean_csv(
     """
     logger.debug("clean_csv START: %s", input_path)
     input_path = Path(input_path)
+    effective_downloads_dir = downloads_dir or DOWNLOADS_DIR
+    logger.debug(
+        "clean_csv cache context: downloads_dir=%s processor_cache_dir=%s no_cache_ocr=%s",
+        effective_downloads_dir,
+        getattr(processor, "cache_dir", None),
+        no_cache_ocr,
+    )
 
     logger.debug("Reading CSV...")
     df = pd.read_csv(input_path)
@@ -92,6 +111,7 @@ async def clean_csv(
         owns_processor = processor is None
         if owns_processor and attachment_cols:
             cache_dir = downloads_dir or DOWNLOADS_DIR
+            logger.debug("Creating AttachmentProcessor (chunked) cache_dir=%s", cache_dir)
             processor = AttachmentProcessor(cache_dir=cache_dir)
         try:
             for start in range(0, len(df), chunk_size):
@@ -105,8 +125,10 @@ async def clean_csv(
                             if pd.notna(cell):
                                 urls = [u.strip() for u in str(cell).split(",") if u.strip()]
                                 for url in urls:
-                                    if is_valid_url(url):
+                                    if is_valid_url(url) and _is_supported_attachment_url(url):
                                         chunk_url_locations.append((row_idx, col, url))
+                                    elif is_valid_url(url):
+                                        logger.debug("Skipping unsupported attachment URL: %s", url)
 
                     unique_urls = list({loc[2] for loc in chunk_url_locations})
 
@@ -144,8 +166,10 @@ async def clean_csv(
                     # Handle comma-separated URLs in a single cell
                     urls = [u.strip() for u in str(cell).split(",") if u.strip()]
                     for url in urls:
-                        if is_valid_url(url):
+                        if is_valid_url(url) and _is_supported_attachment_url(url):
                             url_locations.append((row_idx, col, url))
+                        elif is_valid_url(url):
+                            logger.debug("Skipping unsupported attachment URL: %s", url)
 
         # Extract unique URLs and process all concurrently
         unique_urls = list({loc[2] for loc in url_locations})
@@ -157,6 +181,7 @@ async def clean_csv(
             owns_processor = processor is None
             if owns_processor:
                 cache_dir = downloads_dir or DOWNLOADS_DIR
+                logger.debug("Creating AttachmentProcessor cache_dir=%s", cache_dir)
                 processor = AttachmentProcessor(cache_dir=cache_dir)
             try:
                 results = await processor.process_attachments_async(unique_urls, no_cache_ocr=no_cache_ocr)

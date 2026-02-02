@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-02-02T04:15:35.499611+00:00",
+    "generated_at": "2026-02-02T07:35:30.242221+00:00",
     "model_id": "gemini-3-flash-preview",
     "thinking_level": "MINIMAL",
     "batch_size": 5,
@@ -9,1023 +9,224 @@
   },
   "records": [
     {
-      "record_id": "CFPB-2023-0038-0051",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Human Rights Watch strongly supports the agencies\u2019 efforts to better regulate the rights-impacting practices of private entities."
-        ],
-        "regulatory_mandate_quotes": [
-          "Human Rights Watch strongly supports the agencies\u2019 efforts to better regulate the rights-impacting practices of private entities."
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0052",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Hidden Interest/Fees", "Deferred Interest Traps"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Neighborhood Trust Financial Partners\u2019 Comment in Response to Request for Information Regarding Medical Payment Products."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0053",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient"],
-        "reported_consumer_harms": ["Deferred Interest Traps", "Hidden Interest/Fees"],
-        "policy_recommendations": ["Capping Interest Rates"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Care Credit offered a promo for 0% financing for 24 months, but then an interest rate of 22.9% and above, with severe penalty APR."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0054",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Hidden Interest/Fees", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I wish to record the issues I have with the Care Credit credit card issued by Synchrony Bank.",
-          "My full comment is too long to fit into the online form's 5,000 character limit."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0055",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Uninsured/Underinsured"],
-        "reported_consumer_harms": [
-          "Lack of Financial Assistance Information",
-          "Bankrupcty/Legal Action"
-        ],
-        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "The U.S. has some of the highest healthcare costs in the world, which can lead to significant financial burdens on patients.",
-          "The issues surrounding medical debt and healthcare costs in America are complex and interconnected."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
       "record_id": "CFPB-2023-0038-0071",
       "categorical_fields": {
         "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": [
-          "Low-Income",
-          "Uninsured/Underinsured",
-          "Minority/BIPOC"
-        ],
-        "reported_consumer_harms": [
-          "Deferred Interest Traps",
-          "Hidden Interest/Fees",
-          "Credit Score Damage",
-          "Lack of Financial Assistance Information"
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Deceptive Marketing",
+          "Credit Reporting Damage",
+          "Lack of Financial Assistance Awareness"
         ],
         "policy_recommendations": [
-          "Ban Deferred Interest",
-          "Stricter Disclosure Requirements",
-          "Mandatory Financial Assistance Screening"
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening",
+          "Ban on Credit Reporting for Medical Debt"
         ],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Comment from National Consumer Law Center, Americans for Financial Reform Education Fund, and Georgia Watch"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0072",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations", "No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 4.0,
-        "seriousness_of_life_impact": 3.0,
-        "product_sentiment_score": 8.0
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 8.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Comment from U.S. Chamber of Commerce"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": [
+          "September 11, 2023 Comment Intake Request for Information Regarding Medical Payment Products"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0073",
       "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Confusion Over Payment Terms"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Mental Health Strain"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 6.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 3.0
+        "sentiment_toward_products": 4.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "I work in HR, and even trying to explain to people how insurance works is hard.",
-          "it is so hard to review the forms and understand what happened."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "Even myself, someone who has to navigate it frequently, it is so hard to review the forms and understand what happened."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0074",
       "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Comment submitted by Allan Share"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": [
+          "From: Allan Share To: MedicalDebtRFI_2023 Subject: Docket No. CFPB\u20132023\u20130038"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0075",
       "categorical_fields": {
         "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Synchrony", "CareCredit"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 3.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 9.0
+        "urgency_of_concern": 2.0,
+        "seriousness_of_life_impact": 1.0,
+        "sentiment_toward_products": 9.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Alberto B. Casellas EVP & CEO, Health & Wellness Synchrony"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0076",
-      "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0077",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 4.0,
-        "seriousness_of_life_impact": 3.0,
-        "product_sentiment_score": 6.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "comments from the American Society of Plastic Surgeons in response to the Agency's Request for Information"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0078",
-      "categorical_fields": {
-        "stakeholder_type": "Government/Regulatory Body",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Aggressive Debt Collection", "Credit Score Damage"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "comment letter filed on behalf of California Attorney General Rob Bonta."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0079",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Minority/BIPOC"],
-        "reported_consumer_harms": ["Aggressive Debt Collection", "Bankruptcy/Legal Action"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "A Center at the University of the District of Columbia David A. Clarke School of Law"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0080",
-      "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Low-Income", "Chronic Illness Patient"],
-        "reported_consumer_harms": [
-          "Aggressive Debt Collection",
-          "Credit Score Damage",
-          "Discouragement of Care"
-        ],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["MedPut"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 4.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "users had much higher rates of 1) problems paying for medical care; 2) being contacted by a collections agency; 3) putting off medical care due to costs"
-        ],
-        "regulatory_mandate_quotes": [
-          "I wish to applaud the Consumer Financial Protection Bureau for looking into medical payment products."
         ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0001",
       "categorical_fields": {
-        "stakeholder_type": "Government/Regulatory Body",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "seriousness_of_life_impact": 0.0,
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Federal Register / Vol. 88, No. 132 / Wednesday, July 12, 2023 / Notices"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "Request for Information Regarding Medical Payment Products"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0002",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["unavailable"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0003",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["unavailable"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0004",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["unavailable"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0005",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0086",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["Comment submitted by Anders Gilberg (MGMA)"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0087",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["Comment from AHIP"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0088",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Chronic Illness Patient"],
-        "reported_consumer_harms": [
-          "Credit Score Damage",
-          "Aggressive Debt Collection",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": [
-          "Credit Reporting Reform",
-          "Mandatory Financial Assistance Screening"
-        ],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "RIP Medical Debt regarding the impact of medical debt on consumer financial stability."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0089",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 4.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 6.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Comment from American Hospital Association (AHA) regarding provider perspectives."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0090",
-      "categorical_fields": {
-        "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 3.0,
-        "product_sentiment_score": 7.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Comment from ACA International representing the accounts receivable management industry."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0066",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": [
-          "Confusion Over Payment Terms",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": [
-          "Stricter Disclosure Requirements",
-          "Enhanced Oversight of Collections"
-        ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "The medical billing practices that consumers (patients) must be a part of (be victims of) are for the most part unknown and mysterious and out of the consumers (patients) control.",
-          "Taking advantage of consumers (patients) when they are so vulnerable is IMMORAL."
-        ],
-        "regulatory_mandate_quotes": [
-          "If there ever was a role for the Consumer Financial Protection Bureau to protect consumers, this IS IT!"
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0067",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 7.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Please see the attached comments of the Dental Trade Alliance."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0068",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Discouragement of Care"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I went for a few months without health insurance because I was changing jobs and it wasn't pretty.",
-          "If I didn't have regular credit cards, I would be in big trouble."
-        ],
-        "regulatory_mandate_quotes": [
-          "I don't know what is going on but this whole system needs to be looked at."
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0069",
-      "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["See attached file(s)"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0070",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Please find attached comments from the Academy of Doctors of Audiology."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0036",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 2.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 8.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I actually find the Care Credit option of payment helpful.",
-          "I've found it to be helpful in stretching my budget and necessary for dental expenses or emergency bills."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0037",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Veteran"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 1.0,
-        "seriousness_of_life_impact": 3.0,
-        "product_sentiment_score": 9.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "My only relationship comes from emergency care under the Veterans Administration programs & they have been great."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0038",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Discouragement of Care", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I haven't done the treatment I need yet because I can't pay for this over the course of a year and then I would have onerous credit terms."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0039",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income", "Senior/Elderly"],
-        "reported_consumer_harms": [
-          "Discouragement of Care",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "the issue I find in my town is not being able to find a doctor or dentist who will accept Medicaid, especially for dental care."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0040",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 0.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "We don't need these products, don't want these products, and will not involve ourselves by obtaining or utilizing these products."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0081",
-      "categorical_fields": {
-        "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 8.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["Thomas D. Policelli CEO, HPS/PayMedix"],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0082",
-      "categorical_fields": {
-        "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 8.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Please see attached comments from PayZen. Thank you."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0083",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient", "Low-Income"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Re: Request for Information Regarding Specialty Medical Payment Products"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0084",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
-          "Credit Score Damage",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": [
-          "Enhanced Oversight of Collections",
-          "Mandatory Financial Assistance Screening"
-        ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "we submit the attached comments on behalf of the more than 100,000 Georgians burdened with medical debt.",
-          "We are pleased that your Agencies are seeking to understand the effects that medical credit cards, loans, and other financial products have on patients."
-        ],
-        "regulatory_mandate_quotes": [
-          "Seeking to understand the effects that medical credit cards, loans, and other financial products have on patients and the healthcare system."
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0085",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 4.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Assistive technology helps to meet the medical need of a person who has a disability or a medical condition.",
-          "A modified vehicle is a form of assistive technology that helps to address the medical needs for those who rely on private transportation."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0041",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Senior/Elderly", "Low-Income"],
-        "reported_consumer_harms": ["Deferred Interest Traps", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Capping Interest Rates"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "The CARE CREDIT medical credit card has kept me in debt.",
-          "I pray that my service pet doesn\u2019t get sick again because the interest rate is so high that I\u2019m in debt immediately."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0042",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Hidden Interest/Fees"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "These products are nothing short of a rip-off.",
-          "Just letting them charge whatever they can get away with is crazy."
-        ],
-        "regulatory_mandate_quotes": [
-          "At the very, very least, our regulators should require that these products stay within the guidelines and, more importantly, that prices for the services match Medicare levels."
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0043",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Hidden Interest/Fees"],
-        "policy_recommendations": ["Capping Interest Rates"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I feel the dental practitioner may have received a 'kickback' for pushing me in the direction of a particular loan agency.",
-          "Them financing interest was greatly bloated."
-        ],
-        "regulatory_mandate_quotes": [
-          "Better still is to provide a government program to address health needs."
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0044",
-      "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Please see attached comments from the American Animal Hospital Association."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0045",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient"],
-        "reported_consumer_harms": ["Hidden Interest/Fees", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I was told I did not qualify because I was disabled.",
-          "I was told they would refund the premiums... that was a lie."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["unavailable"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0046",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": [
-          "Low-Income",
-          "Chronic Illness Patient",
-          "Senior/Elderly"
-        ],
-        "reported_consumer_harms": [
-          "Bankrupcty/Legal Action",
-          "Lack of Financial Assistance Information"
-        ],
+        "vulnerable_population_tags": ["Senior/Elderly", "Disabled", "Low Income"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "Mental Health Strain"],
         "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 10.0,
-        "product_sentiment_score": 2.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "I can\u2019t survive on ssd so I\u2019m claiming bankruptcy.",
-          "I\u2019ve had 6 tummy ops, hashimotos, slow teeth loss, ortho issues, toe issues and pvcs with heart aneurysm."
-        ],
-        "regulatory_mandate_quotes": [
           "Why can\u2019t I who lives at doctors dentists pharmacists operating rooms have Medicaid back secondary to Medicare?"
         ]
       }
@@ -1034,190 +235,608 @@
       "record_id": "CFPB-2023-0038-0047",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Discouragement of Care"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Mental Health Strain"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 5.0
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "The stress and lack of insurance caused more damage than good.",
-          "I drove myself into the hospital via 6 weeks of round trips... for that job."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "I drove myself into the hospital via 6 weeks of round trips... The stress and ..."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0048",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Credit Score Damage", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Credit Reporting Reform", "Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
+        "vulnerable_population_tags": ["Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Credit Reporting Damage"],
+        "policy_recommendations": ["Ban on Credit Reporting for Medical Debt"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 8.0,
         "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 4.0
+        "sentiment_toward_products": 4.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "I have used my cc to pay for eye exams and dental care for years because most insurance doesn\u2019t cover them correctly.",
           "stop them from ruining o credit report of the patient"
-        ],
-        "regulatory_mandate_quotes": [
-          "make these billing companies bill the correct agency and stop them from ruining o credit report of the patient"
         ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0049",
       "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "urgency_of_concern": 0.0,
+        "seriousness_of_life_impact": 0.0,
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Duplicate to CFPB-2023-0038-0048"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["Duplicate to CFPB-2023-0038-0048"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0050",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
         "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 3.0,
+        "urgency_of_concern": 2.0,
         "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 7.0
+        "sentiment_toward_products": 7.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "very informative previously payment for revision labs test deflation augmentation"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0041",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Senior/Elderly", "Low Income"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Bankruptcy/Financial Ruin"],
+        "policy_recommendations": ["Unknown"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "The CARE CREDIT medical credit card has kept me in debt. I mainly use it for my veterinary bills.",
+          "I pray that my service pet doesn\u2019t get sick again because the interest rate is so high that I\u2019m in debt immediately."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0042",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Deceptive Marketing"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements", "Interest Rate Caps"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 0.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "These products are nothing short of a rip-off. The prices are not negotiated (as they are if you are using insurance).",
+          "Our regulators should require that these products stay within the guidelines and, more importantly, that prices for the services match Medicare levels."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0043",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Deceptive Marketing"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 6.0,
+        "seriousness_of_life_impact": 6.0,
+        "sentiment_toward_products": 3.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Them financing interest was greatly bloated. I feel the dental practitioner may have received a 'kickback' for pushing me in the direction of a particular loan agency.",
+          "Where the need for financing to overcome health issues is fair, it may be better to used a standard credit card."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0044",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Please see attached comments from the American Animal Hospital Association."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0045",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Disabled", "Low Income"],
+        "reported_harms_and_impacts": ["Deceptive Marketing", "Credit Reporting Damage"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I informed them, I was on Medicare Disability... that third party charged Credit One since 2010 for disability premiums.",
+          "I filed a claim in 2019, I was told I did not qualify because I was disabled."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0026",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Provider",
-        "vulnerable_population_identifiers": ["Minority/BIPOC"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 7.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Manuel A. Cordero, DDS, CPH <ceo@hdassoc.org>"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["Manuel A. Cordero, DDS, CPH <ceo@hdassoc.org>"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0027",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 8.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Cathy Christensen <cathy@americanmedspa.org>"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["Cathy Christensen <cathy@americanmedspa.org>"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0028",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 7.0
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 8.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "August 31, 2023 Consumer Financial Protection Bureau 1700 G Street NW",
           "Please see attached comments from the American Dental Association."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0029",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 7.0
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 7.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Please see the attached comment from the American Veterinary Medical Association."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0030",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Aggressive Debt Collection", "Credit Score Damage"],
-        "policy_recommendations": ["Credit Reporting Reform"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector", "Hospital Billing Department"]
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection", "Credit Reporting Damage"],
+        "policy_recommendations": ["Unknown"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Need help paying bill or remove from collections with payment plan to attain an apartment."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0076",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 7.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Via electronic mail to: MedicalDebtRFI_2023@cfpb.gov"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0077",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "comments from the American Society of Plastic Surgeons in response to the Agency's Request for Information regarding medical payment products."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0078",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection", "Credit Reporting Damage"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Ban on Credit Reporting for Medical Debt"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "I have a bill In collections with Penn Credit for Broward Health.",
-          "Need help paying bill or remove from collections with payment plan to attain an apartment."
+          "filed on behalf of California Attorney General Rob Bonta. Please contact our office if you have any follow up questions."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0079",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Minority Communities"],
+        "reported_harms_and_impacts": [
+          "Credit Reporting Damage",
+          "Bankruptcy/Financial Ruin",
+          "Mental Health Strain"
         ],
-        "regulatory_mandate_quotes": [
-          "Need help paying bill or remove from collections with payment plan to attain an apartment."
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "A Center at the University of the District of Columbia David A. Clarke School of Law"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0080",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["Low Income", "Underinsured"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection", "Health Care Postponement"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Installment Loan", "MedPut"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 4.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "users had much higher rates of 1) problems paying for medical care; 2) being contacted by a collections agency; 3) putting off medical care due to cost.",
+          "I wish to applaud the Consumer Financial Protection Bureau for looking into medical payment products."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0006",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["None Identified"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 2.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 9.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "The use of Care Credit allowed me to have much needed dental work and pay for it over time.",
+          "I have successfully used the product by paying as agreed and in full at the conclusion of the term."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0007",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 5.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "A significant issue that is common amongst Flexible Spending Accounts is that many have a use-it-or-lose-it provision."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0008",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Deceptive Marketing",
+          "Mental Health Strain"
+        ],
+        "policy_recommendations": ["Interest Rate Caps", "Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["CareCredit"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I felt pressured into signing up for CareCredit by an emergency vet clinic.",
+          "In 7 months, I have been charged over $1,300 in interest. I feel like I'm drowning."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0009",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 0.0,
+        "seriousness_of_life_impact": 0.0,
+        "sentiment_toward_products": 5.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": ["accidentally posted a test comment."]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0010",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 3.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I hope that any proposed and final regulations prioritize the needs and actions of actual people."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0081",
+      "categorical_fields": {
+        "stakeholder_type": "Financial Services Company",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": ["Thomas D. Policelli CEO, HPS/PayMedix"]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0082",
+      "categorical_fields": {
+        "stakeholder_type": "Financial Services Company",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 2.0,
+        "seriousness_of_life_impact": 1.0,
+        "sentiment_toward_products": 9.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Please see attached comments from PayZen. Thank you."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0083",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Disabled"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Mental Health Strain"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Re: Request for Information Regarding Specialty Medical Payment Products"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0084",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "Aggressive Debt Collection",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": [
+          "Ban on Credit Reporting for Medical Debt",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "we submit the attached comments on behalf of the more than 100,000 Georgians burdened with medical debt.",
+          "seeking to understand the effects that medical credit cards, loans, and other financial products have on patients"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0085",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Disabled"],
+        "reported_harms_and_impacts": ["Health Care Postponement", "Bankruptcy/Financial Ruin"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 3.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Assistive technology helps to meet the medical need of a person who has a disability or a medical condition.",
+          "A modified vehicle is a form of assistive technology that helps to address the medical needs for those who rely on private transportation"
         ]
       }
     },
@@ -1225,457 +844,209 @@
       "record_id": "CFPB-2023-0038-0011",
       "categorical_fields": {
         "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient", "Low-Income"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["Low Income", "Disabled"],
+        "reported_harms_and_impacts": ["Lack of Financial Assistance Awareness"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 7.0,
         "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 3.0
+        "sentiment_toward_products": 4.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Patients being treatment for behavioral health conditions may be more likely than others to have medical debt and may have trouble finding treatment fully covered by insurance"
-        ],
-        "regulatory_mandate_quotes": [
-          "I write to encourage CFPB, Treasury and HHS to further study the implications of use of such medical payment products"
+          "encourage CFPB, Treasury and HHS to further study the implications of use of such medical payment products... among patients receiving treatment for mental health conditions and substance use disorders.",
+          "Patients being treatment for behavioral health conditions may be more likely than others to have medical debt."
         ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0012",
       "categorical_fields": {
-        "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["RE: Docket No. CFPB\u20132023\u20130038"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["I respect...", "See Attached"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0013",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
-          "Bankrupcty/Legal Action",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "Deceptive Marketing"],
+        "policy_recommendations": ["Product Bans", "Provider Training/Regulation"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 8.0,
+        "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 1.0
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "This new practice of just signing patients up on admittance into finance contracts will put more people in financial jeopardy",
-          "most bankruptcies are related to medical debt"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "This new practice of just signing patients up on admittance into finance contracts will put more people in financial jeopardy.",
+          "most bankruptcies are related to medical debt."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0014",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Bankrupcty/Legal Action", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "High Interest Rates/Fees"],
+        "policy_recommendations": ["Product Bans", "No Action Recommended"],
+        "product_and_company_mentions": ["Provider-managed Payment Plan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 0.0
+        "sentiment_toward_products": 0.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "This predatory activity of pushing patients into finance contracts will only make matters worse for patients and their families",
-          "Hospitals used to set up payment plans when needed, often at no interest"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "This predatory activity of pushing patients into finance contracts will only make matters worse for patients and their families.",
+          "Hospitals used to set up payment plans when needed, often at no interest, because they had the appearance of operating for the public good."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0015",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Bankrupcty/Legal Action"],
-        "policy_recommendations": ["Capping Interest Rates"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "Deceptive Marketing"],
+        "policy_recommendations": ["Product Bans"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 0.0
+        "sentiment_toward_products": 0.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Most bankruptcies in the US are related to medical debt. This predatory activity of pushing patients into finance contracts will only make matters worse",
-          "If there were universal healthcare in the US we would not be having a discussion on financing health care debt"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0091",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Uninsured/Underinsured"],
-        "reported_consumer_harms": [
-          "Lack of Financial Assistance Information",
-          "Deferred Interest Traps"
-        ],
-        "policy_recommendations": [
-          "Mandatory Financial Assistance Screening",
-          "Stricter Disclosure Requirements"
-        ],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Governing for Impact submitted via www.regulations.gov to Administrator Chiquita Brooks-LaSure."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0092",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
-          "Aggressive Debt Collection",
-          "Bankrupcty/Legal Action",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 10.0,
-        "seriousness_of_life_impact": 10.0,
-        "product_sentiment_score": 0.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Being placed in collections and no options becoming homeless.",
-          "maybe if their funding is cut by sponsors maybe they can understand the position many patients are placed in."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0093",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "Comment submitted was flagged as being materially false, fictitious or fraudulent representation."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0094",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Student"],
-        "reported_consumer_harms": ["Credit Score Damage"],
-        "policy_recommendations": ["Credit Reporting Reform", "Capping Interest Rates"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "It would be good if there was way to pay for college that was less userous and more equitable.",
-          "Or a way to pay back loans that didn't crowd or intermingle with your credit rating."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0095",
-      "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "See Attached",
-          "From: Trina Calloway To: MedicalDebtRFI_2023"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0006",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 2.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 9.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "The use of Care Credit allowed me to have much needed dental work and pay for it over time.",
-          "I have successfully used the product by paying as agreed and in full at the conclusion of the term."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0007",
-      "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "A significant issue that is common amongst Flexible Spending Accounts is that many have a use-it-or-lose-it provision."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0008",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
-          "Deferred Interest Traps",
-          "Hidden Interest/Fees",
-          "Confusion Over Payment Terms"
-        ],
-        "policy_recommendations": ["Capping Interest Rates", "Ban Deferred Interest"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I felt pressured into signing up for CareCredit by an emergency vet clinic.",
-          "There was an \u201cinterest free\u201d period of only 6 months... I have been charged over $1,300 in interest."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0009",
-      "categorical_fields": {
-        "stakeholder_type": "Unknown",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 0.0,
-        "seriousness_of_life_impact": 0.0,
-        "product_sentiment_score": 5.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": ["accidentally posted a test comment."],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0010",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Unknown"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 3.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I hope that any proposed and final regulations prioritize the needs and actions of actual people."
-        ],
-        "regulatory_mandate_quotes": [
-          "I hope that any proposed and final regulations prioritize the needs and actions of actual people."
+          "Most bankruptcies in the US are related to medical debt. This predatory activity... will only make matters worse.",
+          "If there were universal healthcare in the US we would not be having a discussion on financing health care debt at the point of service."
         ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0056",
       "categorical_fields": {
-        "stakeholder_type": "Government/Regulatory Body",
-        "vulnerable_population_identifiers": [
-          "Low-Income",
-          "Minority/BIPOC",
-          "Uninsured/Underinsured"
-        ],
-        "reported_consumer_harms": [
-          "Lack of Financial Assistance Information",
-          "Discouragement of Care",
-          "Credit Score Damage"
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["Low Income", "None Identified"],
+        "reported_harms_and_impacts": [
+          "Lack of Financial Assistance Awareness",
+          "High Interest Rates/Fees"
         ],
         "policy_recommendations": [
           "Mandatory Financial Assistance Screening",
-          "Stricter Disclosure Requirements",
-          "Capping Interest Rates"
+          "Enhanced Disclosure Requirements"
         ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "The Los Angeles County Department of Public Health is deeply committed to protecting the health and well-being of our residents."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "The Los Angeles County Department of Public Health (LA County Public Health) is deeply committed to protecting the health and well-being of our residents.",
+          "Request for Comments regarding medical payment products."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0057",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": [
           "Aggressive Debt Collection",
-          "Lack of Financial Assistance Information"
+          "Mental Health Strain",
+          "Lack of Financial Assistance Awareness"
         ],
-        "policy_recommendations": [
-          "Mandatory Financial Assistance Screening",
-          "Enhanced Oversight of Collections"
-        ],
-        "product_and_entity_mentions": ["Third-Party Debt Collector", "Hospital Billing Department"]
+        "policy_recommendations": ["Ban on Credit Reporting for Medical Debt"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
         "urgency_of_concern": 7.0,
         "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 3.0
+        "sentiment_toward_products": 3.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Medical expenses are not discretionary spending. Debt from life saving care should be treated differently than other debit.",
-          "Stress caused by collection calls/unpaid bills is the least conducive thing to recovery from illness or injury."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "Debt from life saving care should be treated differently than other debit. Stress caused by collection calls/unpaid bills is the least conducive thing to recovery.",
+          "I am shocked by how quickly medical debt is sent to collection agencies even by 'nonprofit' hospitals."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0058",
       "categorical_fields": {
         "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Uninsured/Underinsured"],
-        "reported_consumer_harms": [
-          "Lack of Financial Assistance Information",
-          "Deferred Interest Traps",
-          "Aggressive Debt Collection"
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "Lack of Financial Assistance Awareness",
+          "High Interest Rates/Fees",
+          "Deceptive Marketing"
         ],
         "policy_recommendations": [
           "Mandatory Financial Assistance Screening",
-          "Ban Deferred Interest",
-          "Credit Reporting Reform"
+          "Enhanced Disclosure Requirements"
         ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 10.0,
+        "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Response to Request for Information Regarding Medical Payment Products"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "Response to Request for Information Regarding Medical Payment Products",
+          "unavailable"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0059",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": [
-          "Bankruptcy/Legal Action",
-          "Credit Score Damage",
-          "Discouragement of Care"
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": [
+          "Bankruptcy/Financial Ruin",
+          "Mental Health Strain",
+          "High Interest Rates/Fees"
         ],
-        "policy_recommendations": ["Enhanced Oversight of Collections", "Capping Interest Rates"],
-        "product_and_entity_mentions": ["Unknown"]
+        "policy_recommendations": ["Product Bans", "Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 10.0,
         "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 0.0
+        "sentiment_toward_products": 0.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Medical debt is a glaring manifestation of the deeply flawed and corrupt health care system in our country.",
-          "It is an egregious injustice that leaves countless individuals drowning in an insurmountable burden."
-        ],
-        "regulatory_mandate_quotes": [
-          "This dire situation demands immediate attention and concrete actions to rectify the systemic issues plaguing our health care system."
+          "It is an egregious injustice that leaves countless individuals drowning in an insurmountable burden, jeopardizing their financial stability."
         ]
       }
     },
@@ -1683,70 +1054,491 @@
       "record_id": "CFPB-2023-0038-0060",
       "categorical_fields": {
         "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Stricter Disclosure Requirements"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
+        "urgency_of_concern": 2.0,
         "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 9.0
+        "sentiment_toward_products": 10.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Alberto B. Casellas, EVP & CEO, Health & Wellness, Synchrony"
+          "Synchrony / CareCredit submission from Alberto B. Casellas, EVP & CEO, Health & Wellness.",
+          "unavailable"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0036",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["CareCredit"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 2.0,
+        "seriousness_of_life_impact": 4.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I actually find the Care Credit option of payment helpful.",
+          "I've found it to be helpful in stretching my budget and necessary for dental expenses or emergency bills."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0037",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Veteran"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 1.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 9.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "My only relationship comes from emergency care under the Veterans Administration programs & they have been great in the last 2 years."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0038",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Health Care Postponement", "High Interest Rates/Fees"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 6.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I haven't done the treatment I need yet because I can't pay for this over the course of a year and then I would have onerous credit terms."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0039",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Low Income", "Senior/Elderly"],
+        "reported_harms_and_impacts": ["Health Care Postponement"],
+        "policy_recommendations": ["Provider Training/Regulation"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 5.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "the issue I find in my town is not being able to find a doctor or dentist who will accept Medicaid, especially for dental care."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0040",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Product Bans"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 0.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "We don't need these products, don't want these products, and will not involve ourselves by obtaining or utilizing these products."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0051",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "Health Care Postponement"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Provider Training/Regulation"
         ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Human Rights Watch strongly supports the agencies\u2019 efforts to better regulate the rights-impacting practices of private entities."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0052",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Credit Reporting Damage", "High Interest Rates/Fees"],
+        "policy_recommendations": [
+          "Mandatory Financial Assistance Screening",
+          "Interest Rate Caps"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 3.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Neighborhood Trust Financial Partners\u2019 Comment in Response to Request for Information Regarding Medical Payment Products."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0053",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Senior/Elderly"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Deceptive Marketing"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 6.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Care Credit offered a promo for 0% financiing for 24 months, but then an interest rate of 22.9% and above, with severe penalty APR if a payment was missed.",
+          "My health care provider only covered the removal of the cataract and a blank (non-RX) lens. I had to pay for the prescription lens."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0054",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["High Interest Rates/Fees", "Aggressive Debt Collection"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I wish to record the issues I have with the Care Credit credit card issued by Synchrony Bank.",
+          "My full comment is too long to fit into the online form's 5,000 character limit, so I have attached it as a Word document."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0055",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "Bankruptcy/Financial Ruin",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "The U.S. has some of the highest healthcare costs in the world, which can lead to significant financial burdens on patients.",
+          "Factors contributing to the medical debt crisis... include high healthcare costs and aggressive debt collection."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0066",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Deceptive Marketing", "Mental Health Strain"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 0.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "The medical billing practices that consumers (patients) must be a part of (be victims of) are for the most part unknown and mysterious.",
+          "Taking advantage of consumers (patients) when they are so vulnerable is IMMORAL."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0067",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Please see the attached comments of the Dental Trade Alliance."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0068",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Health Care Postponement"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 6.0,
+        "sentiment_toward_products": 5.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I went for a few months without health insurance because I was changing jobs and it wasn't pretty.",
+          "If I didn't have regular credit cards, I would be walking around with a missing front tooth."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0069",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 4.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": ["See attached file(s)", "unavailable"]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0070",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 2.0,
+        "seriousness_of_life_impact": 2.0,
+        "sentiment_toward_products": 7.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Please find attached comments from the Academy of Doctors of Audiology."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0086",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Lack of Financial Assistance Awareness"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Provider-managed Payment Plan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 4.0,
+        "sentiment_toward_products": 7.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Comment submitted by Anders Gilberg regarding Medical Group Management Association (MGMA) perspectives."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0087",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Health Care Postponement"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 6.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Comment from AHIP (America's Health Insurance Plans) addressing centers for Medicare and Medicaid Services."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0088",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Disabled"],
+        "reported_harms_and_impacts": [
+          "Credit Reporting Damage",
+          "High Interest Rates/Fees",
+          "Bankruptcy/Financial Ruin"
+        ],
+        "policy_recommendations": [
+          "Ban on Credit Reporting for Medical Debt",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "RIP Medical Debt provides perspectives on the systemic harms of medical debt and third-party payment products."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0089",
+      "categorical_fields": {
+        "stakeholder_type": "Healthcare Industry Association",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Lack of Financial Assistance Awareness"],
+        "policy_recommendations": ["Maintain Current Regulations", "No Action Recommended"],
+        "product_and_company_mentions": ["Provider-managed Payment Plan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 3.0,
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 8.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "American Hospital Association (AHA) highlights the importance of patient access to diverse payment options."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0090",
+      "categorical_fields": {
+        "stakeholder_type": "Financial Services Company",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 4.0,
+        "seriousness_of_life_impact": 4.0,
+        "sentiment_toward_products": 7.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "ACA International representing the accounts receivable management industry regarding medical debt collection and credit reporting."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0021",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient", "Low-Income"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
+        "vulnerable_population_tags": ["Disabled", "Low Income"],
+        "reported_harms_and_impacts": [
+          "Lack of Financial Assistance Awareness",
+          "Bankruptcy/Financial Ruin"
+        ],
         "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 3.0
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 10.0,
+        "sentiment_toward_products": 3.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "I was treated at PeaceHealth St. Joseph Hospital... my bills were over $1 million.",
-          "I will need chiropractic, aftercare..."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "The kicker, though, was aftercare. I will need chiropractic..."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0022",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": [
-          "Hidden Interest/Fees",
-          "Confusion Over Payment Terms",
-          "Deferred Interest Traps"
-        ],
-        "policy_recommendations": ["Stricter Disclosure Requirements", "Capping Interest Rates"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Deceptive Marketing", "High Interest Rates/Fees"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 1.0
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "They bated me and painted the card like it was perfect for me.",
-          "My balance of $700 not significantly decreased despite making consistent and timely payments."
-        ],
-        "regulatory_mandate_quotes": [
-          "I am writing to express my extreme dissatisfaction with the services provided by Care Credit."
+          "My balance of $700 not significantly decreased despite making consistent and timely payments, but it has actually risen."
         ]
       }
     },
@@ -1754,45 +1546,41 @@
       "record_id": "CFPB-2023-0038-0023",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Senior/Elderly", "Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Discouragement of Care"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["Senior/Elderly", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Health Care Postponement"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
+        "urgency_of_concern": 6.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Even with insurance, I don't always go to my doctor when it would probably be a good idea because my deductible is a few thousand dollars.",
-          "Newly retired and likely to need more medical care in the coming years."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "I don't always go to my doctor when it would probably be a good idea because my deductible is a few thousand dollars.",
+          "Now that my husband and I are newly retired and likely to need more medical care in the coming years..."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0024",
       "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 2.0,
         "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 9.0
+        "sentiment_toward_products": 9.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Deferred payment plans provide a significant level of flexibility and financial relief to individuals facing unexpected expenses.",
-          "As a responsible credit card user, I believe that these options play a crucial role."
-        ],
-        "regulatory_mandate_quotes": [
-          "express my sincere concern and request regarding the availability of deferred payment options on credit cards."
+          "As a responsible credit card user, I believe that these options play a crucial role in providing financial flexibility."
         ]
       }
     },
@@ -1800,26 +1588,26 @@
       "record_id": "CFPB-2023-0038-0025",
       "categorical_fields": {
         "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Minority/BIPOC"],
-        "reported_consumer_harms": [
-          "Credit Score Damage",
-          "Lack of Financial Assistance Information"
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "Mental Health Strain",
+          "Lack of Financial Assistance Awareness"
         ],
-        "policy_recommendations": ["Enhanced Oversight of Collections", "Credit Reporting Reform"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "We fight for a world in which, without exception, public policies and investments remove barriers for most impacted children and families.",
-          "advocate for the development and implementation of data-driven public policy."
-        ],
-        "regulatory_mandate_quotes": [
-          "public policies and investments remove barriers for most impacted children and families and improve well-being."
+          "We advocate for the development and implementation of data-driven public policy that improves child and family well-being.",
+          "Public policies and investments remove barriers for most impacted children and families."
         ]
       }
     },
@@ -1827,252 +1615,107 @@
       "record_id": "CFPB-2023-0038-0016",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Senior/Elderly", "Chronic Illness Patient"],
-        "reported_consumer_harms": [
-          "Bankrupcty/Legal Action",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Senior/Elderly"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin", "Deceptive Marketing"],
+        "policy_recommendations": ["Product Bans"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "As an immuno-compromised senior, the issue of financing health care debt is of great concern to me.",
           "This predatory activity of pushing patients into finance contracts will only make matters worse for patients and their families and increase the number of bankruptcies."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0017",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Confusion Over Payment Terms"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Deceptive Marketing"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 3.0
+        "urgency_of_concern": 6.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "My dentist has offered me a medical credit card to help finance a $5,000 medical dental repair that is not covered by my insurance.",
           "My dentist acted offended that I would not use the credit card financing."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0018",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Provider",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Capping Interest Rates"],
-        "product_and_entity_mentions": ["Unknown"]
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": ["Lack of Financial Assistance Awareness"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Installment Loan", "Provider-managed Payment Plan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 4.0,
         "seriousness_of_life_impact": 3.0,
-        "product_sentiment_score": 7.0
+        "sentiment_toward_products": 8.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "My organization partners with a local bank to provide financing to our patients for up to 72 months at an interest rate of between 4%-6%.",
-          "Offering the financing to our patients is not our first option by any means, it is just there as another option."
-        ],
-        "regulatory_mandate_quotes": ["I'd be careful to lump them all into the same category."]
+          "There are many different types of medical payment products. I'd be careful to lump them all into the same category.",
+          "Offering the financing to our patients is not our first option by any means, it is just there as another option for our patients in addition to applying for financial assistance."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0019",
       "categorical_fields": {
         "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Minority/BIPOC"],
-        "reported_consumer_harms": [
-          "Hidden Interest/Fees",
-          "Credit Score Damage",
-          "Aggressive Debt Collection"
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "Aggressive Debt Collection",
+          "Credit Reporting Damage",
+          "High Interest Rates/Fees"
         ],
         "policy_recommendations": [
-          "Stricter Disclosure Requirements",
+          "Enhanced Disclosure Requirements",
           "Mandatory Financial Assistance Screening"
         ],
-        "product_and_entity_mentions": ["Unknown"]
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 8.0,
         "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
+        "sentiment_toward_products": 3.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["See Attached"],
-        "regulatory_mandate_quotes": ["unavailable"]
+        "representative_narrative_snippets": ["See Attached", "509 E Radburn Street, Tucson, AZ"]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0020",
       "categorical_fields": {
-        "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Unknown"]
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 5.0
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "I have been a huge difference for the Finance committee and I testified a couple of times for it"
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0031",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 6.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I told the financial lady I would only pay the Medicare price for the visit. One month later I was billed $2,664 for an EKG and some labs.",
-          "They billed me for additional codes outside of the ER visit."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0032",
-      "categorical_fields": {
-        "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": ["Low-Income", "Uninsured/Underinsured"],
-        "reported_consumer_harms": [
-          "Lack of Financial Assistance Information",
-          "Discouragement of Care"
-        ],
-        "policy_recommendations": [
-          "Mandatory Financial Assistance Screening",
-          "Stricter Disclosure Requirements"
-        ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "No one should feel like they would rather risk their health, their life at times, just because they're unfamiliar with the healthcare system.",
-          "It is unconscionable that healthcare admins/non-profit hospitals... withhold VITAL information from their charges."
-        ],
-        "regulatory_mandate_quotes": [
-          "It is necessary to broaden the public's knowledge with regard to their own health"
-        ]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0033",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Senior/Elderly", "Low-Income"],
-        "reported_consumer_harms": [
-          "Aggressive Debt Collection",
-          "Credit Score Damage",
-          "Confusion Over Payment Terms"
-        ],
-        "policy_recommendations": ["Credit Reporting Reform", "Enhanced Oversight of Collections"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector", "Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I've suddenly got a letter from a collections agency or it showed up on my credit report, that I suddenly owe a co-pay.",
-          "I've had sudden collection demands for $400, a co-pay from Advocate Christ Hospital for spinal surgery in 2008."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0034",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient"],
-        "reported_consumer_harms": [
-          "Aggressive Debt Collection",
-          "Lack of Financial Assistance Information",
-          "Confusion Over Payment Terms"
-        ],
-        "policy_recommendations": [
-          "Mandatory Financial Assistance Screening",
-          "Enhanced Oversight of Collections"
-        ],
-        "product_and_entity_mentions": ["Hospital Billing Department", "Third-Party Debt Collector"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 9.0,
-        "product_sentiment_score": 1.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "I have insurance, and my bill was still out of control. Neither hospital, nor any clinic I've been to since has informed me of financial aid options.",
-          "If I miss a deadline once because of my Neurodiversity, I'm back on the chopping block with collections."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
-      }
-    },
-    {
-      "record_id": "CFPB-2023-0038-0035",
-      "categorical_fields": {
-        "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income", "Uninsured/Underinsured"],
-        "reported_consumer_harms": [
-          "Discouragement of Care",
-          "Lack of Financial Assistance Information"
-        ],
-        "policy_recommendations": [
-          "Mandatory Financial Assistance Screening",
-          "Enhanced Oversight of Collections"
-        ],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
-      },
-      "scalar_fields": {
-        "urgency_of_concern": 10.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 0.0
-      },
-      "key_quotes_fields": {
-        "representative_narrative_snippets": [
-          "My inability to pay for healthcare has prevented me from seeking out even basic appointments like physicals and check ups.",
-          "Medical debt is a crisis all over the United States. Hospitals should not be allowed to claim not for profit status while refusing to provide charity care."
-        ],
-        "regulatory_mandate_quotes": [
-          "The federal government needs to act urgently to protect the wellbeing of everyday Americans from predatory hospital systems."
         ]
       }
     },
@@ -2080,22 +1723,20 @@
       "record_id": "CFPB-2023-0038-0096",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Low-Income", "Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Uninsured/Underinsured"],
+        "reported_harms_and_impacts": ["Lack of Financial Assistance Awareness"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 7.0,
-        "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 5.0
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 4.0,
+        "sentiment_toward_products": 6.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "The following are five concrete proposals aimed at preventing patients from encountering unaffordable healthcare costs"
-        ],
-        "regulatory_mandate_quotes": [
-          "Consider alleviating providers from the collection of cost-sharing by encouraging health plans... to directly collect the required cost-sharing"
+          "Sustain efforts to ensure universal enrollment in comprehensive healthcare coverage for all individuals.",
+          "Consider alleviating providers from the collection of cost-sharing by encouraging health plans... to directly collect the required cost-sharing."
         ]
       }
     },
@@ -2103,172 +1744,292 @@
       "record_id": "CFPB-2023-0038-0097",
       "categorical_fields": {
         "stakeholder_type": "Consumer Advocacy Organization",
-        "vulnerable_population_identifiers": [
-          "Low-Income",
-          "Minority/BIPOC",
-          "Uninsured/Underinsured"
-        ],
-        "reported_consumer_harms": [
-          "Deferred Interest Traps",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
           "Aggressive Debt Collection",
-          "Credit Score Damage",
-          "Hidden Interest/Fees"
+          "Credit Reporting Damage",
+          "High Interest Rates/Fees",
+          "Deceptive Marketing"
         ],
         "policy_recommendations": [
-          "Ban Deferred Interest",
-          "Capping Interest Rates",
-          "Stricter Disclosure Requirements",
-          "Mandatory Financial Assistance Screening"
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening",
+          "Ban on Credit Reporting for Medical Debt"
         ],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)", "Wells Fargo Health Advantage"]
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 9.0,
         "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Consumer Financial Protection Bureau"],
-        "regulatory_mandate_quotes": ["Via Electronic Submission Only: www.regulations.gov"]
+        "representative_narrative_snippets": [
+          "via Electronic Submission Only: www.regulations.gov Consumer Financial Protection Bureau"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0098",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Student", "Uninsured/Underinsured"],
-        "reported_consumer_harms": ["Deferred Interest Traps", "Confusion Over Payment Terms"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
+        "vulnerable_population_tags": ["Student", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Deceptive Marketing",
+          "Mental Health Strain"
+        ],
+        "policy_recommendations": ["Enhanced Disclosure Requirements", "Interest Rate Caps"],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 3.0
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "I was a graduate student in college without any health care or dental care coverage when I had one of my molars collapse on me.",
-          "The dentist recommended that I open a Care Credit card for the $900 it would cost to have the work done."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "I was a graduate student in college without any health care or dental care coverage when I had one of my molars collapse on me. I was in excruciating pain.",
+          "The dentist recommended that I open a Care Credit card for the $900 it would cost to have the work done. The only other option presented to me at the time was to continue on with my nerve exposed."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0099",
       "categorical_fields": {
         "stakeholder_type": "Financial Services Company",
-        "vulnerable_population_identifiers": ["Unknown"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Maintain Current Regulations"],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 4.0,
         "seriousness_of_life_impact": 2.0,
-        "product_sentiment_score": 8.0
+        "sentiment_toward_products": 8.0
       },
       "key_quotes_fields": {
-        "representative_narrative_snippets": ["Please see the attached comments."],
-        "regulatory_mandate_quotes": [
-          "The Honorable Chiquita Brooks-LaSure Administrator Centers for Medicare & Medicaid Services"
-        ]
+        "representative_narrative_snippets": ["Please see the attached comments."]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0100",
       "categorical_fields": {
         "stakeholder_type": "Healthcare Industry Association",
-        "vulnerable_population_identifiers": ["Minority/BIPOC"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Provider Training/Certification"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["Provider Training/Regulation"],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
       },
       "scalar_fields": {
         "urgency_of_concern": 5.0,
-        "seriousness_of_life_impact": 4.0,
-        "product_sentiment_score": 6.0
+        "seriousness_of_life_impact": 3.0,
+        "sentiment_toward_products": 5.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Please see the attached comment from the National Dental Association."
+          "Please see the attached comment from the National Dental Association. Thank you."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0031",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Bankruptcy/Financial Ruin"],
+        "policy_recommendations": ["Enhanced Disclosure Requirements"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 6.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I told the financial lady I would only pay the Medicare price for the visit. One month later I was billed $2,664 for an EKG and some labs.",
+          "They billed it as a level 4 ER visit which is upcoding."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0032",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "Health Care Postponement",
+          "Lack of Financial Assistance Awareness"
         ],
-        "regulatory_mandate_quotes": ["To whom it may concern"]
+        "policy_recommendations": [
+          "Mandatory Financial Assistance Screening",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 3.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "No one should feel like they would rather risk their health, their life at times, just because they're unfamiliar with the healthcare system.",
+          "It is unconscionable that healthcare admins/non-profit hospitals... withhold VITAL information from their charges."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0033",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Senior/Elderly", "Low Income"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection", "Credit Reporting Damage"],
+        "policy_recommendations": ["Ban on Credit Reporting for Medical Debt"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "I've suddenly got a letter from a collections agency or it showed up on my credit report, that I suddenly owe a co-pay for a test or surgery.",
+          "I've always had insurance, and lately also Medicare & Medicaid- yet still, there have been several times where I suddenly got a letter from a collections agency."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0034",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Disabled"],
+        "reported_harms_and_impacts": [
+          "Aggressive Debt Collection",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": [
+          "Mandatory Financial Assistance Screening",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Provider-managed Payment Plan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Neither hospital, nor any clinic I've been to since has informed me of financial aid options.",
+          "If I miss a deadline once because of my Neurodiversity, I'm back on the chopping block with collections."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0035",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "Health Care Postponement",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": [
+          "Mandatory Financial Assistance Screening",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 10.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Hospitals should not be allowed to claim not for profit status while refusing to provide charity care programs to people in need.",
+          "My inability to pay for healthcare has prevented me from seeking out even basic appointments like physicals and check ups."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0061",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient"],
-        "reported_consumer_harms": ["Unknown"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": [
+          "Bankruptcy/Financial Ruin",
+          "Lack of Financial Assistance Awareness"
+        ],
+        "policy_recommendations": ["Mandatory Financial Assistance Screening"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 7.0,
+        "urgency_of_concern": 8.0,
         "seriousness_of_life_impact": 10.0,
-        "product_sentiment_score": 3.0
+        "sentiment_toward_products": 2.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "After almost a year and many different expensive test they gave me my diagnosis of stage 4 cancer and a very glim prognosis.",
-          "I believe they took advantage of me and my insurance."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "I believe they took advantage of me and my insurance company. They also did not offer any type of charity care which I could have qualified for.",
+          "This caused me to file bankruptcy."
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0062",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Chronic Illness Patient", "Low-Income"],
-        "reported_consumer_harms": ["Lack of Financial Assistance Information"],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Hospital Billing Department"]
+        "vulnerable_population_tags": ["Low Income", "Disabled"],
+        "reported_harms_and_impacts": [
+          "Bankruptcy/Financial Ruin",
+          "Mental Health Strain",
+          "Health Care Postponement"
+        ],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 6.0,
-        "seriousness_of_life_impact": 7.0,
-        "product_sentiment_score": 2.0
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 3.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
           "Our policy has a $5,000 per year out-of-pocket maximum... this feels more like an out-of-pocket expectation or obligation in order to get health care.",
           "Our gross income last year was $63,000, so $5,000 makes a difference to our household budget."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0063",
       "categorical_fields": {
         "stakeholder_type": "Legal/Policy Expert",
-        "vulnerable_population_identifiers": ["Low-Income", "Minority/BIPOC"],
-        "reported_consumer_harms": [
-          "Aggressive Debt Collection",
-          "Credit Score Damage",
-          "Deferred Interest Traps"
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": [
+          "Deceptive Marketing",
+          "High Interest Rates/Fees",
+          "Aggressive Debt Collection"
         ],
         "policy_recommendations": [
-          "Ban Deferred Interest",
-          "Stricter Disclosure Requirements",
-          "Capping Interest Rates"
+          "Product Bans",
+          "Enhanced Disclosure Requirements",
+          "Interest Rate Caps"
         ],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)", "Wells Fargo Health Advantage"]
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
         "urgency_of_concern": 10.0,
         "seriousness_of_life_impact": 5.0,
-        "product_sentiment_score": 0.0
+        "sentiment_toward_products": 0.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Subject: Ban Predatory Medical Payment Products",
-          "The CFPB should ban deferred interest on medical credit cards, which are often marketed at the point of care when patients are most vulnerable."
-        ],
-        "regulatory_mandate_quotes": [
-          "The CFPB should use its authority to ban predatory deferred interest and require hospitals to screen for financial assistance before offering credit products."
+          "Subject: Ban Predatory Medical Payment Products -- Request for Information Regarding Medical Payment Products",
+          "The CFPB must strictly regulate or ban these products to protect patients from financial ruin."
         ]
       }
     },
@@ -2276,53 +2037,176 @@
       "record_id": "CFPB-2023-0038-0064",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Low-Income"],
-        "reported_consumer_harms": [
-          "Hidden Interest/Fees",
-          "Credit Score Damage",
-          "Aggressive Debt Collection"
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Credit Reporting Damage",
+          "Bankruptcy/Financial Ruin"
         ],
-        "policy_recommendations": ["Unknown"],
-        "product_and_entity_mentions": ["Third-Party Debt Collector", "Hospital Billing Department"]
+        "policy_recommendations": [
+          "Ban on Credit Reporting for Medical Debt",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 8.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 1.0
+        "urgency_of_concern": 9.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Actual bills from hospitals actually easily cover the cost of a brand new car-something the vast majority of the people our congress represents cannot afford !!",
-          "This whole 'medical payment' scheme just causes me more money with absolutely nothing to show for it."
-        ],
-        "regulatory_mandate_quotes": ["unavailable"]
+          "Medical payment products just causes me more money with absolutely nothing to show for it.",
+          "Actual bills from hospitals actually easily cover the cost of a brand new car-something the vast majority of the people our congress represents cannot afford !!"
+        ]
       }
     },
     {
       "record_id": "CFPB-2023-0038-0065",
       "categorical_fields": {
         "stakeholder_type": "Individual Patient",
-        "vulnerable_population_identifiers": ["Underinsured"],
-        "reported_consumer_harms": [
-          "Deferred Interest Traps",
-          "Confusion Over Payment Terms",
-          "Hidden Interest/Fees"
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": [
+          "Deceptive Marketing",
+          "High Interest Rates/Fees",
+          "Mental Health Strain"
         ],
-        "policy_recommendations": ["Stricter Disclosure Requirements", "Ban Deferred Interest"],
-        "product_and_entity_mentions": ["CareCredit (Synchrony)"]
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Provider Training/Regulation"
+        ],
+        "product_and_company_mentions": ["CareCredit", "Synchrony"]
       },
       "scalar_fields": {
-        "urgency_of_concern": 9.0,
-        "seriousness_of_life_impact": 8.0,
-        "product_sentiment_score": 2.0
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 9.0,
+        "sentiment_toward_products": 1.0
       },
       "key_quotes_fields": {
         "representative_narrative_snippets": [
-          "Care Credit materials seemed omnipresent in his office, with posters and pamphlets prominently displayed.",
-          "I made a regrettable decision when I chose to utilize Care Credit... I found myself burdened with a high-interest rate of 26.99%."
+          "I made a regrettable decision when I chose to utilize Care Credit... Care Credit materials seemed omnipresent in his office.",
+          "I realized that I was paying a staggering 26.99% interest rate... I've paid more in interest than the original cost of the dental procedure."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0091",
+      "categorical_fields": {
+        "stakeholder_type": "Legal/Policy Expert",
+        "vulnerable_population_tags": ["Low Income", "Uninsured/Underinsured"],
+        "reported_harms_and_impacts": [
+          "High Interest Rates/Fees",
+          "Deceptive Marketing",
+          "Lack of Financial Assistance Awareness"
         ],
-        "regulatory_mandate_quotes": [
-          "I urge you to take decisive action to protect consumers from the predatory practices of medical credit card companies like Care Credit."
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Mandatory Financial Assistance Screening",
+          "Ban on Credit Reporting for Medical Debt"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)", "Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Submitted via www.regulations.gov regarding Docket No. CFPB\u20132023\u20130038."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0092",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Low Income"],
+        "reported_harms_and_impacts": [
+          "Aggressive Debt Collection",
+          "Bankruptcy/Financial Ruin",
+          "Mental Health Strain"
+        ],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 10.0,
+        "seriousness_of_life_impact": 10.0,
+        "sentiment_toward_products": 0.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Being placed in collections and no options becoming homeless and now not being able to communicate at all with Moped @ Broward Hospital",
+          "maybe if their funding is cut by sponsors maybe they can understand the position many patients are placed in"
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0093",
+      "categorical_fields": {
+        "stakeholder_type": "Other",
+        "vulnerable_population_tags": ["None Identified"],
+        "reported_harms_and_impacts": ["Unknown"],
+        "policy_recommendations": ["No Action Recommended"],
+        "product_and_company_mentions": ["Unknown"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 5.0,
+        "seriousness_of_life_impact": 5.0,
+        "sentiment_toward_products": 5.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Comment submitted was flagged as being materially false, fictitious or fraudulent representation."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0094",
+      "categorical_fields": {
+        "stakeholder_type": "Individual Patient",
+        "vulnerable_population_tags": ["Student", "Low Income"],
+        "reported_harms_and_impacts": ["Credit Reporting Damage", "Mental Health Strain"],
+        "policy_recommendations": [
+          "Ban on Credit Reporting for Medical Debt",
+          "Interest Rate Caps"
+        ],
+        "product_and_company_mentions": ["Installment Loan"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 7.0,
+        "seriousness_of_life_impact": 8.0,
+        "sentiment_toward_products": 2.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "Since I left school, there has only been a few times where I could pay student payments and live a normal life",
+          "It would be good if there was way to pay for college that was less userous and more equitable. Or a way to pay back loans that didn't crowd or intermingle with your credit rating."
+        ]
+      }
+    },
+    {
+      "record_id": "CFPB-2023-0038-0095",
+      "categorical_fields": {
+        "stakeholder_type": "Consumer Advocacy Organization",
+        "vulnerable_population_tags": ["Unknown"],
+        "reported_harms_and_impacts": ["Aggressive Debt Collection", "Credit Reporting Damage"],
+        "policy_recommendations": [
+          "Enhanced Disclosure Requirements",
+          "Ban on Credit Reporting for Medical Debt"
+        ],
+        "product_and_company_mentions": ["Medical Credit Card (General)"]
+      },
+      "scalar_fields": {
+        "urgency_of_concern": 8.0,
+        "seriousness_of_life_impact": 7.0,
+        "sentiment_toward_products": 1.0
+      },
+      "key_quotes_fields": {
+        "representative_narrative_snippets": [
+          "See Attached",
+          "To: MedicalDebtRFI_2023 Cc: Hallee Morgan Subject: Docket No. CFPB\u2013 2023"
         ]
       }
     }
