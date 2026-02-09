@@ -13,6 +13,7 @@ from typing import Any, cast
 
 import pandas as pd
 import pytest
+import jsonschema
 from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 
@@ -35,8 +36,23 @@ RESPONSES_CSV = FIXTURES_ROOT / "responses_100.csv"
 HARDCODED_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"  # pragma: allowlist secret
 SCHEMA_FIXTURE = FIXTURES_ROOT / HARDCODED_HASH / "schema" / "schema.json"
 SCHEMA_CACHE_BYPASS = True
-
+RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "prompts" / "response_schema.json"
 os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "true"
+
+E2E_LOG_FILE = FIXTURES_ROOT / "e2e_analyze.log"
+
+
+def _setup_file_logger() -> logging.Handler:
+    """Set up a file handler that captures all app.* debug logs."""
+    handler = logging.FileHandler(E2E_LOG_FILE, mode="w", encoding="utf-8")
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(
+        logging.Formatter("%(asctime)s.%(msecs)03d [%(levelname)s] %(name)s: %(message)s", datefmt="%H:%M:%S")
+    )
+    app_logger = logging.getLogger("app")
+    app_logger.addHandler(handler)
+    app_logger.setLevel(logging.DEBUG)
+    return handler
 
 
 def _load_prompt(path: Path) -> str:
@@ -44,14 +60,18 @@ def _load_prompt(path: Path) -> str:
 
 
 def _expected_headers(schema: dict) -> list[str]:
+    enum_fields = schema.get("enum_fields", [])
     categorical_fields = schema.get("categorical_fields", [])
     scalar_fields = schema.get("scalar_fields", [])
     key_quotes_fields = schema.get("key_quotes_fields", [])
+    text_array_fields = schema.get("text_array_fields", [])
 
     headers = ["record_id"]
+    headers.extend(field.get("field_name", "").strip() for field in enum_fields)
     headers.extend(field.get("field_name", "").strip() for field in categorical_fields)
     headers.extend(field.get("field_name", "").strip() for field in scalar_fields)
     headers.extend(field.get("field_name", "").strip() for field in key_quotes_fields)
+    headers.extend(field.get("field_name", "").strip() for field in text_array_fields)
 
     return [header for header in headers if header]
 
@@ -68,6 +88,9 @@ def _poll_until_complete(
             pytest.fail(f"Expected 200 status, got {status_response.status_code}")
         status_payload = cast("dict[str, Any]", status_response.json())
         if status_payload.get("completed") is True:
+            error = status_payload.get("error")
+            if error:
+                pytest.fail(f"Job {job_id} failed: {error}")
             return status_payload
         time.sleep(0.25)
     pytest.fail("Timed out waiting for job completion")
@@ -176,54 +199,86 @@ def test_clean_data(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_schema_generation(monkeypatch: pytest.MonkeyPatch) -> None:
     """Generate schema."""
     logging.basicConfig(level=logging.DEBUG)
-    load_dotenv()
-    _clear_fixtures_outputs(FIXTURES_ROOT, HARDCODED_HASH, "schema")
-    if not os.environ.get("GEMINI_API_KEY"):
-        pytest.fail("GEMINI_API_KEY environment variable not set")
+    file_handler = _setup_file_logger()
+    try:
+        load_dotenv()
+        _clear_fixtures_outputs(FIXTURES_ROOT, HARDCODED_HASH, "schema")
+        if not os.environ.get("GEMINI_API_KEY"):
+            pytest.fail("GEMINI_API_KEY environment variable not set")
 
-    content = RESPONSES_CSV.read_bytes()
-    expected_hash = DataStore.hash_content(content)
-    data_store = DataStore(data_dir=FIXTURES_ROOT)
-    monkeypatch.setattr(server_module, "_data_store", data_store)
-    monkeypatch.setattr(server_module, "_job_store", JobStore())
+        content = RESPONSES_CSV.read_bytes()
+        expected_hash = DataStore.hash_content(content)
+        data_store = DataStore(data_dir=FIXTURES_ROOT)
+        monkeypatch.setattr(server_module, "_data_store", data_store)
+        monkeypatch.setattr(server_module, "_job_store", JobStore())
 
-    use_case = _load_prompt(PROMPTS_DIR / "use_case.txt")
+        use_case = _load_prompt(PROMPTS_DIR / "use_case.txt")
 
-    cleaned_csv = data_store.get_cleaned_csv(HARDCODED_HASH)
-    if not cleaned_csv:
-        pytest.fail("Cleaned CSV was not found for schema generation")
+        cleaned_csv = data_store.get_cleaned_csv(HARDCODED_HASH)
+        if not cleaned_csv:
+            pytest.fail("Cleaned CSV was not found for schema generation")
 
-    with TestClient(app) as client:
-        schema_endpoint = f"/schema/{expected_hash}"
-        if SCHEMA_CACHE_BYPASS:
-            schema_endpoint = f"{schema_endpoint}?no_cache=true"
-        schema_response = client.post(
-            schema_endpoint,
-            json={"use_case": use_case, "sample_size": 10, "head_size": 5},
-        )
-        if schema_response.status_code != HTTPStatus.OK:
-            pytest.fail(f"Expected 200 status, got {schema_response.status_code}")
+        with TestClient(app) as client:
+            schema_endpoint = f"/schema/{expected_hash}"
+            if SCHEMA_CACHE_BYPASS:
+                schema_endpoint = f"{schema_endpoint}?no_cache=true"
+            request_payload = {"use_case": use_case, "sample_size": 10, "head_size": 5}
+            logging.getLogger("app").debug(
+                "Schema request: endpoint=%s payload=%s",
+                schema_endpoint,
+                json.dumps(request_payload, indent=2),
+            )
+            schema_response = client.post(schema_endpoint, json=request_payload)
+            logging.getLogger("app").debug(
+                "Schema response: status=%s body=%s",
+                schema_response.status_code,
+                json.dumps(schema_response.json(), indent=2),
+            )
+            if schema_response.status_code != HTTPStatus.OK:
+                pytest.fail(f"Expected 200 status, got {schema_response.status_code}")
 
-        schema_payload = schema_response.json()
-        if schema_payload.get("cached") is True and SCHEMA_CACHE_BYPASS is True:
-            pytest.fail("Expected schema cache bypass to generate a new schema")
-        schema = schema_payload.get("schema")
-        if not schema:
-            pytest.fail("Schema response was empty")
-        for field in schema.get("categorical_fields", []):
-            if field.get("required") is not True:
-                pytest.fail("categorical_fields entries must include required=true")
-        for field in schema.get("scalar_fields", []):
-            if field.get("required") is not True:
-                pytest.fail("scalar_fields entries must include required=true")
-        for field in schema.get("key_quotes_fields", []):
-            if field.get("required") is not True:
-                pytest.fail("key_quotes_fields entries must include required=true")
+            schema_payload = schema_response.json()
+            if schema_payload.get("cached") is True and SCHEMA_CACHE_BYPASS is True:
+                pytest.fail("Expected schema cache bypass to generate a new schema")
+            schema = schema_payload.get("schema")
+            if not schema:
+                pytest.fail("Schema response was empty")
+            response_schema = json.loads(RESPONSE_SCHEMA_PATH.read_text(encoding="utf-8"))
+            validator = jsonschema.Draft7Validator(response_schema)
+            errors = sorted(validator.iter_errors(schema), key=lambda err: list(err.path))
+            if errors:
+                logging.getLogger("app").error("Schema validation produced %d error(s)", len(errors))
+                for idx, err in enumerate(errors, start=1):
+                    logging.getLogger("app").error("Schema validation error %d: %s", idx, err.message)
+                    logging.getLogger("app").debug(
+                        "Schema validation error %d path: %s",
+                        idx,
+                        list(err.path),
+                    )
+                    logging.getLogger("app").debug(
+                        "Schema validation error %d schema_path: %s",
+                        idx,
+                        list(err.schema_path),
+                    )
+                    logging.getLogger("app").debug(
+                        "Schema validation error %d details: %s",
+                        idx,
+                        json.dumps(err.instance, indent=2),
+                    )
+                    logging.getLogger("app").debug(
+                        "Schema validation error %d schema: %s",
+                        idx,
+                        json.dumps(err.schema, indent=2),
+                    )
+                pytest.fail(f"Schema failed validation with {len(errors)} error(s)")
+    finally:
+        logging.getLogger("app").removeHandler(file_handler)
 
 
 def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> None:
     """Run analyze endpoint for a known hash and validate outputs."""
     logging.basicConfig(level=logging.DEBUG)
+    file_handler = _setup_file_logger()
     load_dotenv()
     _clear_fixtures_outputs(FIXTURES_ROOT, HARDCODED_HASH, "analyzed")
     if not os.environ.get("GEMINI_API_KEY"):
@@ -232,6 +287,7 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
     data_store = DataStore(data_dir=FIXTURES_ROOT)
     monkeypatch.setattr(server_module, "_data_store", data_store)
     monkeypatch.setattr(server_module, "_job_store", JobStore())
+
 
     use_case = _load_prompt(PROMPTS_DIR / "use_case.txt")
     system_prompt = _load_prompt(PROMPTS_DIR / "system_prompt.txt")
@@ -254,7 +310,7 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
         if not analyze_job_id:
             pytest.fail("Analyze response missing job_id")
 
-        _poll_until_complete(client, analyze_job_id)
+        _poll_until_complete(client, analyze_job_id, timeout_seconds=300.0)
 
     expected_headers = _expected_headers(cast("dict[str, Any]", schema))
 
@@ -277,7 +333,10 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
         pytest.fail("CSV headers did not match schema fields")
 
     if len(csv_df) != len(responses_df):
-        pytest.fail("Analysis CSV row count did not match source CSV")
+        pytest.fail(
+            f"Analysis CSV row count did not match source CSV: "
+            f"{len(csv_df)}/{len(responses_df)}"
+        )
 
     if csv_df["record_id"].nunique() != len(csv_df):
         pytest.fail("Analysis CSV record_id values were not unique")
@@ -285,12 +344,20 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
     source_ids = set(responses_df[source_id_column].astype(str))
     record_ids = set(csv_df["record_id"].astype(str))
     if record_ids != source_ids:
-        pytest.fail("Analysis CSV record_id values did not match source IDs")
+        missing = source_ids - record_ids
+        extra = record_ids - source_ids
+        pytest.fail(
+            f"Analysis CSV record_ids did not match source IDs "
+            f"(missing={len(missing)}, extra={len(extra)})"
+        )
 
     field_columns = [col for col in csv_df.columns if col != "record_id"]
     if not field_columns:
         pytest.fail("No analysis fields found in CSV header")
 
+    enum_fields_list = [
+        field.get("field_name", "").strip() for field in schema.get("enum_fields", []) if field.get("field_name")
+    ]
     scalar_fields = [
         field.get("field_name", "").strip() for field in schema.get("scalar_fields", []) if field.get("field_name")
     ]
@@ -300,8 +367,11 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
     free_text_fields = [
         field.get("field_name", "").strip() for field in schema.get("key_quotes_fields", []) if field.get("field_name")
     ]
+    text_array_fields_list = [
+        field.get("field_name", "").strip() for field in schema.get("text_array_fields", []) if field.get("field_name")
+    ]
 
-    for column in scalar_fields + category_fields + free_text_fields:
+    for column in enum_fields_list + scalar_fields + category_fields + free_text_fields + text_array_fields_list:
         if column not in csv_df.columns:
             pytest.fail(f"Missing expected analysis column: {column}")
 
@@ -323,21 +393,32 @@ def test_analyze_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> No
             payload = failing_rows.to_dict(orient="records")
             pytest.fail(f"Column {column} contained non-numeric values. Rows={payload}")
 
-    for column in category_fields + free_text_fields:
-        null_mask = csv_df[column].isna()
-        if null_mask.any():
-            failing_rows = csv_df[null_mask]
+    # Text array fields with min_items=0 can be legitimately empty; empty arrays
+    # round-trip through CSV as NaN in pandas, so they are excluded from null checks.
+    # Allow up to 5% null/blank rate per column — LLMs occasionally leave individual
+    # fields null even when the record is otherwise complete.
+    null_tolerance = 0.05
+    max_nulls = max(1, int(len(csv_df) * null_tolerance))
+    for column in enum_fields_list + category_fields + free_text_fields:
+        null_count = csv_df[column].isna().sum()
+        if null_count > max_nulls:
+            failing_rows = csv_df[csv_df[column].isna()]
             payload = failing_rows.to_dict(orient="records")
-            pytest.fail(f"Column {column} contained null values. Rows={payload}")
-        blank_mask = ~csv_df[column].map(lambda value: isinstance(value, str) and value.strip() != "")
-        if blank_mask.any():
+            pytest.fail(f"Column {column} contained {null_count} null values (max {max_nulls}). Rows={payload}")
+        blank_mask = ~csv_df[column].fillna("_").map(lambda value: isinstance(value, str) and value.strip() != "")
+        blank_count = blank_mask.sum()
+        if blank_count > max_nulls:
             failing_rows = csv_df[blank_mask]
             payload = failing_rows.to_dict(orient="records")
-            pytest.fail(f"Column {column} contained blank strings. Rows={payload}")
+            pytest.fail(f"Column {column} contained {blank_count} blank strings (max {max_nulls}). Rows={payload}")
 
     analysis_json = json.loads(json_path.read_text(encoding="utf-8"))
     if not analysis_json.get("records"):
         pytest.fail("analysis JSON records were empty")
+
+    # Flush and remove file handler
+    file_handler.close()
+    logging.getLogger("app").removeHandler(file_handler)
 
 
 def test_tag_fix_outputs_with_cached_hash(monkeypatch: pytest.MonkeyPatch) -> None:

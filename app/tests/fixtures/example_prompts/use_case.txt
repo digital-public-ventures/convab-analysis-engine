@@ -1,4 +1,4 @@
-I need help designing a schema for analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.
+I need help analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.
 
 The comments come from diverse stakeholders:
 - Individual patients sharing personal experiences with medical credit cards
@@ -8,7 +8,7 @@ The comments come from diverse stakeholders:
 - Healthcare industry associations providing market data
 - Legal and policy experts offering regulatory recommendations
 
-I want a schema output as a JSON object that defines both categorical and scalar values for visualization and pattern discovery. The schema should help answer questions like:
+I want a schema output that defines both categorical and scalar values for visualization and pattern discovery. The output should help answer questions like:
 
 1. What are the most common harms or benefits reported by patients?
 2. Which specific companies or products are mentioned most frequently?
@@ -18,7 +18,7 @@ I want a schema output as a JSON object that defines both categorical and scalar
 6. What is the relationship between financial assistance availability and medical payment product usage?
 7. What are the downstream impacts (credit reporting, collections, health outcomes)?
 
-The schema should capture:
+The output should capture:
 - Stakeholder type and perspective
 - Whether the stakeholder belongs to a vulnerable population (veteran, student, senior, single mom, etc...)
 - Sentiment and position on medical payment products

@@ -13,7 +13,16 @@ from app.post_processing.tag_fix import run_tag_fix
 
 
 @pytest.mark.asyncio
-async def test_run_tag_fix_writes_outputs(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize(
+    ("provider", "api_key_env"),
+    [("gemini", "GEMINI_API_KEY"), ("openai", "OPENAI_API_KEY")],
+)
+async def test_run_tag_fix_writes_outputs(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    provider: str,
+    api_key_env: str,
+) -> None:
     schema_path = tmp_path / "schema.json"
     schema_path.write_text(
         json.dumps({"categorical_fields": [{"field_name": "issue"}]}),
@@ -40,7 +49,9 @@ async def test_run_tag_fix_writes_outputs(tmp_path: Path, monkeypatch: pytest.Mo
             {"total_tokens": 1},
         )
 
-    monkeypatch.setenv("GEMINI_API_KEY", "test")
+    monkeypatch.setenv("LLM_PROVIDER", provider)
+    monkeypatch.setenv(api_key_env, "test")
+    monkeypatch.setattr("app.post_processing.tag_fix.create_llm_client", lambda api_key=None: object())
     monkeypatch.setattr(
         "app.post_processing.tag_fix.generate_structured_content",
         fake_generate_structured_content,

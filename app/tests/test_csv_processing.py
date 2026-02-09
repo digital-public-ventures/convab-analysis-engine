@@ -13,30 +13,30 @@ from fastapi.testclient import TestClient
 from app.processing import AttachmentProcessor, clean_csv
 from app.server import app
 
-FIXTURES_DIR = Path(__file__).parent / "fixtures"
-HASH_VALUE = "8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28"  # pragma: allowlist secret
-TEST_CSV = FIXTURES_DIR / HASH_VALUE / "responses.csv"
+FIXTURES_DIR = Path(__file__).parent / 'fixtures'
+HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
+TEST_CSV = FIXTURES_DIR / HASH_VALUE / 'responses.csv'
 
 
 def _poll_job_completion(client: TestClient, job_id: str, timeout_seconds: float = 20.0) -> None:
     deadline = time.time() + timeout_seconds
     while time.time() < deadline:
-        status_response = client.get(f"/jobs/{job_id}")
+        status_response = client.get(f'/jobs/{job_id}')
         assert status_response.status_code == 200
-        if status_response.json().get("completed") is True:
+        if status_response.json().get('completed') is True:
             return
         time.sleep(0.25)
-    pytest.fail("Timed out waiting for clean job completion")
+    pytest.fail('Timed out waiting for clean job completion')
 
 
 @pytest.fixture
 def test_cache_dir(tmp_path: Path) -> Path:
     """Create a temporary cache directory with pre-populated downloads."""
-    cache_dir = tmp_path / "downloads"
+    cache_dir = tmp_path / 'downloads'
     cache_dir.mkdir()
 
     # Copy existing cached files to test cache directory
-    source_cache = Path(__file__).parent.parent / "data" / "downloads"
+    source_cache = Path(__file__).parent.parent / 'data' / 'downloads'
     if source_cache.exists():
         for item in source_cache.iterdir():
             if item.is_file():
@@ -61,8 +61,8 @@ class TestCSVProcessing:
     @pytest.mark.asyncio
     async def test_clean_csv_invokes_callbacks(self, tmp_path: Path) -> None:
         """Ensure clean_csv calls on_row_count and on_chunk during processing."""
-        csv_path = tmp_path / "sample.csv"
-        csv_path.write_text("id,data\n1,a\n2,b\n3,c\n4,d\n", encoding="utf-8")
+        csv_path = tmp_path / 'sample.csv'
+        csv_path.write_text('id,data\n1,a\n2,b\n3,c\n4,d\n', encoding='utf-8')
 
         chunks: list[list[dict[str, object]]] = []
         row_counts: list[int] = []
@@ -102,27 +102,27 @@ class TestCSVProcessing:
         output_path = await clean_csv(TEST_CSV, processor=processor)
 
         # Verify output file was created
-        assert output_path.exists(), "Output CSV should be created"
+        assert output_path.exists(), 'Output CSV should be created'
 
         # Read the output CSV
         df = pd.read_csv(output_path)
 
         # Verify the DataFrame has expected structure
-        assert len(df) > 0, "Output should have rows"
-        assert "Document ID" in df.columns, "Should preserve Document ID column"
+        assert len(df) > 0, 'Output should have rows'
+        assert 'Document ID' in df.columns, 'Should preserve Document ID column'
 
         # Verify extracted columns were created for attachment columns
         # The fixture has 'Attachment Files' column with attachments
-        extracted_cols = [col for col in df.columns if col.endswith("_extracted")]
-        assert len(extracted_cols) > 0, "Should create extracted columns for attachments"
+        extracted_cols = [col for col in df.columns if col.endswith('_extracted')]
+        assert len(extracted_cols) > 0, 'Should create extracted columns for attachments'
 
         # Verify at least some text was extracted
         has_extracted_text = False
         for col in extracted_cols:
-            if df[col].notna().any() and (df[col].astype(str) != "").any():
+            if df[col].notna().any() and (df[col].astype(str) != '').any():
                 has_extracted_text = True
                 break
-        assert has_extracted_text, "Should extract text from at least one attachment"
+        assert has_extracted_text, 'Should extract text from at least one attachment'
 
         # Clean up output file
         output_path.unlink(missing_ok=True)
@@ -147,12 +147,12 @@ class TestCSVProcessing:
         await clean_csv(TEST_CSV, processor=processor)
 
         # Track cache hits on second run
-        with patch("app.processing.cache.get_cached_content", side_effect=track_cache):
+        with patch('app.processing.cache.get_cached_content', side_effect=track_cache):
             await clean_csv(TEST_CSV, processor=processor)
 
         # Should have cache hits on second run (from text cache)
         # The pre-populated cache should provide hits
-        assert len(cache_hits) >= 0, "Cache should be checked"
+        assert len(cache_hits) >= 0, 'Cache should be checked'
 
     @pytest.mark.asyncio
     async def test_all_document_types_extracted(self, processor: AttachmentProcessor) -> None:
@@ -163,30 +163,30 @@ class TestCSVProcessing:
         # Find ALL columns containing attachment references
         attachment_cols: list[str] = []
         for col in df.columns:
-            if "attachment" in col.lower() or "files" in col.lower():
+            if 'attachment' in col.lower() or 'files' in col.lower():
                 if df[col].notna().any():
                     attachment_cols.append(col)
 
-        assert len(attachment_cols) > 0, "Should find attachment columns in test data"
+        assert len(attachment_cols) > 0, 'Should find attachment columns in test data'
 
         # Collect all URLs from ALL attachment columns
         all_urls: list[str] = []
         for col in attachment_cols:
             for cell in df[col].dropna():
-                urls = [u.strip() for u in str(cell).split(",") if u.strip()]
+                urls = [u.strip() for u in str(cell).split(',') if u.strip()]
                 # Filter to only valid attachment URLs (http/https with known extensions)
                 for url in urls:
-                    if url.startswith("http") and any(
-                        url.lower().endswith(ext) for ext in [".pdf", ".docx", ".png", ".jpg"]
+                    if url.startswith('http') and any(
+                        url.lower().endswith(ext) for ext in ['.pdf', '.docx', '.png', '.jpg']
                     ):
                         all_urls.append(url)
 
         # Verify we have different file types in test data
         extensions = {Path(url).suffix.lower() for url in all_urls}
-        expected_types = {".pdf", ".docx", ".png"}
+        expected_types = {'.pdf', '.docx', '.png'}
         found_types = extensions & expected_types
 
-        assert len(found_types) >= 2, f"Test data should include multiple file types, found: {found_types}"
+        assert len(found_types) >= 2, f'Test data should include multiple file types, found: {found_types}'
 
         # Process attachments
         results = await processor.process_attachments_async(all_urls, use_ocr=True)
@@ -196,9 +196,10 @@ class TestCSVProcessing:
             urls_of_type = [u for u in all_urls if u.lower().endswith(ext)]
             for url in urls_of_type:
                 # Should have a result entry for each URL
-                assert url in results, f"Should have result for {ext} file: {url}"
+                assert url in results, f'Should have result for {ext} file: {url}'
 
 
+@pytest.mark.usefixtures('override_attachment_cache_dir')
 class TestServerEndpoint:
     """Integration tests for the FastAPI server endpoint."""
 
@@ -210,89 +211,90 @@ class TestServerEndpoint:
         """
         with TestClient(app) as client:
             # Upload the test CSV
-            with Path.open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, 'rb') as f:
                 response = client.post(
-                    "/clean",
-                    files={"file": ("responses.csv", f, "text/csv")},
+                    '/clean',
+                    files={'file': ('responses.csv', f, 'text/csv')},
                 )
 
             # Verify response
-            assert response.status_code == 202, f"Should return 202, got {response.status_code}"
-            assert "application/json" in response.headers["content-type"]
+            assert response.status_code == 202, f'Should return 202, got {response.status_code}'
+            assert 'application/json' in response.headers['content-type']
 
             # Verify JSON structure
             data = response.json()
-            assert "hash" in data, "Response should contain hash"
-            assert "job_id" in data, "Response should contain job_id"
-            assert "poll_url" in data, "Response should contain poll_url"
-            assert "results_url" in data, "Response should contain results_url"
+            assert 'hash' in data, 'Response should contain hash'
+            assert 'job_id' in data, 'Response should contain job_id'
+            assert 'poll_url' in data, 'Response should contain poll_url'
+            assert 'results_url' in data, 'Response should contain results_url'
 
             # Verify hash is a valid SHA256 (64-char hex string)
-            assert len(data["hash"]) == 64, "Hash should be 64 characters"
-            assert all(c in "0123456789abcdef" for c in data["hash"]), "Hash should be hex"
+            assert len(data['hash']) == 64, 'Hash should be 64 characters'
+            assert all(c in '0123456789abcdef' for c in data['hash']), 'Hash should be hex'
 
     def test_clean_endpoint_caching(self) -> None:
         """Test that submitting the same file twice returns cached=True."""
         with TestClient(app) as client:
             # First upload
-            with Path.open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, 'rb') as f:
                 content = f.read()
 
             response1 = client.post(
-                "/clean",
-                files={"file": ("responses.csv", content, "text/csv")},
+                '/clean',
+                files={'file': ('responses.csv', content, 'text/csv')},
             )
             assert response1.status_code == 202
             data1 = response1.json()
 
-            _poll_job_completion(client, data1["job_id"])
+            _poll_job_completion(client, data1['job_id'])
 
             # Second upload with same content
             response2 = client.post(
-                "/clean",
-                files={"file": ("responses.csv", content, "text/csv")},
+                '/clean',
+                files={'file': ('responses.csv', content, 'text/csv')},
             )
             assert response2.status_code == 202
             data2 = response2.json()
 
             # Same hash, but second should be cached
-            assert data1["hash"] == data2["hash"], "Same content should produce same hash"
-            assert data2["cached"] is True, "Second request should be cached"
+            assert data1['hash'] == data2['hash'], 'Same content should produce same hash'
+            assert data2['cached'] is True, 'Second request should be cached'
 
     def test_data_info_endpoint(self) -> None:
         """Test the /data/{hash} endpoint returns correct info."""
         with TestClient(app) as client:
             # First, upload a file to get a hash
-            with Path.open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, 'rb') as f:
                 clean_response = client.post(
-                    "/clean",
-                    files={"file": ("responses.csv", f, "text/csv")},
+                    '/clean',
+                    files={'file': ('responses.csv', f, 'text/csv')},
                 )
 
             assert clean_response.status_code == 202
             payload = clean_response.json()
-            content_hash = payload["hash"]
-            _poll_job_completion(client, payload["job_id"])
+            content_hash = payload['hash']
+            _poll_job_completion(client, payload['job_id'])
 
             # Now query the data info endpoint
-            info_response = client.get(f"/data/{content_hash}")
+            info_response = client.get(f'/data/{content_hash}')
 
             assert info_response.status_code == 200
             data = info_response.json()
 
-            assert data["hash"] == content_hash
-            assert data["has_cleaned_csv"] is True
-            assert data["cleaned_file"] is not None
+            assert data['hash'] == content_hash
+            assert data['has_cleaned_csv'] is True
+            assert data['cleaned_file'] is not None
             # Schema won't exist yet since we haven't called /schema
-            assert "has_schema" in data
+            assert 'has_schema' in data
 
     def test_data_info_endpoint_404_for_unknown_hash(self) -> None:
         """Test that /data/{hash} returns 404 for unknown hash."""
         with TestClient(app) as client:
-            response = client.get("/data/nonexistenthash123")
+            response = client.get('/data/nonexistenthash123')
             assert response.status_code == 404
 
 
+@pytest.mark.usefixtures('override_attachment_cache_dir')
 class TestSchemaEndpoint:
     """Integration tests for the /schema/{hash} endpoint."""
 
@@ -300,29 +302,29 @@ class TestSchemaEndpoint:
         """Test that /schema/{hash} returns 404 for unknown hash."""
         with TestClient(app) as client:
             response = client.post(
-                "/schema/nonexistenthash123",
-                json={"use_case": "This is a test use case for analysis"},
+                '/schema/nonexistenthash123',
+                json={'use_case': 'This is a test use case for analysis'},
             )
             assert response.status_code == 404
-            assert "not found" in response.json()["detail"].lower()
+            assert 'not found' in response.json()['detail'].lower()
 
     def test_schema_endpoint_validates_use_case_length(self) -> None:
         """Test that /schema endpoint validates use_case minimum length."""
         with TestClient(app) as client:
             # First upload a file to get a valid hash
-            with Path.open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, 'rb') as f:
                 clean_response = client.post(
-                    "/clean",
-                    files={"file": ("responses.csv", f, "text/csv")},
+                    '/clean',
+                    files={'file': ('responses.csv', f, 'text/csv')},
                 )
             payload = clean_response.json()
-            content_hash = payload["hash"]
-            _poll_job_completion(client, payload["job_id"])
+            content_hash = payload['hash']
+            _poll_job_completion(client, payload['job_id'])
 
             # Try to generate schema with too-short use_case
             response = client.post(
-                f"/schema/{content_hash}",
-                json={"use_case": "short"},
+                f'/schema/{content_hash}',
+                json={'use_case': 'short'},
             )
             assert response.status_code == 422  # Validation error
 
@@ -331,23 +333,23 @@ class TestSchemaEndpoint:
         # This test just validates the request structure is accepted
         # We don't actually call the LLM to avoid API costs in tests
         with TestClient(app) as client:
-            with Path.open(TEST_CSV, "rb") as f:
+            with Path.open(TEST_CSV, 'rb') as f:
                 clean_response = client.post(
-                    "/clean",
-                    files={"file": ("responses.csv", f, "text/csv")},
+                    '/clean',
+                    files={'file': ('responses.csv', f, 'text/csv')},
                 )
             payload = clean_response.json()
-            content_hash = payload["hash"]
-            _poll_job_completion(client, payload["job_id"])
+            content_hash = payload['hash']
+            _poll_job_completion(client, payload['job_id'])
 
             # Verify the endpoint would accept this request format
             # (actual schema generation is tested separately with mocks)
             response = client.post(
-                f"/schema/{content_hash}",
+                f'/schema/{content_hash}',
                 json={
-                    "use_case": "Analyze customer feedback for sentiment and themes",
-                    "sample_size": 5,
-                    "head_size": 3,
+                    'use_case': 'Analyze customer feedback for sentiment and themes',
+                    'sample_size': 5,
+                    'head_size': 3,
                 },
             )
             # Should either succeed (200) or fail due to API key (500)

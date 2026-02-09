@@ -11,10 +11,28 @@ PRICING_BY_MODEL_ID: dict[str, Pricing] = {
         "thinking": 14.00,
         "pricing_unit": 1_000_000,
     },
+    "gpt-5.2-codex": {
+        "input": 1.75,
+        "output": 14.00,
+        "thinking": 14.00,
+        "pricing_unit": 1_000_000,
+    },
+    "gpt-5.1": {
+        "input": 1.25,
+        "output": 10.00,
+        "thinking": 10.00,
+        "pricing_unit": 1_000_000,
+    },
     "gpt-5-mini": {
         "input": 0.25,
         "output": 2.00,
         "thinking": 2.00,
+        "pricing_unit": 1_000_000,
+    },
+    "gpt-5-nano": {
+        "input": 0.05,
+        "output": 0.40,
+        "thinking": 0.40,
         "pricing_unit": 1_000_000,
     },
 }

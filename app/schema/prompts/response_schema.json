@@ -1,162 +1,100 @@
 {
   "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "schema_name": {
-      "type": "string",
-      "description": "Descriptive name for this schema"
-    },
-    "version": {
-      "type": "string",
-      "description": "Version number of the schema"
-    },
-    "description": {
-      "type": "string",
-      "description": "Brief description of what this schema captures"
-    },
-    "categorical_fields": {
+    "additional_categorical_fields": {
       "type": "array",
-      "description": "Discrete categories for classification",
-      "items": {
-        "type": "object",
-        "properties": {
-          "field_name": {
-            "type": "string",
-            "description": "Name of the categorical field"
-          },
-          "required": {
-            "type": "boolean",
-            "description": "Whether this field must be populated"
-          },
-          "description": {
-            "type": "string",
-            "description": "What this field captures"
-          },
-          "suggested_values": {
-            "type": "array",
-            "description": "List of suggested category values",
-            "items": {
-              "type": "string"
-            }
-          },
-          "allow_multiple": {
-            "type": "boolean",
-            "description": "Whether multiple values can be selected"
-          },
-          "nullable": {
-            "type": "boolean",
-            "description": "Whether this field can be null"
-          },
-          "min_items": {
-            "type": "integer",
-            "description": "Minimum items required when allow_multiple is true"
-          },
-          "hint": {
-            "type": "string",
-            "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
-          }
-        },
-        "required": [
-          "field_name",
-          "required",
-          "description",
-          "suggested_values",
-          "allow_multiple",
-          "nullable",
-          "min_items"
-        ]
-      }
+      "items": { "$ref": "#/definitions/categorical_field" },
+      "minItems": 0
     },
-    "scalar_fields": {
+    "additional_scalar_fields": {
       "type": "array",
-      "description": "Numerical rating scales from 0-10",
-      "items": {
-        "type": "object",
-        "properties": {
-          "field_name": {
-            "type": "string",
-            "description": "Name of the scalar field"
-          },
-          "required": {
-            "type": "boolean",
-            "description": "Whether this field must be populated"
-          },
-          "description": {
-            "type": "string",
-            "description": "What this score measures"
-          },
-          "scale_min": {
-            "type": "integer",
-            "description": "Minimum value of the scale"
-          },
-          "scale_max": {
-            "type": "integer",
-            "description": "Maximum value of the scale"
-          },
-          "scale_interpretation": {
-            "type": "string",
-            "description": "Explanation of what the scale values mean"
-          },
-          "nullable": {
-            "type": "boolean",
-            "description": "Whether this field can be null"
-          },
-          "hint": {
-            "type": "string",
-            "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
-          }
-        },
-        "required": [
-          "field_name",
-          "required",
-          "description",
-          "scale_min",
-          "scale_max",
-          "scale_interpretation",
-          "nullable"
-        ]
-      }
+      "items": { "$ref": "#/definitions/scalar_field" },
+      "minItems": 0
     },
-    "key_quotes_fields": {
+    "additional_text_array_fields": {
       "type": "array",
-      "description": "Fields for extracting notable text snippets",
-      "items": {
-        "type": "object",
-        "properties": {
-          "field_name": {
-            "type": "string",
-            "description": "Name of the key quotes field"
-          },
-          "required": {
-            "type": "boolean",
-            "description": "Whether this field must be populated"
-          },
-          "description": {
-            "type": "string",
-            "description": "What kinds of quotes to extract"
-          },
-          "max_quotes": {
-            "type": "integer",
-            "description": "Maximum number of quotes to extract per record"
-          },
-          "min_items": {
-            "type": "integer",
-            "description": "Minimum quotes required for this field"
-          },
-          "hint": {
-            "type": "string",
-            "description": "Instructions for identifying and selecting quotes"
-          }
-        },
-        "required": ["field_name", "required", "description", "max_quotes", "min_items"]
-      }
+      "items": { "$ref": "#/definitions/text_array_field" },
+      "minItems": 0
     }
   },
   "required": [
-    "schema_name",
-    "version",
-    "description",
-    "categorical_fields",
-    "scalar_fields",
-    "key_quotes_fields"
-  ]
+    "additional_categorical_fields",
+    "additional_scalar_fields",
+    "additional_text_array_fields"
+  ],
+  "definitions": {
+    "categorical_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "required_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "suggested_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "allow_multiple": { "type": "boolean" },
+        "minItems": { "type": "integer" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "required_values",
+        "suggested_values",
+        "allow_multiple",
+        "minItems",
+        "hint"
+      ]
+    },
+    "scalar_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "scale_min": { "type": "integer" },
+        "scale_max": { "type": "integer" },
+        "scale_interpretation": { "type": "string" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "scale_min",
+        "scale_max",
+        "scale_interpretation",
+        "hint"
+      ]
+    },
+    "text_array_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "maxItems": { "type": "integer" },
+        "minItems": { "type": "integer" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "maxItems",
+        "minItems",
+        "hint"
+      ]
+    }
+  }
 }

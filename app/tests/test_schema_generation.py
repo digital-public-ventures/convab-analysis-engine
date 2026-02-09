@@ -18,8 +18,7 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
             mock_gen.return_value = (mock_schema, {"total_tokens": 100}, MagicMock())
 
-            # Mock the genai.Client
-            with patch("app.schema.generator.genai.Client"):
+            with patch("app.schema.generator.create_llm_client"):
                 from app.schema import SchemaGenerator
 
                 generator = SchemaGenerator(api_key="test-key")
@@ -48,7 +47,7 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
             mock_gen.return_value = (mock_schema, {"total_tokens": 100}, MagicMock())
 
-            with patch("app.schema.generator.genai.Client"):
+            with patch("app.schema.generator.create_llm_client"):
                 from app.schema import SchemaGenerator
 
                 generator = SchemaGenerator(api_key="test-key")
@@ -58,17 +57,25 @@ class TestSchemaGenerator:
                 )
 
                 assert "schema_name" in schema
+                assert "enum_fields" in schema
                 assert "categorical_fields" in schema
                 assert "scalar_fields" in schema
                 assert "key_quotes_fields" in schema
+                assert "text_array_fields" in schema
+                assert isinstance(schema["enum_fields"], list)
                 assert isinstance(schema["categorical_fields"], list)
                 assert isinstance(schema["scalar_fields"], list)
                 assert isinstance(schema["key_quotes_fields"], list)
+                assert isinstance(schema["text_array_fields"], list)
+                for field in schema["enum_fields"]:
+                    assert field.get("required") is True
                 for field in schema["categorical_fields"]:
                     assert field.get("required") is True
                 for field in schema["scalar_fields"]:
                     assert field.get("required") is True
                 for field in schema["key_quotes_fields"]:
+                    assert field.get("required") is True
+                for field in schema["text_array_fields"]:
                     assert field.get("required") is True
 
     @pytest.mark.asyncio
@@ -77,7 +84,7 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
             mock_gen.return_value = (None, None, None)
 
-            with patch("app.schema.generator.genai.Client"):
+            with patch("app.schema.generator.create_llm_client"):
                 from app.schema import SchemaGenerator
 
                 generator = SchemaGenerator(api_key="test-key")
@@ -90,7 +97,7 @@ class TestSchemaGenerator:
 
     def test_save_schema_creates_file(self, tmp_path: Path, mock_schema: dict) -> None:
         """Test that save_schema creates schema.json file."""
-        with patch("app.schema.generator.genai.Client"):
+        with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
             generator = SchemaGenerator(api_key="test-key")
@@ -116,7 +123,7 @@ class TestSchemaGenerator:
 
     def test_save_schema_includes_metadata(self, tmp_path: Path, mock_schema: dict) -> None:
         """Test that saved schema includes metadata."""
-        with patch("app.schema.generator.genai.Client"):
+        with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
             generator = SchemaGenerator(api_key="test-key")
@@ -135,8 +142,8 @@ class TestSchemaGenerator:
 
             metadata = saved["_metadata"]
             assert "generated_at" in metadata
-            assert metadata["model_id"] == "gemini-3-flash-preview"
-            assert metadata["thinking_level"] == "MINIMAL"
+            assert metadata["model_id"] == "gemini-2.5-pro"
+            assert metadata["thinking_level"] == "LOW"
             assert metadata["rows_sampled"] == 15
             assert "sentiment" in metadata["use_case"].lower()
 
@@ -146,7 +153,7 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.generate_structured_content") as mock_gen:
             mock_gen.side_effect = RuntimeError("API rate limit exceeded")
 
-            with patch("app.schema.generator.genai.Client"):
+            with patch("app.schema.generator.create_llm_client"):
                 from app.schema import SchemaGenerator
 
                 generator = SchemaGenerator(api_key="test-key")
@@ -159,7 +166,7 @@ class TestSchemaGenerator:
 
     def test_missing_api_key_raises_error(self) -> None:
         """Test that ValueError is raised when API key is missing."""
-        with patch("app.schema.generator.genai.Client"), patch.dict("os.environ", {}, clear=True):
+        with patch("app.schema.generator.create_llm_client"), patch.dict("os.environ", {}, clear=True):
             from app.schema import SchemaGenerator
 
             with pytest.raises(ValueError, match="GEMINI_API_KEY"):
@@ -167,7 +174,7 @@ class TestSchemaGenerator:
 
     def test_flash_model_uses_higher_rate_limits(self) -> None:
         """Test that flash models get higher rate limits."""
-        with patch("app.schema.generator.genai.Client"):
+        with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
             generator = SchemaGenerator(api_key="test-key", model_id="gemini-3-flash-preview")
@@ -175,7 +182,7 @@ class TestSchemaGenerator:
 
     def test_pro_model_uses_lower_rate_limits(self) -> None:
         """Test that pro models get lower rate limits."""
-        with patch("app.schema.generator.genai.Client"):
+        with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
             generator = SchemaGenerator(api_key="test-key", model_id="gemini-pro")
@@ -183,7 +190,7 @@ class TestSchemaGenerator:
 
     def test_save_schema_truncates_long_use_case(self, tmp_path: Path, mock_schema: dict) -> None:
         """Test that very long use cases are truncated in metadata."""
-        with patch("app.schema.generator.genai.Client"):
+        with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
             generator = SchemaGenerator(api_key="test-key")
@@ -203,6 +210,18 @@ class TestSchemaGenerator:
 
             # Use case should be truncated to 500 chars
             assert len(saved["_metadata"]["use_case"]) == 500
+
+    def test_missing_openai_api_key_raises_error(self) -> None:
+        """OpenAI provider uses OPENAI_API_KEY validation."""
+        with patch("app.schema.generator.create_llm_client"), patch.dict(
+            "os.environ",
+            {"LLM_PROVIDER": "openai"},
+            clear=True,
+        ):
+            from app.schema import SchemaGenerator
+
+            with pytest.raises(ValueError, match="OPENAI_API_KEY"):
+                SchemaGenerator()
 
 
 class TestPromptConstruction:
@@ -254,14 +273,14 @@ class TestPromptConstruction:
         """Test that large records are truncated."""
         from app.schema.prompts import build_schema_generation_prompt
 
-        large_text = "x" * 2000
+        large_text = "x" * 20000
         prompt = build_schema_generation_prompt(
             sample_data=[{"text": large_text}],
             use_case="Test",
         )
 
-        # Should be truncated to ~1000 chars + overhead
-        assert len(prompt) < 2000 + 500
+        # Record payloads are truncated in _format_sample_data.
+        assert len(prompt) < 17000
         assert "..." in prompt
 
     def test_response_schema_has_required_fields(self) -> None:
@@ -272,10 +291,9 @@ class TestPromptConstruction:
         assert "required" in SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         required = SCHEMA_GENERATION_RESPONSE_SCHEMA["required"]
-        assert "schema_name" in required
-        assert "categorical_fields" in required
-        assert "scalar_fields" in required
-        assert "key_quotes_fields" in required
+        assert "additional_categorical_fields" in required
+        assert "additional_scalar_fields" in required
+        assert "additional_text_array_fields" in required
 
     def test_system_prompt_loaded(self) -> None:
         """Test that system prompt is loaded."""
@@ -290,24 +308,35 @@ class TestPromptConstruction:
 
         assert "key quotes" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
 
+    def test_system_prompt_mentions_enum_fields(self) -> None:
+        """Test that system prompt includes guidance on enum fields."""
+        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+
+        assert "enum field" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
+
+    def test_system_prompt_mentions_text_array_fields(self) -> None:
+        """Test that system prompt includes guidance on text array fields."""
+        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+
+        assert "text array field" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
+
     def test_response_schema_categorical_field_structure(self) -> None:
-        """Test that categorical_fields schema has correct properties."""
+        """Test that additional categorical-field schema has correct properties."""
         from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
-        cat_schema = SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]["categorical_fields"]
-        cat_item = cat_schema["items"]["properties"]
+        cat_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["categorical_field"]["properties"]
 
         assert "field_name" in cat_item
         assert "description" in cat_item
+        assert "required_values" in cat_item
         assert "suggested_values" in cat_item
         assert "allow_multiple" in cat_item
 
     def test_response_schema_scalar_field_structure(self) -> None:
-        """Test that scalar_fields schema has correct properties."""
+        """Test that additional scalar-field schema has correct properties."""
         from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
-        scalar_schema = SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]["scalar_fields"]
-        scalar_item = scalar_schema["items"]["properties"]
+        scalar_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["scalar_field"]["properties"]
 
         assert "field_name" in scalar_item
         assert "description" in scalar_item
@@ -316,12 +345,25 @@ class TestPromptConstruction:
         assert "scale_interpretation" in scalar_item
 
     def test_response_schema_key_quotes_field_structure(self) -> None:
-        """Test that key_quotes_fields schema has correct properties."""
+        """Key quotes are fixed canonical fields, not emitted in additional schema."""
         from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
-        quotes_schema = SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]["key_quotes_fields"]
-        quotes_item = quotes_schema["items"]["properties"]
+        assert "key_quotes_fields" not in SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]
 
-        assert "field_name" in quotes_item
-        assert "description" in quotes_item
-        assert "max_quotes" in quotes_item
+    def test_response_schema_enum_field_structure(self) -> None:
+        """Enum fields are fixed canonical fields, not emitted in additional schema."""
+        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+
+        assert "enum_fields" not in SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]
+
+    def test_response_schema_text_array_field_structure(self) -> None:
+        """Test that additional text-array schema has correct properties."""
+        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+
+        text_array_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["text_array_field"]["properties"]
+
+        assert "field_name" in text_array_item
+        assert "description" in text_array_item
+        assert "maxItems" in text_array_item
+        assert "minItems" in text_array_item
+        assert "nullable" in text_array_item

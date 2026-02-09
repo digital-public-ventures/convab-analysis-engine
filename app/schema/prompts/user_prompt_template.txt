@@ -9,9 +9,11 @@ SAMPLE DATA ({num_records} records):
 Analyze these samples to understand what kinds of patterns, themes, and dimensions exist in this text data.
 
 Design a schema that includes:
-1. Categorical fields - discrete categories for classification (include field name, description, and suggested category values)
-2. Scalar fields - numerical rating scales from 0-10 (include field name, description, and scale interpretation)
-3. Key Quotes - 1-2 snippets of text comment that capture the most important or emotionally-moving aspects of the comment
+1. Enum fields - strict single-choice fields with a closed set of allowed values (include field name, description, allowed_values, and hint). Exactly one value must be selected; no new values may be created.
+2. Categorical fields - discrete categories for classification (include field name, description, and suggested category values). May allow multiple selections and new values beyond those suggested.
+3. Scalar fields - numerical rating scales from 0-10 (include field name, description, and scale interpretation)
+4. Key Quotes - up to 3 representative narrative snippets that capture the most important or emotionally-moving aspects of the comment (min 0, may be empty if the comment lacks substantive narrative)
+5. Text array fields - open-ended arrays of extracted text such as names, arguments, etc. (include field name, description, min_items, and hint)
 
 **IMPORTANT:** Return ONLY the schema definition as a JSON object adhering to the attached response schema. Do NOT tag or score any of the sample records.
 

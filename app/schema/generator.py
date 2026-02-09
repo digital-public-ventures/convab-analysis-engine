@@ -4,22 +4,66 @@ from __future__ import annotations
 
 import json
 import logging
-import os
+from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from google import genai
-from google.genai import errors
-
-from app.config import SCHEMA_MODEL_ID, SCHEMA_THINKING_LEVEL, TOKEN_USAGE_FILE
-from app.llm.gemini_client import generate_structured_content
+from app.config import SCHEMA_MODEL_ID, SCHEMA_REQUEST_TIMEOUT, SCHEMA_THINKING_LEVEL, TOKEN_USAGE_FILE
+from app.llm import generate_structured_content
 from app.llm.model_config import get_model_profile
+from app.llm.provider import create_llm_client, get_llm_provider, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
 
 from .prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA, SCHEMA_GENERATION_SYSTEM_PROMPT, build_schema_generation_prompt
 
 logger = logging.getLogger(__name__)
+PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+RESPONSE_SCHEMA_EXAMPLE_PATH = PROMPTS_DIR / "response_schema_example.json"
+
+
+def _load_response_schema_example() -> dict[str, Any]:
+    with RESPONSE_SCHEMA_EXAMPLE_PATH.open(encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _merge_schema_with_example(schema: dict[str, Any]) -> dict[str, Any]:
+    """Merge LLM additional_* schema fields into the canonical example schema."""
+    additional_to_canonical = {
+        "additional_categorical_fields": "categorical_fields",
+        "additional_scalar_fields": "scalar_fields",
+        "additional_text_array_fields": "text_array_fields",
+    }
+
+    has_additional_fields = any(key in schema for key in additional_to_canonical)
+    if not has_additional_fields:
+        return schema
+
+    merged_schema = deepcopy(_load_response_schema_example())
+
+    for additional_key, canonical_key in additional_to_canonical.items():
+        additional_fields = schema.get(additional_key, [])
+        if not isinstance(additional_fields, list):
+            continue
+
+        canonical_fields = merged_schema.setdefault(canonical_key, [])
+        if not isinstance(canonical_fields, list):
+            continue
+
+        existing_field_names = {
+            field.get("field_name")
+            for field in canonical_fields
+            if isinstance(field, dict) and field.get("field_name")
+        }
+        for field in additional_fields:
+            if not isinstance(field, dict):
+                continue
+            field_name = field.get("field_name")
+            if field_name and field_name not in existing_field_names:
+                canonical_fields.append(field)
+                existing_field_names.add(field_name)
+
+    return merged_schema
 
 
 class SchemaGenerator:
@@ -40,23 +84,26 @@ class SchemaGenerator:
         Args:
             model_id: Gemini model to use (default: from config)
             thinking_level: Thinking level for reasoning (default: from config)
-            api_key: API key for Gemini (defaults to GEMINI_API_KEY env var)
+            api_key: API key for active provider (env fallback by provider)
         """
         self.model_id = model_id or SCHEMA_MODEL_ID
         self.thinking_level = thinking_level or SCHEMA_THINKING_LEVEL
+        self.provider = get_llm_provider()
 
-        # Initialize Gemini client
-        api_key = api_key or os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            raise ValueError("GEMINI_API_KEY environment variable not set")
-
-        self.client = genai.Client(api_key=api_key)
+        # Initialize provider-specific client
+        resolved_api_key = resolve_api_key(api_key=api_key, provider=self.provider)
+        self.client = create_llm_client(api_key=resolved_api_key, provider=self.provider)
 
         profile = get_model_profile(self.model_id)
         if not profile:
-            raise ValueError(f"Unsupported model ID: {self.model_id}")
+            raise ValueError(f'Unsupported model ID: {self.model_id}')
 
-        self.rate_limiter = AsyncRateLimiter(rpm=profile.rpm, tpm=profile.tpm, rpd=profile.rpd)
+        self.rate_limiter = AsyncRateLimiter(
+            rpm=profile.rpm,
+            tpm=profile.tpm,
+            rpd=profile.rpd,
+            max_concurrency=profile.max_concurrency,
+        )
 
     async def generate_schema(self, sample_data: list[dict], use_case: str) -> dict[str, Any]:
         """Generate a tagging schema based on sample data.
@@ -76,7 +123,7 @@ class SchemaGenerator:
             ValueError: If API returns invalid JSON
             errors.APIError: If API call fails
         """
-        logger.info("Generating schema using %s with %d samples...", self.model_id, len(sample_data))
+        logger.info('Generating schema using %s with %d samples...', self.model_id, len(sample_data))
 
         # Build the prompt
         user_prompt = build_schema_generation_prompt(sample_data, use_case)
@@ -95,26 +142,27 @@ class SchemaGenerator:
                 batch_size=len(sample_data),
                 include_thoughts=True,
                 return_full_response=True,
+                request_timeout=SCHEMA_REQUEST_TIMEOUT,
             )
 
             if not response_data:
-                raise ValueError("No schema generated")
+                raise ValueError('No schema generated')
 
             # Display thinking process if available
             self._display_thinking(full_response)
 
             # Log token usage
             if usage_metadata:
-                total_tokens = usage_metadata["total_tokens"]
-                logger.info("Schema generated (%d tokens used)", total_tokens)
+                total_tokens = usage_metadata['total_tokens']
+                logger.info('Schema generated (%d tokens used)', total_tokens)
 
             return response_data
 
-        except errors.APIError as e:
-            logger.error("API Error: %s", e)
+        except TimeoutError:
+            logger.error('API request timed out')
             raise
         except (KeyError, ValueError) as e:
-            logger.error("Configuration Error: %s", e)
+            logger.error('Configuration Error: %s', e)
             raise
 
     def _display_thinking(self, response: Any) -> None:
@@ -123,27 +171,57 @@ class SchemaGenerator:
         Args:
             response: Gemini API response object
         """
-        if not response or not response.candidates or not response.candidates[0].content:
+        if not response:
             return
 
-        parts = response.candidates[0].content.parts
-        if not parts:
+        # Gemini candidate thought parts
+        if hasattr(response, 'candidates') and response.candidates and response.candidates[0].content:
+            parts = response.candidates[0].content.parts
+            if not parts:
+                return
+            for part in parts:
+                if hasattr(part, 'thought') and part.thought and part.text:
+                    thought_text = part.text
+                    if len(thought_text) > 300:
+                        thought_text = thought_text[:300] + '...'
+                    logger.debug('Model thinking: %s', thought_text)
+                    return
+
+        # OpenAI reasoning summaries
+        output = getattr(response, 'output', None)
+        if not isinstance(output, list):
             return
 
-        for part in parts:
-            if hasattr(part, "thought") and part.thought and part.text:
-                # Show abbreviated thinking process
-                thought_text = part.text
-                if len(thought_text) > 300:
-                    thought_text = thought_text[:300] + "..."
-                logger.debug("Model thinking: %s", thought_text)
-                break
+        for item in output:
+            item_dict: dict[str, Any] | None = None
+            if isinstance(item, dict):
+                item_dict = item
+            elif hasattr(item, 'model_dump'):
+                maybe_dict = item.model_dump()
+                if isinstance(maybe_dict, dict):
+                    item_dict = maybe_dict
+
+            if not item_dict or item_dict.get('type') != 'reasoning':
+                continue
+
+            summary = item_dict.get('summary') or []
+            if not isinstance(summary, list):
+                continue
+
+            for summary_part in summary:
+                if isinstance(summary_part, dict):
+                    summary_text = summary_part.get('text')
+                    if isinstance(summary_text, str) and summary_text:
+                        if len(summary_text) > 300:
+                            summary_text = summary_text[:300] + '...'
+                        logger.debug('Model thinking summary: %s', summary_text)
+                        return
 
     def save_schema(
         self,
         schema: dict[str, Any],
         schema_dir: Path,
-        use_case: str = "",
+        use_case: str = '',
         rows_sampled: int = 0,
     ) -> Path:
         """Save the generated schema to a hash-specific directory.
@@ -158,24 +236,25 @@ class SchemaGenerator:
             Path to the saved schema.json file
         """
         schema_dir.mkdir(parents=True, exist_ok=True)
+        merged_schema = _merge_schema_with_example(schema)
 
         # Add metadata to schema
         schema_with_meta = {
-            "_metadata": {
-                "generated_at": datetime.now().isoformat(),
-                "model_id": self.model_id,
-                "thinking_level": self.thinking_level,
-                "rows_sampled": rows_sampled,
-                "use_case": use_case[:500] if use_case else "",
+            '_metadata': {
+                'generated_at': datetime.now().isoformat(),
+                'model_id': self.model_id,
+                'thinking_level': self.thinking_level,
+                'rows_sampled': rows_sampled,
+                'use_case': use_case[:500] if use_case else '',
             },
-            **schema,
+            **merged_schema,
         }
 
-        schema_file = schema_dir / "schema.json"
+        schema_file = schema_dir / 'schema.json'
 
-        with open(schema_file, "w", encoding="utf-8") as f:
+        with open(schema_file, 'w', encoding='utf-8') as f:
             json.dump(schema_with_meta, f, indent=2)
 
-        logger.info("Schema saved to %s", schema_file)
+        logger.info('Schema saved to %s', schema_file)
 
         return schema_file

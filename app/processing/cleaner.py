@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 import pandas as pd
 
 from app.config import ATTACHMENT_EXTENSIONS, CLEANED_DATA_DIR, DOWNLOADS_DIR, UNSUPPORTED_ATTACHMENT_EXTENSIONS
+from app.text_normalization import normalize_text_for_llm
 
 from .attachment import AttachmentProcessor, is_valid_url
 
@@ -45,6 +46,36 @@ def _is_supported_attachment_url(url: str) -> bool:
     if extension in UNSUPPORTED_ATTACHMENT_EXTENSIONS:
         return False
     return True
+
+
+def _normalize_dataframe_text_columns(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
+    """Normalize string fields for robust downstream model processing.
+
+    Leaves the first column untouched to avoid changing canonical IDs.
+    """
+    if df.empty:
+        return df, 0
+
+    normalized_df = df.copy()
+    changed_cells = 0
+    id_column = normalized_df.columns[0]
+    for col in normalized_df.columns:
+        if col == id_column:
+            continue
+        if normalized_df[col].dtype != object:
+            continue
+        for idx, value in normalized_df[col].items():
+            if not isinstance(value, str):
+                continue
+            normalized = normalize_text_for_llm(
+                value,
+                newline_strategy='space',
+                encoding_strategy='ascii_ignore',
+            )
+            if normalized != value:
+                normalized_df.at[idx, col] = normalized
+                changed_cells += 1
+    return normalized_df, changed_cells
 
 
 async def clean_csv(
@@ -219,6 +250,9 @@ async def clean_csv(
 
     if cleaned_frames:
         df = pd.concat(cleaned_frames, ignore_index=True)
+        df, changed_cells = _normalize_dataframe_text_columns(df)
+        if changed_cells:
+            logger.debug('Normalized %d text cells during clean stage', changed_cells)
 
     if on_chunk is None and chunk_size is None:
         # Remove completely empty columns

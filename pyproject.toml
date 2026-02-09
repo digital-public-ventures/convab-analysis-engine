@@ -24,6 +24,7 @@ dependencies = [
     "python-docx>=1.1.0",
     "paddleocr>=2.7.3",
     "paddlepaddle>=2.6.0",
+    "openai>=2.17.0",
 ]
 
 [project.optional-dependencies]
@@ -31,6 +32,7 @@ dev = [
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
     "pytest-asyncio>=0.23.0",
+    "jsonschema>=4.26.0",
     "ruff>=0.1.0",
     "mypy>=1.8.0",
     "black>=24.0.0",
@@ -48,6 +50,10 @@ testpaths = ["app/tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow-running",
+    "integration: marks integration tests",
+]
 addopts = [
     "--strict-markers",
     "--strict-config",

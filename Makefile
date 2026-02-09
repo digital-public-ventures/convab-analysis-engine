@@ -15,7 +15,7 @@ help:
 # Run fast tests (excludes slow integration tests)
 test:
 	@echo "🧪 Running tests..."
-	uv run pytest -vv --durations=0
+	uv run pytest -vv --durations=0 --durations-min=0.15
 
 
 # Run API server

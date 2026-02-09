@@ -87,6 +87,7 @@ dmypy.json
 .pyre/
 .pytype/
 cython_debug/
+.ruff_cache/
 
 # Node.js / JavaScript
 package-lock.json
@@ -307,6 +308,7 @@ src/regs_dot_gov_exploration/data/responses.csv
 app/data/*
 app/tests/fixtures/8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28/analyzed/integration_test/*
 app/tests/fixtures/8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28/cleaned_data/*
+app/tests/fixtures/8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28/post_processing/*
 
 # notes
 TODO.md

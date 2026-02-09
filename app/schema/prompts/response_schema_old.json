@@ -1,0 +1,525 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "type": "string",
+      "description": "Descriptive name for this schema"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version number of the schema"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what this schema captures"
+    },
+
+    "enum_fields": {
+      "type": "array",
+      "description": "Fields with a strict set of allowed values where exactly one must be selected",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "enum": ["stakeholder_type", "organization_advocacy_type"]
+          },
+          "required": { "const": true },
+          "description": { "type": "string" },
+          "allowed_values": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 2
+          },
+          "nullable": { "const": false },
+          "hint": { "type": "string" }
+        },
+        "required": ["field_name", "required", "description", "allowed_values", "nullable", "hint"],
+        "allOf": [
+          {
+            "if": {
+              "properties": { "field_name": { "const": "stakeholder_type" } },
+              "required": ["field_name"]
+            },
+            "then": {
+              "properties": {
+                "description": { "const": "Type of stakeholder" },
+                "allowed_values": {
+                  "const": ["private_individual", "organization", "government_agency"]
+                },
+                "hint": {
+                  "const": "Classify the stakeholder as one of: private individual, organization, or government agency"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "field_name": { "const": "organization_advocacy_type" }
+              },
+              "required": ["field_name"]
+            },
+            "then": {
+              "properties": {
+                "description": {
+                  "const": "Advocacy orientation of the commenting organization"
+                },
+                "allowed_values": {
+                  "const": [
+                    "public_consumer_worker_environment_advocate",
+                    "business_or_industry_advocate",
+                    "government_official",
+                    "not_applicable"
+                  ]
+                },
+                "hint": {
+                  "const": "Classify the organization's advocacy type. Use 'not_applicable' when stakeholder_type is 'private_individual'."
+                }
+              }
+            }
+          }
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "properties": { "field_name": { "const": "stakeholder_type" } },
+            "required": ["field_name"]
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "properties": {
+              "field_name": { "const": "organization_advocacy_type" }
+            },
+            "required": ["field_name"]
+          }
+        }
+      ]
+    },
+
+    "categorical_fields": {
+      "type": "array",
+      "description": "Discrete categories for classification",
+      "contains": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": { "const": "impact_drivers" },
+          "required": { "const": true },
+          "description": {
+            "const": "Factors the commenter identifies as driving the impact"
+          },
+          "required_values": {
+            "const": ["rule/regulation", "product", "practice", "person", "company", "unclear"]
+          },
+          "suggested_values": { "const": [] },
+          "allow_multiple": { "const": true },
+          "nullable": { "const": false },
+          "minItems": { "const": 1 },
+          "hint": {
+            "const": "Select one or more drivers that the commenter identifies as causing the impact they assert has occurred or will occur. Use 'unclear' only when the commenter does not specify a driver."
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "required_values",
+          "suggested_values",
+          "allow_multiple",
+          "nullable",
+          "minItems",
+          "hint"
+        ]
+      },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "Name of the categorical field"
+          },
+          "required": { "const": true },
+          "description": {
+            "type": "string",
+            "description": "What this field captures"
+          },
+          "required_values": {
+            "type": "array",
+            "description": "Values that must always be included as options for this field",
+            "items": { "type": "string" },
+            "minItems": 0
+          },
+          "suggested_values": {
+            "type": "array",
+            "description": "Additional suggested category values; new values beyond these may also be created",
+            "items": { "type": "string" },
+            "minItems": 0
+          },
+          "allow_multiple": {
+            "type": "boolean",
+            "description": "Whether multiple values can be selected"
+          },
+          "nullable": { "const": false },
+          "minItems": {
+            "type": "integer",
+            "description": "Minimum items required when allow_multiple is true"
+          },
+          "hint": {
+            "type": "string",
+            "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "required_values",
+          "suggested_values",
+          "allow_multiple",
+          "nullable",
+          "minItems",
+          "hint"
+        ]
+      }
+    },
+
+    "scalar_fields": {
+      "type": "array",
+      "description": "Numerical rating scales from 0-10",
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "amount_of_impact" },
+              "required": { "const": true },
+              "description": {
+                "const": "Magnitude of impact asserted by the commenter"
+              },
+              "scale_min": { "const": 0 },
+              "scale_max": { "const": 10 },
+              "scale_interpretation": {
+                "const": "0 = no impact, 10 = greatest possible impact"
+              },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "While keeping in mind that impact can be good, bad, unknown, etc., rate the overall amount of impact the commenter asserts. This asserted impact may have already happened, or it may be contingent on a future event or decision. Use a 0-10 scale where 0 means no impact and 10 means the strongest possible impact. If the commenter does not assert any impact, score 0."
+              }
+            },
+            "required": [
+              "field_name",
+              "required",
+              "description",
+              "scale_min",
+              "scale_max",
+              "scale_interpretation",
+              "nullable",
+              "hint"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "impact_sentiment" },
+              "required": { "const": true },
+              "description": {
+                "const": "Sentiment direction of the asserted impact (harmful to beneficial)"
+              },
+              "scale_min": { "const": 0 },
+              "scale_max": { "const": 10 },
+              "scale_interpretation": {
+                "const": "0 = most harmful impact, 10 = most beneficial impact"
+              },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "Rate the positivity of the impact the commenter asserts. 0 means the commenter describes the most harmful possible impact, 10 means the most beneficial possible impact. Consider the commenter's perspective when rating. If the commenter describes a mix of positive and negative impacts, rate the net sentiment."
+              }
+            },
+            "required": [
+              "field_name",
+              "required",
+              "description",
+              "scale_min",
+              "scale_max",
+              "scale_interpretation",
+              "nullable",
+              "hint"
+            ]
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "urgency_of_impact" },
+              "required": { "const": true },
+              "description": {
+                "const": "Temporal urgency of the asserted impact (distant to imminent)"
+              },
+              "scale_min": { "const": 0 },
+              "scale_max": { "const": 10 },
+              "scale_interpretation": {
+                "const": "0 = distant future impact, 10 = most urgent/immediate impact"
+              },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "Rate the urgency of the impact the commenter describes. 10 means the impact is happening now or is imminent, 0 means the impact is projected to occur far in the future. Consider both explicit temporal language and implied urgency."
+              }
+            },
+            "required": [
+              "field_name",
+              "required",
+              "description",
+              "scale_min",
+              "scale_max",
+              "scale_interpretation",
+              "nullable",
+              "hint"
+            ]
+          }
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "Name of the scalar field"
+          },
+          "required": { "const": true },
+          "description": {
+            "type": "string",
+            "description": "What this score measures"
+          },
+          "scale_min": {
+            "type": "integer",
+            "description": "Minimum value of the scale"
+          },
+          "scale_max": {
+            "type": "integer",
+            "description": "Maximum value of the scale"
+          },
+          "scale_interpretation": {
+            "type": "string",
+            "description": "Explanation of what the scale values mean"
+          },
+          "nullable": { "const": false },
+          "hint": {
+            "type": "string",
+            "description": "Instructions for how to best make use of this field and/or avoid pitfalls"
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "scale_min",
+          "scale_max",
+          "scale_interpretation",
+          "nullable",
+          "hint"
+        ]
+      }
+    },
+
+    "key_quotes_fields": {
+      "type": "array",
+      "description": "Fields for extracting notable text snippets",
+      "contains": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": { "const": "representative_narrative_snippets" },
+          "required": { "const": true },
+          "description": {
+            "const": "Representative narrative snippets from the comment"
+          },
+          "max_quotes": { "const": 3 },
+          "minItems": { "const": 0 },
+          "nullable": { "const": false },
+          "hint": {
+            "const": "Select up to 3 text snippets that capture the most important or emotionally-moving aspects of the comment, including the commenter's narrative, core argument, or emotional appeal. May be empty if the comment lacks substantive narrative content."
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "max_quotes",
+          "minItems",
+          "nullable",
+          "hint"
+        ]
+      },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "Name of the key quotes field"
+          },
+          "required": { "const": true },
+          "description": {
+            "type": "string",
+            "description": "What kinds of quotes to extract"
+          },
+          "max_quotes": {
+            "type": "integer",
+            "description": "Maximum number of quotes to extract per record"
+          },
+          "minItems": { "const": 0 },
+          "nullable": { "const": false },
+          "hint": {
+            "type": "string",
+            "description": "Instructions for identifying and selecting quotes"
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "nullable",
+          "description",
+          "max_quotes",
+          "minItems",
+          "hint"
+        ]
+      }
+    },
+
+    "text_array_fields": {
+      "type": "array",
+      "description": "Fields for extracting arrays of text strings from comments",
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "individual_name" },
+              "required": { "const": true },
+              "description": { "const": "Name or names of individual commenters" },
+              "minItems": { "const": 0 },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "Extract one string per individual commenter identified in the comment. May be empty if no individual names are provided."
+              }
+            },
+            "required": ["field_name", "required", "description", "minItems", "nullable", "hint"]
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "organization_name" },
+              "required": { "const": true },
+              "description": {
+                "const": "Name or names of the organizations commenting"
+              },
+              "minItems": { "const": 0 },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "Extract one string per organization identified in the comment. May be empty if no organization names are provided."
+              }
+            },
+            "required": ["field_name", "required", "description", "minItems", "nullable", "hint"]
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "field_name": { "const": "identified_arguments" },
+              "required": { "const": true },
+              "description": {
+                "const": "Causal or conditional arguments extracted from the comment"
+              },
+              "maxItems": { "consat": 5 },
+              "minItems": { "const": 0 },
+              "nullable": { "const": false },
+              "hint": {
+                "const": "Extract claims that connect causes to consequences (e.g., 'if X then Y', 'because X, therefore Y'). Focus on arguments relevant to the commenter's impact_drivers, amount_of_impact, and impact_sentiment. May be empty if no clear arguments are present."
+              }
+            },
+            "required": [
+              "field_name",
+              "required",
+              "description",
+              "maxItems",
+              "minItems",
+              "nullable",
+              "hint"
+            ]
+          }
+        }
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "Name of the text array field"
+          },
+          "required": { "const": true },
+          "description": {
+            "type": "string",
+            "description": "What this field captures"
+          },
+          "maxItems": {
+            "type": "integer",
+            "description": "Maximum number of items to extract per record"
+          },
+          "minItems": {
+            "type": "integer",
+            "description": "Minimum items required for this field"
+          },
+          "nullable": { "const": false },
+          "hint": {
+            "type": "string",
+            "description": "Instructions for how to best populate this field"
+          }
+        },
+        "required": [
+          "field_name",
+          "required",
+          "description",
+          "maxItems",
+          "minItems",
+          "nullable",
+          "hint"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_name",
+    "version",
+    "description",
+    "enum_fields",
+    "categorical_fields",
+    "scalar_fields",
+    "key_quotes_fields",
+    "text_array_fields"
+  ],
+  "additionalProperties": false
+}

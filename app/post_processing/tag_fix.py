@@ -6,14 +6,12 @@ import asyncio
 import csv
 import json
 import logging
-import os
 from dataclasses import dataclass
 from pathlib import Path
 
-from google import genai
-
 from app.config import ANALYSIS_MODEL_ID, ANALYSIS_THINKING_LEVEL, TOKEN_USAGE_FILE
-from app.llm.gemini_client import generate_structured_content, validate_model_config
+from app.llm import generate_structured_content, validate_model_config
+from app.llm.provider import create_llm_client, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
 
 logger = logging.getLogger(__name__)
@@ -100,7 +98,7 @@ def _build_prompt(field_name: str, labels: list[str]) -> str:
 
 
 async def _dedupe_field(
-    client: genai.Client,
+    client: object,
     limiter: AsyncRateLimiter,
     field_name: str,
     labels: list[str],
@@ -180,14 +178,6 @@ def _write_mappings(mappings_path: Path, mappings: dict[str, dict[str, str]]) ->
     mappings_path.parent.mkdir(parents=True, exist_ok=True)
     mappings_path.write_text(json.dumps(mappings, indent=2), encoding="utf-8")
 
-
-def _get_api_key(api_key: str | None) -> str:
-    resolved = api_key or os.environ.get("GEMINI_API_KEY")
-    if not resolved:
-        raise ValueError("GEMINI_API_KEY environment variable not set")
-    return resolved
-
-
 async def run_tag_fix(
     *,
     schema_path: Path,
@@ -205,8 +195,8 @@ async def run_tag_fix(
     labels_by_field = _collect_labels(analysis_csv_path, categorical_fields)
 
     profile = validate_model_config(model_id, thinking_level)
-    client = genai.Client(api_key=_get_api_key(api_key))
-    limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd)
+    client = create_llm_client(api_key=resolve_api_key(api_key=api_key))
+    limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd, max_concurrency=profile.max_concurrency)
 
     tasks = [
         _dedupe_field(
