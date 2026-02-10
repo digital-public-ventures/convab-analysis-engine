@@ -31,13 +31,18 @@ from .cache import (
     get_cached_content,
     get_cached_pdf_page_image,
     get_cached_text,
+    pdf_page_image_cache_path,
     save_pdf_page_image_to_cache,
     save_text_to_cache,
     save_to_cache,
+    text_cache_path_from_content_hash,
+    url_to_cache_path,
 )
 
 logger = logging.getLogger(__name__)
 _OCR_LOCK = threading.Lock()
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 if TYPE_CHECKING:
     import fitz
@@ -117,6 +122,7 @@ class PDFExtractor:
         no_cache_ocr: bool = False,
         min_text_chars: int = PDF_OCR_MIN_TEXT_CHARS,
         render_dpi: int = PDF_OCR_RENDER_DPI,
+        strategy_counts: dict[str, int] | None = None,
     ) -> str:
         """Extract text from PDF bytes with OCR fallback.
 
@@ -138,6 +144,8 @@ class PDFExtractor:
 
         document_sha256 = content_hash(content)
         text_parts: list[str] = []
+        native_pages = 0
+        ocr_pages = 0
         with fitz.open(stream=content, filetype="pdf") as doc:
             for page_index, page in enumerate(doc):
                 page_started_at = time.monotonic()
@@ -145,6 +153,7 @@ class PDFExtractor:
                 should_ocr = len(native_text) < min_text_chars
 
                 if not should_ocr:
+                    native_pages += 1
                     logger.debug(
                         "PDF PAGE PROCESS: page=%d strategy=native native_chars=%d elapsed_s=%.3f",
                         page_index,
@@ -155,6 +164,7 @@ class PDFExtractor:
                         text_parts.append(native_text)
                     continue
 
+                ocr_pages += 1
                 page_image_bytes: bytes | None = None
                 if cache_dir and not no_cache_ocr:
                     page_image_bytes = get_cached_pdf_page_image(
@@ -165,17 +175,29 @@ class PDFExtractor:
                     )
 
                 if page_image_bytes is not None:
+                    if cache_dir is None:  # pragma: no cover - defensive guard
+                        raise RuntimeError("cache_dir must be set when using cached PDF page images")
+                    logger.info(
+                        "ATTACHMENT CACHE HIT: type=pdf_page strategy=ocr_skip_render page=%d file=%s",
+                        page_index,
+                        pdf_page_image_cache_path(document_sha256, page_index, render_dpi, cache_dir),
+                    )
                     page_text = _ocr_image_bytes(page_image_bytes, ocr_engine)
                 else:
                     pix = page.get_pixmap(dpi=render_dpi)
                     page_text = _ocr_pixmap(pix, ocr_engine)
                     if cache_dir:
-                        save_pdf_page_image_to_cache(
+                        page_cache_path = save_pdf_page_image_to_cache(
                             document_sha256,
                             page_index,
                             render_dpi,
                             pix.tobytes("png"),
                             cache_dir,
+                        )
+                        logger.info(
+                            "ATTACHMENT OCR PAGE: page=%d trigger=native_chars_below_threshold file=%s",
+                            page_index,
+                            page_cache_path,
                         )
 
                 if page_text:
@@ -189,6 +211,9 @@ class PDFExtractor:
                     time.monotonic() - page_started_at,
                 )
 
+        if strategy_counts is not None:
+            strategy_counts["native_pages"] = native_pages
+            strategy_counts["ocr_pages"] = ocr_pages
         return "\n".join(part for part in text_parts if part)
 
 
@@ -486,6 +511,8 @@ class AttachmentProcessor:
             logger.debug("DOWNLOAD CACHE DIR: %s", self.cache_dir)
             cached = get_cached_content(url, self.cache_dir)
             if cached is not None:
+                cache_path = url_to_cache_path(url, self.cache_dir)
+                logger.info("ATTACHMENT CACHE HIT: type=download url=%s file=%s", url, cache_path)
                 logger.debug(
                     "DOWNLOAD CACHE HIT: %s (%d bytes) elapsed_s=%.3f",
                     url,
@@ -512,7 +539,8 @@ class AttachmentProcessor:
 
         # Save to cache
         if self.cache_dir:
-            save_to_cache(url, content, self.cache_dir)
+            saved_path = save_to_cache(url, content, self.cache_dir)
+            logger.info("ATTACHMENT SAVED: type=download url=%s file=%s", url, saved_path)
 
         return content
 
@@ -564,6 +592,7 @@ class AttachmentProcessor:
         *,
         use_ocr: bool = False,
         no_cache_ocr: bool = False,
+        strategy_counts: dict[str, int] | None = None,
     ) -> str:
         """Extract text without checking OCR caches."""
         extraction_started_at = time.monotonic()
@@ -588,6 +617,7 @@ class AttachmentProcessor:
                 ocr_engine,
                 cache_dir=self.cache_dir,
                 no_cache_ocr=no_cache_ocr,
+                strategy_counts=strategy_counts,
             )
             logger.debug(
                 "PDF OCR PIPELINE END: %s (%d chars elapsed_s=%.3f)",
@@ -618,6 +648,7 @@ class AttachmentProcessor:
 
         content = self._load_content(url_or_path)
         content_sha256 = content_hash(content)
+        extraction_strategy = "native"
 
         if self.cache_dir and not no_cache_ocr:
             cached_text = get_cached_text(
@@ -626,6 +657,12 @@ class AttachmentProcessor:
                 content_sha256=content_sha256,
             )
             if cached_text is not None:
+                text_cache_path = text_cache_path_from_content_hash(content_sha256, self.cache_dir)
+                logger.info(
+                    "ATTACHMENT CACHE HIT: type=extracted_text strategy=skip_processing url=%s file=%s",
+                    url_or_path,
+                    text_cache_path,
+                )
                 logger.debug("TEXT CACHE HIT: %s (%d chars)", url_or_path, len(cached_text))
                 return cached_text
         elif not self.cache_dir:
@@ -633,19 +670,42 @@ class AttachmentProcessor:
         else:
             logger.debug("TEXT CACHE BYPASS READ: no_cache_ocr=True for %s", url_or_path)
 
+        extension = self._detect_extension(url_or_path)
+        if extension in IMAGE_EXTENSIONS:
+            extraction_strategy = "ocr"
+        elif extension == ".pdf" and use_ocr:
+            extraction_strategy = "ocr"
+
+        strategy_counts: dict[str, int] = {}
         result = self._extract_text_uncached_sync(
             url_or_path,
             content,
             use_ocr=use_ocr,
             no_cache_ocr=no_cache_ocr,
+            strategy_counts=strategy_counts,
         )
+        if extension == ".pdf" and use_ocr:
+            native_pages = strategy_counts.get("native_pages", 0)
+            ocr_pages = strategy_counts.get("ocr_pages", 0)
+            if native_pages > 0 and ocr_pages > 0:
+                extraction_strategy = "mixed"
+            elif native_pages > 0:
+                extraction_strategy = "native"
+            else:
+                extraction_strategy = "ocr"
 
         if self.cache_dir and result:
-            save_text_to_cache(
+            text_cache_path = save_text_to_cache(
                 url_or_path,
                 result,
                 self.cache_dir,
                 content_sha256=content_sha256,
+            )
+            logger.info(
+                "ATTACHMENT SAVED: type=extracted_text strategy=%s url=%s file=%s",
+                extraction_strategy,
+                url_or_path,
+                text_cache_path,
             )
             if no_cache_ocr:
                 logger.debug("TEXT CACHE OVERWRITE: %s", url_or_path)

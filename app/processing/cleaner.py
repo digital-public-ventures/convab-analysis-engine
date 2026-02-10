@@ -213,6 +213,13 @@ async def clean_csv(
                         header=write_header,
                         index=False,
                     )
+                    logger.info(
+                        "CLEAN CSV CHUNK WRITTEN: file=%s mode=%s rows=%d start_row=%d",
+                        partial_output_path,
+                        "write" if write_header else "append",
+                        len(chunk_df),
+                        start,
+                    )
 
                 if on_chunk is not None:
                     await on_chunk(chunk_df.to_dict(orient="records"))
@@ -306,6 +313,7 @@ async def clean_csv(
         if not partial_output_path.exists():
             raise ValueError("incremental output file was not created")
         partial_output_path.replace(output_path)
+        logger.info("CLEAN CSV FINALIZED: partial=%s final=%s", partial_output_path, output_path)
         logger.debug("clean_csv END: incremental output finalized at %s", output_path)
         return output_path
 

@@ -75,8 +75,9 @@ async def test_ocr_text_cache_hits_with_responses_fixture(tmp_path: Path, monkey
         *,
         use_ocr: bool = False,
         no_cache_ocr: bool = False,
+        strategy_counts: dict[str, int] | None = None,
     ) -> str:
-        _ = (url_or_path, content, use_ocr, no_cache_ocr)
+        _ = (url_or_path, content, use_ocr, no_cache_ocr, strategy_counts)
         calls["count"] += 1
         return "FAKE OCR TEXT"
 
@@ -90,6 +91,42 @@ async def test_ocr_text_cache_hits_with_responses_fixture(tmp_path: Path, monkey
     assert second == "FAKE OCR TEXT"
     assert calls["count"] == 1
     assert get_cached_text(url, tmp_path, content_sha256=content_hash(fake_content)) == "FAKE OCR TEXT"
+
+
+@pytest.mark.asyncio
+async def test_no_cache_ocr_forces_reextract_and_overwrites_text_cache(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    url = _first_attachment_url(RESPONSES_CSV)
+    processor = AttachmentProcessor(cache_dir=tmp_path)
+    fake_content = b"same-doc-bytes"
+    calls = {"count": 0}
+
+    def fake_extract_text_uncached_sync(
+        url_or_path: str,
+        content: bytes,
+        *,
+        use_ocr: bool = False,
+        no_cache_ocr: bool = False,
+        strategy_counts: dict[str, int] | None = None,
+    ) -> str:
+        _ = (url_or_path, content, use_ocr, no_cache_ocr, strategy_counts)
+        calls["count"] += 1
+        return f"FAKE OCR TEXT {calls['count']}"
+
+    monkeypatch.setattr(processor, "_load_content", lambda _: fake_content)
+    monkeypatch.setattr(processor, "_extract_text_uncached_sync", fake_extract_text_uncached_sync)
+
+    first = await processor.extract_text_async(url, use_ocr=True, no_cache_ocr=False)
+    second = await processor.extract_text_async(url, use_ocr=True, no_cache_ocr=True)
+    third = await processor.extract_text_async(url, use_ocr=True, no_cache_ocr=False)
+
+    assert first == "FAKE OCR TEXT 1"
+    assert second == "FAKE OCR TEXT 2"
+    assert third == "FAKE OCR TEXT 2"
+    assert calls["count"] == 2
+    assert get_cached_text(url, tmp_path, content_sha256=content_hash(fake_content)) == "FAKE OCR TEXT 2"
 
 
 def test_run_ocr_process_wide_guard_serializes_calls() -> None:
