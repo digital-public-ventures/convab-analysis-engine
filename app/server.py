@@ -55,6 +55,10 @@ logger = logging.getLogger(__name__)
 def _configure_logging() -> None:
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
+    console_level_name = os.environ.get("SERVER_CONSOLE_LOG_LEVEL", "INFO").upper()
+    file_level_name = os.environ.get("SERVER_FILE_LOG_LEVEL", "DEBUG").upper()
+    console_level = getattr(logging, console_level_name, logging.INFO)
+    file_level = getattr(logging, file_level_name, logging.DEBUG)
 
     formatter = logging.Formatter(LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
@@ -64,7 +68,7 @@ def _configure_logging() -> None:
     )
     if not has_stream_handler:
         stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.DEBUG)
+        stream_handler.setLevel(console_level)
         stream_handler.setFormatter(formatter)
         root_logger.addHandler(stream_handler)
 
@@ -88,7 +92,7 @@ def _configure_logging() -> None:
             backupCount=5,
             encoding="utf-8",
         )
-        file_handler.setLevel(logging.DEBUG)
+        file_handler.setLevel(file_level)
         file_handler.setFormatter(formatter)
         root_logger.addHandler(file_handler)
         logger.info("File logging enabled at %s", log_file)
