@@ -4,6 +4,11 @@
 
 **Sensemaking** is a generic response analysis platform for parsing free-text response data from diverse sources (CFPB complaints, regulations.gov comments, surveys, etc.) and extracting structured insights using LLM-powered analysis.
 
+### Definition of done for tasks
+
+- **Always** commit when you complete a task, even if it's a small change (e.g., adding a test, updating documentation).
+- **Always** check the roadmap when you complete a task to see if it needs to be updated.
+
 ### Core Architecture Principles
 
 1. **Data Source Encapsulation** - Each data source folder encapsulates schema-specific parsing, field normalization, and attachment handling
@@ -53,7 +58,6 @@ These paths are intentionally **gitignored** and must never be committed:
   `<type>/<short-description>`
 
   **Examples**:
-
   - `feature/add-regs-gov-analyzer`
   - `bugfix/fix-data-processor-npe`
   - `chore/update-dependencies`
@@ -153,7 +157,6 @@ When adding a new data source (e.g., `src/new_source_exploration/`):
    ```
 
 2. **Implement data_processor.py**:
-
    - Parse the source-specific CSV schema
    - Normalize to common fields: `id`, `narrative`, `metadata`
    - Handle missing/optional fields gracefully
