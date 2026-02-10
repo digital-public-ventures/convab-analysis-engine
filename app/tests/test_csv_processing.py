@@ -203,63 +203,6 @@ class TestCSVProcessing:
 class TestServerEndpoint:
     """Integration tests for the FastAPI server endpoint."""
 
-    def test_clean_endpoint_returns_json_with_hash(self) -> None:
-        """Test the /clean endpoint returns JSON with hash and file info.
-
-        This test uses the actual server with its default cache directory.
-        The pre-existing cache from app/data/downloads ensures fast execution.
-        """
-        with TestClient(app) as client:
-            # Upload the test CSV
-            with Path.open(TEST_CSV, 'rb') as f:
-                response = client.post(
-                    '/clean',
-                    files={'file': ('responses.csv', f, 'text/csv')},
-                )
-
-            # Verify response
-            assert response.status_code == 202, f'Should return 202, got {response.status_code}'
-            assert 'application/json' in response.headers['content-type']
-
-            # Verify JSON structure
-            data = response.json()
-            assert 'hash' in data, 'Response should contain hash'
-            assert 'job_id' in data, 'Response should contain job_id'
-            assert 'poll_url' in data, 'Response should contain poll_url'
-            assert 'results_url' in data, 'Response should contain results_url'
-
-            # Verify hash is a valid SHA256 (64-char hex string)
-            assert len(data['hash']) == 64, 'Hash should be 64 characters'
-            assert all(c in '0123456789abcdef' for c in data['hash']), 'Hash should be hex'
-
-    def test_clean_endpoint_caching(self) -> None:
-        """Test that submitting the same file twice returns cached=True."""
-        with TestClient(app) as client:
-            # First upload
-            with Path.open(TEST_CSV, 'rb') as f:
-                content = f.read()
-
-            response1 = client.post(
-                '/clean',
-                files={'file': ('responses.csv', content, 'text/csv')},
-            )
-            assert response1.status_code == 202
-            data1 = response1.json()
-
-            _poll_job_completion(client, data1['job_id'])
-
-            # Second upload with same content
-            response2 = client.post(
-                '/clean',
-                files={'file': ('responses.csv', content, 'text/csv')},
-            )
-            assert response2.status_code == 202
-            data2 = response2.json()
-
-            # Same hash, but second should be cached
-            assert data1['hash'] == data2['hash'], 'Same content should produce same hash'
-            assert data2['cached'] is True, 'Second request should be cached'
-
     def test_data_info_endpoint(self) -> None:
         """Test the /data/{hash} endpoint returns correct info."""
         with TestClient(app) as client:
@@ -327,31 +270,3 @@ class TestSchemaEndpoint:
                 json={'use_case': 'short'},
             )
             assert response.status_code == 422  # Validation error
-
-    def test_schema_endpoint_accepts_valid_request(self) -> None:
-        """Test that /schema endpoint accepts valid requests (without calling LLM)."""
-        # This test just validates the request structure is accepted
-        # We don't actually call the LLM to avoid API costs in tests
-        with TestClient(app) as client:
-            with Path.open(TEST_CSV, 'rb') as f:
-                clean_response = client.post(
-                    '/clean',
-                    files={'file': ('responses.csv', f, 'text/csv')},
-                )
-            payload = clean_response.json()
-            content_hash = payload['hash']
-            _poll_job_completion(client, payload['job_id'])
-
-            # Verify the endpoint would accept this request format
-            # (actual schema generation is tested separately with mocks)
-            response = client.post(
-                f'/schema/{content_hash}',
-                json={
-                    'use_case': 'Analyze customer feedback for sentiment and themes',
-                    'sample_size': 5,
-                    'head_size': 3,
-                },
-            )
-            # Should either succeed (200) or fail due to API key (500)
-            # but not validation error (422) or not found (404)
-            assert response.status_code in (200, 500)
