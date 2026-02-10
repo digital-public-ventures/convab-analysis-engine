@@ -58,7 +58,7 @@ def test_pdf_mixed_ocr_uses_page_rules(monkeypatch: pytest.MonkeyPatch, tmp_path
     pages = [
         _FakePage("This page has plenty of native text to keep.", False, "p0"),
         _FakePage("short", False, "p1"),
-        _FakePage("This has images and text.", True, "p2"),
+        _FakePage("This page has images but enough native text to skip OCR.", True, "p2"),
     ]
     fake_fitz = SimpleNamespace(open=lambda stream, filetype: _FakeDoc(pages))
     monkeypatch.setitem(sys.modules, "fitz", fake_fitz)
@@ -77,7 +77,8 @@ def test_pdf_mixed_ocr_uses_page_rules(monkeypatch: pytest.MonkeyPatch, tmp_path
     lines = result.splitlines()
     assert lines[0] == "This page has plenty of native text to keep."
     assert "OCR-p1" in lines
-    assert "OCR-p2" in lines
+    assert "This page has images but enough native text to skip OCR." in lines
+    assert "OCR-p2" not in lines
 
 
 def test_pdf_page_image_cache_respected_and_bypassed(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
@@ -133,4 +134,4 @@ def test_pdf_page_image_cache_respected_and_bypassed(monkeypatch: pytest.MonkeyP
     assert second == "OCR_PIXMAP"
     assert calls["read"] == 0
     assert calls["pixmap"] == 1
-    assert calls["write"] == 0
+    assert calls["write"] == 1

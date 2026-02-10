@@ -9,6 +9,7 @@ import io
 import logging
 import os
 import threading
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 from urllib.parse import urlparse
@@ -16,6 +17,8 @@ from urllib.parse import urlparse
 import httpx
 
 from app.config import (
+    ATTACHMENT_SUSPICIOUS_CHAR_THRESHOLD,
+    ATTACHMENT_SUSPICIOUS_MAX_COUNT,
     DEFAULT_TIMEOUT,
     IMAGE_EXTENSIONS,
     OCR_GLOBAL_CONCURRENCY,
@@ -121,7 +124,7 @@ class PDFExtractor:
             content: Raw PDF file bytes
             ocr_engine: PaddleOCR engine instance
             cache_dir: Optional cache directory for rendered page images
-            no_cache_ocr: If True, bypass OCR caches and rerun OCR
+            no_cache_ocr: If True, bypass OCR cache reads and rerun OCR
             min_text_chars: OCR when page text length is below this threshold
             render_dpi: DPI to use when rendering page image
 
@@ -137,11 +140,17 @@ class PDFExtractor:
         text_parts: list[str] = []
         with fitz.open(stream=content, filetype="pdf") as doc:
             for page_index, page in enumerate(doc):
+                page_started_at = time.monotonic()
                 native_text = page.get_text().strip()
-                has_images = bool(page.get_image_info(hashes=False, xrefs=False))
-                should_ocr = has_images or len(native_text) < min_text_chars
+                should_ocr = len(native_text) < min_text_chars
 
                 if not should_ocr:
+                    logger.debug(
+                        "PDF PAGE PROCESS: page=%d strategy=native native_chars=%d elapsed_s=%.3f",
+                        page_index,
+                        len(native_text),
+                        time.monotonic() - page_started_at,
+                    )
                     if native_text:
                         text_parts.append(native_text)
                     continue
@@ -160,7 +169,7 @@ class PDFExtractor:
                 else:
                     pix = page.get_pixmap(dpi=render_dpi)
                     page_text = _ocr_pixmap(pix, ocr_engine)
-                    if cache_dir and not no_cache_ocr:
+                    if cache_dir:
                         save_pdf_page_image_to_cache(
                             document_sha256,
                             page_index,
@@ -171,6 +180,14 @@ class PDFExtractor:
 
                 if page_text:
                     text_parts.append(page_text)
+                logger.debug(
+                    "PDF PAGE PROCESS: page=%d strategy=ocr native_chars=%d ocr_chars=%d used_cached_page=%s elapsed_s=%.3f",
+                    page_index,
+                    len(native_text),
+                    len(page_text),
+                    page_image_bytes is not None,
+                    time.monotonic() - page_started_at,
+                )
 
         return "\n".join(part for part in text_parts if part)
 
@@ -280,11 +297,18 @@ def _run_ocr(ocr_engine: "PaddleOCR", image: object) -> str:
     Raises:
         AttributeError: If predict() method doesn't exist (wrong version)
     """
+    started_at = time.monotonic()
     if OCR_GLOBAL_CONCURRENCY != 1:
         raise RuntimeError("OCR_GLOBAL_CONCURRENCY must be 1 to enforce process-wide OCR serialization")
     with _OCR_LOCK:
         results = ocr_engine.predict(image)
-    return _extract_text_from_ocr_results(results)
+    text = _extract_text_from_ocr_results(results)
+    logger.debug(
+        "OCR PREDICT DONE: chars=%d elapsed_s=%.3f",
+        len(text),
+        time.monotonic() - started_at,
+    )
+    return text
 
 
 class AttachmentProcessor:
@@ -456,12 +480,18 @@ class AttachmentProcessor:
         Raises:
             httpx.HTTPError: If the request fails
         """
+        fetch_started_at = time.monotonic()
         # Check cache first
         if self.cache_dir:
             logger.debug("DOWNLOAD CACHE DIR: %s", self.cache_dir)
             cached = get_cached_content(url, self.cache_dir)
             if cached is not None:
-                logger.debug("CACHE HIT: %s (%d bytes)", url, len(cached))
+                logger.debug(
+                    "DOWNLOAD CACHE HIT: %s (%d bytes) elapsed_s=%.3f",
+                    url,
+                    len(cached),
+                    time.monotonic() - fetch_started_at,
+                )
                 return cached
         else:
             logger.debug("DOWNLOAD CACHE SKIP: no cache_dir set for %s", url)
@@ -472,7 +502,13 @@ class AttachmentProcessor:
         response = client.get(url)
         response.raise_for_status()
         content: bytes = response.content
-        logger.debug("FETCH END: %s (%d bytes)", url, len(content))
+        logger.debug(
+            "FETCH END: %s (%d bytes status=%d elapsed_s=%.3f)",
+            url,
+            len(content),
+            response.status_code,
+            time.monotonic() - fetch_started_at,
+        )
 
         # Save to cache
         if self.cache_dir:
@@ -530,11 +566,17 @@ class AttachmentProcessor:
         no_cache_ocr: bool = False,
     ) -> str:
         """Extract text without checking OCR caches."""
+        extraction_started_at = time.monotonic()
         extension = self._detect_extension(url_or_path)
         if extension in IMAGE_EXTENSIONS:
             logger.debug("OCR START: %s", url_or_path)
             result = self._extract_image_text(content)
-            logger.debug("OCR END: %s (%d chars)", url_or_path, len(result))
+            logger.debug(
+                "OCR END: %s (%d chars elapsed_s=%.3f)",
+                url_or_path,
+                len(result),
+                time.monotonic() - extraction_started_at,
+            )
             return result
 
         extractor = self._get_extractor(extension)
@@ -547,12 +589,22 @@ class AttachmentProcessor:
                 cache_dir=self.cache_dir,
                 no_cache_ocr=no_cache_ocr,
             )
-            logger.debug("PDF OCR PIPELINE END: %s (%d chars)", url_or_path, len(result))
+            logger.debug(
+                "PDF OCR PIPELINE END: %s (%d chars elapsed_s=%.3f)",
+                url_or_path,
+                len(result),
+                time.monotonic() - extraction_started_at,
+            )
             return result
 
         logger.debug("TEXT EXTRACT START: %s", url_or_path)
         result = extractor.extract(content)
-        logger.debug("TEXT EXTRACT END: %s (%d chars)", url_or_path, len(result))
+        logger.debug(
+            "TEXT EXTRACT END: %s (%d chars elapsed_s=%.3f)",
+            url_or_path,
+            len(result),
+            time.monotonic() - extraction_started_at,
+        )
         return result
 
     def extract_text(self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False) -> str:
@@ -579,7 +631,7 @@ class AttachmentProcessor:
         elif not self.cache_dir:
             logger.debug("TEXT CACHE SKIP: no cache_dir set for %s", url_or_path)
         else:
-            logger.debug("TEXT CACHE SKIP: no_cache_ocr=True for %s", url_or_path)
+            logger.debug("TEXT CACHE BYPASS READ: no_cache_ocr=True for %s", url_or_path)
 
         result = self._extract_text_uncached_sync(
             url_or_path,
@@ -588,14 +640,17 @@ class AttachmentProcessor:
             no_cache_ocr=no_cache_ocr,
         )
 
-        if self.cache_dir and result and not no_cache_ocr:
+        if self.cache_dir and result:
             save_text_to_cache(
                 url_or_path,
                 result,
                 self.cache_dir,
                 content_sha256=content_sha256,
             )
-            logger.debug("TEXT CACHED: %s", url_or_path)
+            if no_cache_ocr:
+                logger.debug("TEXT CACHE OVERWRITE: %s", url_or_path)
+            else:
+                logger.debug("TEXT CACHED: %s", url_or_path)
 
         return result
 
@@ -622,7 +677,7 @@ class AttachmentProcessor:
         Args:
             url_or_path: URL or file path to extract from
             use_ocr: Whether to use OCR fallback for PDFs
-            no_cache_ocr: If True, skip the extracted text cache and re-extract
+            no_cache_ocr: If True, bypass extracted text cache reads, re-extract, and overwrite cache
 
         Returns:
             Tuple of (extracted_text, None) on success, or (None, error_message) on failure
@@ -667,16 +722,60 @@ class AttachmentProcessor:
             OCR_GLOBAL_CONCURRENCY,
             no_cache_ocr,
         )
+        total_chars = 0
+        total_secs = 0.0
+        suspicious_count = 0
+        suspicious_examples: list[str] = []
         for idx, url in enumerate(urls, start=1):
+            item_started_at = time.monotonic()
             text, error = self.extract_text_safe(url, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
+            elapsed_s = time.monotonic() - item_started_at
             if error:
                 logger.warning("FAILED [%d/%d]: %s - %s", idx, len(urls), url, error)
                 if not skip_errors:
                     raise RuntimeError(error)
             else:
-                logger.debug("DONE [%d/%d]: %s", idx, len(urls), url)
+                text_len = len(text.strip()) if text else 0
+                total_chars += text_len
+                total_secs += elapsed_s
+                logger.debug(
+                    "DONE [%d/%d]: %s chars=%d elapsed_s=%.3f",
+                    idx,
+                    len(urls),
+                    url,
+                    text_len,
+                    elapsed_s,
+                )
+                if text_len <= ATTACHMENT_SUSPICIOUS_CHAR_THRESHOLD:
+                    suspicious_count += 1
+                    if len(suspicious_examples) < 5:
+                        suspicious_examples.append(url)
+                    logger.warning(
+                        "SUSPICIOUS SHORT ATTACHMENT: url=%s chars=%d threshold=%d count=%d",
+                        url,
+                        text_len,
+                        ATTACHMENT_SUSPICIOUS_CHAR_THRESHOLD,
+                        suspicious_count,
+                    )
+                    if suspicious_count >= ATTACHMENT_SUSPICIOUS_MAX_COUNT:
+                        raise RuntimeError(
+                            "Too many suspiciously short attachment extracts "
+                            f"({suspicious_count} <= {ATTACHMENT_SUSPICIOUS_CHAR_THRESHOLD} chars). "
+                            f"Examples: {suspicious_examples}"
+                        )
             results[url] = text
 
+        success_count = sum(1 for value in results.values() if value is not None)
+        avg_chars = (total_chars / success_count) if success_count else 0.0
+        avg_secs = (total_secs / success_count) if success_count else 0.0
+        logger.info(
+            "BATCH SUMMARY: processed=%d success=%d suspicious_short=%d avg_chars=%.1f avg_seconds=%.3f",
+            len(results),
+            success_count,
+            suspicious_count,
+            avg_chars,
+            avg_secs,
+        )
         logger.debug("BATCH END: %d URLs processed", len(results))
         return results
 
@@ -695,7 +794,7 @@ class AttachmentProcessor:
             skip_errors: If True, continue on failures; if False, raise on first error
             use_ocr: Whether to use OCR fallback for PDFs
             max_concurrency: Maximum concurrent downloads (defaults to MAX_DOWNLOAD_CONCURRENCY)
-            no_cache_ocr: If True, skip the extracted text cache and re-extract
+            no_cache_ocr: If True, bypass OCR cache reads, re-extract, and overwrite OCR caches
 
         Returns:
             Dictionary mapping URL to extracted text (or None on failure)
