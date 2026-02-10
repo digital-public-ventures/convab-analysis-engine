@@ -142,8 +142,8 @@ class TestSchemaGenerator:
 
             metadata = saved["_metadata"]
             assert "generated_at" in metadata
-            assert metadata["model_id"] == "gemini-2.5-pro"
-            assert metadata["thinking_level"] == "LOW"
+            assert metadata["model_id"] == "gemini-2.5-flash-lite-preview-09-2025"
+            assert metadata["thinking_level"] == "NONE"
             assert metadata["rows_sampled"] == 15
             assert "sentiment" in metadata["use_case"].lower()
 

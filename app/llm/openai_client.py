@@ -245,6 +245,55 @@ def _build_schema_name(model_id: str) -> str:
     return name[:64]
 
 
+def _normalize_json_schema_for_openai(schema: object) -> object:
+    """Normalize app/Gemini-style schema fields to strict JSON Schema for OpenAI."""
+    if isinstance(schema, dict):
+        normalized: dict[str, object] = {}
+        nullable_flag = bool(schema.get('nullable') is True)
+
+        for key, value in schema.items():
+            if key == 'nullable':
+                continue
+            if key == 'type':
+                if isinstance(value, str):
+                    normalized[key] = _schema_type_name(value)
+                elif isinstance(value, list):
+                    normalized[key] = [
+                        _schema_type_name(item) if isinstance(item, str) else _normalize_json_schema_for_openai(item)
+                        for item in value
+                    ]
+                else:
+                    normalized[key] = _normalize_json_schema_for_openai(value)
+                continue
+            normalized[key] = _normalize_json_schema_for_openai(value)
+
+        if nullable_flag:
+            current_type = normalized.get('type')
+            if isinstance(current_type, str):
+                normalized['type'] = [current_type, 'null']
+            elif isinstance(current_type, list):
+                if 'null' not in current_type:
+                    normalized['type'] = [*current_type, 'null']
+            else:
+                normalized['type'] = ['null']
+
+        current_type = normalized.get('type')
+        is_object_type = (
+            current_type == 'object'
+            or (isinstance(current_type, list) and 'object' in current_type)
+        )
+        if is_object_type and 'additionalProperties' not in normalized:
+            normalized['additionalProperties'] = False
+        if is_object_type and isinstance(normalized.get('properties'), dict):
+            normalized['required'] = list(normalized['properties'].keys())
+        return normalized
+
+    if isinstance(schema, list):
+        return [_normalize_json_schema_for_openai(item) for item in schema]
+
+    return schema
+
+
 async def _create_response(client: object, request_params: dict[str, object], request_timeout: float) -> object:
     """Call responses.create for either sync or async OpenAI SDK clients."""
     responses_api = getattr(client, 'responses', None)
@@ -409,27 +458,22 @@ async def generate_structured_content(
             request_params['reasoning'] = reasoning
 
     if json_schema:
+        normalized_schema = _normalize_json_schema_for_openai(json_schema)
         request_params['text'] = {
             'format': {
                 'type': 'json_schema',
                 'name': _build_schema_name(resolved_model_id),
-                'schema': json_schema,
+                'schema': normalized_schema,
                 'strict': True,
             }
         }
-        request_params.update(
-            {
-                'temperature': 0,
-                'top_p': 1,
-            }
-        )
         request_params.pop('reasoning', None)
 
     request_log = {
         'model': resolved_model_id,
         'prompt_text': prompt_text,
         'system_instruction': system_instruction,
-        'json_schema': json_schema,
+        'json_schema': normalized_schema if json_schema else None,
         'thinking_level': thinking_level,
         'include_thoughts': include_thoughts,
         'request_params': request_params,

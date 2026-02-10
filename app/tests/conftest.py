@@ -1,5 +1,7 @@
 """Shared pytest fixtures for app tests."""
 
+import sys
+
 from pathlib import Path
 
 import pytest
@@ -8,7 +10,6 @@ from app import config as app_config
 from app import server as app_server
 from app.analysis import analyzer as analysis_analyzer
 from app.schema import generator as schema_generator
-from app import server as app_server
 from app.processing import AttachmentProcessor
 from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
@@ -163,16 +164,19 @@ def override_data_dir(
 @pytest.fixture(autouse=True)
 def override_prompt_record_chars(monkeypatch: pytest.MonkeyPatch) -> None:
     """Keep prompt record truncation small for test runs."""
-    monkeypatch.setattr(analysis_analyzer, 'MAX_PROMPT_RECORD_CHARS', 2000)
+    monkeypatch.setattr(analysis_analyzer, 'MAX_PROMPT_RECORD_CHARS', 500)
 
 
 @pytest.fixture(autouse=True)
 def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
     """Force lower-cost model defaults for all tests."""
-    schema_test_model_id = "gemini-2.5-pro"
-    analysis_test_model_id = "gemini-3-flash-preview"
+    schema_test_model_id = "gemini-2.5-flash-lite-preview-09-2025"
+    analysis_test_model_id = "gemini-2.5-flash-lite-preview-09-2025"
+    test_thinking_level = "NONE"
     monkeypatch.setattr(schema_generator, "SCHEMA_MODEL_ID", schema_test_model_id)
+    monkeypatch.setattr(schema_generator, "SCHEMA_THINKING_LEVEL", test_thinking_level)
     monkeypatch.setattr(analysis_analyzer, "ANALYSIS_MODEL_ID", analysis_test_model_id)
+    monkeypatch.setattr(analysis_analyzer, "ANALYSIS_THINKING_LEVEL", test_thinking_level)
     original_analyze = analysis_analyzer.analyze_dataset
 
     async def _analyze_with_test_model(
@@ -182,11 +186,14 @@ def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
         on_row_count=None,
     ):
         if config is None:
-            config = analysis_analyzer.AnalysisConfig(model_id=analysis_test_model_id)
+            config = analysis_analyzer.AnalysisConfig(
+                model_id=analysis_test_model_id,
+                thinking_level=test_thinking_level,
+            )
         else:
             config = analysis_analyzer.AnalysisConfig(
                 model_id=analysis_test_model_id,
-                thinking_level=config.thinking_level,
+                thinking_level=test_thinking_level,
                 batch_size=config.batch_size,
             )
         return await original_analyze(
@@ -198,3 +205,8 @@ def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
 
     monkeypatch.setattr(analysis_analyzer, "analyze_dataset", _analyze_with_test_model)
     monkeypatch.setattr(app_server, "analyze_dataset", _analyze_with_test_model)
+
+    # Some tests import `analyze_dataset` directly, so patch those bound symbols too.
+    analyze_integration_module = sys.modules.get("app.tests.test_analyze_first5_integration")
+    if analyze_integration_module is not None:
+        monkeypatch.setattr(analyze_integration_module, "analyze_dataset", _analyze_with_test_model)

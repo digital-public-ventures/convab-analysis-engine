@@ -15,9 +15,11 @@ from app.config import ANALYSIS_CSV_FILENAME, ANALYSIS_JSON_FILENAME
 
 FIXTURES_ROOT = Path(__file__).parent / "fixtures"
 CONTENT_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"
-INPUT_CSV = FIXTURES_ROOT / CONTENT_HASH / "cleaned_data" / "cleaned_tmp3r_w0258.csv"
+INPUT_CSV = FIXTURES_ROOT / "raw" / "clean_10.csv"
 SCHEMA_PATH = FIXTURES_ROOT / CONTENT_HASH / "schema" / "schema.json"
-PROMPTS_DIR = FIXTURES_ROOT / "example_prompts"
+TEST_USE_CASE = "Extract structured fields for each record."
+TEST_SYSTEM_PROMPT = "Return valid JSON matching the schema."
+pytestmark = pytest.mark.integration
 
 
 @pytest.mark.asyncio
@@ -45,12 +47,12 @@ async def test_analyze_first_5_rows_from_fixture(tmp_path: Path) -> None:
         cleaned_csv=subset_csv,
         schema_path=SCHEMA_PATH,
         output_dir=output_dir,
-        use_case=(PROMPTS_DIR / "use_case.txt").read_text(encoding="utf-8"),
-        system_prompt=(PROMPTS_DIR / "system_prompt.txt").read_text(encoding="utf-8"),
+        use_case=TEST_USE_CASE,
+        system_prompt=TEST_SYSTEM_PROMPT,
     )
     payload, csv_text = await analyze_dataset(
         request,
-        config=AnalysisConfig(batch_size=5),
+        config=AnalysisConfig(batch_size=1),
     )
 
     records = payload.get("records", [])

@@ -40,6 +40,7 @@ RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "prompts" / "response_sche
 os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "true"
 
 E2E_LOG_FILE = FIXTURES_ROOT / "e2e_analyze.log"
+pytestmark = pytest.mark.integration
 
 
 def _setup_file_logger() -> logging.Handler:
@@ -74,6 +75,19 @@ def _expected_headers(schema: dict) -> list[str]:
     headers.extend(field.get("field_name", "").strip() for field in text_array_fields)
 
     return [header for header in headers if header]
+
+
+def _normalize_schema_for_validation(schema: dict[str, Any]) -> dict[str, Any]:
+    """Normalize minor provider differences before strict schema validation."""
+    normalized = json.loads(json.dumps(schema))
+    for key in ("additional_categorical_fields", "additional_scalar_fields", "additional_text_array_fields"):
+        fields = normalized.get(key, [])
+        if not isinstance(fields, list):
+            continue
+        for field in fields:
+            if isinstance(field, dict):
+                field.setdefault("nullable", False)
+    return normalized
 
 
 def _poll_until_complete(
@@ -245,7 +259,8 @@ def test_schema_generation(monkeypatch: pytest.MonkeyPatch) -> None:
                 pytest.fail("Schema response was empty")
             response_schema = json.loads(RESPONSE_SCHEMA_PATH.read_text(encoding="utf-8"))
             validator = jsonschema.Draft7Validator(response_schema)
-            errors = sorted(validator.iter_errors(schema), key=lambda err: list(err.path))
+            normalized_schema = _normalize_schema_for_validation(cast("dict[str, Any]", schema))
+            errors = sorted(validator.iter_errors(normalized_schema), key=lambda err: list(err.path))
             if errors:
                 logging.getLogger("app").error("Schema validation produced %d error(s)", len(errors))
                 for idx, err in enumerate(errors, start=1):

@@ -33,6 +33,7 @@ TEST_CSV = FIXTURES_DIR / 'responses.csv'
 FIXTURE_SCHEMA = FIXTURES_DIR / 'schema' / 'schema.json'
 FIXTURE_ANALYSIS_DIR = FIXTURES_DIR / 'analyzed' / 'integration_test' / '20260131-215335'
 STREAMING_BATCH_THRESHOLD = 2
+pytestmark = pytest.mark.integration
 
 
 def _poll_until_complete(

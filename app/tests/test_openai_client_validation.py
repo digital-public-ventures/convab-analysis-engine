@@ -4,7 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from app.llm.openai_client import _validate_response_against_schema, generate_structured_content, validate_model_config
+from app.llm.openai_client import (
+    _normalize_json_schema_for_openai,
+    _validate_response_against_schema,
+    generate_structured_content,
+    validate_model_config,
+)
 
 
 def test_validate_response_against_schema_accepts_valid_payload() -> None:
@@ -88,3 +93,22 @@ def test_validate_model_config_accepts_latest_codex_alias() -> None:
     """Model validation accepts current codex alias and resolves full ID."""
     profile = validate_model_config("gpt-5.2-codex", "HIGH")
     assert profile.model_id == "gpt-5.2-codex"
+
+
+def test_normalize_json_schema_for_openai_converts_type_and_nullable() -> None:
+    """Normalizer converts uppercase types and nullable fields to strict JSON Schema."""
+    schema = {
+        "type": "OBJECT",
+        "properties": {
+            "name": {"type": "STRING", "nullable": True},
+            "items": {"type": "ARRAY", "items": {"type": "NUMBER"}},
+        },
+    }
+
+    normalized = _normalize_json_schema_for_openai(schema)
+
+    assert normalized["type"] == "object"
+    assert normalized["additionalProperties"] is False
+    assert normalized["required"] == ["name", "items"]
+    assert normalized["properties"]["name"]["type"] == ["string", "null"]
+    assert normalized["properties"]["items"]["type"] == "array"
