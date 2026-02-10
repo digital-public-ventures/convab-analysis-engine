@@ -94,8 +94,9 @@ def _configure_logging() -> None:
         )
         file_handler.setLevel(file_level)
         file_handler.setFormatter(formatter)
+        file_handler.doRollover()
         root_logger.addHandler(file_handler)
-        logger.info("File logging enabled at %s", log_file)
+        logger.info("File logging enabled at %s (startup rollover applied)", log_file)
 
 
 _configure_logging()
