@@ -219,7 +219,8 @@ class TestAsyncJobHandling:
     def test_clean_job_streams_results_incrementally(self, tmp_path: Path) -> None:
         """Verify results appear while a clean job is still running."""
         unique_id = uuid.uuid4().hex
-        rows = [f'{unique_id}-{i},Test data {i}' for i in range(120)]
+        expected_rows = 120
+        rows = [f'{unique_id}-{i},Test data {i}' for i in range(expected_rows)]
         csv_content = 'id,data\n' + '\n'.join(rows)
         csv_path = tmp_path / 'responses.csv'
         csv_path.write_text(csv_content, encoding='utf-8')
@@ -232,7 +233,9 @@ class TestAsyncJobHandling:
                 )
 
             _expect_status(response, HTTPStatus.ACCEPTED)
-            job_id = response.json()['job_id']
+            response_payload = response.json()
+            job_id = response_payload['job_id']
+            content_hash = response_payload['hash']
 
             saw_running_with_results = False
             deadline = time.time() + 10
@@ -252,6 +255,15 @@ class TestAsyncJobHandling:
             final_results = client.get(f'/jobs/{job_id}/results').json()
             if not final_results.get('rows'):
                 pytest.fail('Expected rows in clean job results')
+            if len(final_results['rows']) != expected_rows:
+                pytest.fail('Expected clean job final rows to match input row count')
+
+            cleaned_path = server_module.DataStore(app_config.DATA_DIR).get_cleaned_csv(content_hash)
+            if cleaned_path is None:
+                pytest.fail('Expected cleaned CSV to exist after clean job completion')
+            cleaned_df = pd.read_csv(cleaned_path)
+            if len(cleaned_df) != expected_rows:
+                pytest.fail('Expected cleaned CSV row count to match input row count')
 
             if not saw_running_with_results:
                 print('NOTE: Clean job completed before incremental results observed')
@@ -667,7 +679,12 @@ class TestAsyncJobHandling:
 
         monkeypatch.setattr(server_module, 'clean_csv', failing_clean_csv)
 
-        temp_csv = _write_temp_csv(tmp_path, rows=10)
+        unique_id = uuid.uuid4().hex
+        temp_csv = tmp_path / 'failure_input.csv'
+        temp_csv.write_text(
+            f'id,data\n{unique_id}-1,a\n{unique_id}-2,b\n',
+            encoding='utf-8',
+        )
 
         with TestClient(app) as client:
             with temp_csv.open('rb') as handle:
@@ -687,6 +704,59 @@ class TestAsyncJobHandling:
             _expect_status(results_response, HTTPStatus.OK)
             if not results_response.json().get('rows'):
                 pytest.fail('Expected partial results after failure')
+
+    def test_clean_job_failure_keeps_partial_file_unpublished(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+    ) -> None:
+        """Failed clean jobs should keep identifiable partial output and no final cleaned CSV."""
+
+        async def failing_clean_csv(input_path: str | Path, **kwargs: object) -> Path:
+            output_dir = kwargs.get('output_dir')
+            save_dir = output_dir if isinstance(output_dir, Path) else tmp_path
+            save_dir.mkdir(parents=True, exist_ok=True)
+            partial_path = save_dir / f'cleaned_{Path(input_path).name}.partial'
+            partial_path.write_text('id,data\n1,partial\n', encoding='utf-8')
+            raise ValueError('forced failure after partial write')
+
+        monkeypatch.setattr(server_module, 'clean_csv', failing_clean_csv)
+
+        unique_id = uuid.uuid4().hex
+        temp_csv = tmp_path / 'failure_input.csv'
+        temp_csv.write_text(
+            f'id,data\n{unique_id}-1,a\n{unique_id}-2,b\n',
+            encoding='utf-8',
+        )
+
+        with TestClient(app) as client:
+            with temp_csv.open('rb') as handle:
+                response = client.post(
+                    '/clean?no_cache=true',
+                    files={'file': ('responses.csv', handle, 'text/csv')},
+                )
+
+            _expect_status(response, HTTPStatus.ACCEPTED)
+            payload = response.json()
+            content_hash = payload['hash']
+            job_id = payload['job_id']
+            status_payload = _poll_until_terminal(client, job_id)
+
+            if status_payload.get('status') != 'failed':
+                pytest.fail('Expected failed status for clean job')
+
+            cleaned_dir = app_config.DATA_DIR / content_hash / 'cleaned_data'
+            partial_files = list(cleaned_dir.glob('cleaned_*.csv.partial'))
+            final_files = list(cleaned_dir.glob('cleaned_*.csv'))
+            if not partial_files:
+                pytest.fail('Expected partial cleaned CSV file to remain after failure')
+            if final_files:
+                pytest.fail('Did not expect finalized cleaned CSV after failure')
+
+            data_response = client.get(f'/data/{content_hash}')
+            _expect_status(data_response, HTTPStatus.OK)
+            if data_response.json().get('has_cleaned_csv') is not False:
+                pytest.fail('Expected data endpoint to report no finalized cleaned CSV')
 
     def test_analyze_job_failure_returns_partial_results(
         self,
