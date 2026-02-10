@@ -3,15 +3,18 @@
 from __future__ import annotations
 
 import csv
+import threading
+import time
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 from urllib.parse import urlparse
 
 import pytest
 
+from app.config import OCR_GLOBAL_CONCURRENCY
 from app.processing import cleaner as cleaner_module
 from app.processing.attachment import AttachmentProcessor, _extract_text_from_ocr_results, _run_ocr, is_valid_url
-from app.processing.cache import get_cached_text
+from app.processing.cache import content_hash, get_cached_text
 from app.processing.cleaner import clean_csv, has_attachment_extension
 
 FIXTURES_ROOT = Path(__file__).parent / "fixtures"
@@ -43,7 +46,7 @@ def test_extract_text_from_ocr_results_expected_format() -> None:
 
 def test_extract_text_from_ocr_results_non_list() -> None:
     with pytest.raises(AttributeError):
-        _extract_text_from_ocr_results({"unexpected": "format"})
+        _extract_text_from_ocr_results(cast("Any", {"unexpected": "format"}))
 
 
 def test_run_ocr_uses_engine_ocr() -> None:
@@ -64,13 +67,21 @@ async def test_ocr_text_cache_hits_with_responses_fixture(tmp_path: Path, monkey
     url = _first_attachment_url(RESPONSES_CSV)
     processor = AttachmentProcessor(cache_dir=tmp_path)
     calls = {"count": 0}
+    fake_content = b"same-doc-bytes"
 
-    async def fake_extract_text_uncached(url_or_path: str, use_ocr: bool = False) -> str:
-        _ = (url_or_path, use_ocr)
+    def fake_extract_text_uncached_sync(
+        url_or_path: str,
+        content: bytes,
+        *,
+        use_ocr: bool = False,
+        no_cache_ocr: bool = False,
+    ) -> str:
+        _ = (url_or_path, content, use_ocr, no_cache_ocr)
         calls["count"] += 1
         return "FAKE OCR TEXT"
 
-    monkeypatch.setattr(processor, "_extract_text_uncached", fake_extract_text_uncached)
+    monkeypatch.setattr(processor, "_load_content", lambda _: fake_content)
+    monkeypatch.setattr(processor, "_extract_text_uncached_sync", fake_extract_text_uncached_sync)
 
     first = await processor.extract_text_async(url, use_ocr=True)
     second = await processor.extract_text_async(url, use_ocr=True)
@@ -78,7 +89,34 @@ async def test_ocr_text_cache_hits_with_responses_fixture(tmp_path: Path, monkey
     assert first == "FAKE OCR TEXT"
     assert second == "FAKE OCR TEXT"
     assert calls["count"] == 1
-    assert get_cached_text(url, tmp_path) == "FAKE OCR TEXT"
+    assert get_cached_text(url, tmp_path, content_sha256=content_hash(fake_content)) == "FAKE OCR TEXT"
+
+
+def test_run_ocr_process_wide_guard_serializes_calls() -> None:
+    active = 0
+    max_active = 0
+    lock = threading.Lock()
+
+    class FakeOCR:
+        def predict(self, image: object) -> list[dict[str, Any]]:
+            nonlocal active, max_active
+            _ = image
+            with lock:
+                active += 1
+                max_active = max(max_active, active)
+            time.sleep(0.03)
+            with lock:
+                active -= 1
+            return [{"rec_texts": ["ok"], "rec_scores": [0.99]}]
+
+    threads = [threading.Thread(target=_run_ocr, args=(FakeOCR(), object())) for _ in range(5)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    assert OCR_GLOBAL_CONCURRENCY == 1
+    assert max_active == 1
 
 
 @pytest.mark.asyncio
@@ -97,7 +135,7 @@ async def test_clean_csv_skips_unsupported_attachment_extensions(
         def close(self) -> None:
             return None
 
-    processor = StubProcessor()
+    processor: Any = StubProcessor()
     monkeypatch.setattr(cleaner_module, "UNSUPPORTED_ATTACHMENT_EXTENSIONS", frozenset({".pdf"}))
 
     await clean_csv(
@@ -109,3 +147,22 @@ async def test_clean_csv_skips_unsupported_attachment_extensions(
     pdf_urls = [url for url in processor.urls if Path(urlparse(url).path).suffix.lower() == ".pdf"]
 
     assert pdf_urls == []
+
+
+@pytest.mark.asyncio
+async def test_clean_csv_uses_pdf_ocr_pipeline(tmp_path: Path) -> None:
+    class StubProcessor:
+        def __init__(self) -> None:
+            self.use_ocr_values: list[bool] = []
+
+        async def process_attachments_async(self, urls: list[str], **kwargs: object) -> dict[str, str | None]:
+            self.use_ocr_values.append(bool(kwargs.get("use_ocr")))
+            return dict.fromkeys(urls, "stub")
+
+        def close(self) -> None:
+            return None
+
+    processor: Any = StubProcessor()
+    await clean_csv(RESPONSES_CSV, processor=processor, output_dir=tmp_path)
+    assert processor.use_ocr_values
+    assert all(processor.use_ocr_values)

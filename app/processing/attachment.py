@@ -8,17 +8,33 @@ import asyncio
 import io
 import logging
 import os
+import threading
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, cast
 from urllib.parse import urlparse
 
 import httpx
 
-from app.config import DEFAULT_TIMEOUT, IMAGE_EXTENSIONS, MAX_DOWNLOAD_CONCURRENCY
+from app.config import (
+    DEFAULT_TIMEOUT,
+    IMAGE_EXTENSIONS,
+    OCR_GLOBAL_CONCURRENCY,
+    PDF_OCR_MIN_TEXT_CHARS,
+    PDF_OCR_RENDER_DPI,
+)
 
-from .cache import get_cached_content, get_cached_text, save_text_to_cache, save_to_cache
+from .cache import (
+    content_hash,
+    get_cached_content,
+    get_cached_pdf_page_image,
+    get_cached_text,
+    save_pdf_page_image_to_cache,
+    save_text_to_cache,
+    save_to_cache,
+)
 
 logger = logging.getLogger(__name__)
+_OCR_LOCK = threading.Lock()
 
 if TYPE_CHECKING:
     import fitz
@@ -89,12 +105,25 @@ class PDFExtractor:
 
         return "\n".join(text_parts)
 
-    def extract_with_ocr(self, content: bytes, ocr_engine: "PaddleOCR") -> str:
+    def extract_with_ocr(
+        self,
+        content: bytes,
+        ocr_engine: "PaddleOCR",
+        *,
+        cache_dir: Path | None = None,
+        no_cache_ocr: bool = False,
+        min_text_chars: int = PDF_OCR_MIN_TEXT_CHARS,
+        render_dpi: int = PDF_OCR_RENDER_DPI,
+    ) -> str:
         """Extract text from PDF bytes with OCR fallback.
 
         Args:
             content: Raw PDF file bytes
             ocr_engine: PaddleOCR engine instance
+            cache_dir: Optional cache directory for rendered page images
+            no_cache_ocr: If True, bypass OCR caches and rerun OCR
+            min_text_chars: OCR when page text length is below this threshold
+            render_dpi: DPI to use when rendering page image
 
         Returns:
             Extracted text content
@@ -104,21 +133,46 @@ class PDFExtractor:
         except ImportError as err:
             raise ImportError("pymupdf is required for PDF extraction. Install with: uv add pymupdf") from err
 
-        text_parts = []
+        document_sha256 = content_hash(content)
+        text_parts: list[str] = []
         with fitz.open(stream=content, filetype="pdf") as doc:
-            for page in doc:
-                text_parts.append(page.get_text())
+            for page_index, page in enumerate(doc):
+                native_text = page.get_text().strip()
+                has_images = bool(page.get_image_info(hashes=False, xrefs=False))
+                should_ocr = has_images or len(native_text) < min_text_chars
 
-            combined_text = "\n".join(text_parts).strip()
-            if combined_text:
-                return combined_text
+                if not should_ocr:
+                    if native_text:
+                        text_parts.append(native_text)
+                    continue
 
-            ocr_text_parts = []
-            for page in doc:
-                pix = page.get_pixmap(dpi=200)
-                ocr_text_parts.append(_ocr_pixmap(pix, ocr_engine))
+                page_image_bytes: bytes | None = None
+                if cache_dir and not no_cache_ocr:
+                    page_image_bytes = get_cached_pdf_page_image(
+                        document_sha256,
+                        page_index,
+                        render_dpi,
+                        cache_dir,
+                    )
 
-        return "\n".join(part for part in ocr_text_parts if part)
+                if page_image_bytes is not None:
+                    page_text = _ocr_image_bytes(page_image_bytes, ocr_engine)
+                else:
+                    pix = page.get_pixmap(dpi=render_dpi)
+                    page_text = _ocr_pixmap(pix, ocr_engine)
+                    if cache_dir and not no_cache_ocr:
+                        save_pdf_page_image_to_cache(
+                            document_sha256,
+                            page_index,
+                            render_dpi,
+                            pix.tobytes("png"),
+                            cache_dir,
+                        )
+
+                if page_text:
+                    text_parts.append(page_text)
+
+        return "\n".join(part for part in text_parts if part)
 
 
 class DOCXExtractor:
@@ -159,6 +213,22 @@ def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
         img = img[:, :, :3]
 
     return _run_ocr(ocr_engine, img)
+
+
+def _ocr_image_bytes(content: bytes, ocr_engine: "PaddleOCR") -> str:
+    """Run OCR on encoded image bytes."""
+    try:
+        import numpy as np
+    except ImportError as err:
+        raise ImportError("numpy is required for OCR. Install with: uv add numpy") from err
+
+    try:
+        from PIL import Image
+    except ImportError as err:
+        raise ImportError("pillow is required for image OCR. Install with: uv add pillow") from err
+
+    image = Image.open(io.BytesIO(content)).convert("RGB")
+    return _run_ocr(ocr_engine, np.array(image))
 
 
 def _extract_text_from_ocr_results(results: list[dict]) -> str:
@@ -210,7 +280,10 @@ def _run_ocr(ocr_engine: "PaddleOCR", image: object) -> str:
     Raises:
         AttributeError: If predict() method doesn't exist (wrong version)
     """
-    results = ocr_engine.predict(image)
+    if OCR_GLOBAL_CONCURRENCY != 1:
+        raise RuntimeError("OCR_GLOBAL_CONCURRENCY must be 1 to enforce process-wide OCR serialization")
+    with _OCR_LOCK:
+        results = ocr_engine.predict(image)
     return _extract_text_from_ocr_results(results)
 
 
@@ -269,7 +342,15 @@ class AttachmentProcessor:
                 )
 
             os.environ.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
-            self._ocr_engine = PaddleOCRImpl(use_textline_orientation=True, lang="en")
+            self._ocr_engine = PaddleOCRImpl(
+                device="cpu",
+                cpu_threads=8,
+                use_textline_orientation=True,
+                text_detection_model_name="PP-OCRv5_mobile_det",
+                text_recognition_model_name="en_PP-OCRv5_mobile_rec",
+                textline_orientation_model_name="PP-LCNet_x1_0_textline_ori",
+                text_det_limit_side_len=960,
+            )
 
         return self._ocr_engine
 
@@ -342,6 +423,12 @@ class AttachmentProcessor:
     async def _extract_image_text_async(self, content: bytes) -> str:
         """Extract text from an image using OCR (async wrapper)."""
         return await asyncio.to_thread(self._extract_image_text, content)
+
+    def _load_content(self, url_or_path: str) -> bytes:
+        """Load bytes from URL or local path."""
+        if self._is_url(url_or_path):
+            return self._fetch_url(url_or_path)
+        return self._read_file(url_or_path)
 
     def _is_url(self, url_or_path: str) -> bool:
         """Check if the input is a URL.
@@ -434,15 +521,42 @@ class AttachmentProcessor:
 
         return file_path.read_bytes()
 
-    async def extract_text_async(self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False) -> str:
-        """Extract text from a document at the given URL or path (async).
+    def _extract_text_uncached_sync(
+        self,
+        url_or_path: str,
+        content: bytes,
+        *,
+        use_ocr: bool = False,
+        no_cache_ocr: bool = False,
+    ) -> str:
+        """Extract text without checking OCR caches."""
+        extension = self._detect_extension(url_or_path)
+        if extension in IMAGE_EXTENSIONS:
+            logger.debug("OCR START: %s", url_or_path)
+            result = self._extract_image_text(content)
+            logger.debug("OCR END: %s (%d chars)", url_or_path, len(result))
+            return result
 
-        Args:
-            url_or_path: URL or file path to extract from
-            use_ocr: Whether to use OCR fallback for PDFs
-            no_cache_ocr: If True, skip the extracted text cache and re-extract
-                          (but still cache the new result for future use)
-        """
+        extractor = self._get_extractor(extension)
+        if extension == ".pdf" and use_ocr:
+            logger.debug("PDF OCR PIPELINE START: %s", url_or_path)
+            ocr_engine = self._get_ocr_engine()
+            result = cast("PDFExtractor", extractor).extract_with_ocr(
+                content,
+                ocr_engine,
+                cache_dir=self.cache_dir,
+                no_cache_ocr=no_cache_ocr,
+            )
+            logger.debug("PDF OCR PIPELINE END: %s (%d chars)", url_or_path, len(result))
+            return result
+
+        logger.debug("TEXT EXTRACT START: %s", url_or_path)
+        result = extractor.extract(content)
+        logger.debug("TEXT EXTRACT END: %s (%d chars)", url_or_path, len(result))
+        return result
+
+    def extract_text(self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False) -> str:
+        """Extract text from a document at the given URL or path."""
         logger.debug(
             "EXTRACT START: %s (no_cache_ocr=%s cache_dir=%s)",
             url_or_path,
@@ -450,73 +564,57 @@ class AttachmentProcessor:
             self.cache_dir,
         )
 
-        # Check extracted text cache first (unless no_cache_ocr is set)
+        content = self._load_content(url_or_path)
+        content_sha256 = content_hash(content)
+
         if self.cache_dir and not no_cache_ocr:
-            cached_text = get_cached_text(url_or_path, self.cache_dir)
+            cached_text = get_cached_text(
+                url_or_path,
+                self.cache_dir,
+                content_sha256=content_sha256,
+            )
             if cached_text is not None:
                 logger.debug("TEXT CACHE HIT: %s (%d chars)", url_or_path, len(cached_text))
                 return cached_text
         elif not self.cache_dir:
             logger.debug("TEXT CACHE SKIP: no cache_dir set for %s", url_or_path)
-        elif no_cache_ocr:
+        else:
             logger.debug("TEXT CACHE SKIP: no_cache_ocr=True for %s", url_or_path)
 
-        # Cache miss or no_cache_ocr - extract text
-        result = await self._extract_text_uncached(url_or_path, use_ocr)
+        result = self._extract_text_uncached_sync(
+            url_or_path,
+            content,
+            use_ocr=use_ocr,
+            no_cache_ocr=no_cache_ocr,
+        )
 
-        # Cache the extracted text (always cache, even if no_cache_ocr was set)
-        if self.cache_dir and result:
-            save_text_to_cache(url_or_path, result, self.cache_dir)
+        if self.cache_dir and result and not no_cache_ocr:
+            save_text_to_cache(
+                url_or_path,
+                result,
+                self.cache_dir,
+                content_sha256=content_sha256,
+            )
             logger.debug("TEXT CACHED: %s", url_or_path)
-        elif self.cache_dir:
-            logger.debug("TEXT CACHE NOT WRITTEN: empty result for %s", url_or_path)
 
         return result
+
+    async def extract_text_async(self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False) -> str:
+        """Async compatibility wrapper around sync extraction."""
+        return await asyncio.to_thread(self.extract_text, url_or_path, use_ocr, no_cache_ocr)
 
     async def _extract_text_uncached(self, url_or_path: str, use_ocr: bool = False) -> str:
-        """Extract text without cache lookup (internal)."""
-        extension = self._detect_extension(url_or_path)
-        if extension in IMAGE_EXTENSIONS:
-            if self._is_url(url_or_path):
-                content = await asyncio.to_thread(self._fetch_url, url_or_path)
-            else:
-                content = await asyncio.to_thread(self._read_file, url_or_path)
+        """Async compatibility wrapper around sync uncached extraction."""
+        content = await asyncio.to_thread(self._load_content, url_or_path)
+        return await asyncio.to_thread(
+            self._extract_text_uncached_sync,
+            url_or_path,
+            content,
+            use_ocr=use_ocr,
+            no_cache_ocr=False,
+        )
 
-            logger.debug("OCR START: %s", url_or_path)
-            result = await self._extract_image_text_async(content)
-            logger.debug("OCR END: %s (%d chars)", url_or_path, len(result))
-            return result
-
-        extractor = self._get_extractor(extension)
-
-        if self._is_url(url_or_path):
-            content = await asyncio.to_thread(self._fetch_url, url_or_path)
-        else:
-            content = await asyncio.to_thread(self._read_file, url_or_path)
-
-        if extension == ".pdf" and use_ocr:
-            logger.debug("PDF EXTRACT START: %s", url_or_path)
-            extracted = await asyncio.to_thread(extractor.extract, content)
-            if extracted and extracted.strip():
-                logger.debug("PDF EXTRACT END: %s (%d chars)", url_or_path, len(extracted))
-                return extracted
-
-            logger.debug("PDF OCR FALLBACK START: %s", url_or_path)
-            ocr_engine = self._get_ocr_engine()
-            result = await asyncio.to_thread(
-                cast("PDFExtractor", extractor).extract_with_ocr,
-                content,
-                ocr_engine,
-            )
-            logger.debug("PDF OCR FALLBACK END: %s (%d chars)", url_or_path, len(result))
-            return result
-
-        logger.debug("TEXT EXTRACT START: %s", url_or_path)
-        result = await asyncio.to_thread(extractor.extract, content)
-        logger.debug("TEXT EXTRACT END: %s (%d chars)", url_or_path, len(result))
-        return result
-
-    async def extract_text_safe_async(
+    def extract_text_safe(
         self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False
     ) -> tuple[str | None, str | None]:
         """Extract text with error handling, returning (text, error) tuple.
@@ -530,7 +628,7 @@ class AttachmentProcessor:
             Tuple of (extracted_text, None) on success, or (None, error_message) on failure
         """
         try:
-            text = await self.extract_text_async(url_or_path, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
+            text = self.extract_text(url_or_path, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
             return text, None
         except ImportError as e:
             return None, f"Missing dependency: {e}"
@@ -543,6 +641,45 @@ class AttachmentProcessor:
         except Exception as e:
             return None, f"Extraction failed: {e}"
 
+    async def extract_text_safe_async(
+        self, url_or_path: str, use_ocr: bool = False, no_cache_ocr: bool = False
+    ) -> tuple[str | None, str | None]:
+        """Async compatibility wrapper around sync safe extraction."""
+        return await asyncio.to_thread(self.extract_text_safe, url_or_path, use_ocr, no_cache_ocr)
+
+    def process_attachments(
+        self,
+        urls: list[str],
+        skip_errors: bool = True,
+        use_ocr: bool = False,
+        max_concurrency: int | None = None,
+        no_cache_ocr: bool = False,
+    ) -> dict[str, str | None]:
+        """Process multiple attachment URLs synchronously."""
+        _ = max_concurrency
+        results: dict[str, str | None] = {}
+        if not urls:
+            return results
+
+        logger.debug(
+            "BATCH START: %d URLs, concurrency=%d, no_cache_ocr=%s",
+            len(urls),
+            OCR_GLOBAL_CONCURRENCY,
+            no_cache_ocr,
+        )
+        for idx, url in enumerate(urls, start=1):
+            text, error = self.extract_text_safe(url, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
+            if error:
+                logger.warning("FAILED [%d/%d]: %s - %s", idx, len(urls), url, error)
+                if not skip_errors:
+                    raise RuntimeError(error)
+            else:
+                logger.debug("DONE [%d/%d]: %s", idx, len(urls), url)
+            results[url] = text
+
+        logger.debug("BATCH END: %d URLs processed", len(results))
+        return results
+
     async def process_attachments_async(
         self,
         urls: list[str],
@@ -551,7 +688,7 @@ class AttachmentProcessor:
         max_concurrency: int | None = None,
         no_cache_ocr: bool = False,
     ) -> dict[str, str | None]:
-        """Process multiple attachment URLs concurrently.
+        """Async compatibility wrapper around sync attachment processing.
 
         Args:
             urls: List of URLs to process
@@ -563,32 +700,11 @@ class AttachmentProcessor:
         Returns:
             Dictionary mapping URL to extracted text (or None on failure)
         """
-        results: dict[str, str | None] = {}
-        if not urls:
-            return results
-
-        concurrency = max_concurrency or MAX_DOWNLOAD_CONCURRENCY
-        semaphore = asyncio.Semaphore(concurrency)
-        logger.debug("BATCH START: %d URLs, concurrency=%d, no_cache_ocr=%s", len(urls), concurrency, no_cache_ocr)
-
-        completed = 0
-
-        async def _process(url: str) -> tuple[str, str | None, str | None]:
-            async with semaphore:
-                text, error = await self.extract_text_safe_async(url, use_ocr=use_ocr, no_cache_ocr=no_cache_ocr)
-                return url, text, error
-
-        tasks = [asyncio.create_task(_process(url)) for url in urls]
-        for task in asyncio.as_completed(tasks):
-            url, text, error = await task
-            completed += 1
-            if error:
-                logger.warning("FAILED [%d/%d]: %s - %s", completed, len(urls), url, error)
-                if not skip_errors:
-                    raise RuntimeError(error)
-            else:
-                logger.debug("DONE [%d/%d]: %s", completed, len(urls), url)
-            results[url] = text
-
-        logger.debug("BATCH END: %d URLs processed", len(results))
-        return results
+        return await asyncio.to_thread(
+            self.process_attachments,
+            urls,
+            skip_errors,
+            use_ocr,
+            max_concurrency,
+            no_cache_ocr,
+        )

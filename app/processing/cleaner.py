@@ -69,8 +69,8 @@ def _normalize_dataframe_text_columns(df: pd.DataFrame) -> tuple[pd.DataFrame, i
                 continue
             normalized = normalize_text_for_llm(
                 value,
-                newline_strategy='space',
-                encoding_strategy='ascii_ignore',
+                newline_strategy="space",
+                encoding_strategy="ascii_ignore",
             )
             if normalized != value:
                 normalized_df.at[idx, col] = normalized
@@ -98,7 +98,7 @@ async def clean_csv(
         chunk_size: Optional chunk size for incremental processing
         on_chunk: Optional callback invoked with each cleaned chunk
         on_row_count: Optional callback invoked with total row count
-        no_cache_ocr: If True, skip OCR text cache and re-extract (but still cache results)
+        no_cache_ocr: If True, bypass OCR caches and force fresh OCR for this run
 
     Returns:
         Path to the cleaned CSV file
@@ -165,7 +165,11 @@ async def clean_csv(
 
                     chunk_extracted_data: dict[tuple[int, str], list[str]] = {}
                     if unique_urls and processor is not None:
-                        results = await processor.process_attachments_async(unique_urls, no_cache_ocr=no_cache_ocr)
+                        results = await processor.process_attachments_async(
+                            unique_urls,
+                            use_ocr=True,
+                            no_cache_ocr=no_cache_ocr,
+                        )
                         for row_idx, col, url in chunk_url_locations:
                             key = (row_idx, col)
                             text = results.get(url)
@@ -215,7 +219,11 @@ async def clean_csv(
                 logger.debug("Creating AttachmentProcessor cache_dir=%s", cache_dir)
                 processor = AttachmentProcessor(cache_dir=cache_dir)
             try:
-                results = await processor.process_attachments_async(unique_urls, no_cache_ocr=no_cache_ocr)
+                results = await processor.process_attachments_async(
+                    unique_urls,
+                    use_ocr=True,
+                    no_cache_ocr=no_cache_ocr,
+                )
             finally:
                 if owns_processor:
                     processor.close()
@@ -252,7 +260,7 @@ async def clean_csv(
         df = pd.concat(cleaned_frames, ignore_index=True)
         df, changed_cells = _normalize_dataframe_text_columns(df)
         if changed_cells:
-            logger.debug('Normalized %d text cells during clean stage', changed_cells)
+            logger.debug("Normalized %d text cells during clean stage", changed_cells)
 
     if on_chunk is None and chunk_size is None:
         # Remove completely empty columns

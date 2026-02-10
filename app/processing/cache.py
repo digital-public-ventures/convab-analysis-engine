@@ -7,6 +7,8 @@ import logging
 from pathlib import Path
 from urllib.parse import urlparse
 
+from app.config import PDF_PAGE_CACHE_SUBDIR
+
 logger = logging.getLogger(__name__)
 
 
@@ -78,7 +80,12 @@ def save_to_cache(url: str, content: bytes, cache_dir: Path) -> Path:
     return cache_path
 
 
-def _text_cache_path(url_or_path: str, cache_dir: Path) -> Path:
+def content_hash(content: bytes) -> str:
+    """Return SHA256 hash for binary content."""
+    return hashlib.sha256(content).hexdigest()
+
+
+def _legacy_text_cache_path(url_or_path: str, cache_dir: Path) -> Path:
     """Generate a cache file path for extracted text."""
     text_cache_dir = cache_dir / "extracted_text"
     url_hash = hashlib.md5(url_or_path.encode()).hexdigest()
@@ -87,7 +94,18 @@ def _text_cache_path(url_or_path: str, cache_dir: Path) -> Path:
     return cache_path
 
 
-def get_cached_text(url_or_path: str, cache_dir: Path) -> str | None:
+def text_cache_path_from_content_hash(content_sha256: str, cache_dir: Path) -> Path:
+    """Generate text cache path from content hash."""
+    text_cache_dir = cache_dir / "extracted_text"
+    return text_cache_dir / f"{content_sha256}.txt"
+
+
+def get_cached_text(
+    url_or_path: str,
+    cache_dir: Path,
+    *,
+    content_sha256: str | None = None,
+) -> str | None:
     """Get cached extracted text if it exists.
 
     Args:
@@ -97,17 +115,32 @@ def get_cached_text(url_or_path: str, cache_dir: Path) -> str | None:
     Returns:
         Cached extracted text, or None if not cached
     """
-    cache_path = _text_cache_path(url_or_path, cache_dir)
-    exists = cache_path.exists()
-    logger.debug("TEXT CACHE LOOKUP: %s exists=%s", cache_path, exists)
+    if content_sha256:
+        content_cache_path = text_cache_path_from_content_hash(content_sha256, cache_dir)
+        content_exists = content_cache_path.exists()
+        logger.debug("TEXT CACHE LOOKUP (content hash): %s exists=%s", content_cache_path, content_exists)
+        if content_exists:
+            text = content_cache_path.read_text(encoding="utf-8")
+            logger.debug("TEXT CACHE READ (content hash): %s (%d chars)", content_cache_path, len(text))
+            return text
+
+    legacy_cache_path = _legacy_text_cache_path(url_or_path, cache_dir)
+    exists = legacy_cache_path.exists()
+    logger.debug("TEXT CACHE LOOKUP (legacy): %s exists=%s", legacy_cache_path, exists)
     if exists:
-        text = cache_path.read_text(encoding="utf-8")
-        logger.debug("TEXT CACHE READ: %s (%d chars)", cache_path, len(text))
+        text = legacy_cache_path.read_text(encoding="utf-8")
+        logger.debug("TEXT CACHE READ (legacy): %s (%d chars)", legacy_cache_path, len(text))
         return text
     return None
 
 
-def save_text_to_cache(url_or_path: str, text: str, cache_dir: Path) -> Path:
+def save_text_to_cache(
+    url_or_path: str,
+    text: str,
+    cache_dir: Path,
+    *,
+    content_sha256: str | None = None,
+) -> Path:
     """Save extracted text to cache.
 
     Args:
@@ -118,8 +151,54 @@ def save_text_to_cache(url_or_path: str, text: str, cache_dir: Path) -> Path:
     Returns:
         Path where the text file was saved
     """
-    cache_path = _text_cache_path(url_or_path, cache_dir)
+    if content_sha256:
+        cache_path = text_cache_path_from_content_hash(content_sha256, cache_dir)
+    else:
+        cache_path = _legacy_text_cache_path(url_or_path, cache_dir)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     cache_path.write_text(text, encoding="utf-8")
     logger.debug("TEXT CACHE WRITE: %s (%d chars)", cache_path, len(text))
+    return cache_path
+
+
+def pdf_page_image_cache_path(
+    document_sha256: str,
+    page_index: int,
+    dpi: int,
+    cache_dir: Path,
+) -> Path:
+    """Generate cache path for a rendered PDF page image."""
+    page_cache_dir = cache_dir / PDF_PAGE_CACHE_SUBDIR
+    return page_cache_dir / f"{document_sha256}_p{page_index}_dpi{dpi}.png"
+
+
+def get_cached_pdf_page_image(
+    document_sha256: str,
+    page_index: int,
+    dpi: int,
+    cache_dir: Path,
+) -> bytes | None:
+    """Get cached PDF page image bytes if present."""
+    cache_path = pdf_page_image_cache_path(document_sha256, page_index, dpi, cache_dir)
+    exists = cache_path.exists()
+    logger.debug("PDF PAGE CACHE LOOKUP: %s exists=%s", cache_path, exists)
+    if not exists:
+        return None
+    content = cache_path.read_bytes()
+    logger.debug("PDF PAGE CACHE READ: %s (%d bytes)", cache_path, len(content))
+    return content
+
+
+def save_pdf_page_image_to_cache(
+    document_sha256: str,
+    page_index: int,
+    dpi: int,
+    image_bytes: bytes,
+    cache_dir: Path,
+) -> Path:
+    """Save rendered PDF page image bytes to cache."""
+    cache_path = pdf_page_image_cache_path(document_sha256, page_index, dpi, cache_dir)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_bytes(image_bytes)
+    logger.debug("PDF PAGE CACHE WRITE: %s (%d bytes)", cache_path, len(image_bytes))
     return cache_path
