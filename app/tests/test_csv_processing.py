@@ -88,6 +88,38 @@ class TestCSVProcessing:
         assert len(chunks[1]) == 2
 
     @pytest.mark.asyncio
+    async def test_clean_csv_incremental_output_grows_partial_file(self, tmp_path: Path) -> None:
+        """Ensure chunked clean writes partial output incrementally and finalizes atomically."""
+        csv_path = tmp_path / 'sample.csv'
+        csv_path.write_text('id,data\n1,a\n2,b\n3,c\n4,d\n', encoding='utf-8')
+        partial_path = tmp_path / 'cleaned_sample.csv.partial'
+        final_path = tmp_path / 'cleaned_sample.csv'
+
+        chunk_rows_seen = 0
+
+        async def on_chunk(rows: list[dict[str, object]]) -> None:
+            nonlocal chunk_rows_seen
+            chunk_rows_seen += len(rows)
+            assert partial_path.exists()
+            partial_df = pd.read_csv(partial_path)
+            assert len(partial_df) == chunk_rows_seen
+
+        output_path = await clean_csv(
+            csv_path,
+            output_dir=tmp_path,
+            downloads_dir=tmp_path,
+            chunk_size=2,
+            incremental_output=True,
+            on_chunk=on_chunk,
+        )
+
+        assert output_path == final_path
+        assert final_path.exists()
+        assert not partial_path.exists()
+        final_df = pd.read_csv(final_path)
+        assert len(final_df) == 4
+
+    @pytest.mark.asyncio
     async def test_clean_csv_processes_attachments(self, processor: AttachmentProcessor) -> None:
         """Test that clean_csv correctly processes a CSV with attachments.
 

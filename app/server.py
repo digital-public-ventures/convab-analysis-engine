@@ -10,7 +10,6 @@ import math
 import os
 import re
 import string
-import tempfile
 import time
 from contextlib import asynccontextmanager
 from logging.handlers import RotatingFileHandler
@@ -99,7 +98,10 @@ _configure_logging()
 
 UPLOAD_FILE = File(...)
 NO_CACHE_QUERY = Query(default=False, description="Skip checking for existing cleaned CSV")
-NO_CACHE_OCR_QUERY = Query(default=False, description="Skip cached OCR results and re-extract")
+NO_CACHE_OCR_QUERY = Query(
+    default=False,
+    description="Bypass OCR cache reads, re-extract, and overwrite OCR cache entries",
+)
 CURSOR_QUERY = Query(default=None)
 LIMIT_QUERY = Query(default=500, ge=1, le=5000)
 
@@ -301,12 +303,16 @@ def _add_csv_results(job_id: str, csv_path: Path, chunk_size: int) -> int:
 async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_cache_ocr: bool = False) -> None:
     _job_store.mark_running(job_id)
     paths = _data_store.ensure_hash_dirs(content_hash)
+    raw_input_path = paths["root"] / "input.csv"
+    raw_input_path.write_bytes(content)
     logger.debug(
-        "Clean job cache dirs: downloads=%s cleaned=%s no_cache_ocr=%s",
+        "Clean job cache dirs: root=%s downloads=%s cleaned=%s no_cache_ocr=%s",
+        paths["root"],
         paths["downloads"],
         paths["cleaned_data"],
         no_cache_ocr,
     )
+    logger.debug("Clean job raw input persisted: %s (%d bytes)", raw_input_path, len(content))
 
     async def _set_total_rows(total_rows: int) -> None:
         _job_store.set_total_rows(job_id, total_rows)
@@ -314,20 +320,17 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_c
     async def _add_chunk(rows: list[dict[str, Any]]) -> None:
         _job_store.add_results(job_id, rows)
 
-    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as tmp:
-        tmp.write(content)
-        tmp_path = Path(tmp.name)
-
     try:
         processor = AttachmentProcessor(cache_dir=paths["downloads"])
         processor.set_shared_ocr_engine(get_processor().get_ocr_engine())
 
         cleaned_path = await clean_csv(
-            tmp_path,
+            raw_input_path,
             processor=processor,
             output_dir=paths["cleaned_data"],
             downloads_dir=paths["downloads"],
             chunk_size=CLEAN_CHUNK_SIZE,
+            incremental_output=True,
             on_chunk=_add_chunk,
             on_row_count=_set_total_rows,
             no_cache_ocr=no_cache_ocr,
@@ -337,8 +340,6 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_c
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception("Clean job failed")
         _job_store.mark_failed(job_id, str(exc))
-    finally:
-        tmp_path.unlink(missing_ok=True)
 
 
 async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
@@ -475,8 +476,9 @@ async def clean_csv_endpoint(
         file: CSV file to clean
         no_cache: If True, skip checking for existing cleaned CSV and re-process
                   (but still use cached OCR results for attachments)
-        no_cache_ocr: If True, bypass OCR caches (extracted text and rendered PDF page images)
-                      while still reusing downloaded attachment files
+        no_cache_ocr: If True, bypass OCR cache reads (extracted text and rendered PDF page images),
+                      force fresh OCR extraction, and overwrite OCR cache entries while still
+                      reusing downloaded attachment files
     """
     content = await file.read()
     content_hash = DataStore.hash_content(content)

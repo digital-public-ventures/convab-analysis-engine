@@ -84,6 +84,7 @@ async def clean_csv(
     output_dir: Path | None = None,
     downloads_dir: Path | None = None,
     chunk_size: int | None = None,
+    incremental_output: bool = False,
     on_chunk: Callable[[list[dict[str, object]]], Awaitable[None]] | None = None,
     on_row_count: Callable[[int], Awaitable[None]] | None = None,
     no_cache_ocr: bool = False,
@@ -96,9 +97,10 @@ async def clean_csv(
         output_dir: Directory for cleaned CSV output (default: CLEANED_DATA_DIR)
         downloads_dir: Directory for downloaded attachments (default: DOWNLOADS_DIR)
         chunk_size: Optional chunk size for incremental processing
+        incremental_output: If True, write chunked output to a partial file and atomically finalize on completion
         on_chunk: Optional callback invoked with each cleaned chunk
         on_row_count: Optional callback invoked with total row count
-        no_cache_ocr: If True, bypass OCR caches and force fresh OCR for this run
+        no_cache_ocr: If True, bypass OCR cache reads, force fresh OCR, and overwrite OCR caches
 
     Returns:
         Path to the cleaned CSV file
@@ -108,6 +110,17 @@ async def clean_csv(
     """
     logger.debug("clean_csv START: %s", input_path)
     input_path = Path(input_path)
+    if incremental_output and chunk_size is None:
+        raise ValueError("incremental_output requires chunk_size")
+
+    save_dir = output_dir or CLEANED_DATA_DIR
+    save_dir.mkdir(parents=True, exist_ok=True)
+    output_filename = f"cleaned_{input_path.name}"
+    output_path = save_dir / output_filename
+    partial_output_path = output_path.with_suffix(f"{output_path.suffix}.partial")
+    if incremental_output:
+        partial_output_path.unlink(missing_ok=True)
+
     effective_downloads_dir = downloads_dir or DOWNLOADS_DIR
     logger.debug(
         "clean_csv cache context: downloads_dir=%s processor_cache_dir=%s no_cache_ocr=%s",
@@ -184,10 +197,28 @@ async def clean_csv(
                             if key in chunk_extracted_data:
                                 chunk_df.at[row_idx, extracted_col] = "\n".join(chunk_extracted_data[key])
 
+                chunk_df, changed_cells = _normalize_dataframe_text_columns(chunk_df)
+                if changed_cells:
+                    logger.debug(
+                        "Normalized %d text cells in chunk starting at row %d",
+                        changed_cells,
+                        start,
+                    )
+
+                if incremental_output:
+                    write_header = not partial_output_path.exists()
+                    chunk_df.to_csv(
+                        partial_output_path,
+                        mode="w" if write_header else "a",
+                        header=write_header,
+                        index=False,
+                    )
+
                 if on_chunk is not None:
                     await on_chunk(chunk_df.to_dict(orient="records"))
 
-                cleaned_frames.append(chunk_df)
+                if not incremental_output:
+                    cleaned_frames.append(chunk_df)
         finally:
             if owns_processor and processor is not None:
                 processor.close()
@@ -271,11 +302,14 @@ async def clean_csv(
         df = df.loc[:, ~(df.astype(str).eq("").all())]
 
     # Save cleaned CSV
+    if incremental_output:
+        if not partial_output_path.exists():
+            raise ValueError("incremental output file was not created")
+        partial_output_path.replace(output_path)
+        logger.debug("clean_csv END: incremental output finalized at %s", output_path)
+        return output_path
+
     logger.debug("Saving cleaned CSV...")
-    save_dir = output_dir or CLEANED_DATA_DIR
-    save_dir.mkdir(parents=True, exist_ok=True)
-    output_filename = f"cleaned_{input_path.name}"
-    output_path = save_dir / output_filename
     df.to_csv(output_path, index=False)
     logger.debug("clean_csv END: saved to %s", output_path)
 

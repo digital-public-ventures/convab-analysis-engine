@@ -256,6 +256,53 @@ class TestAsyncJobHandling:
             if not saw_running_with_results:
                 print('NOTE: Clean job completed before incremental results observed')
 
+    def test_clean_job_persists_raw_input_early(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+    ) -> None:
+        """Ensure /clean persists the raw input file under the hash root when the job starts."""
+
+        async def slow_clean_csv(input_path: str | Path, **kwargs: object) -> Path:
+            df = pd.read_csv(input_path)
+            await asyncio.sleep(0.3)
+            output_dir = kwargs.get('output_dir')
+            save_dir = output_dir if isinstance(output_dir, Path) else FIXTURES_DIR
+            save_dir.mkdir(parents=True, exist_ok=True)
+            output_path = save_dir / f'cleaned_{Path(input_path).name}'
+            df.to_csv(output_path, index=False)
+            return output_path
+
+        monkeypatch.setattr(server_module, 'clean_csv', slow_clean_csv)
+
+        temp_csv = _write_temp_csv(tmp_path, rows=30)
+        content = temp_csv.read_bytes()
+        expected_hash = server_module.DataStore.hash_content(content)
+        raw_input_path = app_config.DATA_DIR / expected_hash / 'input.csv'
+
+        with TestClient(app) as client:
+            with temp_csv.open('rb') as handle:
+                response = client.post(
+                    '/clean?no_cache=true',
+                    files={'file': ('responses.csv', handle, 'text/csv')},
+                )
+
+            _expect_status(response, HTTPStatus.ACCEPTED)
+            payload = response.json()
+            if payload.get('hash') != expected_hash:
+                pytest.fail('Expected clean response hash to match uploaded content hash')
+
+            deadline = time.time() + 2.0
+            while time.time() < deadline and not raw_input_path.exists():
+                time.sleep(0.05)
+
+            if not raw_input_path.exists():
+                pytest.fail('Expected raw input file to be persisted early in hash root')
+            if raw_input_path.read_bytes() != content:
+                pytest.fail('Expected persisted raw input bytes to match uploaded content')
+
+            _poll_until_complete(client, payload['job_id'])
+
     def test_clean_job_streams_results_before_completion(
         self,
         monkeypatch: pytest.MonkeyPatch,
