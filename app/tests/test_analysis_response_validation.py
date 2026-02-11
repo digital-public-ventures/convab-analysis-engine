@@ -134,13 +134,14 @@ async def test_analyze_dataset_rejects_schema_invalid_payloads(
         return payload, {"total_tokens": 1, "input_tokens": 1, "output_tokens": 0, "thinking_tokens": 0}
 
     monkeypatch.setattr(analyzer_module, "generate_structured_content", fake_generate_structured_content)
-    monkeypatch.setattr(analyzer_module, "create_llm_client", lambda api_key=None: object())
-    monkeypatch.setattr(analyzer_module, "resolve_api_key", lambda: "test")
+    monkeypatch.setattr(analyzer_module, "create_llm_client", lambda *args, **kwargs: object())
+    monkeypatch.setattr(analyzer_module, "resolve_api_key", lambda *args, **kwargs: "test")
     monkeypatch.setattr(
         analyzer_module,
         "validate_model_config",
         lambda model_id, thinking_level: SimpleNamespace(
             model_id=model_id,
+            provider="gemini",
             rpm=1000,
             tpm=1_000_000,
             rpd=1_000_000,

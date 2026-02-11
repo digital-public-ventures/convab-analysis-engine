@@ -639,8 +639,8 @@ async def analyze_dataset(
     logger.debug('Prepared %d records in %.2fs', len(records), time.monotonic() - record_build_started_at)
 
     profile = validate_model_config(config.model_id, config.thinking_level)
-    api_key = resolve_api_key()
-    client = create_llm_client(api_key=api_key)
+    api_key = resolve_api_key(provider=profile.provider, model_id_or_key=profile.model_id)
+    client = create_llm_client(api_key=api_key, provider=profile.provider, model_id_or_key=profile.model_id)
     limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd, max_concurrency=profile.max_concurrency)
 
     prompt_prep_started_at = time.monotonic()

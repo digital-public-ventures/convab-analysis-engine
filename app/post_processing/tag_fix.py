@@ -195,7 +195,15 @@ async def run_tag_fix(
     labels_by_field = _collect_labels(analysis_csv_path, categorical_fields)
 
     profile = validate_model_config(model_id, thinking_level)
-    client = create_llm_client(api_key=resolve_api_key(api_key=api_key))
+    client = create_llm_client(
+        api_key=resolve_api_key(
+            api_key=api_key,
+            provider=profile.provider,
+            model_id_or_key=profile.model_id,
+        ),
+        provider=profile.provider,
+        model_id_or_key=profile.model_id,
+    )
     limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd, max_concurrency=profile.max_concurrency)
 
     tasks = [

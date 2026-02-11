@@ -75,8 +75,10 @@ async def test_analyze_dataset_invokes_callbacks(
 
     monkeypatch.setenv("LLM_PROVIDER", provider)
     monkeypatch.setenv(api_key_env, "test")
-    monkeypatch.setattr(analyzer_module, "create_llm_client", lambda api_key=None: object())
+    monkeypatch.setattr(analyzer_module, "create_llm_client", lambda *args, **kwargs: object())
     monkeypatch.setattr(analyzer_module, "_analyze_batch", fake_analyze_batch)
+    model_id = "gemini-3-flash-preview" if provider == "gemini" else "gpt-5-mini"
+    thinking_level = "LOW" if provider == "gemini" else "MEDIUM"
 
     request = AnalysisRequest(
         cleaned_csv=cleaned_csv,
@@ -88,7 +90,7 @@ async def test_analyze_dataset_invokes_callbacks(
 
     await analyze_dataset(
         request,
-        config=AnalysisConfig(batch_size=2),
+        config=AnalysisConfig(batch_size=2, model_id=model_id, thinking_level=thinking_level),
         on_batch=on_batch,
         on_row_count=on_row_count,
     )

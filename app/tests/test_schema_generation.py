@@ -197,7 +197,7 @@ class TestSchemaGenerator:
         ):
             from app.schema import SchemaGenerator
 
-            with pytest.raises(ValueError, match="Invalid model"):
+            with pytest.raises(ValueError, match="conflicts with model"):
                 SchemaGenerator(api_key="test-key", model_id="gpt-5.2", thinking_level="MEDIUM")
 
     def test_save_schema_truncates_long_use_case(self, tmp_path: Path, mock_schema: dict) -> None:
@@ -233,7 +233,7 @@ class TestSchemaGenerator:
             from app.schema import SchemaGenerator
 
             with pytest.raises(ValueError, match="OPENAI_API_KEY"):
-                SchemaGenerator()
+                SchemaGenerator(model_id="gpt-5.2")
 
 
 class TestPromptConstruction:

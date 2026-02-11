@@ -11,7 +11,7 @@ from typing import Any
 
 from app.config import SCHEMA_MODEL_ID, SCHEMA_REQUEST_TIMEOUT, SCHEMA_THINKING_LEVEL, TOKEN_USAGE_FILE
 from app.llm import generate_structured_content, validate_model_config
-from app.llm.provider import create_llm_client, get_llm_provider, resolve_api_key
+from app.llm.provider import create_llm_client, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
 
 from .prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA, SCHEMA_GENERATION_SYSTEM_PROMPT, build_schema_generation_prompt
@@ -87,14 +87,17 @@ class SchemaGenerator:
         """
         self.model_id = model_id or SCHEMA_MODEL_ID
         self.thinking_level = thinking_level or SCHEMA_THINKING_LEVEL
-        self.provider = get_llm_provider()
-
-        # Initialize provider-specific client
-        resolved_api_key = resolve_api_key(api_key=api_key, provider=self.provider)
-        self.client = create_llm_client(api_key=resolved_api_key, provider=self.provider)
-
         profile = validate_model_config(self.model_id, self.thinking_level)
         self.model_id = profile.model_id
+        self.provider = profile.provider
+
+        # Initialize provider-specific client
+        resolved_api_key = resolve_api_key(api_key=api_key, provider=profile.provider, model_id_or_key=self.model_id)
+        self.client = create_llm_client(
+            api_key=resolved_api_key,
+            provider=profile.provider,
+            model_id_or_key=self.model_id,
+        )
 
         self.rate_limiter = AsyncRateLimiter(
             rpm=profile.rpm,

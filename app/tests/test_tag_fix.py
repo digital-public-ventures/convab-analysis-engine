@@ -51,17 +51,21 @@ async def test_run_tag_fix_writes_outputs(
 
     monkeypatch.setenv("LLM_PROVIDER", provider)
     monkeypatch.setenv(api_key_env, "test")
-    monkeypatch.setattr("app.post_processing.tag_fix.create_llm_client", lambda api_key=None: object())
+    monkeypatch.setattr("app.post_processing.tag_fix.create_llm_client", lambda *args, **kwargs: object())
     monkeypatch.setattr(
         "app.post_processing.tag_fix.generate_structured_content",
         fake_generate_structured_content,
     )
+    model_id = "gemini-3-flash-preview" if provider == "gemini" else "gpt-5-mini"
+    thinking_level = "LOW" if provider == "gemini" else "MEDIUM"
 
     output_dir = tmp_path / "output"
     result = await run_tag_fix(
         schema_path=schema_path,
         analysis_csv_path=analysis_csv,
         output_dir=output_dir,
+        model_id=model_id,
+        thinking_level=thinking_level,
     )
 
     mappings = json.loads(result.mappings_path.read_text(encoding="utf-8"))

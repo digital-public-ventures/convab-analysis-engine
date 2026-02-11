@@ -14,29 +14,11 @@ from typing import Any, Literal, overload
 from app.config import TOKEN_USAGE_FILE
 from app.text_normalization import normalize_text_for_llm
 
-from .model_config import MODELS, ModelProfile, get_model_profile, resolve_model_id
+from .model_config import ModelProfile, resolve_model_id, validate_model_config as validate_model_profile
 from .rate_limiter import AsyncRateLimiter
 from .token_tracking import record_token_usage
 
 logger = logging.getLogger(__name__)
-
-# Mirror the Gemini short keys (`flash`, `pro`) while resolving to OpenAI models.
-OPENAI_MODELS: dict[str, ModelProfile] = {
-    'flash': MODELS['gpt_5_mini'],
-    'lite': MODELS['gpt_5_mini'],
-    'pro': MODELS['gpt_5_2'],
-    'codex': MODELS['gpt_5_2_codex'],
-    'gpt_5_2': MODELS['gpt_5_2'],
-    'gpt_5_2_codex': MODELS['gpt_5_2_codex'],
-    'gpt_5_1': MODELS['gpt_5_1'],
-    'gpt_5_mini': MODELS['gpt_5_mini'],
-    'gpt_5_nano': MODELS['gpt_5_nano'],
-    # Compatibility aliases for existing Gemini-oriented config values.
-    'gemini-2.5-flash-lite-preview-09-2025': MODELS['gpt_5_mini'],
-    'gemini-3-flash-preview': MODELS['gpt_5_mini'],
-    'gemini-2.5-pro': MODELS['gpt_5_2'],
-    'gemini-3-pro-preview': MODELS['gpt_5_2'],
-}
 
 
 def _schema_type_name(schema_type: str) -> str:
@@ -326,25 +308,12 @@ def validate_model_config(model_id_or_key: str, thinking_level: str, models_dict
     Raises:
         ValueError: If model is invalid or thinking_level not supported by model
     """
-    if models_dict is None:
-        models_dict = OPENAI_MODELS
-
-    profile = get_model_profile(model_id_or_key, models_dict=models_dict)
-    if not profile:
-        available_keys = list(models_dict.keys())
-        available_ids = [model.model_id for model in models_dict.values()]
-        msg = f'Invalid model. Choose from keys: {available_keys} or model IDs: {available_ids}'
-        raise ValueError(msg)
-
-    normalized_thinking = thinking_level.upper()
-    if normalized_thinking not in profile.allowed_thinking:
-        msg = (
-            f"Model {profile.model_id} does not support thinking level '{thinking_level}'. "
-            f'Allowed: {profile.allowed_thinking}'
-        )
-        raise ValueError(msg)
-
-    return profile
+    return validate_model_profile(
+        model_id_or_key=model_id_or_key,
+        thinking_level=thinking_level,
+        models_dict=models_dict,
+        provider='openai',
+    )
 
 
 @overload
@@ -424,7 +393,7 @@ async def generate_structured_content(
             len(normalized_system_instruction or ''),
         )
 
-    resolved_model_id = resolve_model_id(model_id, models_dict=OPENAI_MODELS)
+    resolved_model_id = resolve_model_id(model_id, provider='openai')
 
     acquired = False
     if isinstance(rate_limiter, AsyncRateLimiter):

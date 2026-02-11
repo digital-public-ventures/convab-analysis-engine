@@ -1,7 +1,10 @@
 """LLM model configuration profiles and rate limits."""
 
 import math
-from typing import TypedDict
+from typing import Literal, TypedDict
+
+LLMProvider = Literal['gemini', 'openai']
+SUPPORTED_PROVIDERS: tuple[LLMProvider, ...] = ('gemini', 'openai')
 
 
 class Pricing(TypedDict):
@@ -18,6 +21,7 @@ class ModelProfile:
 
     def __init__(
         self,
+        provider: LLMProvider,
         model_id: str,
         rpm: int,
         tpm: int,
@@ -29,6 +33,7 @@ class ModelProfile:
         """Initialize a model profile.
 
         Args:
+            provider: LLM provider for this model
             model_id: Full model identifier
             rpm: Requests per minute limit
             tpm: Tokens per minute limit
@@ -37,6 +42,7 @@ class ModelProfile:
             max_concurrency: Max in-flight requests allowed by config
             pricing: Optional pricing metadata for token cost calculation
         """
+        self.provider = provider
         self.model_id = model_id
         self.rpm = rpm
         self.tpm = tpm
@@ -59,6 +65,7 @@ def _max_concurrency_from_rpm(rpm: int, safety_margin: float = RPM_SAFETY_MARGIN
 
 MODELS = {
     'flash': ModelProfile(
+        provider='gemini',
         model_id='gemini-3-flash-preview',
         rpm=1000,
         tpm=1_000_000,
@@ -73,6 +80,7 @@ MODELS = {
         },
     ),
     'lite': ModelProfile(
+        provider='gemini',
         model_id='gemini-2.5-flash-lite-preview-09-2025',
         rpm=1000,
         tpm=1_000_000,
@@ -87,6 +95,7 @@ MODELS = {
         },
     ),
     'pro': ModelProfile(
+        provider='gemini',
         model_id='gemini-3-pro-preview',
         rpm=25,
         tpm=1_000_000,
@@ -101,6 +110,7 @@ MODELS = {
         },
     ),
     'pro_2_5': ModelProfile(
+        provider='gemini',
         model_id='gemini-2.5-pro',
         rpm=150,
         tpm=2_000_000,
@@ -110,6 +120,7 @@ MODELS = {
     ),
     # OpenAI GPT models use tier-based limits. These are conservative Tier 1 defaults.
     'gpt_5_2': ModelProfile(
+        provider='openai',
         model_id='gpt-5.2',
         rpm=500,
         tpm=500_000,
@@ -124,6 +135,7 @@ MODELS = {
         },
     ),
     'gpt_5_2_codex': ModelProfile(
+        provider='openai',
         model_id='gpt-5.2-codex',
         rpm=500,
         tpm=500_000,
@@ -138,6 +150,7 @@ MODELS = {
         },
     ),
     'gpt_5_1': ModelProfile(
+        provider='openai',
         model_id='gpt-5.1',
         rpm=500,
         tpm=500_000,
@@ -152,6 +165,7 @@ MODELS = {
         },
     ),
     'gpt_5_mini': ModelProfile(
+        provider='openai',
         model_id='gpt-5-mini',
         rpm=500,
         tpm=500_000,
@@ -166,6 +180,7 @@ MODELS = {
         },
     ),
     'gpt_5_nano': ModelProfile(
+        provider='openai',
         model_id='gpt-5-nano',
         rpm=500,
         tpm=200_000,
@@ -201,26 +216,99 @@ MODEL_ALIASES = {
 }
 
 
-def get_model_profile(model_id_or_key: str, models_dict: dict[str, ModelProfile] | None = None) -> ModelProfile | None:
+def _validate_provider(provider: str) -> LLMProvider:
+    if provider not in SUPPORTED_PROVIDERS:
+        msg = f'Unsupported provider {provider!r}. Expected one of {sorted(SUPPORTED_PROVIDERS)}.'
+        raise ValueError(msg)
+    return provider  # type: ignore[return-value]
+
+
+def get_model_profile(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> ModelProfile | None:
     """Resolve a ModelProfile by key, alias, or full model ID."""
     if models_dict is None:
         models_dict = MODELS
 
+    if provider is not None:
+        provider = _validate_provider(provider)
+
+    profile: ModelProfile | None = None
     if model_id_or_key in models_dict:
-        return models_dict[model_id_or_key]
+        profile = models_dict[model_id_or_key]
+    else:
+        alias = MODEL_ALIASES.get(model_id_or_key)
+        if alias and alias in models_dict:
+            profile = models_dict[alias]
+        else:
+            for candidate in models_dict.values():
+                if candidate.model_id == model_id_or_key:
+                    profile = candidate
+                    break
 
-    alias = MODEL_ALIASES.get(model_id_or_key)
-    if alias and alias in models_dict:
-        return models_dict[alias]
+    if profile is None:
+        return None
 
-    for profile in models_dict.values():
-        if profile.model_id == model_id_or_key:
-            return profile
-
-    return None
+    if provider is not None and profile.provider != provider:
+        return None
+    return profile
 
 
-def resolve_model_id(model_id_or_key: str, models_dict: dict[str, ModelProfile] | None = None) -> str:
-    """Resolve a full model ID from a key or alias."""
+def get_model_provider(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+) -> LLMProvider | None:
+    """Resolve provider for a model key/alias/id."""
     profile = get_model_profile(model_id_or_key, models_dict=models_dict)
+    if profile is None:
+        return None
+    return profile.provider
+
+
+def resolve_model_id(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> str:
+    """Resolve a full model ID from a key or alias."""
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict, provider=provider)
     return profile.model_id if profile else model_id_or_key
+
+
+def validate_model_config(
+    model_id_or_key: str,
+    thinking_level: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> ModelProfile:
+    """Validate model + thinking-level configuration."""
+    if models_dict is None:
+        models_dict = MODELS
+
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict, provider=provider)
+    if not profile:
+        available_profiles = [p for p in models_dict.values() if provider is None or p.provider == provider]
+        available_keys = [key for key, value in models_dict.items() if value in available_profiles]
+        available_ids = [model.model_id for model in available_profiles]
+        if provider is not None:
+            msg = (
+                f'Invalid model for provider {provider!r}. '
+                f'Choose from keys: {available_keys} or model IDs: {available_ids}'
+            )
+            raise ValueError(msg)
+        msg = f'Invalid model. Choose from keys: {available_keys} or model IDs: {available_ids}'
+        raise ValueError(msg)
+
+    normalized_thinking = thinking_level.upper()
+    if normalized_thinking not in profile.allowed_thinking:
+        msg = (
+            f"Model {profile.model_id} does not support thinking level '{thinking_level}'. "
+            f'Allowed: {profile.allowed_thinking}'
+        )
+        raise ValueError(msg)
+    return profile

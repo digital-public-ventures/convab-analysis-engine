@@ -14,18 +14,15 @@ from google.genai import types
 from app.config import TOKEN_USAGE_FILE
 from app.text_normalization import normalize_text_for_llm
 
-from .model_config import MODELS, ModelProfile, get_model_profile, resolve_model_id
+from .model_config import (
+    ModelProfile,
+    resolve_model_id,
+    validate_model_config as validate_model_profile,
+)
 from .rate_limiter import AsyncRateLimiter
 from .token_tracking import record_token_usage
 
 logger = logging.getLogger(__name__)
-
-GEMINI_MODELS: dict[str, ModelProfile] = {
-    'flash': MODELS['flash'],
-    'lite': MODELS['lite'],
-    'pro': MODELS['pro'],
-    'pro_2_5': MODELS['pro_2_5'],
-}
 
 
 def _schema_type_name(schema_type: str) -> str:
@@ -157,24 +154,12 @@ def validate_model_config(model_id_or_key: str, thinking_level: str, models_dict
     Raises:
         ValueError: If model is invalid or thinking_level not supported by model
     """
-    if models_dict is None:
-        models_dict = GEMINI_MODELS
-
-    profile = get_model_profile(model_id_or_key, models_dict=models_dict)
-    if not profile:
-        available_keys = list(models_dict.keys())
-        available_ids = [model.model_id for model in models_dict.values()]
-        msg = f'Invalid model. Choose from keys: {available_keys} or model IDs: {available_ids}'
-        raise ValueError(msg)
-
-    if thinking_level not in profile.allowed_thinking:
-        msg = (
-            f"Model {profile.model_id} does not support thinking level '{thinking_level}'. "
-            f'Allowed: {profile.allowed_thinking}'
-        )
-        raise ValueError(msg)
-
-    return profile
+    return validate_model_profile(
+        model_id_or_key=model_id_or_key,
+        thinking_level=thinking_level,
+        models_dict=models_dict,
+        provider='gemini',
+    )
 
 
 @overload
@@ -277,7 +262,7 @@ async def generate_structured_content(
         )
 
     # Map short model names to full IDs
-    resolved_model_id = resolve_model_id(model_id, models_dict=GEMINI_MODELS)
+    resolved_model_id = resolve_model_id(model_id, provider='gemini')
 
     # If rate limiter provided, count tokens and wait for rate limits
     acquired = False
