@@ -31,6 +31,14 @@
 - For complex shell logic, write a script file, then run it.
 - Do not run commands in a terminal that already has an active process.
 
+## CSV Handling Rules (Long Fields / Multi-line Records)
+
+- Some source CSVs contain very long text fields and embedded newlines inside quoted cells.
+- Never treat CSVs as line-oriented text for sampling/filtering (avoid `shuf`, `head|tail` pipelines on raw CSV rows).
+- Use CSV-aware tooling (`csv` module, `pandas`, `xsv`, etc.) so quoted multi-line rows stay intact.
+- App-wide Python default: `app/__init__.py` calls `app.csv_limits.configure_csv_field_limit()` so app entrypoints avoid `_csv.Error: field larger than field limit`.
+- For standalone scripts that do not import `app`, call `app.csv_limits.configure_csv_field_limit()` before `csv.DictReader` / `csv.reader`.
+
 ## Local-Only Work Tracking (Do Not Commit)
 
 These paths are intentionally **gitignored** and must never be committed:
