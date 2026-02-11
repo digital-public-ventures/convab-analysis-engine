@@ -14,23 +14,33 @@ from app.analysis.analyzer import AnalysisConfig, AnalysisRequest, analyze_datas
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 INPUT_CSV = REPO_ROOT / 'app' / 'data' / 'raw' / 'extracted_15.csv'
+PROVIDER_TEST_CONFIG = {
+    'gemini': {
+        'api_key_env': 'GEMINI_API_KEY',
+        'model_id': 'gemini-2.5-flash-lite-preview-09-2025',
+        'thinking_level': 'NONE',
+    },
+    'openai': {
+        'api_key_env': 'OPENAI_API_KEY',
+        'model_id': 'gpt-5-mini',
+        'thinking_level': 'LOW',
+    },
+}
 
 pytestmark = pytest.mark.integration
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ('provider', 'api_key_env', 'thinking_level'),
-    [('gemini', 'GEMINI_API_KEY', 'MINIMAL'), ('openai', 'OPENAI_API_KEY', 'NONE')],
-)
+@pytest.mark.parametrize('provider', ['gemini', 'openai'])
 async def test_analyze_extracted_15_hits_real_api(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     provider: str,
-    api_key_env: str,
-    thinking_level: str,
 ) -> None:
     """Run a single-row analysis call against the live provider API."""
+    provider_config = PROVIDER_TEST_CONFIG[provider]
+    api_key_env = provider_config['api_key_env']
+
     load_dotenv()
     if not os.environ.get(api_key_env):
         pytest.skip(f'{api_key_env} environment variable not set')
@@ -67,7 +77,12 @@ async def test_analyze_extracted_15_hits_real_api(
 
     payload, csv_text = await analyze_dataset(
         request,
-        config=AnalysisConfig(batch_size=1, thinking_level=thinking_level, request_timeout=20.0),
+        config=AnalysisConfig(
+            model_id=provider_config['model_id'],
+            batch_size=1,
+            thinking_level=provider_config['thinking_level'],
+            request_timeout=20.0,
+        ),
     )
 
     records = payload.get('records', [])
