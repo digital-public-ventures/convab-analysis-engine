@@ -177,7 +177,7 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
-            generator = SchemaGenerator(api_key="test-key", model_id="gemini-3-flash-preview")
+            generator = SchemaGenerator(api_key="test-key", model_id="gemini-3-flash-preview", thinking_level="LOW")
             assert generator.rate_limiter.rpm_limit == 1000
 
     def test_pro_model_uses_lower_rate_limits(self) -> None:
@@ -185,8 +185,20 @@ class TestSchemaGenerator:
         with patch("app.schema.generator.create_llm_client"):
             from app.schema import SchemaGenerator
 
-            generator = SchemaGenerator(api_key="test-key", model_id="gemini-pro")
+            generator = SchemaGenerator(api_key="test-key", model_id="gemini-pro", thinking_level="LOW")
             assert generator.rate_limiter.rpm_limit == 25
+
+    def test_provider_model_mismatch_fails_fast(self) -> None:
+        """Gemini provider should reject OpenAI-only model IDs during init."""
+        with patch("app.schema.generator.create_llm_client"), patch.dict(
+            "os.environ",
+            {"LLM_PROVIDER": "gemini"},
+            clear=False,
+        ):
+            from app.schema import SchemaGenerator
+
+            with pytest.raises(ValueError, match="Invalid model"):
+                SchemaGenerator(api_key="test-key", model_id="gpt-5.2", thinking_level="MEDIUM")
 
     def test_save_schema_truncates_long_use_case(self, tmp_path: Path, mock_schema: dict) -> None:
         """Test that very long use cases are truncated in metadata."""

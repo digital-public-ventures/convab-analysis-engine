@@ -10,8 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from app.config import SCHEMA_MODEL_ID, SCHEMA_REQUEST_TIMEOUT, SCHEMA_THINKING_LEVEL, TOKEN_USAGE_FILE
-from app.llm import generate_structured_content
-from app.llm.model_config import get_model_profile
+from app.llm import generate_structured_content, validate_model_config
 from app.llm.provider import create_llm_client, get_llm_provider, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
 
@@ -94,9 +93,8 @@ class SchemaGenerator:
         resolved_api_key = resolve_api_key(api_key=api_key, provider=self.provider)
         self.client = create_llm_client(api_key=resolved_api_key, provider=self.provider)
 
-        profile = get_model_profile(self.model_id)
-        if not profile:
-            raise ValueError(f'Unsupported model ID: {self.model_id}')
+        profile = validate_model_config(self.model_id, self.thinking_level)
+        self.model_id = profile.model_id
 
         self.rate_limiter = AsyncRateLimiter(
             rpm=profile.rpm,

@@ -20,6 +20,13 @@ from .token_tracking import record_token_usage
 
 logger = logging.getLogger(__name__)
 
+GEMINI_MODELS: dict[str, ModelProfile] = {
+    'flash': MODELS['flash'],
+    'lite': MODELS['lite'],
+    'pro': MODELS['pro'],
+    'pro_2_5': MODELS['pro_2_5'],
+}
+
 
 def _schema_type_name(schema_type: str) -> str:
     """Normalize schema type names across JSON Schema and Gemini style."""
@@ -151,7 +158,7 @@ def validate_model_config(model_id_or_key: str, thinking_level: str, models_dict
         ValueError: If model is invalid or thinking_level not supported by model
     """
     if models_dict is None:
-        models_dict = MODELS
+        models_dict = GEMINI_MODELS
 
     profile = get_model_profile(model_id_or_key, models_dict=models_dict)
     if not profile:
@@ -270,7 +277,7 @@ async def generate_structured_content(
         )
 
     # Map short model names to full IDs
-    resolved_model_id = resolve_model_id(model_id, models_dict=MODELS)
+    resolved_model_id = resolve_model_id(model_id, models_dict=GEMINI_MODELS)
 
     # If rate limiter provided, count tokens and wait for rate limits
     acquired = False
