@@ -1,198 +1,97 @@
-# DPV Sensemaking
+# Sensemaking
 
-**A generic response analysis platform for intelligently parsing free-text response data from diverse sources**
+A platform for extracting structured insights from free-text public comments, complaints, and feedback at scale. Upload a CSV of responses, and Sensemaking cleans the data, generates a tagging schema tailored to the dataset, runs LLM-powered analysis across every record, and deduplicates the resulting tags -- producing a structured, analysis-ready dataset.
 
-Sensemaking is designed to ingest complaints, comments, feedback, and other response data from various sources (CFPB complaints, regulations.gov public comments, surveys, etc.), normalize them to a shared analysis framework, and extract structured insights using LLM-powered analysis.
+## How It Works
 
-## Vision
+```
+CSV upload ──▶ /clean ──▶ /schema/{hash} ──▶ /analyze ──▶ /tag-fix
+```
 
-The core goal is to build a **generic response analyzer** that can:
+1. **Clean & OCR** -- Upload a CSV via `/clean`. Attachments (PDF, DOCX, images) are downloaded and OCR'd. Text is normalized and a cleaned CSV is written to a content-hash-addressed directory.
+2. **Generate schema** -- `/schema/{hash}` samples the cleaned data and asks an LLM to produce a JSON tagging schema (categorical fields, scalars, quote arrays) fitted to the dataset's domain.
+3. **Analyze** -- `/analyze` batches cleaned rows through the LLM, producing per-record structured JSON conforming to the schema.
+4. **Deduplicate tags** -- `/tag-fix` uses an LLM pass to merge near-duplicate categorical labels (e.g. "Low Income" / "Low-Income Individuals") and writes a final deduplicated CSV.
 
-1. **Parse diverse input schemas** - Each data source has its own CSV schema with different columns, but all share a free-text narrative field
-2. **Normalize to a common format** - Map source-specific fields to a shared analysis model while preserving source-specific metadata
-3. **Extract structured insights** - Use LLMs to analyze narratives, extract themes, sentiment, entities, and categorical dimensions
-4. **Handle attachments** - Process PDF, DOCX, and other document attachments referenced by URL or file path
-5. **Support iterative development** - Feature flags for quick iteration with sample data
-
-## Current Data Sources
-
-### CFPB Exploration (`src/cfpb_exploration/`)
-
-Analysis of Consumer Financial Protection Bureau complaint data. Contains consumer narratives about financial products and services.
-
-### Regulations.gov Exploration (`src/regs_dot_gov_exploration/`)
-
-Analysis of public comments submitted to federal regulatory dockets. Initial focus on CFPB-2023-0038 (Medical Payment Products RFI) - comments from patients, healthcare providers, and industry stakeholders about medical credit cards and financing.
+All long-running steps return a job ID immediately. Poll `/jobs/{job_id}` for status and stream results from `/jobs/{job_id}/results`.
 
 ## Quick Start
 
-### Prerequisites
-
-- Python 3.11+
-- [uv](https://github.com/astral-sh/uv) (recommended) or pip
-
-### Setup
+Requires Python 3.13+ and [uv](https://github.com/astral-sh/uv).
 
 ```bash
-# Clone the repository
 git clone https://github.com/jimmoffet/sensemaking.git
 cd sensemaking
-
-# Install dependencies with uv
 uv sync --extra dev
 
-# Or with pip
-pip install -e ".[dev]"
-
-# Copy environment variables
 cp .env.example .env
-# Edit .env with your API keys (GEMINI_API_KEY required)
+# Edit .env -- at minimum set GEMINI_API_KEY
 
-# Run linting
-ruff check .
-ruff format .
-
-# Run type checking
-mypy .
-
-# Run tests
-pytest
+uv run uvicorn app.server:app --reload
 ```
 
-### Environment Configuration
+The server starts at `http://127.0.0.1:8000`. Interactive docs at `/docs`.
 
-Key environment variables:
+## Architecture
+
+```
+app/
+├── server.py                  # FastAPI app, endpoint definitions, background jobs
+├── config.py                  # Paths, model IDs, processing constants
+├── processing/
+│   ├── cleaner.py             # CSV cleaning, attachment detection
+│   ├── attachment.py          # PDF/DOCX/image download + OCR extraction
+│   ├── cache.py               # OCR result caching
+│   ├── data_store.py          # Content-hash directory management
+│   └── job_store.py           # Async job tracking with cursor-based results
+├── schema/
+│   ├── generator.py           # LLM-driven JSON schema creation
+│   └── prompts/               # System/user prompt templates, base schema example
+├── analysis/
+│   ├── analyzer.py            # Batch LLM analysis pipeline
+│   └── response_validation.py # Validate LLM output against schema
+├── llm/
+│   ├── gemini_client.py       # Gemini API wrapper
+│   ├── openai_client.py       # OpenAI API wrapper
+│   ├── model_config.py        # Provider-aware model configuration
+│   ├── rate_limiter.py        # Async rate limiter
+│   └── costs.py               # Token/cost tracking
+├── post_processing/
+│   └── tag_fix.py             # LLM-driven tag deduplication
+└── tests/                     # Unit and integration tests
+```
+
+Datasets are stored under `app/data/{content_hash}/` with subdirectories for raw input, downloads, cleaned data, schema, analysis output, and post-processing results.
+
+## API
+
+All endpoints accept and return JSON unless noted.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/clean` | Upload a CSV file (multipart). Returns a job ID. Cleans text, downloads and OCR's attachments. |
+| `GET` | `/jobs/{job_id}` | Poll job status. `completed` is true when the job finishes (check `error` for failures). |
+| `GET` | `/jobs/{job_id}/results` | Cursor-paginated results. Pass `cursor` and `limit` query params. |
+| `POST` | `/schema/{hash}` | Generate a tagging schema for the cleaned dataset. Body: `{ use_case }`. |
+| `GET` | `/data/{hash}` | Check whether cleaned CSV and schema exist for a given hash. |
+| `POST` | `/analyze` | Start analysis. Body: `{ hash, use_case, system_prompt }`. Returns a job ID. |
+| `POST` | `/tag-fix` | Start tag deduplication. Body: `{ hash }`. Returns a job ID. |
+
+All `POST` endpoints that create jobs accept a `?no_cache=true` query param to force reprocessing. `/clean` also accepts `?no_cache_ocr=true` to re-extract OCR.
+
+## Development
 
 ```bash
-# Required
-GEMINI_API_KEY=your-gemini-api-key
-
-# Development flags
-USE_HEAD=true  # Use small sample data for fast iteration
-```
-
-## Repository Structure
-
-```
-sensemaking/
-├── .github/                    # GitHub configuration
-│   ├── agents/                 # Agent role definitions
-│   ├── skills/                 # Custom skills
-│   ├── ISSUE_TEMPLATE/         # Bug reports, feature requests
-│   ├── PULL_REQUEST_TEMPLATE/  # PR templates
-│   └── copilot-instructions.*  # AI agent guidance
-│
-├── ADRs/                       # Architecture Decision Records (immutable)
-│
-├── docs/                       # Developer documentation
-│   ├── README.md               # Documentation index
-│   └── QUICK_START.md          # Setup guide
-│
-├── src/                        # Source code
-│   ├── cfpb_exploration/       # CFPB complaint analysis
-│   │   ├── data/               # Input CSV data
-│   │   ├── output/             # Analysis results
-│   │   ├── prompts/            # LLM prompt templates
-│   │   ├── schemas/            # Generated JSON schemas
-│   │   ├── data_processor.py   # CSV parsing utilities
-│   │   └── main.py             # Analysis orchestrator
-│   │
-│   ├── regs_dot_gov_exploration/  # Regulations.gov analysis
-│   │   ├── data/               # Input data
-│   │   │   ├── responses.csv   # Full dataset
-│   │   │   └── head/           # Sample data for development
-│   │   ├── output/             # Analysis results
-│   │   ├── prompts/            # LLM prompt templates
-│   │   ├── data_processor.py   # Schema-specific parsing
-│   │   ├── attachment_processor.py  # PDF/DOCX extraction
-│   │   └── main.py             # Analysis orchestrator
-│   │
-│   └── utilities/              # Shared modules
-│       ├── llm/                # LLM client wrappers
-│       └── schema_generator.py # Dynamic schema generation
-│
-├── temp/                       # Temporary files (gitignored)
-│   ├── notes/                  # Agent working memory
-│   ├── plans/                  # Execution plans
-│   └── output/                 # Temporary outputs
-│
-├── tests/                      # Test suite
-│
-├── pyproject.toml              # Project configuration
-├── ruff.toml                   # Ruff linter configuration
-├── mypy.ini                    # MyPy type checker configuration
-├── .env.example                # Environment template
-├── AGENTS.md                   # Shared agent instructions
-└── README.md                   # This file
-```
-
-## Development Tools
-
-| Tool           | Purpose                                           |
-| -------------- | ------------------------------------------------- |
-| **uv**         | Fast Python package manager with lockfile support |
-| **ruff**       | Primary linter and formatter (line length: 120)   |
-| **mypy**       | Static type checker (strict mode)                 |
-| **pytest**     | Test framework with async and coverage support    |
-| **pre-commit** | Git hook framework for automated checks           |
-
-### Key Commands
-
-```bash
-# Package management
-uv sync --extra dev          # Install all dependencies
-uv add <package>             # Add a dependency
-
 # Code quality
-ruff check .                 # Lint code
-ruff check . --fix           # Auto-fix linting issues
-ruff format .                # Format code
+ruff check .                 # Lint
+ruff format .                # Format
+mypy .                       # Type check
 
-# Type checking
-mypy .                       # Run type checker
-
-# Testing
-pytest                       # Run all tests
-pytest -v                    # Verbose output
-pytest --cov                 # With coverage report
+# Tests
+pytest                       # Run all tests (some require API keys)
+pytest -k "not integration"  # Unit tests only
 ```
-
-## Architecture Principles
-
-### Data Source Encapsulation
-
-Each data source (`cfpb_exploration`, `regs_dot_gov_exploration`, etc.) encapsulates:
-
-- **Schema-specific parsing** - CSV column mappings specific to that source
-- **Field normalization** - Map to common analysis fields (id, narrative, metadata)
-- **Attachment handling** - Source-specific attachment URL patterns
-
-### Shared Utilities
-
-The `utilities/` module provides:
-
-- **LLM clients** - Wrappers for Gemini API with rate limiting
-- **Schema generation** - Dynamic JSON schema creation from sample data
-- **Response parsing** - Extract structured JSON from LLM responses
-
-### Development Workflow
-
-- Use `USE_HEAD=true` to work with small sample datasets
-- Each source has a `data/head/` folder with headers + sample rows
-- Run full analysis only after validating with sample data
-
-## Documentation
-
-- [Quick Start Guide](docs/QUICK_START.md) - Setup and getting started
-- [Architecture Decision Records](ADRs/README.md) - Key architectural decisions
-- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
-- [Agent Instructions](AGENTS.md) - AI agent collaboration guide
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- **Maintainer**: Jim Moffet (<jim@digitalpublic.ventures>)
-- **Issues**: [GitHub Issues](https://github.com/jimmoffet/sensemaking/issues)
+MIT
