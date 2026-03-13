@@ -8,8 +8,11 @@ All tests live under `app/tests/`. Pytest is configured in `pyproject.toml` with
 # All tests (includes coverage report)
 pytest
 
-# Unit tests only (skip integration tests that call live APIs)
-pytest -k "not integration"
+# Fast tests only — no API keys needed
+pytest -m "not integration"
+
+# Integration tests only
+pytest -m integration
 
 # Specific file
 pytest app/tests/test_csv_processing.py
@@ -24,49 +27,69 @@ Coverage reports are generated automatically (`--cov=app`) in terminal, HTML (`h
 
 ### Unit Tests (no API key required)
 
+These run in seconds with no network access. LLM calls are mocked or use fake responses.
+
 | File | What it tests |
 |------|---------------|
-| `test_csv_processing.py` | CSV cleaning logic and text normalization |
+| `test_csv_processing.py` | CSV cleaning, text normalization, attachment handling |
 | `test_data_store.py` | Content-hash directory management |
-| `test_costs.py` | Token cost tracking |
-| `test_response_parser.py` | LLM response JSON parsing |
-| `test_analysis_response_validation.py` | Schema validation of analysis output |
-| `test_model_provider_resolution.py` | LLM provider selection logic |
-| `test_rate_limiter_concurrency.py` | Async rate limiter correctness |
-| `test_cli.py` | CLI module |
-| `test_analyzer_callbacks.py` | Analysis callback hooks |
+| `test_llm_utils.py` | Token cost calculation, provider resolution, and response parsing helpers |
+| `test_cli.py` | CLI argument validation and output |
+| `test_analysis_response_validation.py` | Schema validation of analysis output (mocked LLM) |
+| `test_rate_limiter_concurrency.py` | Async rate limiter correctness and concurrency caps |
+| `test_analyzer_callbacks.py` | Batch callbacks, dynamic batching, character budgets |
+| `test_schema_generation.py` | Schema generation prompt construction (mocked LLM) |
+| `test_gemini_client_validation.py` | Gemini response schema validation (fake payloads) |
+| `test_openai_client_validation.py` | OpenAI response schema validation (fake payloads) |
+| `test_pdf_mixed_ocr.py` | PDF mixed text/image page handling (mocked structures) |
 
-### Integration Tests (require API keys or live model access)
+### Integration Tests (require API keys)
 
-| File | What it tests |
-|------|---------------|
-| `test_e2e_integration.py` | Full pipeline: clean → schema → analyze |
-| `test_job_handling_integration.py` | Async job creation, polling, and results |
-| `test_schema_generation.py` | Schema generation via live LLM call |
-| `test_analyze_first5_integration.py` | Analysis of a 5-row sample |
-| `test_gemini_client_validation.py` | Gemini API client against live API |
-| `test_openai_client_validation.py` | OpenAI API client against live API |
-| `test_analysis_response_validation_integration.py` | End-to-end response validation |
-| `test_rate_limiter_throughput_integration.py` | Rate limiter under real timing |
-| `test_attachment_ocr.py` | Attachment download and OCR extraction |
-| `test_pdf_mixed_ocr.py` | PDF pages with mixed text/image content |
-| `test_tag_fix.py` | Tag deduplication via live LLM call |
+These call live LLM APIs and are marked `@pytest.mark.integration` (except `test_tag_fix.py` and `test_attachment_ocr.py`, which lack the marker but still need network access).
 
-Integration tests are marked with `@pytest.mark.integration`. To run only integration tests:
+| File | API key(s) | What it tests |
+|------|-----------|---------------|
+| `test_e2e_integration.py` | `GEMINI_API_KEY` | Full pipeline: clean → schema → analyze → post-process |
+| `test_job_handling_integration.py` | `GEMINI_API_KEY` | Async job creation, polling, results retrieval |
+| `test_analyze_first5_integration.py` | `GEMINI_API_KEY` | Analysis of a 5-row sample against live model |
+| `test_analysis_response_validation_integration.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Response validation against both providers (parametrized) |
+| `test_rate_limiter_throughput_integration.py` | — | Rate limiter under real timing with 5000-row fixture |
+| `test_tag_fix.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Tag deduplication via live LLM (parametrized by provider) |
+| `test_attachment_ocr.py` | — | Attachment download, OCR text extraction, PDF regression |
+
+Tests that need a missing API key will `pytest.skip()` or `pytest.fail()` with a clear message.
+
+## API Keys
+
+| Variable | Where to get it | Used by |
+|----------|----------------|---------|
+| `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/apikey) | Most integration tests |
+| `OPENAI_API_KEY` | [OpenAI Platform](https://platform.openai.com/api-keys) | `test_tag_fix.py`, `test_analysis_response_validation_integration.py` |
+
+Set them in your shell before running integration tests:
 
 ```bash
-pytest -m integration
+export GEMINI_API_KEY=your-key
+export OPENAI_API_KEY=your-key
 ```
 
 ## Test Fixtures
 
 Test data lives in `app/tests/fixtures/`:
 
-- `responses_100.csv` — 100-row sample dataset used by E2E tests and `scripts/run_e2e.py`
-- `example_prompts/` — system and user prompts for integration tests
-- `e2e_analyze.log` — debug log from the last E2E run (inspect this before re-running E2E tests to diagnose failures)
+| Path | Purpose |
+|------|---------|
+| `responses_100.csv` | 100-row sample dataset — primary E2E fixture |
+| `raw/clean_10.csv` | 10-row pre-cleaned CSV for `test_analyze_first5_integration` |
+| `raw/clean_5000.csv` | 5000-row CSV for rate limiter throughput tests |
+| `example_prompts/` | System and user prompt templates for integration tests |
+| `e2e_analyze.log` | Debug log from last E2E run — **inspect before re-running E2E tests** |
+| `<content-hash>/` | Auto-generated directories with cleaned data, schemas, and analysis results |
 
-Shared fixtures are defined in `app/tests/conftest.py`, including sample CSV content, mock schemas, and a flash-model monkeypatch for E2E tests that overrides the default model to avoid RPM limits.
+Shared fixtures are defined in `app/tests/conftest.py`:
+- `override_data_dir` (autouse) — forces data directories into test fixtures
+- `override_llm_model_ids` (autouse) — swaps in `gemini-2.5-flash-lite-preview-09-2025` with thinking disabled, avoiding RPM limits on expensive models
+- `sample_csv_content`, `mock_schema`, `sample_data_records` — test data builders
 
 ## E2E Script
 
@@ -76,4 +99,4 @@ For a quick end-to-end validation outside of pytest:
 uv run python scripts/run_e2e.py
 ```
 
-This processes `app/tests/fixtures/responses_100.csv` through the full pipeline and validates all outputs.
+Processes `app/tests/fixtures/responses_100.csv` through the full pipeline (clean → schema → analyze → tag-fix) and validates all outputs.
