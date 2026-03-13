@@ -11,9 +11,9 @@ from http import HTTPStatus
 from pathlib import Path
 from typing import Any, cast
 
+import jsonschema
 import pandas as pd
 import pytest
-import jsonschema
 from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 
@@ -236,7 +236,7 @@ def test_schema_generation(monkeypatch: pytest.MonkeyPatch) -> None:
             schema_endpoint = f"/schema/{expected_hash}"
             if SCHEMA_CACHE_BYPASS:
                 schema_endpoint = f"{schema_endpoint}?no_cache=true"
-            request_payload = {"use_case": use_case, "sample_size": 10, "head_size": 5}
+            request_payload = {"use_case": use_case, "num_sample_rows": 10, "num_head_rows": 5}
             logging.getLogger("app").debug(
                 "Schema request: endpoint=%s payload=%s",
                 schema_endpoint,

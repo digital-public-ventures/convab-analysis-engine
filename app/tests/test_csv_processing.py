@@ -11,7 +11,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.processing import AttachmentProcessor, clean_csv
-from app.server import app
+from app.server import SchemaRequest, app
 
 FIXTURES_DIR = Path(__file__).parent / 'fixtures'
 HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
@@ -48,7 +48,7 @@ def test_cache_dir(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
-def processor(test_cache_dir: Path) -> Generator[AttachmentProcessor, None, None]:
+def processor(test_cache_dir: Path) -> Generator[AttachmentProcessor]:
     """Create an AttachmentProcessor with the test cache directory."""
     proc = AttachmentProcessor(cache_dir=test_cache_dir)
     yield proc
@@ -272,6 +272,22 @@ class TestServerEndpoint:
 @pytest.mark.usefixtures('override_attachment_cache_dir')
 class TestSchemaEndpoint:
     """Integration tests for the /schema/{hash} endpoint."""
+
+    def test_schema_request_accepts_new_and_legacy_sampling_field_names(self) -> None:
+        """SchemaRequest accepts clearer row-count names without breaking old clients."""
+        use_case = 'This is a test use case for analysis'
+
+        parsed_new = SchemaRequest.model_validate(
+            {'use_case': use_case, 'num_sample_rows': 10, 'num_head_rows': 5}
+        )
+        assert parsed_new.num_sample_rows == 10
+        assert parsed_new.num_head_rows == 5
+
+        parsed_legacy = SchemaRequest.model_validate(
+            {'use_case': use_case, 'sample_size': 9, 'head_size': 4}
+        )
+        assert parsed_legacy.num_sample_rows == 9
+        assert parsed_legacy.num_head_rows == 4
 
     def test_schema_endpoint_404_for_unknown_hash(self) -> None:
         """Test that /schema/{hash} returns 404 for unknown hash."""

@@ -20,7 +20,7 @@ import pandas as pd
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi import Path as PathParam
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from app.analysis import AnalysisRequest, analyze_dataset
 from app.config import (
@@ -148,8 +148,18 @@ class SchemaRequest(BaseModel):
     """Request model for /schema endpoint."""
 
     use_case: str = Field(..., min_length=10, description='Description of intended data analysis')
-    sample_size: int = Field(default=SCHEMA_DEFAULT_SAMPLE_SIZE, ge=1, le=100)
-    head_size: int = Field(default=SCHEMA_DEFAULT_HEAD_SIZE, ge=1, le=20)
+    num_sample_rows: int = Field(
+        default=SCHEMA_DEFAULT_SAMPLE_SIZE,
+        ge=1,
+        le=100,
+        validation_alias=AliasChoices('num_sample_rows', 'sample_size'),
+    )
+    num_head_rows: int = Field(
+        default=SCHEMA_DEFAULT_HEAD_SIZE,
+        ge=1,
+        le=20,
+        validation_alias=AliasChoices('num_head_rows', 'head_size'),
+    )
 
 
 class SchemaResponse(BaseModel):
@@ -613,11 +623,11 @@ async def generate_schema_endpoint(
     df = pd.read_csv(cleaned_csv)
 
     # Get head rows
-    head_rows = df.head(request.head_size).to_dict('records')
+    head_rows = df.head(request.num_head_rows).to_dict('records')
 
     # Get random sample (excluding head rows)
-    remaining_df = df.iloc[request.head_size :]
-    sample_count = min(request.sample_size, len(remaining_df))
+    remaining_df = df.iloc[request.num_head_rows :]
+    sample_count = min(request.num_sample_rows, len(remaining_df))
     random_rows = remaining_df.sample(n=sample_count).to_dict('records') if sample_count > 0 else []
 
     max_sample_tokens = 50_000
