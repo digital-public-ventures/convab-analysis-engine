@@ -1,4 +1,4 @@
-Based on the following use case and sample data, design a comprehensive tagging schema.
+Based on the following use case and sample data, design a comprehensive public comments analysis schema. The use describes what the public is being asked to comment on.
 
 USE CASE:
 {use_case}

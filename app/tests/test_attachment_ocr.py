@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import threading
 import time
 from pathlib import Path
@@ -10,15 +11,26 @@ from typing import Any, cast
 from urllib.parse import urlparse
 
 import pytest
+from PIL import Image
 
 from app.config import OCR_GLOBAL_CONCURRENCY
 from app.processing import cleaner as cleaner_module
-from app.processing.attachment import AttachmentProcessor, _extract_text_from_ocr_results, _run_ocr, is_valid_url
+from app.processing.attachment import AttachmentProcessor, _extract_text_from_ocr_results, _ocr_image_bytes, _run_ocr, is_valid_url
 from app.processing.cache import content_hash, get_cached_text
 from app.processing.cleaner import clean_csv, has_attachment_extension
 
 FIXTURES_ROOT = Path(__file__).parent / "fixtures"
 RESPONSES_CSV = FIXTURES_ROOT / "responses_100.csv"
+REGRESSION_PDF = Path(
+    "app/data/15bfafc41815164b0c19fa3996d72123f391d1ea740cf85b49c0f27c56aa8447/downloads/1c397ba7_attachment_1.pdf"
+)
+GARBLED_BASELINE_EXCERPT = """
+p administration's push to expand at-will employment through the so-called "Schedule
+re ule is not about efficienc or accuntability. It is a blatant power gracloake
+rything he touches, Trump deflects blame, scapegoats entire communities, and denies
+ty—but even proposing this policy is an insult to working people, to democracy, and tc
+rumanity.
+"""
 
 
 def _first_attachment_url(csv_path: Path) -> str:
@@ -60,6 +72,33 @@ def test_run_ocr_uses_engine_ocr() -> None:
     image = object()
     assert _run_ocr(FakeOCR(), image) == "Text"
     assert calls == [{"image": image}]
+
+
+def test_ocr_image_bytes_applies_margin_and_white_flatten() -> None:
+    source = Image.new("RGBA", (10, 10), (0, 0, 0, 0))
+    for x in range(3, 7):
+        for y in range(3, 7):
+            source.putpixel((x, y), (0, 0, 0, 255))
+
+    buffer = io.BytesIO()
+    source.save(buffer, format="PNG")
+    content = buffer.getvalue()
+
+    captured_shapes: list[tuple[int, int, int]] = []
+    captured_pixels: list[tuple[int, int, int]] = []
+
+    class FakeOCR:
+        def predict(self, image: object) -> list[dict[str, Any]]:
+            arr = cast("Any", image)
+            captured_shapes.append(tuple(arr.shape))
+            captured_pixels.append(tuple(int(v) for v in arr[0, 0]))
+            return [{"rec_texts": ["ok"], "rec_scores": [0.9]}]
+
+    text = _ocr_image_bytes(content, FakeOCR())
+
+    assert text == "ok"
+    assert captured_shapes == [(70, 70, 3)]
+    assert captured_pixels == [(255, 255, 255)]
 
 
 @pytest.mark.asyncio
@@ -203,3 +242,26 @@ async def test_clean_csv_uses_pdf_ocr_pipeline(tmp_path: Path) -> None:
     await clean_csv(RESPONSES_CSV, processor=processor, output_dir=tmp_path)
     assert processor.use_ocr_values
     assert all(processor.use_ocr_values)
+
+
+@pytest.mark.skipif(not REGRESSION_PDF.exists(), reason="Regression PDF fixture not present in workspace")
+def test_pdf_ocr_regression_text_quality(tmp_path: Path) -> None:
+    processor = AttachmentProcessor(cache_dir=tmp_path)
+    text, error = processor.extract_text_safe(str(REGRESSION_PDF), use_ocr=True, no_cache_ocr=True)
+
+    assert error is None
+    assert text is not None
+
+    higher_quality_phrases = [
+        "To Whom It May Concern",
+        "trustworthiness here is virtually nonexistent",
+        "our shared humanity",
+        "while protecting employers from any obligation to fairness",
+        "very mechanisms that ensure nonpartisan integrity",
+        "You cannot defend democracy while gutting its core institutions",
+    ]
+
+    baseline = GARBLED_BASELINE_EXCERPT
+    for phrase in higher_quality_phrases:
+        assert phrase in text
+        assert phrase not in baseline

@@ -22,6 +22,7 @@ from app.config import (
     DEFAULT_TIMEOUT,
     IMAGE_EXTENSIONS,
     OCR_GLOBAL_CONCURRENCY,
+    OCR_IMAGE_MARGIN_PX,
     PDF_OCR_MIN_TEXT_CHARS,
     PDF_OCR_RENDER_DPI,
 )
@@ -241,24 +242,12 @@ class DOCXExtractor:
 
 def _ocr_pixmap(pixmap: "fitz.Pixmap", ocr_engine: "PaddleOCR") -> str:
     """Run OCR on a PyMuPDF pixmap."""
-    try:
-        import numpy as np
-    except ImportError as err:
-        raise ImportError("numpy is required for OCR. Install with: uv add numpy") from err
-
-    img = np.frombuffer(pixmap.samples, dtype=np.uint8).reshape(
-        pixmap.height,
-        pixmap.width,
-        pixmap.n,
-    )
-    if pixmap.n == 4:
-        img = img[:, :, :3]
-
-    return _run_ocr(ocr_engine, img)
+    png_bytes = pixmap.tobytes("png")
+    return _ocr_image_bytes(png_bytes, ocr_engine)
 
 
-def _ocr_image_bytes(content: bytes, ocr_engine: "PaddleOCR") -> str:
-    """Run OCR on encoded image bytes."""
+def _preprocess_image_for_ocr(image: object) -> object:
+    """Normalize image before OCR: transparent margin + white flatten + RGB array."""
     try:
         import numpy as np
     except ImportError as err:
@@ -269,8 +258,34 @@ def _ocr_image_bytes(content: bytes, ocr_engine: "PaddleOCR") -> str:
     except ImportError as err:
         raise ImportError("pillow is required for image OCR. Install with: uv add pillow") from err
 
-    image = Image.open(io.BytesIO(content)).convert("RGB")
-    return _run_ocr(ocr_engine, np.array(image))
+    rgba = cast("Image.Image", image).convert("RGBA")
+    margin = max(0, OCR_IMAGE_MARGIN_PX)
+
+    if margin > 0:
+        expanded = Image.new(
+            "RGBA",
+            (rgba.width + 2 * margin, rgba.height + 2 * margin),
+            (0, 0, 0, 0),
+        )
+        expanded.paste(rgba, (margin, margin), rgba)
+    else:
+        expanded = rgba
+
+    white_underlay = Image.new("RGBA", expanded.size, (255, 255, 255, 255))
+    flattened = Image.alpha_composite(white_underlay, expanded).convert("RGB")
+    return np.array(flattened)
+
+
+def _ocr_image_bytes(content: bytes, ocr_engine: "PaddleOCR") -> str:
+    """Run OCR on encoded image bytes."""
+    try:
+        from PIL import Image
+    except ImportError as err:
+        raise ImportError("pillow is required for image OCR. Install with: uv add pillow") from err
+
+    image = Image.open(io.BytesIO(content))
+    prepared = _preprocess_image_for_ocr(image)
+    return _run_ocr(ocr_engine, prepared)
 
 
 def _extract_text_from_ocr_results(results: list[dict]) -> str:
@@ -453,21 +468,8 @@ class AttachmentProcessor:
 
     def _extract_image_text(self, content: bytes) -> str:
         """Extract text from an image using OCR."""
-        try:
-            import numpy as np
-        except ImportError as err:
-            raise ImportError("numpy is required for OCR. Install with: uv add numpy") from err
-
-        try:
-            from PIL import Image
-        except ImportError as err:
-            raise ImportError("pillow is required for image OCR. Install with: uv add pillow") from err
-
         ocr_engine = self._get_ocr_engine()
-        image = Image.open(io.BytesIO(content)).convert("RGB")
-        img_array = np.array(image)
-
-        return _run_ocr(ocr_engine, img_array)
+        return _ocr_image_bytes(content, ocr_engine)
 
     async def _extract_image_text_async(self, content: bytes) -> str:
         """Extract text from an image using OCR (async wrapper)."""
