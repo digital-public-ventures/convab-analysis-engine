@@ -1,0 +1,31 @@
+I need help analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.
+
+The comments come from diverse stakeholders:
+- Individual patients sharing personal experiences with medical credit cards
+- Healthcare providers describing their practices and observations
+- Financial services companies defending or explaining their products
+- Consumer advocacy organizations highlighting systemic issues
+- Healthcare industry associations providing market data
+- Legal and policy experts offering regulatory recommendations
+
+I want a schema output that defines both categorical and scalar values for visualization and pattern discovery. The output should help answer questions like:
+
+1. What are the most common harms or benefits reported by patients?
+2. Which specific companies or products are mentioned most frequently?
+3. What regulatory actions are commenters recommending?
+4. Are there health equity disparities in who is affected by these products?
+5. How do experiences differ between those who found the products helpful vs. harmful?
+6. What is the relationship between financial assistance availability and medical payment product usage?
+7. What are the downstream impacts (credit reporting, collections, health outcomes)?
+
+The output should capture:
+- Stakeholder type and perspective
+- Whether the stakeholder belongs to a vulnerable population (veteran, student, senior, single mom, etc...)
+- Sentiment and position on medical payment products
+- Specific financial products, companies, or providers mentioned
+- Personal narrative elements (experiences, outcomes, emotional tone)
+- Policy recommendations and regulatory suggestions
+- Demographic and geographic indicators when available
+- References to specific RFI questions being addressed
+- Urgency of concern(s)
+- Seriousness of life impact

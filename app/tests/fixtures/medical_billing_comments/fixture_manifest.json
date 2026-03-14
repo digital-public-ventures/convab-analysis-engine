@@ -1,0 +1,6 @@
+{
+  "dataset_name": "medical_billing_comments",
+  "input_csv": "responses_100.csv",
+  "prompt_dir": "example_prompts",
+  "content_hash": "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"
+}

@@ -12,8 +12,9 @@ import httpx
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES_ROOT = REPO_ROOT / 'app' / 'tests' / 'fixtures'
-PROMPTS_DIR = FIXTURES_ROOT / 'example_prompts'
-RESPONSES_CSV = FIXTURES_ROOT / 'responses_100.csv'
+EXAMPLE_DATASET_DIR = FIXTURES_ROOT / 'medical_billing_comments'
+PROMPTS_DIR = EXAMPLE_DATASET_DIR / 'example_prompts'
+RESPONSES_CSV = EXAMPLE_DATASET_DIR / 'responses_100.csv'
 DATA_DIR = REPO_ROOT / 'app' / 'data'
 DEFAULT_BASE_URL = 'http://127.0.0.1:8000'
 
@@ -81,7 +82,7 @@ def _parse_args() -> argparse.Namespace:
         '--input-csv',
         type=Path,
         default=RESPONSES_CSV,
-        help='Path to input CSV for /clean (default: app/tests/fixtures/responses_100.csv)',
+        help='Path to input CSV for /clean (default: app/tests/fixtures/medical_billing_comments/responses_100.csv)',
     )
     parser.add_argument(
         '--base-url',

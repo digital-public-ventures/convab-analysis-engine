@@ -15,12 +15,19 @@ from PIL import Image
 
 from app.config import OCR_GLOBAL_CONCURRENCY
 from app.processing import cleaner as cleaner_module
-from app.processing.attachment import AttachmentProcessor, _extract_text_from_ocr_results, _ocr_image_bytes, _run_ocr, is_valid_url
+from app.processing.attachment import (
+    AttachmentProcessor,
+    _extract_text_from_ocr_results,
+    _ocr_image_bytes,
+    _run_ocr,
+    is_valid_url,
+)
 from app.processing.cache import content_hash, get_cached_text
 from app.processing.cleaner import clean_csv, has_attachment_extension
 
 FIXTURES_ROOT = Path(__file__).parent / "fixtures"
-RESPONSES_CSV = FIXTURES_ROOT / "responses_100.csv"
+EXAMPLE_DATASET_DIR = FIXTURES_ROOT / "medical_billing_comments"
+RESPONSES_CSV = EXAMPLE_DATASET_DIR / "responses_100.csv"
 REGRESSION_PDF = Path(
     "app/data/15bfafc41815164b0c19fa3996d72123f391d1ea740cf85b49c0f27c56aa8447/downloads/1c397ba7_attachment_1.pdf"
 )
@@ -44,7 +51,7 @@ def _first_attachment_url(csv_path: Path) -> str:
                 for url in urls:
                     if is_valid_url(url) and has_attachment_extension(url):
                         return url
-    raise AssertionError("No attachment URL found in responses_100.csv")
+    raise AssertionError("No attachment URL found in the medical_billing_comments fixture")
 
 
 def test_extract_text_from_ocr_results_expected_format() -> None:

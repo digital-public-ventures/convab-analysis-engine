@@ -34,9 +34,10 @@ from app.server import app
 BASE_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = BASE_DIR.parent
 FIXTURES_ROOT = REPO_ROOT / "app" / "tests" / "fixtures"
-PROMPTS_DIR = FIXTURES_ROOT / "example_prompts"
-RESPONSES_CSV = FIXTURES_ROOT / "responses_100.csv"
-HARDCODED_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"  # pragma: allowlist secret
+EXAMPLE_DATASET_DIR = FIXTURES_ROOT / "medical_billing_comments"
+PROMPTS_DIR = EXAMPLE_DATASET_DIR / "example_prompts"
+RESPONSES_CSV = EXAMPLE_DATASET_DIR / "responses_100.csv"
+EXAMPLE_DATASET_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"  # pragma: allowlist secret
 SCHEMA_CACHE_BYPASS = True
 RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "prompts" / "response_schema.json"
 os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "true"
@@ -128,9 +129,9 @@ def _prepare_runtime_data_dir(tmp_path: Path) -> Path:
     downloads_dir = FIXTURES_ROOT / "downloads"
     if downloads_dir.exists():
         shutil.copytree(downloads_dir, runtime_data_dir / "downloads")
-    fixture_hash_dir = FIXTURES_ROOT / HARDCODED_HASH
+    fixture_hash_dir = FIXTURES_ROOT / EXAMPLE_DATASET_HASH
     if fixture_hash_dir.exists():
-        shutil.copytree(fixture_hash_dir, runtime_data_dir / HARDCODED_HASH)
+        shutil.copytree(fixture_hash_dir, runtime_data_dir / EXAMPLE_DATASET_HASH)
     return runtime_data_dir
 
 
@@ -167,12 +168,12 @@ def test_clean_data(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         pytest.fail("GEMINI_API_KEY environment variable not set")
 
     runtime_data_dir = _prepare_runtime_data_dir(tmp_path)
-    _clear_fixtures_outputs(runtime_data_dir, HARDCODED_HASH, "cleaned_data")
+    _clear_fixtures_outputs(runtime_data_dir, EXAMPLE_DATASET_HASH, "cleaned_data")
     content = RESPONSES_CSV.read_bytes()
     expected_hash = DataStore.hash_content(content)
     data_store = _bind_runtime_data_dir(monkeypatch, runtime_data_dir)
 
-    cleaned_fixture_dir = runtime_data_dir / HARDCODED_HASH / "cleaned_data"
+    cleaned_fixture_dir = runtime_data_dir / EXAMPLE_DATASET_HASH / "cleaned_data"
     if cleaned_fixture_dir.exists():
         for file_path in cleaned_fixture_dir.glob("*"):
             if file_path.is_file():
@@ -190,7 +191,7 @@ def test_clean_data(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         content_hash = clean_payload.get("hash")
         if content_hash != expected_hash:
             pytest.fail("Clean response hash did not match computed hash")
-        if content_hash != HARDCODED_HASH:
+        if content_hash != EXAMPLE_DATASET_HASH:
             pytest.fail("Clean response hash did not match the hardcoded test hash")
 
         job_id = clean_payload.get("job_id")
@@ -203,7 +204,7 @@ def test_clean_data(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         if not hash_dir.exists():
             pytest.fail("Hash directory was not created under fixtures")
 
-        cleaned_csv = data_store.get_cleaned_csv(HARDCODED_HASH)
+        cleaned_csv = data_store.get_cleaned_csv(EXAMPLE_DATASET_HASH)
         if not cleaned_csv:
             pytest.fail("Cleaned CSV was not created")
 
@@ -256,7 +257,7 @@ def test_schema_generation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> N
     file_handler = _setup_file_logger(tmp_path / "e2e_schema_generation.log")
     try:
         load_dotenv()
-        _clear_fixtures_outputs(runtime_data_dir, HARDCODED_HASH, "schema")
+        _clear_fixtures_outputs(runtime_data_dir, EXAMPLE_DATASET_HASH, "schema")
         if not os.environ.get("GEMINI_API_KEY"):
             pytest.fail("GEMINI_API_KEY environment variable not set")
 
@@ -267,7 +268,7 @@ def test_schema_generation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> N
         prompts_dir = runtime_data_dir / PROMPTS_DIR.name
         use_case = _load_prompt(prompts_dir / "use_case.txt")
 
-        cleaned_csv = data_store.get_cleaned_csv(HARDCODED_HASH)
+        cleaned_csv = data_store.get_cleaned_csv(EXAMPLE_DATASET_HASH)
         if not cleaned_csv:
             pytest.fail("Cleaned CSV was not found for schema generation")
 
@@ -335,7 +336,7 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     runtime_data_dir = _prepare_runtime_data_dir(tmp_path)
     file_handler = _setup_file_logger(tmp_path / "e2e_analyze.log")
     load_dotenv()
-    _clear_fixtures_outputs(runtime_data_dir, HARDCODED_HASH, "analyzed")
+    _clear_fixtures_outputs(runtime_data_dir, EXAMPLE_DATASET_HASH, "analyzed")
     if not os.environ.get("GEMINI_API_KEY"):
         pytest.fail("GEMINI_API_KEY environment variable not set")
 
@@ -346,7 +347,7 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     use_case = _load_prompt(prompts_dir / "use_case.txt")
     system_prompt = _load_prompt(prompts_dir / "system_prompt.txt")
 
-    schema_fixture = runtime_data_dir / HARDCODED_HASH / "schema" / "schema.json"
+    schema_fixture = runtime_data_dir / EXAMPLE_DATASET_HASH / "schema" / "schema.json"
     if not schema_fixture.exists():
         pytest.fail("Schema fixture was missing for hardcoded hash")
 
@@ -355,7 +356,7 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     with TestClient(app) as client:
         analyze_response = client.post(
             "/analyze?no_cache=true",
-            json={"hash": HARDCODED_HASH, "use_case": use_case, "system_prompt": system_prompt},
+            json={"hash": EXAMPLE_DATASET_HASH, "use_case": use_case, "system_prompt": system_prompt},
         )
         if analyze_response.status_code != HTTPStatus.ACCEPTED:
             pytest.fail(f"Expected 202 status, got {analyze_response.status_code}")
@@ -369,15 +370,15 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
 
     expected_headers = _expected_headers(cast("dict[str, Any]", schema))
 
-    cleaned_csv = data_store.get_cleaned_csv(HARDCODED_HASH)
+    cleaned_csv = data_store.get_cleaned_csv(EXAMPLE_DATASET_HASH)
     if not cleaned_csv:
         pytest.fail("Cleaned CSV was not created")
 
-    csv_path = data_store.get_analyzed_csv(HARDCODED_HASH, ANALYSIS_CSV_FILENAME)
+    csv_path = data_store.get_analyzed_csv(EXAMPLE_DATASET_HASH, ANALYSIS_CSV_FILENAME)
     if not csv_path or not csv_path.exists():
         pytest.fail("analysis.csv was not created")
 
-    json_path = data_store.get_analyzed_json(HARDCODED_HASH, ANALYSIS_JSON_FILENAME)
+    json_path = data_store.get_analyzed_json(EXAMPLE_DATASET_HASH, ANALYSIS_JSON_FILENAME)
     if not json_path or not json_path.exists():
         pytest.fail("analysis.json was not created")
 
@@ -487,18 +488,18 @@ def test_tag_fix_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     logging.basicConfig(level=logging.DEBUG)
     load_dotenv()
     runtime_data_dir = _prepare_runtime_data_dir(tmp_path)
-    _clear_fixtures_outputs(runtime_data_dir, HARDCODED_HASH, "post_processing")
+    _clear_fixtures_outputs(runtime_data_dir, EXAMPLE_DATASET_HASH, "post_processing")
     if not os.environ.get("GEMINI_API_KEY"):
         pytest.fail("GEMINI_API_KEY environment variable not set")
 
     _bind_runtime_data_dir(monkeypatch, runtime_data_dir)
     monkeypatch.setattr(server_module, "POST_PROCESSING_SUBDIR", "post_processing")
 
-    analysis_csv = runtime_data_dir / HARDCODED_HASH / "analyzed" / ANALYSIS_CSV_FILENAME
+    analysis_csv = runtime_data_dir / EXAMPLE_DATASET_HASH / "analyzed" / ANALYSIS_CSV_FILENAME
     if not analysis_csv.exists():
         pytest.fail("analysis.csv fixture was missing for hardcoded hash")
 
-    post_processing_dir = runtime_data_dir / HARDCODED_HASH / "post_processing"
+    post_processing_dir = runtime_data_dir / EXAMPLE_DATASET_HASH / "post_processing"
     post_processing_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy(analysis_csv, post_processing_dir / TAG_FIX_DEDUPED_CSV_FILENAME)
     (post_processing_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
@@ -509,7 +510,7 @@ def test_tag_fix_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     with TestClient(app) as client:
         tag_fix_response = client.post(
             "/tag-fix",
-            json={"hash": HARDCODED_HASH},
+            json={"hash": EXAMPLE_DATASET_HASH},
         )
         if tag_fix_response.status_code != HTTPStatus.ACCEPTED:
             pytest.fail(f"Expected 202 status, got {tag_fix_response.status_code}")
