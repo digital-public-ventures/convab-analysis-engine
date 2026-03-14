@@ -9,7 +9,7 @@ import time
 import uuid
 from http import HTTPStatus
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 import pytest
@@ -18,154 +18,31 @@ from fastapi.testclient import TestClient
 from app import config as app_config
 from app import server as server_module
 from app import server_jobs as server_jobs_module
-from app.config import POST_PROCESSING_SUBDIR, TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
+from app.config import TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
 from app.dedup import TagDedupOutput
-from app.processing.job_store import JobStore
 from app.server import app
+from app.tests.job_test_helpers import (
+    FIXTURE_SCHEMA,
+    STREAMING_BATCH_THRESHOLD,
+    TEST_CSV,
+    copy_if_different,
+    expect_status,
+    expect_truthy,
+    poll_until_complete,
+    poll_until_terminal,
+    seed_analysis_outputs,
+    seed_tag_fix_outputs,
+    track_add_results_calls,
+    track_results_before_completion,
+    write_temp_csv,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
     from app.analysis import AnalysisConfig, AnalysisRequest
 
-HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
-FIXTURES_DIR = Path(__file__).parent / 'fixtures' / HASH_VALUE
-TEST_CSV = FIXTURES_DIR / 'responses.csv'
-FIXTURE_SCHEMA = FIXTURES_DIR / 'schema' / 'schema.json'
-FIXTURE_ANALYSIS_DIR = FIXTURES_DIR / 'analyzed' / 'integration_test' / '20260131-215335'
-STREAMING_BATCH_THRESHOLD = 2
 pytestmark = pytest.mark.integration
-
-
-def _poll_until_complete(
-    client: TestClient,
-    job_id: str,
-    timeout_seconds: float = 20.0,
-) -> dict[str, Any]:
-    """Poll job status until completion or timeout."""
-    deadline = time.time() + timeout_seconds
-    while time.time() < deadline:
-        status_response = client.get(f'/jobs/{job_id}')
-        if status_response.status_code != HTTPStatus.OK:
-            pytest.fail(f'Expected 200 status, got {status_response.status_code}')
-        status_payload = cast('dict[str, Any]', status_response.json())
-        if status_payload.get('completed') is True:
-            return status_payload
-        time.sleep(0.25)
-    message = 'Timed out waiting for job completion'
-    pytest.fail(message)
-    raise AssertionError(message)
-
-
-def _poll_until_terminal(
-    client: TestClient,
-    job_id: str,
-    timeout_seconds: float = 20.0,
-) -> dict[str, Any]:
-    """Poll job status until completion or failure."""
-    deadline = time.time() + timeout_seconds
-    while time.time() < deadline:
-        status_response = client.get(f'/jobs/{job_id}')
-        _expect_status(status_response, HTTPStatus.OK)
-        status_payload = cast('dict[str, Any]', status_response.json())
-        if status_payload.get('completed') is True:
-            return status_payload
-        time.sleep(0.25)
-    message = 'Timed out waiting for job terminal status'
-    pytest.fail(message)
-    raise AssertionError(message)
-
-
-def _seed_analysis_outputs(content_hash: str) -> None:
-    """Seed cached schema + analysis outputs for the requested hash."""
-    hash_dir = app_config.DATA_DIR / content_hash
-    (hash_dir / 'schema').mkdir(parents=True, exist_ok=True)
-    (hash_dir / 'analyzed').mkdir(parents=True, exist_ok=True)
-
-    _copy_if_different(FIXTURE_SCHEMA, hash_dir / 'schema' / 'schema.json')
-    shutil.copy(FIXTURE_ANALYSIS_DIR / 'analysis.csv', hash_dir / 'analyzed' / 'analysis.csv')
-    shutil.copy(FIXTURE_ANALYSIS_DIR / 'analysis.json', hash_dir / 'analyzed' / 'analysis.json')
-
-
-def _seed_tag_fix_outputs(content_hash: str) -> None:
-    output_dir = app_config.DATA_DIR / content_hash / POST_PROCESSING_SUBDIR
-    output_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy(
-        FIXTURE_ANALYSIS_DIR / 'analysis.csv',
-        output_dir / TAG_FIX_DEDUPED_CSV_FILENAME,
-    )
-    (output_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
-        json.dumps({'seeded': True}),
-        encoding='utf-8',
-    )
-
-
-def _copy_if_different(source: Path, destination: Path) -> None:
-    if source.resolve() == destination.resolve():
-        return
-    shutil.copy(source, destination)
-
-
-def _expect_status(response: object, expected: HTTPStatus) -> None:
-    """Validate HTTP status for a response-like object."""
-    status_code = getattr(response, 'status_code', None)
-    if status_code != expected:
-        pytest.fail(f'Expected {expected} status, got {status_code}')
-
-
-def _expect_truthy(value: object, message: str) -> None:
-    """Fail the test if the value is falsy."""
-    if not value:
-        pytest.fail(message)
-
-
-def _track_results_before_completion(
-    monkeypatch: pytest.MonkeyPatch,
-) -> dict[str, bool]:
-    """Track whether results are added before completion is marked."""
-    state = {'add_called': False, 'marked_after_add': False}
-    original_add_results = JobStore.add_results
-    original_mark_completed = JobStore.mark_completed
-
-    def add_results(self: JobStore, job_id: str, rows: list[dict[str, object]]) -> None:
-        state['add_called'] = True
-        original_add_results(self, job_id, rows)
-
-    def mark_completed(self: JobStore, job_id: str) -> None:
-        if not state['add_called']:
-            pytest.fail('Expected results to be added before completion')
-        state['marked_after_add'] = True
-        original_mark_completed(self, job_id)
-
-    monkeypatch.setattr(JobStore, 'add_results', add_results)
-    monkeypatch.setattr(JobStore, 'mark_completed', mark_completed)
-    return state
-
-
-def _write_temp_csv(tmp_path: Path, rows: int) -> Path:
-    """Create a temporary CSV with unique IDs."""
-    df_source = pd.read_csv(TEST_CSV)
-    df_expanded = pd.concat([df_source] * max(1, rows // len(df_source) + 1), ignore_index=True)
-    df_expanded = df_expanded.head(rows)
-    id_column = df_expanded.columns[0]
-    df_expanded[id_column] = [f'{value}-{idx}' for idx, value in enumerate(df_expanded[id_column])]
-    temp_csv = tmp_path / 'responses.csv'
-    temp_csv.parent.mkdir(parents=True, exist_ok=True)
-    df_expanded.to_csv(temp_csv, index=False)
-    return temp_csv
-
-
-def _track_add_results_calls(monkeypatch: pytest.MonkeyPatch) -> dict[str, int]:
-    """Track how many times add_results is called."""
-    state = {'calls': 0}
-    original_add_results = JobStore.add_results
-
-    def add_results(self: JobStore, job_id: str, rows: list[dict[str, object]]) -> None:
-        state['calls'] += 1
-        original_add_results(self, job_id, rows)
-
-    monkeypatch.setattr(JobStore, 'add_results', add_results)
-    return state
 
 
 @pytest.mark.usefixtures('override_attachment_cache_dir')
@@ -181,36 +58,36 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             payload = response.json()
-            _expect_truthy(payload.get('job_id'), 'Expected job_id in response')
-            _expect_truthy(payload.get('hash'), 'Expected dataset hash in response')
-            _expect_truthy(payload.get('results_url'), 'Expected results_url in response')
+            expect_truthy(payload.get('job_id'), 'Expected job_id in response')
+            expect_truthy(payload.get('hash'), 'Expected dataset hash in response')
+            expect_truthy(payload.get('results_url'), 'Expected results_url in response')
 
             job_id = payload['job_id']
 
             early_results = client.get(f'/jobs/{job_id}/results')
-            _expect_status(early_results, HTTPStatus.OK)
+            expect_status(early_results, HTTPStatus.OK)
             early_payload = early_results.json()
             for key in ('rows', 'next_cursor'):
                 if key not in early_payload:
                     pytest.fail(f'Expected {key} in early results')
 
-            _poll_until_complete(client, job_id)
+            poll_until_complete(client, job_id)
 
             results_response = client.get(f'/jobs/{job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             results_payload = results_response.json()
 
             rows = results_payload.get('rows', [])
-            _expect_truthy(rows, 'Expected cleaned rows in results')
+            expect_truthy(rows, 'Expected cleaned rows in results')
             cursor = results_payload.get('next_cursor')
-            _expect_truthy(cursor, 'Expected cursor for follow-up polling')
+            expect_truthy(cursor, 'Expected cursor for follow-up polling')
             if results_payload.get('completed') is not True:
                 pytest.fail('Expected completed to be true')
 
             follow_up = client.get(f'/jobs/{job_id}/results', params={'cursor': cursor})
-            _expect_status(follow_up, HTTPStatus.OK)
+            expect_status(follow_up, HTTPStatus.OK)
             follow_payload = follow_up.json()
             if follow_payload.get('rows') != []:
                 pytest.fail('Expected no new rows after cursor')
@@ -233,7 +110,7 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             response_payload = response.json()
             job_id = response_payload['job_id']
             content_hash = response_payload['hash']
@@ -280,7 +157,7 @@ class TestAsyncJobHandling:
             df = pd.read_csv(input_path)
             await asyncio.sleep(0.3)
             output_dir = kwargs.get('output_dir')
-            save_dir = output_dir if isinstance(output_dir, Path) else FIXTURES_DIR
+            save_dir = output_dir if isinstance(output_dir, Path) else TEST_CSV.parent
             save_dir.mkdir(parents=True, exist_ok=True)
             output_path = save_dir / f'cleaned_{Path(input_path).name}'
             df.to_csv(output_path, index=False)
@@ -288,7 +165,7 @@ class TestAsyncJobHandling:
 
         monkeypatch.setattr(server_jobs_module, 'clean_csv', slow_clean_csv)
 
-        temp_csv = _write_temp_csv(tmp_path, rows=30)
+        temp_csv = write_temp_csv(tmp_path, rows=30)
         content = temp_csv.read_bytes()
         expected_hash = server_module.DataStore.hash_content(content)
         raw_input_path = app_config.DATA_DIR / expected_hash / 'input.csv'
@@ -300,7 +177,7 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             payload = response.json()
             if payload.get('hash') != expected_hash:
                 pytest.fail('Expected clean response hash to match uploaded content hash')
@@ -314,7 +191,7 @@ class TestAsyncJobHandling:
             if raw_input_path.read_bytes() != content:
                 pytest.fail('Expected persisted raw input bytes to match uploaded content')
 
-            _poll_until_complete(client, payload['job_id'])
+            poll_until_complete(client, payload['job_id'])
 
     def test_clean_job_streams_results_before_completion(
         self,
@@ -322,7 +199,7 @@ class TestAsyncJobHandling:
         tmp_path: Path,
     ) -> None:
         """Ensure clean jobs return partial results before completion."""
-        state = _track_results_before_completion(monkeypatch)
+        state = track_results_before_completion(monkeypatch)
 
         async def slow_clean_csv(input_path: str | Path, **kwargs: object) -> Path:
             output_dir = kwargs.get('output_dir')
@@ -346,7 +223,7 @@ class TestAsyncJobHandling:
                 if asyncio.iscoroutine(second_batch):
                     await second_batch
 
-            save_dir = output_dir if isinstance(output_dir, Path) else FIXTURES_DIR
+            save_dir = output_dir if isinstance(output_dir, Path) else TEST_CSV.parent
             save_dir.mkdir(parents=True, exist_ok=True)
             output_path = save_dir / f'cleaned_{Path(input_path).name}'
             df.to_csv(output_path, index=False)
@@ -368,10 +245,10 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             job_id = response.json()['job_id']
 
-            _poll_until_complete(client, job_id)
+            poll_until_complete(client, job_id)
 
         if not state['marked_after_add']:
             pytest.fail('Expected completion after results were added')
@@ -385,12 +262,12 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            expect_status(clean_response, HTTPStatus.ACCEPTED)
             clean_payload = clean_response.json()
             content_hash = clean_payload['hash']
 
-            _poll_until_complete(client, clean_payload['job_id'])
-            _seed_analysis_outputs(content_hash)
+            poll_until_complete(client, clean_payload['job_id'])
+            seed_analysis_outputs(content_hash)
 
             analyze_response = client.post(
                 '/analyze',
@@ -401,25 +278,25 @@ class TestAsyncJobHandling:
                 },
             )
 
-            _expect_status(analyze_response, HTTPStatus.ACCEPTED)
+            expect_status(analyze_response, HTTPStatus.ACCEPTED)
             analyze_payload = analyze_response.json()
-            _expect_truthy(analyze_payload.get('job_id'), 'Expected job_id in analyze response')
+            expect_truthy(analyze_payload.get('job_id'), 'Expected job_id in analyze response')
 
             analyze_job_id = analyze_payload['job_id']
-            _poll_until_complete(client, analyze_job_id)
+            poll_until_complete(client, analyze_job_id)
 
             results_response = client.get(f'/jobs/{analyze_job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             results_payload = results_response.json()
-            _expect_truthy(results_payload.get('rows'), 'Expected analysis rows')
+            expect_truthy(results_payload.get('rows'), 'Expected analysis rows')
             if results_payload.get('completed') is not True:
                 pytest.fail('Expected completed to be true')
 
             cursor = results_payload.get('next_cursor')
-            _expect_truthy(cursor, 'Expected cursor in analysis results')
+            expect_truthy(cursor, 'Expected cursor in analysis results')
 
             follow_up = client.get(f'/jobs/{analyze_job_id}/results', params={'cursor': cursor})
-            _expect_status(follow_up, HTTPStatus.OK)
+            expect_status(follow_up, HTTPStatus.OK)
             follow_payload = follow_up.json()
             if follow_payload.get('rows') != []:
                 pytest.fail('Expected no new rows after cursor')
@@ -465,7 +342,7 @@ class TestAsyncJobHandling:
             )
             return payload, csv_path.read_text(encoding='utf-8')
 
-        state = _track_results_before_completion(monkeypatch)
+        state = track_results_before_completion(monkeypatch)
 
         monkeypatch.setattr(server_jobs_module, 'analyze_dataset', slow_analyze_dataset)
 
@@ -483,15 +360,15 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            expect_status(clean_response, HTTPStatus.ACCEPTED)
             clean_payload = clean_response.json()
             content_hash = clean_payload['hash']
-            _poll_until_complete(client, clean_payload['job_id'])
+            poll_until_complete(client, clean_payload['job_id'])
 
             hash_dir = app_config.DATA_DIR / content_hash
             schema_dir = hash_dir / 'schema'
             schema_dir.mkdir(parents=True, exist_ok=True)
-            _copy_if_different(FIXTURE_SCHEMA, schema_dir / 'schema.json')
+            copy_if_different(FIXTURE_SCHEMA, schema_dir / 'schema.json')
 
             analyze_response = client.post(
                 '/analyze',
@@ -502,10 +379,10 @@ class TestAsyncJobHandling:
                 },
             )
 
-            _expect_status(analyze_response, HTTPStatus.ACCEPTED)
+            expect_status(analyze_response, HTTPStatus.ACCEPTED)
             analyze_job_id = analyze_response.json()['job_id']
 
-            _poll_until_complete(client, analyze_job_id)
+            poll_until_complete(client, analyze_job_id)
 
         if not state['marked_after_add']:
             pytest.fail('Expected completion after results were added')
@@ -532,37 +409,37 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            expect_status(clean_response, HTTPStatus.ACCEPTED)
             clean_payload = clean_response.json()
             content_hash = clean_payload['hash']
 
-            _poll_until_complete(client, clean_payload['job_id'])
-            _seed_analysis_outputs(content_hash)
+            poll_until_complete(client, clean_payload['job_id'])
+            seed_analysis_outputs(content_hash)
 
             tag_fix_response = client.post(
                 '/tag-fix',
                 json={'hash': content_hash},
             )
 
-            _expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
+            expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
             tag_fix_payload = tag_fix_response.json()
-            _expect_truthy(tag_fix_payload.get('job_id'), 'Expected job_id in tag-fix response')
+            expect_truthy(tag_fix_payload.get('job_id'), 'Expected job_id in tag-fix response')
 
             tag_fix_job_id = tag_fix_payload['job_id']
-            _poll_until_complete(client, tag_fix_job_id)
+            poll_until_complete(client, tag_fix_job_id)
 
             results_response = client.get(f'/jobs/{tag_fix_job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             results_payload = results_response.json()
-            _expect_truthy(results_payload.get('rows'), 'Expected tag-fix rows')
+            expect_truthy(results_payload.get('rows'), 'Expected tag-fix rows')
             if results_payload.get('completed') is not True:
                 pytest.fail('Expected completed to be true')
 
             cursor = results_payload.get('next_cursor')
-            _expect_truthy(cursor, 'Expected cursor in tag-fix results')
+            expect_truthy(cursor, 'Expected cursor in tag-fix results')
 
             follow_up = client.get(f'/jobs/{tag_fix_job_id}/results', params={'cursor': cursor})
-            _expect_status(follow_up, HTTPStatus.OK)
+            expect_status(follow_up, HTTPStatus.OK)
             follow_payload = follow_up.json()
             if follow_payload.get('rows') != []:
                 pytest.fail('Expected no new rows after cursor')
@@ -578,34 +455,34 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            expect_status(clean_response, HTTPStatus.ACCEPTED)
             clean_payload = clean_response.json()
             content_hash = clean_payload['hash']
-            _poll_until_complete(client, clean_payload['job_id'])
+            poll_until_complete(client, clean_payload['job_id'])
 
-            _seed_analysis_outputs(content_hash)
-            _seed_tag_fix_outputs(content_hash)
+            seed_analysis_outputs(content_hash)
+            seed_tag_fix_outputs(content_hash)
 
             tag_fix_response = client.post(
                 '/tag-fix',
                 json={'hash': content_hash},
             )
 
-            _expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
+            expect_status(tag_fix_response, HTTPStatus.ACCEPTED)
             if tag_fix_response.json().get('cached') is not True:
                 pytest.fail('Expected cached response for tag-fix')
 
             tag_fix_job_id = tag_fix_response.json()['job_id']
-            _poll_until_complete(client, tag_fix_job_id)
+            poll_until_complete(client, tag_fix_job_id)
 
             results_response = client.get(f'/jobs/{tag_fix_job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             results_payload = results_response.json()
-            _expect_truthy(results_payload.get('rows'), 'Expected cached tag-fix rows')
+            expect_truthy(results_payload.get('rows'), 'Expected cached tag-fix rows')
 
     def test_clean_no_cache_bypasses_cached(self, tmp_path: Path) -> None:
         """Ensure no_cache forces a fresh clean job even when cached."""
-        temp_csv = _write_temp_csv(tmp_path, rows=25)
+        temp_csv = write_temp_csv(tmp_path, rows=25)
 
         with TestClient(app) as client:
             with temp_csv.open('rb') as handle:
@@ -614,9 +491,9 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(first_response, HTTPStatus.ACCEPTED)
+            expect_status(first_response, HTTPStatus.ACCEPTED)
             first_payload = first_response.json()
-            _poll_until_complete(client, first_payload['job_id'])
+            poll_until_complete(client, first_payload['job_id'])
 
             with temp_csv.open('rb') as handle:
                 cached_response = client.post(
@@ -624,7 +501,7 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(cached_response, HTTPStatus.ACCEPTED)
+            expect_status(cached_response, HTTPStatus.ACCEPTED)
             cached_payload = cached_response.json()
             if cached_payload.get('cached') is not True:
                 pytest.fail('Expected cached response on repeated clean')
@@ -635,7 +512,7 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(no_cache_response, HTTPStatus.ACCEPTED)
+            expect_status(no_cache_response, HTTPStatus.ACCEPTED)
             if no_cache_response.json().get('cached') is True:
                 pytest.fail('Expected no_cache to bypass cache')
 
@@ -645,8 +522,8 @@ class TestAsyncJobHandling:
         tmp_path: Path,
     ) -> None:
         """Large clean jobs should emit multiple result batches."""
-        state = _track_add_results_calls(monkeypatch)
-        temp_csv = _write_temp_csv(tmp_path, rows=450)
+        state = track_add_results_calls(monkeypatch)
+        temp_csv = write_temp_csv(tmp_path, rows=450)
 
         with TestClient(app) as client:
             with temp_csv.open('rb') as handle:
@@ -655,8 +532,8 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
-            _poll_until_complete(client, response.json()['job_id'])
+            expect_status(response, HTTPStatus.ACCEPTED)
+            poll_until_complete(client, response.json()['job_id'])
 
         if state['calls'] < STREAMING_BATCH_THRESHOLD:
             pytest.fail('Expected multiple add_results calls for large file')
@@ -694,15 +571,15 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             job_id = response.json()['job_id']
-            status_payload = _poll_until_terminal(client, job_id)
+            status_payload = poll_until_terminal(client, job_id)
 
             if status_payload.get('status') != 'failed':
                 pytest.fail('Expected failed status for clean job')
 
             results_response = client.get(f'/jobs/{job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             if not results_response.json().get('rows'):
                 pytest.fail('Expected partial results after failure')
 
@@ -737,11 +614,11 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response, HTTPStatus.ACCEPTED)
+            expect_status(response, HTTPStatus.ACCEPTED)
             payload = response.json()
             content_hash = payload['hash']
             job_id = payload['job_id']
-            status_payload = _poll_until_terminal(client, job_id)
+            status_payload = poll_until_terminal(client, job_id)
 
             if status_payload.get('status') != 'failed':
                 pytest.fail('Expected failed status for clean job')
@@ -755,7 +632,7 @@ class TestAsyncJobHandling:
                 pytest.fail('Did not expect finalized cleaned CSV after failure')
 
             data_response = client.get(f'/data/{content_hash}')
-            _expect_status(data_response, HTTPStatus.OK)
+            expect_status(data_response, HTTPStatus.OK)
             if data_response.json().get('has_cleaned_csv') is not False:
                 pytest.fail('Expected data endpoint to report no finalized cleaned CSV')
 
@@ -780,7 +657,7 @@ class TestAsyncJobHandling:
 
         monkeypatch.setattr(server_jobs_module, 'analyze_dataset', failing_analyze_dataset)
 
-        temp_csv = _write_temp_csv(tmp_path, rows=10)
+        temp_csv = write_temp_csv(tmp_path, rows=10)
 
         with TestClient(app) as client:
             with temp_csv.open('rb') as handle:
@@ -789,14 +666,14 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(clean_response, HTTPStatus.ACCEPTED)
+            expect_status(clean_response, HTTPStatus.ACCEPTED)
             clean_payload = clean_response.json()
-            _poll_until_complete(client, clean_payload['job_id'])
+            poll_until_complete(client, clean_payload['job_id'])
 
             hash_dir = app_config.DATA_DIR / clean_payload['hash']
             schema_dir = hash_dir / 'schema'
             schema_dir.mkdir(parents=True, exist_ok=True)
-            _copy_if_different(FIXTURE_SCHEMA, schema_dir / 'schema.json')
+            copy_if_different(FIXTURE_SCHEMA, schema_dir / 'schema.json')
 
             analyze_response = client.post(
                 '/analyze?no_cache=true',
@@ -807,15 +684,15 @@ class TestAsyncJobHandling:
                 },
             )
 
-            _expect_status(analyze_response, HTTPStatus.ACCEPTED)
+            expect_status(analyze_response, HTTPStatus.ACCEPTED)
             job_id = analyze_response.json()['job_id']
-            status_payload = _poll_until_terminal(client, job_id)
+            status_payload = poll_until_terminal(client, job_id)
 
             if status_payload.get('status') != 'failed':
                 pytest.fail('Expected failed status for analyze job')
 
             results_response = client.get(f'/jobs/{job_id}/results')
-            _expect_status(results_response, HTTPStatus.OK)
+            expect_status(results_response, HTTPStatus.OK)
             if not results_response.json().get('rows'):
                 pytest.fail('Expected partial results after analyze failure')
 
@@ -847,8 +724,8 @@ class TestAsyncJobHandling:
             return output_path
 
         monkeypatch.setattr(server_jobs_module, 'clean_csv', fast_clean_csv)
-        temp_csv_one = _write_temp_csv(tmp_path / 'one', rows=15)
-        temp_csv_two = _write_temp_csv(tmp_path / 'two', rows=18)
+        temp_csv_one = write_temp_csv(tmp_path / 'one', rows=15)
+        temp_csv_two = write_temp_csv(tmp_path / 'two', rows=18)
 
         with TestClient(app) as client:
             with temp_csv_one.open('rb') as handle:
@@ -863,20 +740,20 @@ class TestAsyncJobHandling:
                     files={'file': ('responses.csv', handle, 'text/csv')},
                 )
 
-            _expect_status(response_one, HTTPStatus.ACCEPTED)
-            _expect_status(response_two, HTTPStatus.ACCEPTED)
+            expect_status(response_one, HTTPStatus.ACCEPTED)
+            expect_status(response_two, HTTPStatus.ACCEPTED)
 
             job_one = response_one.json()['job_id']
             job_two = response_two.json()['job_id']
 
-            _poll_until_complete(client, job_one)
-            _poll_until_complete(client, job_two)
+            poll_until_complete(client, job_one)
+            poll_until_complete(client, job_two)
 
             results_one = client.get(f'/jobs/{job_one}/results')
             results_two = client.get(f'/jobs/{job_two}/results')
 
-            _expect_status(results_one, HTTPStatus.OK)
-            _expect_status(results_two, HTTPStatus.OK)
+            expect_status(results_one, HTTPStatus.OK)
+            expect_status(results_two, HTTPStatus.OK)
 
             if not results_one.json().get('rows'):
                 pytest.fail('Expected rows for first job')
