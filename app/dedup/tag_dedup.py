@@ -49,7 +49,7 @@ class FieldMapping:
 
 
 @dataclass(frozen=True)
-class TagFixOutput:
+class TagDedupOutput:
     mappings_path: Path
     deduped_csv_path: Path
 
@@ -178,7 +178,7 @@ def _write_mappings(mappings_path: Path, mappings: dict[str, dict[str, str]]) ->
     mappings_path.parent.mkdir(parents=True, exist_ok=True)
     mappings_path.write_text(json.dumps(mappings, indent=2), encoding="utf-8")
 
-async def run_tag_fix(
+async def deduplicate_tags(
     *,
     schema_path: Path,
     analysis_csv_path: Path,
@@ -187,7 +187,7 @@ async def run_tag_fix(
     thinking_level: str = ANALYSIS_THINKING_LEVEL,
     token_usage_file: Path = TOKEN_USAGE_FILE,
     api_key: str | None = None,
-) -> TagFixOutput:
+) -> TagDedupOutput:
     categorical_fields = _load_schema_fields(schema_path)
     if not categorical_fields:
         raise ValueError("No categorical fields found in schema.")
@@ -229,4 +229,4 @@ async def run_tag_fix(
     _write_mappings(mappings_path, mappings)
     _apply_mapping(analysis_csv_path, deduped_csv_path, mappings, categorical_fields)
 
-    return TagFixOutput(mappings_path=mappings_path, deduped_csv_path=deduped_csv_path)
+    return TagDedupOutput(mappings_path=mappings_path, deduped_csv_path=deduped_csv_path)

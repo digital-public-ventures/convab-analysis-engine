@@ -38,7 +38,7 @@ from app.config import (
     TAG_FIX_MAPPINGS_FILENAME,
     TAG_FIX_STREAM_CHUNK_SIZE,
 )
-from app.post_processing import TagFixOutput, run_tag_fix
+from app.dedup import TagDedupOutput, deduplicate_tags
 from app.processing import AttachmentProcessor, DataStore, clean_csv
 from app.processing.job_store import JobStatus, JobStore
 from app.schema import SchemaGenerator
@@ -135,10 +135,12 @@ def get_processor() -> AttachmentProcessor:
 class JobStartResponse(BaseModel):
     """Response model for async job creation."""
 
+    model_config = ConfigDict(populate_by_name=True)
+
     job_id: str
     status: str
     job_type: str
-    hash: str | None = None
+    content_hash: str | None = Field(default=None, alias='hash')
     cached: bool = False
     poll_url: str
     results_url: str
@@ -175,7 +177,9 @@ class SchemaResponse(BaseModel):
 class DataInfoResponse(BaseModel):
     """Response model for /data/{hash} endpoint."""
 
-    hash: str
+    model_config = ConfigDict(populate_by_name=True)
+
+    content_hash: str = Field(..., alias='hash')
     has_cleaned_csv: bool
     cleaned_file: str | None = None
     has_schema: bool
@@ -184,7 +188,9 @@ class DataInfoResponse(BaseModel):
 class AnalyzeRequest(BaseModel):
     """Request model for /analyze endpoint."""
 
-    hash: str = Field(..., min_length=10, description='Hash of the cleaned dataset')
+    model_config = ConfigDict(populate_by_name=True)
+
+    content_hash: str = Field(..., min_length=10, alias='hash', description='Hash of the cleaned dataset')
     use_case: str = Field(..., min_length=10, description='Description of intended analysis')
     system_prompt: str = Field(..., min_length=10, description='System prompt for analysis')
 
@@ -192,16 +198,20 @@ class AnalyzeRequest(BaseModel):
 class AnalyzeResponse(BaseModel):
     """Response model for /analyze endpoint."""
 
-    hash: str
+    model_config = ConfigDict(populate_by_name=True)
+
+    content_hash: str = Field(..., alias='hash')
     cached: bool = False
     analysis_json: dict
     analysis_csv: str
 
 
-class TagFixRequest(BaseModel):
+class TagDedupRequest(BaseModel):
     """Request model for /tag-fix endpoint."""
 
-    hash: str = Field(..., min_length=10, description='Hash of the analyzed dataset')
+    model_config = ConfigDict(populate_by_name=True)
+
+    content_hash: str = Field(..., min_length=10, alias='hash', description='Hash of the analyzed dataset')
 
 
 class JobProgress(BaseModel):
@@ -214,13 +224,15 @@ class JobProgress(BaseModel):
 class JobStatusResponse(BaseModel):
     """Response model for job status requests."""
 
+    model_config = ConfigDict(populate_by_name=True)
+
     job_id: str
     status: str
     job_type: str
     completed: bool
     error: str | None
     progress: JobProgress
-    hash: str | None = None
+    content_hash: str | None = Field(default=None, alias='hash')
 
 
 class JobResultsResponse(BaseModel):
@@ -357,7 +369,7 @@ async def _run_clean_job(job_id: str, content: bytes, content_hash: str, *, no_c
 
 
 async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
-    content_hash = request.hash
+    content_hash = request.content_hash
     _job_store.mark_running(job_id)
     job_started_at = time.monotonic()
     logger.debug(
@@ -440,11 +452,11 @@ async def _run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
         _job_store.mark_failed(job_id, str(exc))
 
 
-async def _run_tag_fix_job(job_id: str, request: TagFixRequest) -> None:
-    content_hash = request.hash
+async def _run_tag_dedup_job(job_id: str, request: TagDedupRequest) -> None:
+    content_hash = request.content_hash
     _job_store.mark_running(job_id)
     job_started_at = time.monotonic()
-    logger.debug('Tag-fix job %s started for hash %s...', job_id, content_hash[:12])
+    logger.debug('Tag dedup job %s started for hash %s...', job_id, content_hash[:12])
 
     analysis_csv = _data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
     if not analysis_csv:
@@ -459,7 +471,7 @@ async def _run_tag_fix_job(job_id: str, request: TagFixRequest) -> None:
     output_dir = _data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
 
     try:
-        result: TagFixOutput = await run_tag_fix(
+        result: TagDedupOutput = await deduplicate_tags(
             schema_path=schema_path,
             analysis_csv_path=analysis_csv,
             output_dir=output_dir,
@@ -468,12 +480,12 @@ async def _run_tag_fix_job(job_id: str, request: TagFixRequest) -> None:
         _job_store.set_total_rows(job_id, total_rows)
         _job_store.mark_completed(job_id)
         logger.debug(
-            'Tag-fix job %s completed in %.2fs',
+            'Tag dedup job %s completed in %.2fs',
             job_id,
             time.monotonic() - job_started_at,
         )
     except Exception as exc:  # pragma: no cover - defensive logging
-        logger.exception('Tag-fix job failed')
+        logger.exception('Tag dedup job failed')
         _job_store.mark_failed(job_id, str(exc))
 
 
@@ -499,7 +511,7 @@ async def clean_csv_endpoint(
 
     logger.debug('Received file: %s (hash: %s...)', file.filename, content_hash[:12])
 
-    job = _job_store.create_job('clean', metadata={'hash': content_hash})
+    job = _job_store.create_job('clean', metadata={'content_hash': content_hash})
     poll_url, results_url = _build_job_urls(job.job_id)
 
     existing = _data_store.get_cleaned_csv(content_hash)
@@ -513,7 +525,7 @@ async def clean_csv_endpoint(
             job_id=job.job_id,
             status=job.status,
             job_type=job.job_type,
-            hash=content_hash,
+            content_hash=content_hash,
             cached=True,
             poll_url=poll_url,
             results_url=results_url,
@@ -525,7 +537,7 @@ async def clean_csv_endpoint(
         job_id=job.job_id,
         status=job.status,
         job_type=job.job_type,
-        hash=content_hash,
+        content_hash=content_hash,
         cached=False,
         poll_url=poll_url,
         results_url=results_url,
@@ -549,7 +561,7 @@ async def get_job_status(job_id: str) -> JobStatusResponse:
             completed_rows=record.completed_rows,
             total_rows=record.total_rows,
         ),
-        hash=record.metadata.get('hash'),
+        content_hash=record.metadata.get('content_hash'),
     )
 
 
@@ -681,7 +693,7 @@ async def get_data_info(content_hash: str = PathParam(..., alias='hash')) -> Dat
     schema = _data_store.get_schema(content_hash)
 
     return DataInfoResponse(
-        hash=content_hash,
+        content_hash=content_hash,
         has_cleaned_csv=cleaned is not None,
         cleaned_file=cleaned.name if cleaned else None,
         has_schema=schema is not None,
@@ -695,7 +707,7 @@ async def analyze_dataset_endpoint(
     no_cache: bool = NO_CACHE_QUERY,
 ) -> JobStartResponse:
     """Start an analysis job and return the job id immediately."""
-    content_hash = request.hash
+    content_hash = request.content_hash
     logger.debug(
         '/analyze request received hash=%s no_cache=%s use_case_len=%d system_prompt_len=%d',
         content_hash,
@@ -711,7 +723,7 @@ async def analyze_dataset_endpoint(
             detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
         )
 
-    job = _job_store.create_job('analyze', metadata={'hash': content_hash})
+    job = _job_store.create_job('analyze', metadata={'content_hash': content_hash})
     poll_url, results_url = _build_job_urls(job.job_id)
 
     existing_json = _data_store.get_analyzed_json(content_hash, ANALYSIS_JSON_FILENAME)
@@ -742,7 +754,7 @@ async def analyze_dataset_endpoint(
                 job_id=job.job_id,
                 status=job.status,
                 job_type=job.job_type,
-                hash=content_hash,
+                content_hash=content_hash,
                 cached=True,
                 poll_url=poll_url,
                 results_url=results_url,
@@ -772,7 +784,7 @@ async def analyze_dataset_endpoint(
         job_id=job.job_id,
         status=job.status,
         job_type=job.job_type,
-        hash=content_hash,
+        content_hash=content_hash,
         cached=False,
         poll_url=poll_url,
         results_url=results_url,
@@ -781,12 +793,12 @@ async def analyze_dataset_endpoint(
 
 @app.post('/tag-fix', response_model=JobStartResponse, status_code=202)
 async def tag_fix_endpoint(
-    request: TagFixRequest,
+    request: TagDedupRequest,
     *,
     no_cache: bool = NO_CACHE_QUERY,
 ) -> JobStartResponse:
     """Start a tag-fix job and return the job id immediately."""
-    content_hash = request.hash
+    content_hash = request.content_hash
 
     if not _data_store.hash_exists(content_hash):
         raise HTTPException(
@@ -794,7 +806,7 @@ async def tag_fix_endpoint(
             detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
         )
 
-    job = _job_store.create_job('tag-fix', metadata={'hash': content_hash})
+    job = _job_store.create_job('tag_fix', metadata={'content_hash': content_hash})
     poll_url, results_url = _build_job_urls(job.job_id)
 
     output_dir = _data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
@@ -808,14 +820,14 @@ async def tag_fix_endpoint(
             job_id=job.job_id,
             status=job.status,
             job_type=job.job_type,
-            hash=content_hash,
+            content_hash=content_hash,
             cached=True,
             poll_url=poll_url,
             results_url=results_url,
         )
 
     _create_background_task(
-        _run_tag_fix_job(
+        _run_tag_dedup_job(
             job_id=job.job_id,
             request=request,
         )
@@ -825,7 +837,7 @@ async def tag_fix_endpoint(
         job_id=job.job_id,
         status=job.status,
         job_type=job.job_type,
-        hash=content_hash,
+        content_hash=content_hash,
         cached=False,
         poll_url=poll_url,
         results_url=results_url,

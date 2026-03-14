@@ -1,4 +1,4 @@
-"""Unit tests for tag-fix post-processing."""
+"""Unit tests for tag deduplication."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any
 
 import pytest
 
-from app.post_processing.tag_fix import run_tag_fix
+from app.dedup.tag_dedup import deduplicate_tags
 
 
 @pytest.mark.asyncio
@@ -17,7 +17,7 @@ from app.post_processing.tag_fix import run_tag_fix
     ("provider", "api_key_env"),
     [("gemini", "GEMINI_API_KEY"), ("openai", "OPENAI_API_KEY")],
 )
-async def test_run_tag_fix_writes_outputs(
+async def test_deduplicate_tags_writes_outputs(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     provider: str,
@@ -51,16 +51,16 @@ async def test_run_tag_fix_writes_outputs(
 
     monkeypatch.setenv("LLM_PROVIDER", provider)
     monkeypatch.setenv(api_key_env, "test")
-    monkeypatch.setattr("app.post_processing.tag_fix.create_llm_client", lambda *args, **kwargs: object())
+    monkeypatch.setattr("app.dedup.tag_dedup.create_llm_client", lambda *args, **kwargs: object())
     monkeypatch.setattr(
-        "app.post_processing.tag_fix.generate_structured_content",
+        "app.dedup.tag_dedup.generate_structured_content",
         fake_generate_structured_content,
     )
     model_id = "gemini-3-flash-preview" if provider == "gemini" else "gpt-5-mini"
     thinking_level = "LOW" if provider == "gemini" else "MEDIUM"
 
     output_dir = tmp_path / "output"
-    result = await run_tag_fix(
+    result = await deduplicate_tags(
         schema_path=schema_path,
         analysis_csv_path=analysis_csv,
         output_dir=output_dir,

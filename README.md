@@ -56,8 +56,8 @@ app/
 │   ├── model_config.py        # Provider-aware model configuration
 │   ├── rate_limiter.py        # Async rate limiter
 │   └── costs.py               # Token/cost tracking
-├── post_processing/
-│   └── tag_fix.py             # LLM-driven tag deduplication
+├── dedup/
+│   └── tag_dedup.py           # LLM-driven tag deduplication
 └── tests/                     # Unit and integration tests
 ```
 

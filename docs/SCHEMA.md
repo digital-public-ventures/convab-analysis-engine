@@ -4,7 +4,7 @@ The response analysis schema (`app/schema/prompts/response_schema_example.json`)
 
 ## How the runtime uses the schema
 
-The schema is loaded as JSON and its fields are discovered dynamically at runtime. `response_validation.py` iterates over five top-level groups — `enum_fields`, `categorical_fields`, `scalar_fields`, `key_quotes_fields`, `text_array_fields` — and reads `field_name`, constraints, and allowed values from each entry. No field names are hard-coded in the validation or prompt-building logic, so adding, renaming, or removing a field only requires editing the JSON file and (if applicable) updating the post-processing tag-fix step. In practice, field-name changes mostly affect the schema JSON and the analysis outputs rather than Python source code.
+The schema is loaded as JSON and its fields are discovered dynamically at runtime. `response_validation.py` iterates over five top-level groups — `enum_fields`, `categorical_fields`, `scalar_fields`, `key_quotes_fields`, `text_array_fields` — and reads `field_name`, constraints, and allowed values from each entry. No field names are hard-coded in the validation or prompt-building logic, so adding, renaming, or removing a field only requires editing the JSON file and (if applicable) updating the dedup step (`app/dedup/tag_dedup.py`). In practice, field-name changes mostly affect the schema JSON and the analysis outputs rather than Python source code.
 
 The schema generator (`schema/generator.py`) can merge additional fields from a per-dataset generated schema into the base schema, keyed by group name. Duplicate `field_name` values are skipped so the base definition always wins.
 
