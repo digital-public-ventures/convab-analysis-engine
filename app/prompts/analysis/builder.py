@@ -12,6 +12,18 @@ ANALYSIS_PROMPT_TEMPLATE = (PROMPTS_DIR / 'analysis_prompt.txt').read_text(encod
 CRITICAL_GUIDELINES = (PROMPTS_DIR / 'critical_guidelines.txt').read_text(encoding='utf-8')
 
 
+def _ordered_string_values(values: list[Any]) -> list[str]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = str(value).strip()
+        if not text or text in seen:
+            continue
+        ordered.append(text)
+        seen.add(text)
+    return ordered
+
+
 def summarize_schema(schema: dict[str, Any]) -> str:
     """Create a concise text summary of schema fields for prompting."""
     lines: list[str] = []
@@ -32,10 +44,20 @@ def summarize_schema(schema: dict[str, Any]) -> str:
         for field in categorical_fields:
             field_name = field.get('field_name', '').strip()
             description = field.get('description', '').strip()
-            suggested_values = field.get('suggested_values', [])
+            value_mode = str(field.get('value_mode', 'closed')).strip().lower()
+            guidance_values = _ordered_string_values(
+                [
+                    *field.get('required_values', []),
+                    *field.get('suggested_values', []),
+                ]
+            )
             allow_multiple = field.get('allow_multiple', False)
-            values_text = ', '.join(str(v) for v in suggested_values)
-            lines.append(f'- {field_name}: {description} | values: [{values_text}] | allow_multiple={allow_multiple}')
+            values_text = ', '.join(str(v) for v in guidance_values)
+            value_label = 'allowed_values' if value_mode == 'closed' else 'guidance_values'
+            lines.append(
+                f'- {field_name}: {description} | value_mode={value_mode} | '
+                f'{value_label}: [{values_text}] | allow_multiple={allow_multiple}'
+            )
 
     scalar_fields = schema.get('scalar_fields', [])
     if scalar_fields:

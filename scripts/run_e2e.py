@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -16,7 +17,19 @@ EXAMPLE_DATASET_DIR = FIXTURES_ROOT / 'medical_billing_comments'
 PROMPTS_DIR = EXAMPLE_DATASET_DIR / 'example_prompts'
 RESPONSES_CSV = EXAMPLE_DATASET_DIR / 'responses_100.csv'
 DATA_DIR = REPO_ROOT / 'app' / 'data'
-DEFAULT_BASE_URL = 'http://127.0.0.1:8000'
+PORT = 8010
+DEFAULT_BASE_URL = f'http://127.0.0.1:{PORT}'
+
+
+def _configure_csv_field_limit() -> None:
+    max_size = sys.maxsize
+    while max_size > 0:
+        try:
+            csv.field_size_limit(max_size)
+        except OverflowError:
+            max_size //= 10
+        else:
+            return
 
 
 def _load_prompt(path: Path) -> str:
@@ -76,6 +89,19 @@ def _validate_tag_fix_csv(csv_path: Path, schema: dict[str, Any], expected_rows:
                 raise AssertionError(f'Duplicate labels found for field {field}: {labels}')
 
 
+def _validate_analysis_csv(csv_path: Path, expected_rows: int) -> None:
+    with csv_path.open(newline='', encoding='utf-8') as handle:
+        reader = csv.DictReader(handle)
+        rows = list(reader)
+
+    if len(rows) != expected_rows:
+        raise AssertionError(f'Expected {expected_rows} analysis rows, got {len(rows)}')
+
+    record_ids = [row.get('record_id') for row in rows]
+    if len(record_ids) != len(set(record_ids)):
+        raise AssertionError('Duplicate record_id values found in analysis CSV')
+
+
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Run clean -> schema -> analyze -> tag-fix and validate outputs.')
     parser.add_argument(
@@ -99,6 +125,7 @@ def _parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    _configure_csv_field_limit()
     args = _parse_args()
     base_url = args.base_url
     input_csv = args.input_csv
@@ -173,10 +200,14 @@ def main() -> None:
 
     cleaned_csv = _resolve_cleaned_csv_path(content_hash)
     expected_rows = _count_rows(cleaned_csv)
+    analysis_csv = DATA_DIR / content_hash / 'analyzed' / 'analysis.csv'
+    if not analysis_csv.exists():
+        raise FileNotFoundError(f'Analysis CSV not found: {analysis_csv}')
     tag_fix_csv = DATA_DIR / content_hash / 'post-processing' / 'analysis_deduped.csv'
     if not tag_fix_csv.exists():
         raise FileNotFoundError(f'Tag-fix CSV not found: {tag_fix_csv}')
 
+    _validate_analysis_csv(analysis_csv, expected_rows)
     _validate_tag_fix_csv(tag_fix_csv, schema, expected_rows)
     print('✅ Tag-fix CSV validation passed')
 

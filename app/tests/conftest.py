@@ -8,10 +8,10 @@ import pytest
 from app import config as app_config
 from app import server as app_server
 from app.analysis import analyzer as analysis_analyzer
-from app.prompts.analysis import builder as analysis_prompt_builder
 from app.processing import AttachmentProcessor
 from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
+from app.prompts.analysis import builder as analysis_prompt_builder
 from app.routers import jobs_runner as app_jobs_runner
 from app.routers import state as app_router_state
 from app.schema import generator as schema_generator
@@ -49,10 +49,13 @@ def mock_schema() -> dict:
                 'field_name': 'sentiment',
                 'required': True,
                 'description': 'Overall sentiment',
+                'value_mode': 'closed',
+                'required_values': [],
                 'suggested_values': ['positive', 'negative', 'neutral'],
                 'allow_multiple': False,
                 'nullable': False,
                 'min_items': 1,
+                'hint': 'Choose the closest sentiment label.',
             }
         ],
         'scalar_fields': [
@@ -172,13 +175,13 @@ def override_prompt_record_chars(monkeypatch: pytest.MonkeyPatch) -> None:
 @pytest.fixture(autouse=True)
 def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
     """Force lower-cost model defaults for all tests."""
-    schema_test_model_id = "gemini-2.5-flash-lite-preview-09-2025"
-    analysis_test_model_id = "gemini-2.5-flash-lite-preview-09-2025"
-    test_thinking_level = "NONE"
-    monkeypatch.setattr(schema_generator, "SCHEMA_MODEL_ID", schema_test_model_id)
-    monkeypatch.setattr(schema_generator, "SCHEMA_THINKING_LEVEL", test_thinking_level)
-    monkeypatch.setattr(analysis_analyzer, "ANALYSIS_MODEL_ID", analysis_test_model_id)
-    monkeypatch.setattr(analysis_analyzer, "ANALYSIS_THINKING_LEVEL", test_thinking_level)
+    schema_test_model_id = 'gemini-2.5-flash-lite-preview-09-2025'
+    analysis_test_model_id = 'gemini-2.5-flash-lite-preview-09-2025'
+    test_thinking_level = 'NONE'
+    monkeypatch.setattr(schema_generator, 'SCHEMA_MODEL_ID', schema_test_model_id)
+    monkeypatch.setattr(schema_generator, 'SCHEMA_THINKING_LEVEL', test_thinking_level)
+    monkeypatch.setattr(analysis_analyzer, 'ANALYSIS_MODEL_ID', analysis_test_model_id)
+    monkeypatch.setattr(analysis_analyzer, 'ANALYSIS_THINKING_LEVEL', test_thinking_level)
     original_analyze = analysis_analyzer.analyze_dataset
 
     async def _analyze_with_test_model(
@@ -205,10 +208,10 @@ def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
             on_row_count=on_row_count,
         )
 
-    monkeypatch.setattr(analysis_analyzer, "analyze_dataset", _analyze_with_test_model)
-    monkeypatch.setattr(app_jobs_runner, "analyze_dataset", _analyze_with_test_model)
+    monkeypatch.setattr(analysis_analyzer, 'analyze_dataset', _analyze_with_test_model)
+    monkeypatch.setattr(app_jobs_runner, 'analyze_dataset', _analyze_with_test_model)
 
     # Some tests import `analyze_dataset` directly, so patch those bound symbols too.
-    analyze_integration_module = sys.modules.get("app.tests.test_analyze_first5_integration")
+    analyze_integration_module = sys.modules.get('app.tests.test_analyze_first5_integration')
     if analyze_integration_module is not None:
-        monkeypatch.setattr(analyze_integration_module, "analyze_dataset", _analyze_with_test_model)
+        monkeypatch.setattr(analyze_integration_module, 'analyze_dataset', _analyze_with_test_model)

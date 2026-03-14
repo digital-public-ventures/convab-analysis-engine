@@ -32,10 +32,20 @@
         "required": { "type": "boolean", "enum": [true] },
         "nullable": { "type": "boolean", "enum": [false] },
         "description": { "type": "string" },
-        "required_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
-        "suggested_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "value_mode": { "type": "string", "enum": ["closed", "open"] },
+        "required_values": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 0
+        },
+        "suggested_values": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 0
+        },
         "allow_multiple": { "type": "boolean" },
         "minItems": { "type": "integer" },
+        "maxItems": { "type": "integer" },
         "hint": { "type": "string" }
       },
       "required": [
@@ -43,6 +53,7 @@
         "required",
         "nullable",
         "description",
+        "value_mode",
         "required_values",
         "suggested_values",
         "allow_multiple",

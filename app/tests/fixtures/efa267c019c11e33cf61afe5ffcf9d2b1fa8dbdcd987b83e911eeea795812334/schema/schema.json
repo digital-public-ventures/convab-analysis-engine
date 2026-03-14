@@ -41,6 +41,7 @@
       "field_name": "impact_drivers",
       "required": true,
       "description": "Factors the commenter identifies as driving the impact",
+      "value_mode": "closed",
       "required_values": [
         "rule/regulation",
         "product",
@@ -59,12 +60,14 @@
       "field_name": "vulnerable_population_tags",
       "required": true,
       "description": "Types of vulnerable populations mentioned in the comment, including the commenter.",
+      "value_mode": "closed",
       "required_values": [
         "Low-Income Individuals",
         "Seniors/Elderly",
         "Veterans",
         "Students"
       ],
+      "suggested_values": [],
       "allow_multiple": true,
       "nullable": false,
       "minItems": 0,
@@ -75,9 +78,8 @@
       "field_name": "reported_harmful_impacts",
       "required": true,
       "description": "Types of harmful impacts mentioned in the comment.",
-      "required_values": [
-        "None or Not Applicable"
-      ],
+      "value_mode": "closed",
+      "required_values": ["None or Not Applicable"],
       "suggested_values": [
         "Debt Burden",
         "Credit Damage",
@@ -97,9 +99,8 @@
       "field_name": "reported_beneficial_impacts",
       "required": true,
       "description": "Types of beneficial impacts mentioned in the comment.",
-      "required_values": [
-        "None or Not Applicable"
-      ],
+      "value_mode": "closed",
+      "required_values": ["None or Not Applicable"],
       "suggested_values": [
         "Improved Access to Care",
         "Payment Flexibility",
@@ -117,9 +118,8 @@
       "field_name": "product_or_company_mentions",
       "required": true,
       "description": "Product names or company mentions referenced in the comment.",
-      "required_values": [
-        "None or Not Applicable"
-      ],
+      "value_mode": "open",
+      "required_values": ["None or Not Applicable"],
       "suggested_values": [
         "CareCredit",
         "Wells Fargo Health Advantage",
@@ -139,17 +139,9 @@
       "required": true,
       "nullable": false,
       "description": "Which specific RFI agency's questions the comment primarily addresses.",
-      "required_values": [
-        "CFPB",
-        "HHS/CMS",
-        "Treasury",
-        "All Agencies"
-      ],
-      "suggested_values": [
-        "CFPB",
-        "HHS/CMS",
-        "Treasury"
-      ],
+      "value_mode": "closed",
+      "required_values": ["CFPB", "HHS/CMS", "Treasury", "All Agencies"],
+      "suggested_values": ["CFPB", "HHS/CMS", "Treasury"],
       "allow_multiple": false,
       "minItems": 1,
       "hint": "Identify the primary agency focus of the comment based on explicit mention or content."

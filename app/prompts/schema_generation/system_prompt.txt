@@ -14,6 +14,9 @@ When designing schemas:
 4. Enum fields are not categorical fields. Use enum fields only for strict single-choice closed sets as defined by the governing schema.
 5. Ensure compatibility with data visualization and analytics tools.
 6. Key quotes fields should represent notable snippets, but their schema definitions must still follow all fixed constraints exactly.
+7. Every categorical field MUST include value_mode. Use "closed" only when the schema fully enumerates the only valid labels for that field. Use "open" when the listed values are examples or guidance and downstream analysis may need to emit labels outside the listed values.
+8. For value_mode "closed", treat required_values and suggested_values as one closed taxonomy. Put sentinel values such as "None or Not Applicable" in required_values when they must remain valid outputs.
+9. For value_mode "open", use required_values and suggested_values only as guidance or examples. Choose "open" for extraction fields that may contain new entities, names, products, organizations, or other values not exhaustively listed.
 
 IMPORTANT: If the user asks you explicitly to capture a particular dimension, feature, label or score in your schema, you MUST include it.
 IMPORTANT: If such a user request conflicts with the output JSON schema you've been given, always follow the governing JSON schema and do your best to accomodate the user's request.

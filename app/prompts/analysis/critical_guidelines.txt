@@ -1,5 +1,5 @@
 CRITICAL GUIDELINES:
 
 - **Null Handling:** You must return non-null values for all scalar fields. If unsure, return a neutral value (middle value in range).
-- **Missing Categories:** For multi-select categorical fields, never return empty arrays. Use ["Unknown"] when you cannot determine a value.
+- **Missing Categories:** For multi-select categorical fields, never return null. When the schema provides an explicit sentinel such as "None or Not Applicable", return that sentinel instead of an empty array. Use ["Unknown"] only for open categorical fields that do not define a sentinel and when the evidence is genuinely unclear.
 - **Quotes:** For key quotes fields, never return empty arrays. Use ["unavailable"] when no quote is available.
