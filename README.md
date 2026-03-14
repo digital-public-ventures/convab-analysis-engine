@@ -52,12 +52,17 @@ app/
 │   ├── cache.py               # OCR result caching
 │   ├── data_store.py          # Content-hash directory management
 │   └── job_store.py           # Async job tracking with cursor-based results
+├── prompts/                   # All LLM interaction contracts
+│   ├── schema_generation/     # Schema generation prompts and response schema
+│   │   └── builder.py         # Prompt construction for schema generation
+│   ├── analysis/              # Analysis prompts and templates
+│   │   └── builder.py         # Prompt construction for analysis batches
+│   ├── response_schema.py     # Builds structured output schema for analysis
+│   └── response_validation.py # Validates LLM analysis output against schema
 ├── schema/
-│   ├── generator.py           # LLM-driven JSON schema creation
-│   └── prompts/               # System/user prompt templates, base schema example
+│   └── generator.py           # LLM-driven JSON schema creation
 ├── analysis/
-│   ├── analyzer.py            # Batch LLM analysis pipeline
-│   └── response_validation.py # Validate LLM output against schema
+│   └── analyzer.py            # Batch LLM analysis pipeline
 ├── llm/
 │   ├── gemini_client.py       # Gemini API wrapper
 │   ├── openai_client.py       # OpenAI API wrapper

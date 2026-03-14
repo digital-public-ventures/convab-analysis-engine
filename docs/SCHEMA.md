@@ -1,10 +1,10 @@
 # Schema Contract
 
-The response analysis schema (`app/schema/prompts/response_schema.json`) defines how the LLM extracts structured data from each public comment. During analysis, each comment is sent to Gemini along with the schema; the model returns a JSON object whose fields match the schema's definitions. The schema is therefore the single source of truth for every field the pipeline produces — it controls what the LLM extracts, how post-processing validates results, and what columns appear in the final output CSV.
+The response analysis schema (`app/prompts/schema_generation/response_schema.json`) defines how the LLM extracts structured data from each public comment. During analysis, each comment is sent to Gemini along with the schema; the model returns a JSON object whose fields match the schema's definitions. The schema is therefore the single source of truth for every field the pipeline produces — it controls what the LLM extracts, how post-processing validates results, and what columns appear in the final output CSV.
 
 ## How the runtime uses the schema
 
-The schema is loaded as JSON and its fields are discovered dynamically at runtime. `response_validation.py` iterates over five top-level groups — `enum_fields`, `categorical_fields`, `scalar_fields`, `key_quotes_fields`, `text_array_fields` — and reads `field_name`, constraints, and allowed values from each entry. No field names are hard-coded in the validation or prompt-building logic, so adding, renaming, or removing a field only requires editing the JSON file and (if applicable) updating the dedup step (`app/dedup/tag_dedup.py`). In practice, field-name changes mostly affect the schema JSON and the analysis outputs rather than Python source code.
+The schema is loaded as JSON and its fields are discovered dynamically at runtime. `app/prompts/response_validation.py` iterates over five top-level groups — `enum_fields`, `categorical_fields`, `scalar_fields`, `key_quotes_fields`, `text_array_fields` — and reads `field_name`, constraints, and allowed values from each entry. No field names are hard-coded in the validation or prompt-building logic, so adding, renaming, or removing a field only requires editing the JSON file and (if applicable) updating the dedup step (`app/dedup/tag_dedup.py`). In practice, field-name changes mostly affect the schema JSON and the analysis outputs rather than Python source code.
 
 The schema generator (`schema/generator.py`) can merge additional fields from a per-dataset generated schema into the base schema, keyed by group name. Duplicate `field_name` values are skipped so the base definition always wins.
 
@@ -93,4 +93,4 @@ LLMs occasionally leave individual categorical fields null (~2% observed rate). 
 3. The LLM returns a merged schema: base template fields plus domain-specific fields inferred from the data.
 4. The schema is cached in `app/data/{hash}/schema/` and reused by `/analyze`.
 
-The runtime schema lives at `app/schema/prompts/response_schema.json`. System and user prompts for schema generation are in `app/schema/prompts/`.
+The runtime schema lives at `app/prompts/schema_generation/response_schema.json`. System and user prompts for schema generation are in `app/prompts/schema_generation/`.
