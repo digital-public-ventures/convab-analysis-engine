@@ -89,10 +89,10 @@ async def test_generate_structured_content_rejects_invalid_schema_payload() -> N
     assert usage is None
 
 
-def test_validate_model_config_accepts_latest_codex_alias() -> None:
-    """Model validation accepts current codex alias and resolves full ID."""
-    profile = validate_model_config("gpt-5.2-codex", "HIGH")
-    assert profile.model_id == "gpt-5.2-codex"
+def test_validate_model_config_accepts_latest_chat_alias() -> None:
+    """Model validation accepts the current chat alias and resolves the base model ID."""
+    profile = validate_model_config("gpt-5.2-chat-latest", "HIGH")
+    assert profile.model_id == "gpt-5.2"
 
 
 def test_normalize_json_schema_for_openai_converts_type_and_nullable() -> None:

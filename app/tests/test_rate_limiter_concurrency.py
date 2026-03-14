@@ -9,7 +9,6 @@ def test_model_profiles_include_rpm_based_max_concurrency() -> None:
     assert MODELS["flash"].max_concurrency == 116
     assert MODELS["lite"].max_concurrency == 116
     assert MODELS["pro"].max_concurrency == 2
-    assert MODELS["pro_2_5"].max_concurrency == 17
     assert MODELS["gpt_5_mini"].max_concurrency == 58
 
 

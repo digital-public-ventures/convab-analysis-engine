@@ -109,15 +109,6 @@ MODELS = {
             'pricing_unit': 1_000_000,
         },
     ),
-    'pro_2_5': ModelProfile(
-        provider='gemini',
-        model_id='gemini-2.5-pro',
-        rpm=150,
-        tpm=2_000_000,
-        rpd=1000,
-        allowed_thinking=['LOW', 'HIGH'],
-        max_concurrency=_max_concurrency_from_rpm(150),
-    ),
     # OpenAI GPT models use tier-based limits. These are conservative Tier 1 defaults.
     'gpt_5_2': ModelProfile(
         provider='openai',
@@ -131,36 +122,6 @@ MODELS = {
             'input': 1.75,
             'output': 14.00,
             'thinking': 14.00,
-            'pricing_unit': 1_000_000,
-        },
-    ),
-    'gpt_5_2_codex': ModelProfile(
-        provider='openai',
-        model_id='gpt-5.2-codex',
-        rpm=500,
-        tpm=500_000,
-        rpd=1_000_000,
-        allowed_thinking=['LOW', 'MEDIUM', 'HIGH', 'XHIGH'],
-        max_concurrency=_max_concurrency_from_rpm(500),
-        pricing={
-            'input': 1.75,
-            'output': 14.00,
-            'thinking': 14.00,
-            'pricing_unit': 1_000_000,
-        },
-    ),
-    'gpt_5_1': ModelProfile(
-        provider='openai',
-        model_id='gpt-5.1',
-        rpm=500,
-        tpm=500_000,
-        rpd=1_000_000,
-        allowed_thinking=['NONE', 'LOW', 'MEDIUM', 'HIGH'],
-        max_concurrency=_max_concurrency_from_rpm(500),
-        pricing={
-            'input': 1.25,
-            'output': 10.00,
-            'thinking': 10.00,
             'pricing_unit': 1_000_000,
         },
     ),
@@ -179,40 +140,17 @@ MODELS = {
             'pricing_unit': 1_000_000,
         },
     ),
-    'gpt_5_nano': ModelProfile(
-        provider='openai',
-        model_id='gpt-5-nano',
-        rpm=500,
-        tpm=200_000,
-        rpd=1_000_000,
-        allowed_thinking=['NONE', 'MINIMAL', 'LOW', 'MEDIUM', 'HIGH'],
-        max_concurrency=_max_concurrency_from_rpm(500),
-        pricing={
-            'input': 0.05,
-            'output': 0.40,
-            'thinking': 0.40,
-            'pricing_unit': 1_000_000,
-        },
-    ),
 }
 
 MODEL_ALIASES = {
     'gemini-pro': 'pro',
     'gemini-flash': 'flash',
     'gemini-lite': 'lite',
-    'gemini-2.5-pro': 'pro_2_5',
     'gpt-5.2': 'gpt_5_2',
     'gpt-5.2-2025-12-11': 'gpt_5_2',
     'gpt-5.2-chat-latest': 'gpt_5_2',
-    'gpt-5.2-codex': 'gpt_5_2_codex',
-    'gpt-5.2-codex-2025-12-11': 'gpt_5_2_codex',
-    'gpt-5.1': 'gpt_5_1',
-    'gpt-5.1-2025-11-13': 'gpt_5_1',
-    'gpt-5.1-chat-latest': 'gpt_5_1',
     'gpt-5-mini': 'gpt_5_mini',
     'gpt-5-mini-2025-08-07': 'gpt_5_mini',
-    'gpt-5-nano': 'gpt_5_nano',
-    'gpt-5-nano-2025-08-07': 'gpt_5_nano',
 }
 
 
