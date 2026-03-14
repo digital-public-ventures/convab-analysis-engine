@@ -39,7 +39,7 @@ CSV upload ──▶ Clean ──▶ Generate Schema ──▶ Analyze ──▶
 
 4. **Deduplicate Tags** — A final LLM pass merges near-duplicate categorical labels (e.g. "Low Income" / "Low-Income Individuals") and writes a deduplicated CSV.
 
-All long-running steps return a job ID immediately. Poll `/jobs/{job_id}` for status and retrieve results from `/jobs/{job_id}/results`.
+Convab can be used through its REST API (for integration with other tools) or its CLI (for scripting and local use). Both interfaces expose the same pipeline.
 
 ## Quick Start
 
@@ -59,6 +59,47 @@ uv run uvicorn app.server:app --reload
 The server starts at `http://127.0.0.1:8000`. Interactive API docs are available at `/docs`.
 
 See [docs/QUICK_START.md](docs/QUICK_START.md) for a walkthrough of processing your first dataset.
+
+## CLI
+
+The CLI runs the full pipeline without needing the server. Each command corresponds to a pipeline stage and writes results to `app/data/{hash}/`.
+
+```bash
+# 1. Clean a CSV
+python -m app.cli clean --input-csv responses.csv
+
+# 2. Generate a tagging schema
+python -m app.cli schema --hash <hash> --use-case-file use_case.txt
+
+# 3. Analyze every record
+python -m app.cli analyze --hash <hash> --use-case-file use_case.txt --system-prompt-file prompt.txt
+
+# 4. Deduplicate tags
+python -m app.cli tag-fix --hash <hash>
+
+# Inspect what artifacts exist for a dataset
+python -m app.cli data-info --hash <hash>
+```
+
+All commands accept `--json` for machine-readable output. `clean`, `analyze`, and `tag-fix` accept `--no-cache` to force reprocessing.
+
+## API
+
+The REST API exposes the same pipeline for integration with other tools. All long-running steps return a job ID immediately — poll `/jobs/{job_id}` for status and retrieve results from `/jobs/{job_id}/results`.
+
+All endpoints accept and return JSON unless noted.
+
+| Method | Path                     | Description                                                                                    |
+| ------ | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `POST` | `/clean`                 | Upload a CSV file (multipart). Cleans text, downloads and OCR's attachments. Returns a job ID. |
+| `POST` | `/schema/{hash}`         | Generate a tagging schema for the cleaned dataset. Body: `{ use_case }`.                       |
+| `POST` | `/analyze`               | Start analysis. Body: `{ hash, use_case, system_prompt }`. Returns a job ID.                   |
+| `POST` | `/tag-fix`               | Start tag deduplication. Body: `{ hash }`. Returns a job ID.                                   |
+| `GET`  | `/jobs/{job_id}`         | Poll job status. `completed` is true when the job finishes (check `error` for failures).       |
+| `GET`  | `/jobs/{job_id}/results` | Cursor-paginated results. Pass `cursor` and `limit` query params.                              |
+| `GET`  | `/data/{hash}`           | Check whether cleaned data and schema exist for a given hash.                                  |
+
+All `POST` endpoints that create jobs accept `?no_cache=true` to force reprocessing. `/clean` also accepts `?no_cache_ocr=true` to re-extract OCR.
 
 ## Architecture
 
@@ -94,26 +135,18 @@ app/
 │   └── costs.py               #   Token/cost tracking
 ├── dedup/
 │   └── tag_dedup.py           # LLM-driven tag deduplication
+├── cli/                       # Command-line interface
+│   ├── app.py                 #   Entry point and command dispatch
+│   ├── parser.py              #   Argument definitions
+│   ├── clean.py               #   clean command
+│   ├── schema.py              #   schema command
+│   ├── analyze.py             #   analyze command
+│   ├── tag_fix.py             #   tag-fix command
+│   └── data_info.py           #   data-info command
 └── tests/
 ```
 
 Datasets are stored under `app/data/{content_hash}/` with subdirectories for raw input, downloads, cleaned data, schema, analysis output, and post-processing results.
-
-## API
-
-All endpoints accept and return JSON unless noted.
-
-| Method | Path                     | Description                                                                                    |
-| ------ | ------------------------ | ---------------------------------------------------------------------------------------------- |
-| `POST` | `/clean`                 | Upload a CSV file (multipart). Cleans text, downloads and OCR's attachments. Returns a job ID. |
-| `POST` | `/schema/{hash}`         | Generate a tagging schema for the cleaned dataset. Body: `{ use_case }`.                       |
-| `POST` | `/analyze`               | Start analysis. Body: `{ hash, use_case, system_prompt }`. Returns a job ID.                   |
-| `POST` | `/tag-fix`               | Start tag deduplication. Body: `{ hash }`. Returns a job ID.                                   |
-| `GET`  | `/jobs/{job_id}`         | Poll job status. `completed` is true when the job finishes (check `error` for failures).       |
-| `GET`  | `/jobs/{job_id}/results` | Cursor-paginated results. Pass `cursor` and `limit` query params.                              |
-| `GET`  | `/data/{hash}`           | Check whether cleaned data and schema exist for a given hash.                                  |
-
-All `POST` endpoints that create jobs accept `?no_cache=true` to force reprocessing. `/clean` also accepts `?no_cache_ocr=true` to re-extract OCR.
 
 ## Development
 
