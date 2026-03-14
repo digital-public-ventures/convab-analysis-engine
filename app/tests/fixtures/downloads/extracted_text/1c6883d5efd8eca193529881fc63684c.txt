@@ -1,0 +1,262 @@
+ 
+September 11, 2023  
+ 
+Chiquita Brooks-LaSure 
+Administrator 
+Centers for Medicare and Medicaid Services 
+200 Independence Avenue SW 
+Washington, DC 20201 
+ 
+Thomas C. West, Jr. 
+Deputy Assistant Secretary for Tax Policy 
+Department of the Treasury 
+1500 Pennsylvania Avenue NW 
+Washington, DC 20220 
+ 
+RE:  
+Request for Information Regarding Medical Payment Products —  
+CMS-2023-0106 
+AHIP Comments   
+ 
+Submitted electronically via regulations.gov  
+ 
+Dear Administrator Brooks-LaSure, Director Chopra, and Mr. West: 
+  
+AHIP1 appreciates the opportunity to provide a response to the Consumer Financial Protection 
+Bureau (CFPB), Department of Health and Human Services (HHS), and the Department of 
+Treasury’s (Treasury) Request for Information (RFI) Regarding Medical Payment Products, 
+published July 12, 2023 in the Federal Register. The RFI is timely and explores important 
+questions about the challenges of medical debt and how medical payment products are impacting 
+both individual consumers and the entire health care system.  
+  
+AHIP member organizations are committed to providing health care solutions and financial 
+security to the hundreds of millions of Americans we serve. As health care costs continue to 
+increase, American families and consumers have sought additional means of financing the cost 
+of care, often at the direction of a health care provider. Given the rise of and often concerning 
+uses of medical payment products, we applaud CFPB, HHS and Treasury (“the agencies”) for 
+efforts to understand medical payment products and the effects these products have on patients, 
+the health care system, and the underlying cost of health care. AHIP recognizes that this RFI 
+builds on the rules the agencies have already implemented to assist consumers with managing 
+ 
+1 AHIP is the national association whose members provide health care coverage, services, and solutions to hundreds 
+of millions of Americans every day. We are committed to making health care better and coverage more affordable 
+and accessible for everyone. 
+Rohit Chopra 
+Director 
+Consumer Financial Protection Bureau 
+1700 G Street NW 
+Washington, DC 20552 
+
+September 8, 2023 
+Page 2 
+ 
+health care costs and medical bills, and to protect patients and consumers from paying inaccurate 
+or inflated medical bills.  
+  
+The agencies pose questions throughout the RFI that address different markets and consumer 
+experiences. In detailed comments (attached), we address select questions presented in the RFI. 
+We are including only those questions that address issues with which AHIP members have 
+expertise. 
+ 
+We appreciate the opportunity to provide comments and look forward to continued partnership 
+with the agencies to ensure both consumer protection and affordable, quality, equitable health 
+care for everyone. If you have any questions, please contact Marcy Buckner at 
+mbuckner@ahip.org  
+  
+Sincerely,   
+  
+ 
+ 
+ 
+Marcy M. Buckner 
+Vice President 
+Employer Health Policy & Advocacy 
+ 
+ 
+
+September 8, 2023 
+Page 3 
+ 
+Specific Responses to RFI Questions 
+ 
+General Questions  
+ 
+Market-level inquiries 
+ 
+9. How do medical payment products and health insurance coverage interact? Do group 
+health plan or health insurance issuer practices contribute to uptake of medical payment 
+products by patients and providers?  
+• Group health plans and health insurance issuers do not interact with medical payment 
+products and medical loans. It is important to note that medical payment products are 
+neither health insurance nor a health plan. These products exist as a direct financial 
+relationship between a health care provider or financial institution and the patient (or 
+their guardian or representative.) Medical card payments are made directly to the 
+provider and insurers are in no way involved in the payment or repayment process. 
+Further, health insurance carriers are not involved with payments between the patient and 
+provider in these arrangements and do not assume any of the risk from the medical card 
+arrangement.  
+• We do not believe that health insurance practices contribute to an uptake of medical 
+payment products by patients and providers. On the contrary, health plans are able to 
+negotiate prices within their network of providers which drives costs down for 
+consumers. Costs are then typically much lower for these consumers than for the 
+uninsured, self-pay patients or out of network care. Provider practices may have financial 
+incentive to encourage use of payment products in part because encouraging direct 
+payment through financing may allow a provider to receive more than they would from a 
+health insurer that has negotiated lower rates on behalf of their members. 
+ 
+i. 
+How many days do providers typically have to wait to be paid by plans or issuers 
+versus by medical payment product companies or general purpose credit card 
+companies? What factors, such as administrative requirements or clinical 
+reviews, contribute to any differential resolution timelines?  
+ 
+• The timeline for providers to wait to be paid by plans or issuers varies depending on the 
+state and that state’s prompt payment laws which require health plans to reimburse a 
+provider within a certain amount of days from receiving a clean claim. Payments owed to 
+the provider from the patient are independent of claim payments made from issuers to 
+providers. AHIP members are not able to respond regarding the amount of time providers 
+typically wait before being paid by a medical payment product because health insurance 
+issuers are not involved in payments between medical payment products and health care 
+providers. 
+ 
+
+September 8, 2023 
+Page 4 
+ 
+ii. 
+Does a patient’s use of a medical payment product exempt them from certain 
+consumer protections, provider requirements, or group health plan or health 
+insurance issuer requirements? Are different types of health coverage treated 
+differently? 
+ 
+• Health insurance providers enter into contractual agreements with providers 
+independently and with no knowledge of the patient’s use of a medical card. It is not 
+practice for a plan or issuer to align payment to providers with the type of health 
+coverage the patient has (HMO, PPO, CDHP, level-funded, self-funded, fully insured), 
+therefore different types of health coverage are not treated differently when it comes to 
+reimbursing the provider.  
+ 
+10. Does health care provider organizational structure, including ownership by private 
+equity, affect providers’ decisions to offer and promote these products? 
+• There is a concern that a health care provider’s organizational structure, especially if 
+owned by private equity, would affect the providers’ decisions to offer and promote 
+medical payment products. Many medical payment programs are owned by private 
+equity, if those same private equity companies also own the health care provider’s 
+organization then there is little to no incentive for the provider to lower or maintain costs. 
+  
+12. To what extent are patients using medical payment products to pay bills that are 
+incorrect, or that could be covered or defrayed by lower-cost alternatives?  
+• Health insurance providers do not have access to this data because payments made to 
+providers through medical payment products are not being processed through the issuer, 
+but instead are payments made from patients directly to the financier or provider. Given 
+that bills from health care providers submitted to a health insurance issuer or group health 
+plan frequently contain errors, missing or inaccurate information, this possibility would 
+seem quite likely. 
+ 
+i. 
+What billing errors may patients commonly encounter? 
+ 
+• Health insurance providers are not made aware of whether one of their plan members is 
+using a medical payment product, so there would be no way for an issuer to determine 
+what billing errors patients using medical payment products may commonly encounter. 
+ 
+ii. 
+How does using a medical payment product affect patients’ rights to dispute 
+incorrect bills? 
+  
+• The use of a medical payment product may not affect a patient’s rights to dispute 
+incorrect bills because of the protections of the No Surprises Act and its extension for 
+those that are insured, uninsured, or self-pay; however, the use of medical payment 
+products may reduce the likelihood of a consumer to refute an incorrect bill and how 
+
+September 8, 2023 
+Page 5 
+ 
+successful the consumer may be in their dispute. This would also depend on whether the 
+consumer must address the incorrect bill with the financier of the medical payment 
+program or with the provider and whether the incorrect bill is eligible for independent 
+dispute resolution under the No Surprises Act. In addition, since medical payment 
+products are not insurance, it is not clear which protections of the No Surprises Act would 
+extend to the patient outside of billing from the provider. Once the financier becomes 
+involved with collecting payments, the protections needed by the consumer may be more 
+in line with financial credit cards and predatory billing than with medical debt. 
+ 
+iii. 
+Are certain groups of patients, such as members of specific underserved 
+communities, more likely to experience medical billing errors or issues resolving 
+disputes over bills paid using medical payment products? 
+ 
+• While AHIP members are not aware of whether one of their plan members is using a 
+medical payment product and therefor cannot determine whether certain underserved 
+communities are more likely to experience medical billing errors, AHIP members are 
+concerned that the marketing of medical payment products to underserved communities 
+may mislead consumers into entering in to an agreement with a provider and medical 
+payment product financier instead of determining whether other options of coverage are 
+available such as Medicare, Medicaid, a subsidized plan on healthcare.gov, or a group 
+health plan from an employer. Consumers who may not fully understand their health 
+insurance coverage are also more likely to be preyed upon by unscrupulous actors 
+resulting in the consumer incurring additional debt which will be reflected negatively on 
+their credit report because medical payment programs are considered credit card debt, not 
+medical debt. 
+ 
+HHS Specific Questions 
+ 
+1. What actions should HHS consider taking to address problematic practices related to 
+medical credit cards or loans, particularly as they relate to patients eligible for or enrolled 
+in Medicare, Medicaid, or the Children’s Health Insurance Program, or patients enrolled 
+in Affordable Care Act Marketplace plans?  
+• AHIP would encourage HHS to require providers to notify the patient that they may be 
+eligible for or already enrolled in Medicare, Medicaid, CHIP, an ACA marketplace plan, 
+or other group health insurance coverage before marketing medical payment products to 
+consumers. Eligibility or enrollment in one of these plans will increase the likelihood that 
+the cost of care will be lower than using a medical payment product alone since these 
+plans utilize health insurance issuers that are able to negotiate costs with health care 
+providers.  
+2. What types of health insurance (Medicare, Medicaid, private insurance, etc.) are 
+particularly associated with the likelihood that an individual is offered or makes use of 
+
+September 8, 2023 
+Page 6 
+ 
+medical credit cards and loans, and how does the type of health coverage affect relevant 
+provider billing practices? 
+• There is no relationship between health insurance providers and medical credit cards and 
+loans so AHIP members are unable to determine the likelihood that an individual is 
+offered these financial products based on the type of health coverage the patient is 
+enrolled in. 
+ 
+5. How does or might the use of medical credit cards and loans affect the amount and 
+timing of cost sharing a patient covered through Medicare, Medicaid, and/or the 
+Affordable Care Act Marketplace owes for a covered service?  
+• The use of medical credit cards and loans may affect the amount of timing and cost 
+sharing a patient owes for a covered service if the claim is not first sent to the insurer 
+before the provider issues a billing statement to the patient. If the provider does not first 
+submit the claim to the insurer, the patient may receive a bill from the provider that is 
+higher than the negotiated cost between the provider and the health insurance issuer. 
+Consumers may not understand that the provider has sent them a bill for charges that 
+have not been processed by their insurer yet and may pay the full amount. Once the 
+provider has been paid, there is no incentive for the provider to file a claim with the 
+insurer which could lower costs for the consumer. 
+ 
+6. Hospital Price Transparency: What prices or versions of standard charges (e.g., cash 
+prices) are offered to patients who sign up for a medical credit card or installment loan? 
+What steps are taken by health care providers to ensure these charges are adequately 
+disclosed in accordance with hospital price transparency requirements? Do these charges 
+reflect and specifically identify facility fees? 
+• AHIP members do not have the data available to determine which prices or versions of 
+standard charges are offered to patients who sign up for medical credit cards, but 
+anticipate that as more hospitals and health systems come into compliance with the 
+Hospital Price Transparency Final Rule, much of that data will be more readily available.  
+ 
+7. How might HHS improve patient understanding of options for covering the cost of 
+medical treatments? At what points in the care process could patients be provided with 
+information about their financial obligations and payment options? 
+• We believe notice to consumers should be abundantly clear and in plain language and 
+terms that spell out what the consumer would be consenting to and what costs they would 
+incur by entering into a medical payment program as well as notifying the consumer that 
+they may be eligible for Medicaid, Medicare, an ACA plan, or group health coverage. 
+Patients (or their representative) should be informed of obligations and options at the 
+earliest opportunity and steps should be taken to communicate those terms clearly and 
+directly, including orally (in person or over the phone) and in writing. 
+ 
+ 

@@ -1,9 +1,5 @@
-# EditorConfig: https://editorconfig.org
-# Consistent coding styles across editors and IDEs for agent-assisted development
-
 root = true
 
-# Default settings for all files
 [*]
 charset = utf-8
 end_of_line = lf
@@ -12,101 +8,8 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-# Markdown: preserve trailing spaces (for line breaks)
-[*.md]
-trim_trailing_whitespace = false
-indent_size = 2
-
-# Python: 4-space indentation per PEP 8
 [*.py]
 indent_size = 4
-max_line_length = 88
 
-# Shell scripts: 2-space indentation
-[*.{sh,bash,zsh}]
-indent_size = 2
-
-# YAML: 2-space indentation
-[*.{yml,yaml}]
-indent_size = 2
-
-# JSON: 2-space indentation
-[*.json]
-indent_size = 2
-
-# JavaScript/TypeScript: 2-space indentation
-[*.{js,jsx,ts,tsx,mjs,cjs}]
-indent_size = 2
-
-# Go: tabs for indentation per Go conventions
-[*.go]
-indent_style = tab
-indent_size = 4
-
-# Rust: 4-space indentation
-[*.rs]
-indent_size = 4
-
-# Java: 4-space indentation
-[*.java]
-indent_size = 4
-
-# C/C++: 2-space indentation
-[*.{c,cpp,h,hpp}]
-indent_size = 2
-
-# Ruby: 2-space indentation
-[*.rb]
-indent_size = 2
-
-# Makefiles: tabs required
-[Makefile]
-indent_style = tab
-
-[*.mk]
-indent_style = tab
-
-# Configuration files
-[*.{toml,ini,cfg,conf}]
-indent_size = 2
-
-# Web files
-[*.{html,css,scss,sass,less}]
-indent_size = 2
-
-# XML/SVG
-[*.{xml,svg}]
-indent_size = 2
-
-# Documentation
-[*.{rst,tex}]
-indent_size = 2
-
-# Package files
-[{package.json,package-lock.json,composer.json}]
-indent_size = 2
-
-# Docker
-[{Dockerfile*,*.dockerfile}]
-indent_size = 2
-
-# Git
-[.gitattributes]
-indent_size = 2
-
-[.gitignore]
-indent_size = 2
-
-# GitHub Actions
-[.github/**/*.{yml,yaml}]
-indent_size = 2
-
-# ADRs and documentation
-[ADRs/*.md]
-trim_trailing_whitespace = false
-
-[docs/*.md]
-trim_trailing_whitespace = false
-
-[temp/notes/**/*.md]
+[*.md]
 trim_trailing_whitespace = false

@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import Any
 
 from . import gemini_client, openai_client
-from .model_config import MODELS, ModelProfile, validate_model_config as validate_model_profile
+from .model_config import MODELS, ModelProfile
+from .model_config import validate_model_config as validate_model_profile
 from .provider import get_llm_provider
 from .rate_limiter import AsyncRateLimiter
 from .response_parser import extract_json_from_response

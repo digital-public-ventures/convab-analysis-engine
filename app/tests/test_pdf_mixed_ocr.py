@@ -18,7 +18,7 @@ class _FakePixmap:
         self.token = token
 
     def tobytes(self, _fmt: str) -> bytes:
-        return f"img-{self.token}".encode("utf-8")
+        return f"img-{self.token}".encode()
 
 
 class _FakePage:
@@ -43,7 +43,7 @@ class _FakeDoc:
     def __init__(self, pages: list[_FakePage]) -> None:
         self._pages = pages
 
-    def __enter__(self) -> "_FakeDoc":
+    def __enter__(self) -> _FakeDoc:
         return self
 
     def __exit__(self, exc_type: object, exc: object, tb: object) -> Literal[False]:

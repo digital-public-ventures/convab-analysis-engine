@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 
-from .model_config import LLMProvider, SUPPORTED_PROVIDERS, get_model_provider
+from .model_config import SUPPORTED_PROVIDERS, LLMProvider, get_model_provider
 
 _API_KEY_ENV_BY_PROVIDER: dict[LLMProvider, str] = {
     'gemini': 'GEMINI_API_KEY',

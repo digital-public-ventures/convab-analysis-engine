@@ -45,7 +45,7 @@ These run in seconds with no network access. LLM calls are mocked or use fake re
 
 ### Integration Tests (require API keys)
 
-These call live LLM APIs and are marked `@pytest.mark.integration` (except `test_tag_fix.py` and `test_attachment_ocr.py`, which lack the marker but still need network access).
+These call live LLM APIs and are marked `@pytest.mark.integration` (except `test_tag_dedup.py` and `test_attachment_ocr.py`, which lack the marker but still need network access).
 
 | File | API key(s) | What it tests |
 |------|-----------|---------------|
@@ -54,7 +54,7 @@ These call live LLM APIs and are marked `@pytest.mark.integration` (except `test
 | `test_analyze_first5_integration.py` | `GEMINI_API_KEY` | Analysis of a 5-row sample against live model |
 | `test_analysis_response_validation_integration.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Response validation against both providers (parametrized) |
 | `test_rate_limiter_throughput_integration.py` | — | Rate limiter under real timing with 5000-row fixture |
-| `test_tag_fix.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Tag deduplication via live LLM (parametrized by provider) |
+| `test_tag_dedup.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Tag deduplication via live LLM (parametrized by provider) |
 | `test_attachment_ocr.py` | — | Attachment download, OCR text extraction, PDF regression |
 
 Tests that need a missing API key will `pytest.skip()` or `pytest.fail()` with a clear message.
@@ -64,7 +64,7 @@ Tests that need a missing API key will `pytest.skip()` or `pytest.fail()` with a
 | Variable | Where to get it | Used by |
 |----------|----------------|---------|
 | `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/apikey) | Most integration tests |
-| `OPENAI_API_KEY` | [OpenAI Platform](https://platform.openai.com/api-keys) | `test_tag_fix.py`, `test_analysis_response_validation_integration.py` |
+| `OPENAI_API_KEY` | [OpenAI Platform](https://platform.openai.com/api-keys) | `test_tag_dedup.py`, `test_analysis_response_validation_integration.py` |
 
 Set them in your shell before running integration tests:
 

@@ -1,0 +1,407 @@
+ 
+ 
+A Center at the University of the District of Columbia David A. Clarke School of Law 
+4340 Connecticut Avenue NW, Suite 319 | Washington, DC 20008 | (202) 274-7386 | www.tzedekdc.org  
+  
+ 
+The Honorable Rohit Chopra    
+Director, Consumer Financial Protection Bureau    
+1700 G Street, NW    
+Washington, DC 20552    
+    
+Via Electronic Submission: www.regulations.gov   
+  
+September 11, 2023    
+    
+Re: Request for Information Regarding Medical Payment Products (CFPB Docket 
+No. CFPB-2023-0038)    
+    
+    
+Dear Director Chopra:    
+   
+Tzedek DC submits this comment in support of the efforts of the U.S. Consumer 
+Financial Protection Bureau (CFPB), the U.S. Health and Human Services Agency 
+(HHS) and the U.S. Treasury (collectively, the agencies) in understanding the 
+prevalence, nature, and impacts of medical payments products, including whether 
+these products allow healthcare providers to operate outside of a broad range of 
+patient and consumer protections, displace hospitals’ provision of financial 
+assistance, lead to inflated or inaccurate medical bills, or otherwise harm patients’ 
+well-being.    
+    
+Tzedek DC is an independent public interest center headquartered at the University 
+of the District of Columbia David A. Clarke School of Law. Tzedek DC’s mission 
+is to safeguard the legal rights and financial health of DC residents with low 
+incomes dealing with the often-devastating consequences of abusive debt collection 
+practices and other consumer related issues. We at Tzedek DC carry out that 
+mission with the goal of addressing racial gaps in wealth and equality. The racial 
+wealth gap is especially wide in the District of Columbia. White DC households are 
+estimated to have, on average, net assets of 81 times more than Black DC 
+households, and 22 times more than Latino DC households. Tzedek DC offers 
+direct legal and financial counseling services at no cost to low- and moderate-
+income DC residents struggling with debt and other consumer-related legal issues, 
+engages in bilingual community outreach, and advocates for systemic reform in DC 
+and nationally.   
+  
+To what extent medical credit cards and loans may hamper financial assistance 
+and access to benefits, and any options for regulators to reduce such barriers   
+  
+The provision of medical credit cards to finance medical care and treatment may 
+have several collateral, and unintended consequences, to the patient. First, the 
+patient may in fact qualify under either their insurance or through their provider’s 
+Board of Directors 
+Irvin Nathan, Member 
+Courtney Weiner, Vice Chair 
+A. Robert Bloom, Treasurer 
+Rahsaan Bernard, Member 
+Rachel Kronowitz, Chair 
+Willard Tom, Member 
+Peter Edelman, Honorary Director 
+Paul Berger, Honorary Director 
+Ariel Levinson-Waldman, Founding 
+President & Director-Counsel 
+Ronald Glancz, z"l, Permanent Member 
+Advisory Council 
+Anthony Alexis 
+Roy Austin, Jr. 
+Nicole Austin-Hillery 
+Claude Bailey 
+Allyson Baker 
+Michael Baratz 
+Vivian Bass 
+Mathew Bruckner 
+Barry Coburn 
+Stephen Danzansky 
+Daniel Edelman 
+Andrew Eskin 
+Vicki Fishman 
+Marc Fleischaker 
+John Freedman 
+Shana Glickfield 
+Sally Greenberg 
+Andrew Herman 
+Mark Kahan 
+June Kress 
+Karen Ann Lash 
+Richard Lawch 
+Joshua Levy 
+Nancy Liebermann 
+Susan Liss 
+Stephen Marcus 
+Lorelie Masters 
+Carol Mates 
+Christopher McCannell 
+Dan Neustadt 
+Michael Nilsson 
+Kathryn Oberly 
+Ellen Oberwetter 
+BB Otero 
+Thorn Pozen  
+Harvey Reiter 
+Thomas Riesenberg 
+Seth Rosenthal 
+Robert Rozen 
+James Sandman 
+Nina Simon 
+John Sturc 
+Kenneth Trombly 
+Rebecca Vallas 
+Roger Zuckerman 
+
+ 
+ 
+ 
+ 
+2
+financial assistance program (FAP) for free or reduced cost out-of-pocket care. If a patient puts the bill on a 
+medical credit card, they lose out on any opportunity to negotiate the price of the care or receive financial 
+assistance. Second, as that patient may have been covered by insurance, they could be paying more for both the 
+actual service as well as for any accrued interest through a credit card payment arrangement than if they simply 
+made a claim with their insurance. Further, many providers offer zero interest payment plans that patients miss 
+out on when using medical credit cards, which often have high rates of deferred interest. Third, financing the 
+medical costs through a medical credit card functionally converts that debt from “medical debt” to credit card 
+debt and any additional protections for medical debt, such as medical debts under $500 no longer being reported 
+by Credit Reporting Agencies (CRAs) to a credit report, are lost to the patient.   
+  
+An October 2015 study of the tax filings of more than 1,800 not-for-profit hospitals, published in The New 
+England Journal of Medicine, concluded that only 29% offer uninsured patients discounts that match those 
+negotiated by commercial insurers or Medicare. Further, the study noted that only 42% notify their patients 
+about eligibility for charity care prior to trying to collect payment for their bills. A significant portion (between 
+11% - 28%) of written-off “bad debt” held by healthcare providers likely should have been free care based on 
+the patients’ income, but patients were either not screened properly or were not made aware of charity 
+care/financial assistance program policies prior to their being stuck with the bill. Federal regulations should set 
+minimum income guidelines for financial assistance across all providers and require preemptive screening of 
+patients for assistance.  For example, nonprofit healthcare providers should be required to provide free care for 
+all patients earning up to 250% of the Federal Poverty Level (FPL) and reduced-price care to all patients 
+earning up to 650% of the FPL. Regulators should also require that providers inquire into a patient’s insurance 
+and screen patients for financial assistance before offering them any medical payment products. Currently, these 
+payment products are offered directly at the point of care when patients are most vulnerable. Existing assistance 
+avenues should be exhausted before medical payment products are offered; even then, there should be a waiting 
+period before such products can be offered to patients so they do not feel pressured to use these products.   
+  
+Regulators should also require FAP information to be provided in multiple languages and forms of 
+communication to be inclusive (i.e. braille, TTY-based telecommunications relay service, etc) and ensure that 
+all patients can understand their potential eligibility and benefit from these policies.  
+  
+How to ensure that patients retain their rights to challenge inaccurate bills regardless of payment method   
+   
+Tzedek DC, in conversations with advocates and legislators, has discussed ways to reform debt collection 
+practices, including the desire to prohibit hospitals from seeking to collect medical debt under the Fair Debt 
+Collection Practices Act (FDCPA). Additionally, we have advocated for and are doing additional advocacy on 
+how to curb other debt collection practices, such as wage and bank account garnishments and liens.  
+  
+We have also discussed the mechanics of imposing conditions on hospitals that receive Medicare funding with 
+legislators’ offices in Congress to ensure that they are complying with financial assistance program policies. 
+Nearly every provider in the US takes Medicare (and perhaps to a lesser extent, Medicaid) patients, and CMS 
+can negotiate on behalf of those patients in a way those patients will never be able to themselves. Such 
+negotiations may even provide advantages through better rates to patients who are either uninsured or 
+underinsured, limiting the possible extent of their own medical debt.  
+  
+With respect to medical credit cards, either these products should not be offered in the way they are currently – 
+with very high interest rates and functionally converting medical debt to credit card debt – or they should be 
+very clearly delineated as representing medical debt. This would help ensure existing protections for medical 
+debt are not lost when medical payment products are used. If such products are to continue, regulations should 
+
+ 
+ 
+ 
+ 
+3
+be implemented that clearly explain that payment of a bill on a medical credit card is not an acknowledgement 
+of the amount owed and the patient does not waive their right to dispute the bill. If the patient does dispute the 
+bill, the patient should be able to receive a full refund, including any interest paid on an inaccurate medical bill.  
+  
+Further, the $500 voluntary reporting change the three major CRAs implemented regarding medical debt is a 
+good start, but medical debt as a class of debt should not be reported on credit reports at all, as credit reports are 
+meant to indicate a “reliable borrower” but owing for a medical emergency or chronic illness is a poor gauge of 
+reliability. Colorado has already banned complete reporting of medical debt on credit reports; there is no reason 
+this cannot be extended nationally.  
+  
+Market-level inquiries and Agency-Specific Inquiries  
+1. What are the benefits, costs, and risks of medical payment products for consumers, healthcare 
+providers, and companies offering these products?    
+  
+For patients, the costs and risks likely outweigh the benefits. Many patients who are offered such payment 
+products are already covered by insurance and may be eligible for coverage through their insurer; in practice, 
+offering medical payment products seems to circumvent submitting claims to insurance, which for the provider 
+can be more time-intensive and may result in a lower payment. Yet patients may be paying more for a service 
+that should have been covered through their insurer, and are now responsible for debt that can be included on 
+their credit report as a credit card debt owed (i.e. not medical debt) at what is typically a significantly higher 
+interest rate than on a traditional credit card, 25%+ versus 15%+, respectively. Additionally, in studies on the 
+use of such cards, it has been found to decrease access to credit, increase financial stress about medical bills, 
+increase the likelihood of bankruptcy, and involve lengthy collection litigation.  
+  
+Further, as mentioned above, patients may lose out on access to financial assistance when using medical 
+payment products. Once a bill has been paid using such a payment product, the patient can no longer apply for 
+financial assistance through the provider. Medical payment products usually have worse terms for consumers 
+than any payment plans offered directly by the provider, which again the consumer misses out on by using such 
+a product.  
+   
+Consumers using these products have the ability to pay their bill immediately, but often feel pressured into 
+using the payment products to do so even if they are not a good option for the consumer. Using these products 
+eliminates all the medical debt credit reporting protections currently in place for consumers and increases the 
+risk that a consumer will be sued over this debt and have a negative account for it on a credit report.   
+ 
+5. Are there specific populations (e.g., race, socioeconomic status, gender identity, sexual orientation, age, 
+language, etc.) or geographic regions that experience disproportionately higher utilization of medical 
+payment products?   
+ 
+Generally, in the District of Columbia, approximately 45% of residents are covered by Medicaid (i.e. 
+approximately 300,000 residents), and according to the Kaiser Family Foundation (KFF), 95% of non-elderly 
+Medicaid enrollees in DC are people of color.1 The DC area is also home to a higher percentage of foreign 
+nationals than the U.S. as a whole, with 15% versus 4%, respectively, according to the Urban Institute.2   
+Given DC’s Medicaid coverage rate of nearly half the jurisdiction’s population, as well as the higher-than-
+average foreign-born population, it is possible that large portions of DC’s population are vulnerable to medical 
+payment products either due to language or cultural barriers (particularly coming from countries that have 
+single-payer healthcare) or due to socio-economic status and a provider seeking to fast-track a payment process 
+around an established insurance claim.   
+
+ 
+ 
+ 
+ 
+4
+Specifically in our work, our clients have incomes below 400% FPL, and therefore in our experience, those who 
+have used medical credit cards also have incomes below 400% FPL. Additionally, all of our clients who, to our 
+knowledge, used medical payment products were women.    
+ 
+6. What are the health equity impacts of medical payment products and related billing and collection 
+policies and practices?   
+ 
+For patients who opt to use medical payment products, they could face high, deferred interest on a medical 
+credit card, which may also negatively impact their credit report and score. These consequences may make it 
+more difficult for them to either pay for previously received care and/or be able to schedule and receive 
+additional follow-up care. Some healthcare providers have explicit policies of turning patients away who have 
+outstanding medical debt, which leads to worse health outcomes for patients. Even if patients can access care, 
+the high rates of deferred interest on medical credit cards remains a significant source of anxiety for many 
+patients, who were unaware of these terms and are unable to afford their bills. These products can also erode 
+trust in our healthcare system, since patients often feel pressure to use them from their provider and then are hit 
+with unfair and surprising terms. With respect to health equity, which is where everyone has a fair and just 
+opportunity to attain their highest level of health, being foreclosed from seeking care due to previous medical 
+debts is the antithesis of having a fair and just opportunity to attain the highest level of health.  
+In conversations with patients and advocates, we have heard from everyday Americans who have been faced 
+with terrible medical emergencies only made worse by their dealings with the healthcare and insurance system 
+afterwards. One such example includes a patient who experienced traumatic brain injury in a car accident 
+resulting in a $1 million hospital bill. The protections of the Affordable Care Act unfortunately do not go far 
+enough, as this patient’s follow-up care costs and needs were hardly covered, forcing a filing for bankruptcy. To 
+complicate matters further, due to the patient’s ongoing financial difficulties, ongoing and necessary follow-up 
+medical care was stopped by the provider.   
+ 
+Further, many Americans do not know how to read a medical bill and do not know how to dispute any 
+inaccuracies. These inherently confusing practices can lead to patients ignoring bills that they cannot afford or 
+are inaccurate. A major impact of these bills is on mental health – Americans overall are more worried about 
+going into medical debt than of getting a serious illness. Once medical bills are sent to collections, it 
+significantly negatively impacts patients’ credit scores, even though it is an unreliable contributor to credit-
+worthiness. Worse, when patients are sued over medical debt, most cases end in default judgments for the 
+provider. The current billing and collection landscape had serious negative impacts on patients’ mental health, 
+physical health, and credit.   
+ 
+ ii. Do certain products or policies present opportunities to better serve members of underserved 
+communities?  
+ 
+Clear, consistent, well-publicized and explained financial assistance policies would be of great benefit to tens of 
+thousands of DC residents. Currently in the District there are eight Federally Qualified Health Centers (FQHCs) 
+which provide services on a sliding scale, including at no cost to patients who qualify. According to the KFF, in 
+2021, DC’s eight FQHCs provided nearly 900,000 patient visits (562,930 in-person clinical, and 332,563 virtual 
+visits) across 84 service locations.3 The current population of DC is approximately 670,000 residents.  
+There are seven major hospitals in DC, and according to the American Hospital Directory, reporting in May 
+2023, DC’s hospitals reported 81,935 discharges (representing 570,669 “patient days”) for 2022.4 Clearly not all 
+of these patients would qualify for financial assistance; however, it should be possible with dedicated materials, 
+training, and sufficient staffing in hospitals’ billing departments to ensure that patients who do or may qualify 
+for financial assistance have the opportunity to speak with a professional objectively about their rights and 
+benefits and what may be available to them, prior to any billing of services to the patient. DC’s FQHCs saw 
+
+ 
+ 
+ 
+ 
+5
+nearly 1 million patients virtually and in-person during the pandemic in 2021 and continue to screen patients 
+and provide low-cost and free care, when appropriate; there is no reason DC’s hospitals cannot provide the 
+same level of care and screening for their patients as community health centers provide.  
+Additionally, we recommend reforming and/or strengthening existing policies to better serve members of 
+underserved communities, including:  
+ 
+• Requiring FAPs to provide free care to patients under 250% FPL and discounted care to patients below 
+650% FPL, and to cover both insured and uninsured patients   
+• Requiring healthcare providers to preemptively screen patients for FAP eligibility  
+• Requiring hospitals presumptively to provide financial assistance to patients who receive means-tested 
+benefits, including SNAP, WIC, Low-Income Home Energy Assistance Program (LIHEAP), and free or 
+reduced-price school meals  
+• Prohibiting lawsuits to collect medical debt if the consumer is eligible for free or reduced-price care  
+• Capping the interest rate that can be charged on medical debts to 3% per year  
+• Prohibiting consumer reporting agencies from including medical debt in credit reports and require debt 
+collectors to notify residents that medical debt will no longer be included in credit reports  
+• Capping hospital commercial prices at a certain percentage of the amount of Medicare prices  
+  
+These policies would all work to cap rates of medical debt and ensure more patients are able to access much 
+needed financial assistance.   
+  
+CFPB  
+1. What actions should the CFPB consider taking to address problematic practices related to medical 
+credit cards or loans, including debt collection and credit reporting practices?  
+  
+Tzedek DC recommends the CFPB seek to limit the interest rate that is charged on medical credit cards, as these 
+rates are typically several points higher than the top-end rates on regular credit cards (i.e. 25%+ v. 15%+). The 
+rate should be capped at the same rate for all other credit cards. Medical credit cards are also typically offered 
+through a deferred interest promotion, which many patients may not fully understand, resulting in a large, lump 
+sum payment that may be particularly expensive and beyond the patient’s ability to pay. Studies have shown 
+that patients have paid more than $1 billion in interest alone on deferred interest on medical credit cards, 
+signaling both the financial windfall of these products to industry as well as their negative financial 
+consequences to the borrower/patient.  
+  
+Tzedek DC further recommends that the CFPB issue guidance prohibiting the marketing of medical credit card 
+to patients via their healthcare providers due to the costly nature of the products as well as the possibility that 
+providers are circumventing the provision of free or reduced cost care to eligible patients. In lieu of a strict 
+prohibition, we would recommend guidance that healthcare providers desiring to offer such payment products 
+must receive training to ensure they are providing comprehensive information about legally mandated FAP 
+and/or zero-interest repayment options before offering such products to patients, and that healthcare provider 
+staff are well-versed and can answer patient questions related to costs, repayments, interest and deferred 
+interest, and how the product and payment may impact their financial standing and credit report.  
+  
+6. How can the CFPB use its authorities to ensure people with medical bills in collections, including 
+medical payment product debt, are screened for eligibility for financial assistance and other benefits?  
+  
+Healthcare providers should offer proper financial screenings of their patients to ensure their potential eligibility 
+for any FAP, or charity care/free or reduced-price care. Receipt of established government benefits should be 
+
+ 
+ 
+ 
+ 
+6
+considered, which in the District of Columbia includes SNAP, Medicaid, TANF, LIHEAP, housing assistance 
+and shelter services, Interim Disability Insurance (IDA), Supplemental Security Income (SSI), Social Security 
+Disability Insurance (SSDI), and WIC, amongst other DC-specific programs. An analysis of a patient’s ability-
+to-pay up-front should clarify how the provider and patient should move forward with the treatment, although in 
+no way should the determination result in no provision of care.  
+  
+The CFPB can require CRAs to code medical payment products as medical debt on credit reports. The CFPB 
+can also require that anyone promoting the use of medical payment products first discuss financial assistance 
+and require screening for financial assistance before an application for a medical payment product can be 
+approved.   
+ 
+8. When hospitals write off a patient’s debt as uncollectible or “bad debt” and cease attempts to collect, 
+do they notify patients that collection attempts will cease? Would patients benefit from such notifications, 
+and would such notifications reduce hospital revenue?  
+ 
+Hospitals do not notify patients that collection attempts will cease when they write off a debt as uncollectible. 
+Notifying patients of such would be a positive thing for the mental (and even physical) health of the patient. 
+Patients would benefit from knowing that the financial burden is no longer present, since it would eliminate one 
+significant source of anxiety and may propel a patient to seek further needed healthcare. It would also benefit 
+patients’ financial health, as they can plan how and where to dedicate their financial resources differently 
+knowing that their medical debt is no longer an issue.  
+  
+Treasury  
+1. What policy actions should Treasury consider taking to address problematic practices related to 
+medical credit cards or loans, including debt collection and credit reporting practices, to conform with 
+the existing tax laws and regulations pertaining to tax exempt hospitals?  
+  
+Treasury should use its authority to limit the ability of tax-exempt hospitals from promoting medical payment 
+products and related debt collection. Treasury should promulgate regulations to specify when hospitals can 
+promote such payment products, and what associated disclosures are necessary in order for a hospital to remain 
+tax exempt. Treasury should also specify that the use of such products in no way limits or changes the 
+requirements of hospitals to provide financial assistance and cannot be counted as a community benefit. In 
+doing so, Treasury should also set more specific eligibility criteria for financial assistance policies to ensure 
+uniformity across the country. If hospitals fail to comply with these regulations, Treasury should limit the value 
+of tax exclusions to the amount of financial assistance a hospital in fact provides.   
+  
+2. Should a tax-exempt hospital’s signing patients up for medical payment products be considered similar 
+to a tax-exempt hospital’s selling medical debt, such that the special rules that only exclude debt sales 
+from being extraordinary collection actions if certain requirements are met would be applied to these 
+payment products?  
+  
+Yes, a hospital’s signing patients up for medical payment products should be considered similar to a tax-exempt 
+hospital’s selling medical debt. The special rules should apply to more specific requirements needing to be met 
+in order for a hospital to do so. This would help ensure more patients are screened for FAP eligibility before 
+being offered a medical payment product and would help protect patients’ rights as they relate to medical debt.  
+  
+5. What are best practices for hospitals publishing and making patients aware of financial assistance 
+programs (beyond compliance with the widely publicized requirements found in the section 501(r) 
+regulations)?  
+
+ 
+ 
+ 
+ 
+7
+  
+In order to ensure that patients are aware of financial assistance programs, hospitals should preemptively screen 
+every patient for eligibility. Patients should be notified verbally of the availability of financial assistance when 
+they check-in for their appointments, and when they check-out. Hospitals should also clearly post financial 
+assistance information on their website, on their general billing page. Every written communication regarding 
+billing or collections that is sent to the patient should have information about financial assistance written in 
+large, bolded text at the beginning and end of each communication. Further, this information should be widely 
+available in all the languages most frequently spoken in the area.   
+  
+8. Does the availability of medical payment products generally benefit the community or assist patients 
+financially?   
+  
+The potential for medical payment products to circumvent established health insurance coverage and result in 
+the offer of payment for services which may be covered by insurance neither assists patients financially nor is a 
+benefit to the community. Medical payment products such as medical credit cards offer deferred interest, the 
+details of which may not be clear to patients at the time of the agreement, which can result in large expenses 
+patients may not be able to afford. Additionally, the use of medical credit cards to pay for healthcare may result 
+in damage to credit, as functionally the debt is viewed as “credit card” debt and not as medical debt.  
+  
+Tzedek DC appreciates the opportunity to provide comments to the agencies on the matter of medical payment 
+products.  
