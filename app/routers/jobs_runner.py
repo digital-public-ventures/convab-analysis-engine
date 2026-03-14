@@ -1,4 +1,4 @@
-"""Background job helpers for FastAPI routes."""
+"""Background job helpers for router endpoints."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ import time
 from pathlib import Path
 from typing import Any, cast
 
-from app import server_runtime
 from app.analysis import AnalysisRequest as DatasetAnalysisRequest
 from app.analysis import analyze_dataset
 from app.config import (
@@ -20,7 +19,8 @@ from app.config import (
     TAG_DEDUP_STREAM_CHUNK_SIZE,
 )
 from app.processing import AttachmentProcessor, TagDedupOutput, clean_csv, deduplicate_tags, read_csv_rows
-from app.server_models import AnalyzeRequest, TagDedupRequest
+from app.routers import state
+from app.routers.models import AnalyzeRequest, TagDedupRequest
 
 logger = logging.getLogger(__name__)
 
@@ -44,10 +44,10 @@ def add_csv_results(job_id: str, csv_path: Path, chunk_size: int) -> int:
             batch.append(cast('dict[str, Any]', row))
             total_rows += 1
             if len(batch) >= chunk_size:
-                server_runtime.job_store.add_results(job_id, batch)
+                state.job_store.add_results(job_id, batch)
                 batch = []
         if batch:
-            server_runtime.job_store.add_results(job_id, batch)
+            state.job_store.add_results(job_id, batch)
     return total_rows
 
 
@@ -60,8 +60,8 @@ async def run_clean_job(
     no_cache_ocr: bool = False,
 ) -> None:
     """Run the clean job in the background."""
-    server_runtime.job_store.mark_running(job_id)
-    paths = server_runtime.data_store.ensure_hash_dirs(content_hash)
+    state.job_store.mark_running(job_id)
+    paths = state.data_store.ensure_hash_dirs(content_hash)
     raw_input_path = paths['root'] / 'input.csv'
     raw_input_path.write_bytes(content)
     logger.debug(
@@ -74,10 +74,10 @@ async def run_clean_job(
     logger.debug('Clean job raw input persisted: %s (%d bytes)', raw_input_path, len(content))
 
     async def set_total_rows(total_rows: int) -> None:
-        server_runtime.job_store.set_total_rows(job_id, total_rows)
+        state.job_store.set_total_rows(job_id, total_rows)
 
     async def add_chunk(rows: list[dict[str, Any]]) -> None:
-        server_runtime.job_store.add_results(job_id, rows)
+        state.job_store.add_results(job_id, rows)
 
     try:
         processor = AttachmentProcessor(cache_dir=paths['downloads'])
@@ -95,38 +95,38 @@ async def run_clean_job(
             no_cache_ocr=no_cache_ocr,
         )
         logger.info('Cleaned CSV saved to: %s', cleaned_path)
-        server_runtime.job_store.mark_completed(job_id)
+        state.job_store.mark_completed(job_id)
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception('Clean job failed')
-        server_runtime.job_store.mark_failed(job_id, str(exc))
+        state.job_store.mark_failed(job_id, str(exc))
 
 
 async def run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
     """Run the analyze job in the background."""
     content_hash = request.content_hash
-    server_runtime.job_store.mark_running(job_id)
+    state.job_store.mark_running(job_id)
     job_started_at = time.monotonic()
     logger.debug('Analyze job %s started for hash %s...', job_id, content_hash[:12])
 
     async def set_total_rows(total_rows: int) -> None:
-        server_runtime.job_store.set_total_rows(job_id, total_rows)
+        state.job_store.set_total_rows(job_id, total_rows)
 
     async def add_batch(rows: list[dict[str, Any]]) -> None:
-        server_runtime.job_store.add_results(job_id, rows)
+        state.job_store.add_results(job_id, rows)
 
-    cleaned_csv = server_runtime.data_store.get_cleaned_csv(content_hash)
+    cleaned_csv = state.data_store.get_cleaned_csv(content_hash)
     if not cleaned_csv:
         logger.error('Analyze job %s failed: cleaned CSV not found for hash %s', job_id, content_hash)
-        server_runtime.job_store.mark_failed(job_id, 'Cleaned CSV not found')
+        state.job_store.mark_failed(job_id, 'Cleaned CSV not found')
         return
 
-    schema_path = server_runtime.data_store.get_schema(content_hash)
+    schema_path = state.data_store.get_schema(content_hash)
     if not schema_path:
         logger.error('Analyze job %s failed: schema not found for hash %s', job_id, content_hash)
-        server_runtime.job_store.mark_failed(job_id, 'Schema not found')
+        state.job_store.mark_failed(job_id, 'Schema not found')
         return
 
-    paths = server_runtime.data_store.ensure_hash_dirs(content_hash)
+    paths = state.data_store.ensure_hash_dirs(content_hash)
     analysis_json_path = paths['analyzed'] / ANALYSIS_JSON_FILENAME
     analysis_csv_path = paths['analyzed'] / ANALYSIS_CSV_FILENAME
 
@@ -171,31 +171,31 @@ async def run_analyze_job(job_id: str, request: AnalyzeRequest) -> None:
             csv_size,
             output_rows,
         )
-        server_runtime.job_store.mark_completed(job_id)
+        state.job_store.mark_completed(job_id)
         logger.debug('Analyze job %s completed in %.2fs', job_id, time.monotonic() - job_started_at)
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception('Analyze job failed')
-        server_runtime.job_store.mark_failed(job_id, str(exc))
+        state.job_store.mark_failed(job_id, str(exc))
 
 
 async def run_tag_dedup_job(job_id: str, request: TagDedupRequest) -> None:
     """Run the tag-dedup job in the background."""
     content_hash = request.content_hash
-    server_runtime.job_store.mark_running(job_id)
+    state.job_store.mark_running(job_id)
     job_started_at = time.monotonic()
     logger.debug('Tag dedup job %s started for hash %s...', job_id, content_hash[:12])
 
-    analysis_csv = server_runtime.data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
+    analysis_csv = state.data_store.get_analyzed_csv(content_hash, ANALYSIS_CSV_FILENAME)
     if not analysis_csv:
-        server_runtime.job_store.mark_failed(job_id, 'Analysis CSV not found')
+        state.job_store.mark_failed(job_id, 'Analysis CSV not found')
         return
 
-    schema_path = server_runtime.data_store.get_schema(content_hash)
+    schema_path = state.data_store.get_schema(content_hash)
     if not schema_path:
-        server_runtime.job_store.mark_failed(job_id, 'Schema not found')
+        state.job_store.mark_failed(job_id, 'Schema not found')
         return
 
-    output_dir = server_runtime.data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
+    output_dir = state.data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
 
     try:
         result: TagDedupOutput = await deduplicate_tags(
@@ -204,9 +204,9 @@ async def run_tag_dedup_job(job_id: str, request: TagDedupRequest) -> None:
             output_dir=output_dir,
         )
         total_rows = add_csv_results(job_id, result.deduped_csv_path, TAG_DEDUP_STREAM_CHUNK_SIZE)
-        server_runtime.job_store.set_total_rows(job_id, total_rows)
-        server_runtime.job_store.mark_completed(job_id)
+        state.job_store.set_total_rows(job_id, total_rows)
+        state.job_store.mark_completed(job_id)
         logger.debug('Tag dedup job %s completed in %.2fs', job_id, time.monotonic() - job_started_at)
     except Exception as exc:  # pragma: no cover - defensive logging
         logger.exception('Tag dedup job failed')
-        server_runtime.job_store.mark_failed(job_id, str(exc))
+        state.job_store.mark_failed(job_id, str(exc))

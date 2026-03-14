@@ -7,12 +7,12 @@ import pytest
 
 from app import config as app_config
 from app import server as app_server
-from app import server_jobs as app_server_jobs
-from app import server_runtime as app_server_runtime
 from app.analysis import analyzer as analysis_analyzer
 from app.processing import AttachmentProcessor
 from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
+from app.routers import jobs_runner as app_jobs_runner
+from app.routers import state as app_router_state
 from app.schema import generator as schema_generator
 
 
@@ -157,7 +157,7 @@ def override_data_dir(
     monkeypatch.setattr(processing_cleaner, 'CLEANED_DATA_DIR', cleaned_dir)
 
     monkeypatch.setattr(app_server, 'DOWNLOADS_DIR', downloads_dir)
-    app_server_runtime.data_store.data_dir = data_dir
+    app_router_state.data_store.data_dir = data_dir
 
     return data_dir
 
@@ -205,7 +205,7 @@ def override_llm_model_ids(monkeypatch: pytest.MonkeyPatch) -> None:
         )
 
     monkeypatch.setattr(analysis_analyzer, "analyze_dataset", _analyze_with_test_model)
-    monkeypatch.setattr(app_server_jobs, "analyze_dataset", _analyze_with_test_model)
+    monkeypatch.setattr(app_jobs_runner, "analyze_dataset", _analyze_with_test_model)
 
     # Some tests import `analyze_dataset` directly, so patch those bound symbols too.
     analyze_integration_module = sys.modules.get("app.tests.test_analyze_first5_integration")

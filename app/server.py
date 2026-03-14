@@ -13,12 +13,11 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from app.config import DATA_DIR, DOWNLOADS_DIR, LOG_DATE_FORMAT, LOG_FORMAT
-from app.processing import AttachmentProcessor, DataStore
+from app.processing import AttachmentProcessor
 from app.routers.analysis import router as analysis_router
 from app.routers.cleaning import router as cleaning_router
 from app.routers.jobs import router as jobs_router
 from app.routers.schema import router as schema_router
-from app.server_models import SchemaRequest
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator
@@ -26,7 +25,7 @@ if TYPE_CHECKING:
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-__all__ = ['app', 'DataStore', 'SchemaRequest']
+__all__ = ['app']
 
 
 def _configure_logging() -> None:

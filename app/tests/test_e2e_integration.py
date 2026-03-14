@@ -19,8 +19,6 @@ from fastapi.testclient import TestClient
 
 from app import config as app_config
 from app import server as server_module
-from app import server_jobs as server_jobs_module
-from app import server_runtime as server_runtime_module
 from app.config import (
     ANALYSIS_CSV_FILENAME,
     ANALYSIS_JSON_FILENAME,
@@ -32,6 +30,8 @@ from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
 from app.processing.job_store import JobStore
 from app.routers import analysis as analysis_router_module
+from app.routers import jobs_runner as server_jobs_module
+from app.routers import state as server_runtime_module
 from app.server import app
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -42,7 +42,7 @@ PROMPTS_DIR = EXAMPLE_DATASET_DIR / "example_prompts"
 RESPONSES_CSV = EXAMPLE_DATASET_DIR / "responses_100.csv"
 EXAMPLE_DATASET_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"  # pragma: allowlist secret
 SCHEMA_CACHE_BYPASS = True
-RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "prompts" / "response_schema.json"
+RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "response_schema.json"
 os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "true"
 
 pytestmark = pytest.mark.integration

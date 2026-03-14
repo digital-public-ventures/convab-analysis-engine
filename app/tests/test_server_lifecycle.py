@@ -16,10 +16,9 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import config as app_config
-from app import server as server_module
-from app import server_jobs as server_jobs_module
+from app.processing import DataStore, TagDedupOutput
 from app.config import TAG_DEDUP_CSV_FILENAME, TAG_DEDUP_MAPPINGS_FILENAME
-from app.processing import TagDedupOutput
+from app.routers import jobs_runner as server_jobs_module
 from app.server import app
 from app.tests.job_test_helpers import (
     FIXTURE_SCHEMA,
@@ -136,7 +135,7 @@ class TestAsyncJobHandling:
             if len(final_results['rows']) != expected_rows:
                 pytest.fail('Expected clean job final rows to match input row count')
 
-            cleaned_path = server_module.DataStore(app_config.DATA_DIR).get_cleaned_csv(content_hash)
+            cleaned_path = DataStore(app_config.DATA_DIR).get_cleaned_csv(content_hash)
             if cleaned_path is None:
                 pytest.fail('Expected cleaned CSV to exist after clean job completion')
             cleaned_df = pd.read_csv(cleaned_path)
@@ -167,7 +166,7 @@ class TestAsyncJobHandling:
 
         temp_csv = write_temp_csv(tmp_path, rows=30)
         content = temp_csv.read_bytes()
-        expected_hash = server_module.DataStore.hash_content(content)
+        expected_hash = DataStore.hash_content(content)
         raw_input_path = app_config.DATA_DIR / expected_hash / 'input.csv'
 
         with TestClient(app) as client:

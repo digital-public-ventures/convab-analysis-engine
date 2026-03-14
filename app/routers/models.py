@@ -1,4 +1,4 @@
-"""Request and response models for the FastAPI server."""
+"""Request and response models for the router layer."""
 
 from __future__ import annotations
 

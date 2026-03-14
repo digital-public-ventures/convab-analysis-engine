@@ -8,10 +8,10 @@ from fastapi import APIRouter, HTTPException, Request, UploadFile
 from fastapi import File, Query
 from fastapi import Path as PathParam
 
-from app import server_runtime
 from app.processing import DataStore, read_csv_rows
-from app.server_jobs import run_clean_job
-from app.server_models import DataInfoResponse, JobStartResponse
+from app.routers import state
+from app.routers.jobs_runner import run_clean_job
+from app.routers.models import DataInfoResponse, JobStartResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -34,16 +34,16 @@ async def clean_csv_endpoint(
 
     logger.debug('Received file: %s (hash: %s...)', file.filename, content_hash[:12])
 
-    job = server_runtime.job_store.create_job('clean', metadata={'content_hash': content_hash})
-    poll_url, results_url = server_runtime.build_job_urls(job.job_id)
+    job = state.job_store.create_job('clean', metadata={'content_hash': content_hash})
+    poll_url, results_url = state.build_job_urls(job.job_id)
 
-    existing = server_runtime.data_store.get_cleaned_csv(content_hash)
+    existing = state.data_store.get_cleaned_csv(content_hash)
     if existing and not no_cache:
         logger.info('Cache hit for hash: %s...', content_hash[:12])
         rows = read_csv_rows(existing)
-        server_runtime.job_store.add_results(job.job_id, rows)
-        server_runtime.job_store.set_total_rows(job.job_id, len(rows))
-        server_runtime.job_store.mark_completed(job.job_id)
+        state.job_store.add_results(job.job_id, rows)
+        state.job_store.set_total_rows(job.job_id, len(rows))
+        state.job_store.mark_completed(job.job_id)
         return JobStartResponse(
             job_id=job.job_id,
             status=job.status,
@@ -58,7 +58,7 @@ async def clean_csv_endpoint(
     if processor is None:
         raise HTTPException(status_code=500, detail='Processor not initialized')
 
-    server_runtime.create_background_task(
+    state.create_background_task(
         run_clean_job(
             job.job_id,
             content,
@@ -82,11 +82,11 @@ async def clean_csv_endpoint(
 @router.get('/data/{hash}', response_model=DataInfoResponse)
 async def get_data_info(content_hash: str = PathParam(..., alias='hash')) -> DataInfoResponse:
     """Get information about a processed dataset."""
-    if not server_runtime.data_store.hash_exists(content_hash):
+    if not state.data_store.hash_exists(content_hash):
         raise HTTPException(status_code=404, detail='Dataset not found')
 
-    cleaned = server_runtime.data_store.get_cleaned_csv(content_hash)
-    schema = server_runtime.data_store.get_schema(content_hash)
+    cleaned = state.data_store.get_cleaned_csv(content_hash)
+    schema = state.data_store.get_schema(content_hash)
 
     return DataInfoResponse(
         content_hash=content_hash,

@@ -9,10 +9,10 @@ import pandas as pd
 from fastapi import APIRouter, HTTPException
 from fastapi import Path as PathParam
 
-from app import server_runtime
 from app.processing import estimate_tokens
+from app.routers import state
+from app.routers.models import SchemaRequest, SchemaResponse
 from app.schema import SchemaGenerator
-from app.server_models import SchemaRequest, SchemaResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -24,20 +24,20 @@ async def generate_schema_endpoint(
     content_hash: str = PathParam(..., alias='hash'),
 ) -> SchemaResponse:
     """Generate a tagging schema for a previously cleaned CSV."""
-    if not server_runtime.data_store.hash_exists(content_hash):
+    if not state.data_store.hash_exists(content_hash):
         raise HTTPException(
             status_code=404,
             detail=f"Dataset with hash '{content_hash[:12]}...' not found. Run /clean first.",
         )
 
-    existing_schema = server_runtime.data_store.get_schema(content_hash)
+    existing_schema = state.data_store.get_schema(content_hash)
     if existing_schema:
         logger.info('Schema cache hit for hash: %s...', content_hash[:12])
         with existing_schema.open(encoding='utf-8') as handle:
             schema_data = json.load(handle)
         return SchemaResponse(content_hash=content_hash, cached=True, schema=schema_data)
 
-    cleaned_csv = server_runtime.data_store.get_cleaned_csv(content_hash)
+    cleaned_csv = state.data_store.get_cleaned_csv(content_hash)
     if not cleaned_csv:
         raise HTTPException(
             status_code=404,
@@ -76,7 +76,7 @@ async def generate_schema_endpoint(
         logger.exception('Schema generation error')
         raise HTTPException(status_code=500, detail=f'Schema generation failed: {exc}') from exc
 
-    paths = server_runtime.data_store.ensure_hash_dirs(content_hash)
+    paths = state.data_store.ensure_hash_dirs(content_hash)
     generator.save_schema(
         schema=schema,
         schema_dir=paths['schema'],

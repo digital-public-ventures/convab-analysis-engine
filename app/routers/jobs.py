@@ -5,9 +5,9 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from fastapi import Query
 
-from app import server_runtime
 from app.processing.job_store import JobStatus
-from app.server_models import JobProgress, JobResultsResponse, JobStatusResponse
+from app.routers import state
+from app.routers.models import JobProgress, JobResultsResponse, JobStatusResponse
 
 router = APIRouter()
 
@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get('/jobs/{job_id}', response_model=JobStatusResponse)
 async def get_job_status(job_id: str) -> JobStatusResponse:
     """Get the current status of a background job."""
-    record = server_runtime.job_store.get_job(job_id)
+    record = state.job_store.get_job(job_id)
     if record is None:
         raise HTTPException(status_code=404, detail='Job not found')
 
@@ -40,12 +40,12 @@ async def get_job_results(
     limit: int = Query(default=500, ge=1, le=5000),
 ) -> JobResultsResponse:
     """Return completed rows for a job since the provided cursor."""
-    record = server_runtime.job_store.get_job(job_id)
+    record = state.job_store.get_job(job_id)
     if record is None:
         raise HTTPException(status_code=404, detail='Job not found')
 
-    cursor_value = server_runtime.parse_cursor(cursor)
-    results, has_more = server_runtime.job_store.get_results_since(job_id, cursor_value, limit)
+    cursor_value = state.parse_cursor(cursor)
+    results, has_more = state.job_store.get_results_since(job_id, cursor_value, limit)
     rows = [row.payload for row in results]
     next_cursor = str(results[-1].sequence_id) if results else (str(cursor_value) if cursor_value else None)
 
