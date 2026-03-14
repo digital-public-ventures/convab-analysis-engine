@@ -11,7 +11,8 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.processing import AttachmentProcessor, clean_csv
-from app.server import SchemaRequest, app
+from app.routers.models import SchemaRequest
+from app.server import app
 
 FIXTURES_DIR = Path(__file__).parent / 'fixtures'
 HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
