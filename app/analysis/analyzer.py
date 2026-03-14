@@ -139,16 +139,26 @@ def _normalize_categorical_fields(
     schema_fields: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Normalize categorical fields to expected shapes."""
+
+    def _categorical_sentinel(field: dict[str, Any]) -> str | None:
+        for value in [*field.get('required_values', []), *field.get('suggested_values', [])]:
+            text = str(value).strip()
+            if text == 'None or Not Applicable':
+                return text
+        return None
+
     normalized: dict[str, Any] = {}
     for field in schema_fields:
         field_name = field.get('field_name', '').strip()
         allow_multiple = bool(field.get('allow_multiple', False))
+        sentinel = _categorical_sentinel(field)
         value = raw_fields.get(field_name)
         if allow_multiple:
             if value is None:
-                normalized[field_name] = None
+                normalized[field_name] = [sentinel] if sentinel else None
             elif isinstance(value, list):
-                normalized[field_name] = [str(v) for v in value]
+                normalized_values = [str(v) for v in value]
+                normalized[field_name] = normalized_values or ([sentinel] if sentinel else [])
             else:
                 normalized[field_name] = [str(value)]
         elif value is None:
@@ -332,13 +342,227 @@ def _records_to_csv_rows(
     return rows
 
 
+def _format_batch_label(batch_index: int | str | None) -> str:
+    return f'batch={batch_index}' if batch_index is not None else 'batch=?'
+
+
+def _child_batch_index(batch_index: int | str | None, suffix: str) -> str:
+    if batch_index is None:
+        return suffix
+    return f'{batch_index}.{suffix}'
+
+
+async def _request_validated_batch_response(
+    client: object,
+    limiter: AsyncRateLimiter,
+    context: AnalysisContext,
+    config: AnalysisConfig,
+    records: list[dict[str, Any]],
+    prompt_text: str,
+    batch_label: str,
+    max_retries: int,
+) -> tuple[dict[str, Any] | None, bool, int]:
+    response_data: dict[str, Any] | None = None
+    for attempt in range(1 + max_retries):
+        response_data, _ = await generate_structured_content(
+            client=client,
+            prompt_text=prompt_text,
+            model_id=config.model_id,
+            json_schema=context.response_schema,
+            system_instruction=context.system_prompt,
+            thinking_level=config.thinking_level,
+            token_usage_file=str(TOKEN_USAGE_FILE),
+            rate_limiter=limiter,
+            batch_size=len(records),
+            request_timeout=config.request_timeout,
+        )
+
+        if response_data:
+            failure = validate_analysis_payload(response_data, context.source_schema)
+            if failure is None:
+                return response_data, False, attempt + 1
+            logger.warning(
+                'Analyze %s attempt %d failed schema validation category=%s: %s',
+                batch_label,
+                attempt + 1,
+                failure.category,
+                failure.message,
+            )
+
+        if attempt < max_retries:
+            logger.warning(
+                'Analyze %s attempt %d failed (empty/invalid response), retrying...',
+                batch_label,
+                attempt + 1,
+            )
+
+    return response_data, True, max_retries + 1
+
+
+async def _recover_exhausted_batch(
+    client: object,
+    limiter: AsyncRateLimiter,
+    context: AnalysisContext,
+    config: AnalysisConfig,
+    records: list[dict[str, Any]],
+    batch_index: int | str | None,
+    batch_label: str,
+    attempts_used: int,
+    response_data: dict[str, Any] | None,
+    started_at: float,
+    input_ids: list[str],
+) -> list[dict[str, Any]]:
+    duration = time.monotonic() - started_at
+    if not response_data:
+        logger.warning(
+            'Analyze %s returned empty response data after %d attempts (%.2fs)', batch_label, attempts_used, duration
+        )
+    else:
+        logger.warning(
+            'Analyze %s returned schema-invalid payload after %d attempts (%.2fs)', batch_label, attempts_used, duration
+        )
+
+    if len(records) > 1:
+        midpoint = max(1, len(records) // 2)
+        logger.warning(
+            'Analyze %s splitting failed batch into %d and %d records for narrower retries',
+            batch_label,
+            midpoint,
+            len(records) - midpoint,
+        )
+        first_half = await _analyze_batch(
+            client=client,
+            limiter=limiter,
+            context=context,
+            config=config,
+            records=records[:midpoint],
+            batch_index=_child_batch_index(batch_index, '1'),
+        )
+        second_half = await _analyze_batch(
+            client=client,
+            limiter=limiter,
+            context=context,
+            config=config,
+            records=records[midpoint:],
+            batch_index=_child_batch_index(batch_index, '2'),
+        )
+        return first_half + second_half
+
+    record_id = input_ids[0] if input_ids else 'unknown'
+    msg = f'Analyze {batch_label} failed after {attempts_used} attempts for record_id={record_id}'
+    raise ValueError(msg)
+
+
+def _reconcile_batch_records(
+    input_ids: list[str],
+    records_data: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], list[str], list[str], list[str]]:
+    records_by_id: dict[str, dict[str, Any]] = {}
+    duplicate_ids: list[str] = []
+    extra_ids: list[str] = []
+    for record in records_data:
+        record_id = str(record.get('record_id', ''))
+        if record_id not in input_ids:
+            extra_ids.append(record_id)
+            continue
+        if record_id in records_by_id:
+            duplicate_ids.append(record_id)
+            continue
+        records_by_id[record_id] = record
+
+    missing_ids = [record_id for record_id in input_ids if record_id not in records_by_id]
+    return records_by_id, missing_ids, extra_ids, duplicate_ids
+
+
+def _log_reconciliation_issues(
+    batch_label: str,
+    input_ids: list[str],
+    records_by_id: dict[str, dict[str, Any]],
+    missing_ids: list[str],
+    extra_ids: list[str],
+    duplicate_ids: list[str],
+) -> None:
+    if not missing_ids and not extra_ids and not duplicate_ids:
+        return
+
+    logger.warning(
+        'Analyze %s returned %d/%d records (missing=%d, extra=%d, duplicate=%d)',
+        batch_label,
+        len(records_by_id),
+        len(input_ids),
+        len(missing_ids),
+        len(extra_ids),
+        len(duplicate_ids),
+    )
+    if missing_ids:
+        logger.warning(
+            'Analyze %s missing record_ids sample: %s',
+            batch_label,
+            missing_ids[:10],
+        )
+        logger.debug('Analyze %s missing record_ids: %s', batch_label, missing_ids)
+    if extra_ids:
+        logger.warning(
+            'Analyze %s extra record_ids sample: %s',
+            batch_label,
+            extra_ids[:10],
+        )
+        logger.debug('Analyze %s extra record_ids: %s', batch_label, extra_ids)
+    if duplicate_ids:
+        logger.warning(
+            'Analyze %s duplicate record_ids sample: %s',
+            batch_label,
+            duplicate_ids[:10],
+        )
+        logger.debug('Analyze %s duplicate record_ids: %s', batch_label, duplicate_ids)
+
+
+async def _recover_missing_records(
+    client: object,
+    limiter: AsyncRateLimiter,
+    context: AnalysisContext,
+    config: AnalysisConfig,
+    records: list[dict[str, Any]],
+    batch_index: int | str | None,
+    batch_label: str,
+    input_ids: list[str],
+    records_by_id: dict[str, dict[str, Any]],
+    missing_ids: list[str],
+) -> dict[str, dict[str, Any]]:
+    missing_id_set = set(missing_ids)
+    missing_records = [record for record in records if str(record.get('record_id', '')) in missing_id_set]
+    logger.warning(
+        'Analyze %s retrying %d missing record_ids as a follow-up batch',
+        batch_label,
+        len(missing_records),
+    )
+    recovered_records = await _analyze_batch(
+        client=client,
+        limiter=limiter,
+        context=context,
+        config=config,
+        records=missing_records,
+        batch_index=_child_batch_index(batch_index, 'missing'),
+    )
+    for record in recovered_records:
+        record_id = str(record.get('record_id', ''))
+        if record_id in input_ids and record_id not in records_by_id:
+            records_by_id[record_id] = record
+
+    remaining_missing_ids = [record_id for record_id in input_ids if record_id not in records_by_id]
+    if remaining_missing_ids:
+        msg = f'Analyze {batch_label} missing record_ids after recovery: {remaining_missing_ids[:10]}'
+        raise ValueError(msg)
+    return records_by_id
+
+
 async def _analyze_batch(
     client: object,
     limiter: AsyncRateLimiter,
     context: AnalysisContext,
     config: AnalysisConfig,
     records: list[dict[str, Any]],
-    batch_index: int | None = None,
+    batch_index: int | str | None = None,
 ) -> list[dict[str, Any]]:
     """Analyze a batch of records using the LLM.
 
@@ -352,7 +576,7 @@ async def _analyze_batch(
     Returns:
         List of analyzed record dictionaries
     """
-    batch_label = f'batch={batch_index}' if batch_index is not None else 'batch=?'
+    batch_label = _format_batch_label(batch_index)
     record_char_sizes = [len(json.dumps(record)) for record in records]
     input_ids = [str(record.get('record_id', '')) for record in records]
     batch_char_size = sum(record_char_sizes)
@@ -373,7 +597,6 @@ async def _analyze_batch(
 
     started_at = time.monotonic()
     max_retries = 5
-
     prompt_text = build_analysis_prompt(
         context.use_case,
         context.schema_summary,
@@ -381,80 +604,62 @@ async def _analyze_batch(
         context.id_column,
     )
 
-    response_data = None
-    for attempt in range(1 + max_retries):
-        response_data, _ = await generate_structured_content(
+    response_data, exhausted, attempts_used = await _request_validated_batch_response(
+        client=client,
+        limiter=limiter,
+        context=context,
+        config=config,
+        records=records,
+        prompt_text=prompt_text,
+        batch_label=batch_label,
+        max_retries=max_retries,
+    )
+    if exhausted:
+        return await _recover_exhausted_batch(
             client=client,
-            prompt_text=prompt_text,
-            model_id=config.model_id,
-            json_schema=context.response_schema,
-            system_instruction=context.system_prompt,
-            thinking_level=config.thinking_level,
-            token_usage_file=str(TOKEN_USAGE_FILE),
-            rate_limiter=limiter,
-            batch_size=len(records),
-            request_timeout=config.request_timeout,
+            limiter=limiter,
+            context=context,
+            config=config,
+            records=records,
+            batch_index=batch_index,
+            batch_label=batch_label,
+            attempts_used=attempts_used,
+            response_data=response_data,
+            started_at=started_at,
+            input_ids=input_ids,
         )
-
-        if response_data:
-            failure = validate_analysis_payload(response_data, context.source_schema)
-            if failure is None:
-                break
-            logger.warning(
-                'Analyze %s attempt %d failed schema validation category=%s: %s',
-                batch_label,
-                attempt + 1,
-                failure.category,
-                failure.message,
-            )
-
-        if attempt < max_retries:
-            logger.warning(
-                'Analyze %s attempt %d failed (empty/invalid response), retrying...',
-                batch_label,
-                attempt + 1,
-            )
-        else:
-            duration = time.monotonic() - started_at
-            if not response_data:
-                logger.warning('Analyze %s returned empty response data after %d attempts (%.2fs)', batch_label, attempt + 1, duration)
-            else:
-                logger.warning('Analyze %s returned schema-invalid payload after %d attempts (%.2fs)', batch_label, attempt + 1, duration)
-            return []
 
     records_data = response_data.get('records', [])
-
-    output_ids = [str(record.get('record_id', '')) for record in records_data]
-    if len(output_ids) != len(input_ids):
-        missing_ids = sorted(set(input_ids) - set(output_ids))
-        extra_ids = sorted(set(output_ids) - set(input_ids))
-        logger.warning(
-            'Analyze %s returned %d/%d records (missing=%d, extra=%d)',
-            batch_label,
-            len(output_ids),
-            len(input_ids),
-            len(missing_ids),
-            len(extra_ids),
+    records_by_id, missing_ids, extra_ids, duplicate_ids = _reconcile_batch_records(input_ids, records_data)
+    _log_reconciliation_issues(
+        batch_label=batch_label,
+        input_ids=input_ids,
+        records_by_id=records_by_id,
+        missing_ids=missing_ids,
+        extra_ids=extra_ids,
+        duplicate_ids=duplicate_ids,
+    )
+    if missing_ids:
+        records_by_id = await _recover_missing_records(
+            client=client,
+            limiter=limiter,
+            context=context,
+            config=config,
+            records=records,
+            batch_index=batch_index,
+            batch_label=batch_label,
+            input_ids=input_ids,
+            records_by_id=records_by_id,
+            missing_ids=missing_ids,
         )
-        if missing_ids:
-            logger.warning(
-                'Analyze %s missing record_ids sample: %s',
-                batch_label,
-                missing_ids[:10],
-            )
-            logger.debug('Analyze %s missing record_ids: %s', batch_label, missing_ids)
-        if extra_ids:
-            logger.warning(
-                'Analyze %s extra record_ids sample: %s',
-                batch_label,
-                extra_ids[:10],
-            )
-            logger.debug('Analyze %s extra record_ids: %s', batch_label, extra_ids)
+
+    ordered_records = [records_by_id[record_id] for record_id in input_ids if record_id in records_by_id]
+    output_ids = [str(record.get('record_id', '')) for record in ordered_records]
 
     duration = time.monotonic() - started_at
     logger.debug('Completed analyze %s with %d records (%.2fs)', batch_label, len(output_ids), duration)
 
-    return cast('list[dict[str, Any]]', records_data)
+    return cast('list[dict[str, Any]]', ordered_records)
 
 
 async def analyze_dataset(
@@ -601,17 +806,18 @@ async def analyze_dataset(
     logger.debug('All batches completed in %.2fs', time.monotonic() - batch_completion_started_at)
 
     if len(normalized) != len(records):
-        logger.warning(
+        logger.error(
             'Normalized %d records from %d input rows',
             len(normalized),
             len(records),
         )
-    else:
-        logger.debug(
-            'Normalized %d records from %d input rows',
-            len(normalized),
-            len(records),
-        )
+        msg = f'Analysis output row count mismatch: normalized={len(normalized)} input={len(records)}'
+        raise ValueError(msg)
+    logger.debug(
+        'Normalized %d records from %d input rows',
+        len(normalized),
+        len(records),
+    )
 
     total_duration = time.monotonic() - analysis_started_at
     logger.debug('Analysis completed in %.2fs', total_duration)

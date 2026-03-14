@@ -18,6 +18,35 @@ def _failure(category: str, message: str) -> ValidationFailure:
     return ValidationFailure(category=category, message=message)
 
 
+def _ordered_string_values(values: list[Any]) -> list[str]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = str(value).strip()
+        if not text or text in seen:
+            continue
+        ordered.append(text)
+        seen.add(text)
+    return ordered
+
+
+def _categorical_allowed_values(field: dict[str, Any]) -> list[str]:
+    return _ordered_string_values(
+        [
+            *field.get('required_values', []),
+            *field.get('suggested_values', []),
+        ]
+    )
+
+
+def _field_int(field: dict[str, Any], *keys: str) -> int | None:
+    for key in keys:
+        value = field.get(key)
+        if isinstance(value, int) and not isinstance(value, bool):
+            return value
+    return None
+
+
 def _validate_field_object(
     group_name: str,
     payload: object,
@@ -27,9 +56,7 @@ def _validate_field_object(
         return _failure('wrong_types', f'{group_name} must be an object')
 
     expected_field_names = {
-        str(field.get('field_name', '')).strip()
-        for field in schema_fields
-        if str(field.get('field_name', '')).strip()
+        str(field.get('field_name', '')).strip() for field in schema_fields if str(field.get('field_name', '')).strip()
     }
     unexpected = sorted(key for key in payload if key not in expected_field_names)
     if unexpected:
@@ -59,14 +86,27 @@ def _validate_field_object(
 
         if group_name == 'categorical_fields':
             allow_multiple = bool(field.get('allow_multiple', False))
-            suggested_values = {str(v) for v in field.get('suggested_values', []) if str(v).strip()}
+            value_mode = str(field.get('value_mode', 'closed')).strip().lower()
+            allowed_values = set(_categorical_allowed_values(field)) if value_mode == 'closed' else set()
             if allow_multiple:
                 if not isinstance(value, list):
                     return _failure('wrong_types', f'{group_name}.{field_name} must be an array')
                 if not all(isinstance(item, str) for item in value):
                     return _failure('wrong_types', f'{group_name}.{field_name} items must be strings')
-                if suggested_values:
-                    invalid = [item for item in value if item not in suggested_values]
+                min_items = _field_int(field, 'min_items', 'minItems')
+                if min_items is not None and len(value) < min_items:
+                    return _failure(
+                        'wrong_types',
+                        f'{group_name}.{field_name} must contain at least {min_items} values',
+                    )
+                max_items = _field_int(field, 'max_items', 'maxItems')
+                if max_items is not None and len(value) > max_items:
+                    return _failure(
+                        'wrong_types',
+                        f'{group_name}.{field_name} must contain at most {max_items} values',
+                    )
+                if allowed_values:
+                    invalid = [item for item in value if item not in allowed_values]
                     if invalid:
                         return _failure(
                             'invalid_enum_values',
@@ -75,7 +115,7 @@ def _validate_field_object(
             else:
                 if not isinstance(value, str):
                     return _failure('wrong_types', f'{group_name}.{field_name} must be a string')
-                if suggested_values and value not in suggested_values:
+                if allowed_values and value not in allowed_values:
                     return _failure('invalid_enum_values', f'{group_name}.{field_name} has invalid value: {value}')
             continue
 

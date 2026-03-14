@@ -5,6 +5,35 @@ from __future__ import annotations
 from typing import Any
 
 
+def _ordered_string_values(values: list[Any]) -> list[str]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = str(value).strip()
+        if not text or text in seen:
+            continue
+        ordered.append(text)
+        seen.add(text)
+    return ordered
+
+
+def _categorical_allowed_values(field: dict[str, Any]) -> list[str]:
+    return _ordered_string_values(
+        [
+            *field.get('required_values', []),
+            *field.get('suggested_values', []),
+        ]
+    )
+
+
+def _field_int(field: dict[str, Any], *keys: str) -> int | None:
+    for key in keys:
+        value = field.get(key)
+        if isinstance(value, int) and not isinstance(value, bool):
+            return value
+    return None
+
+
 def build_analysis_response_schema(schema: dict[str, Any]) -> dict[str, Any]:
     """Build a JSON schema for analysis output based on a generated schema."""
     enum_fields = schema.get('enum_fields', [])
@@ -41,22 +70,20 @@ def build_analysis_response_schema(schema: dict[str, Any]) -> dict[str, Any]:
                 'type': 'ARRAY',
                 'items': {'type': 'STRING'},
             }
-            min_items = field.get('min_items')
-            if isinstance(min_items, int):
+            min_items = _field_int(field, 'min_items', 'minItems')
+            if min_items is not None:
                 field_schema['minItems'] = min_items
-            max_items = field.get('max_items')
-            if isinstance(max_items, int):
-                field_schema['maxItems'] = max_items
         else:
             field_schema = {'type': 'STRING'}
         if field.get('nullable') is True:
             field_schema['nullable'] = True
-        suggested_values = [str(value) for value in field.get('suggested_values', []) if str(value).strip()]
-        if suggested_values:
+        value_mode = str(field.get('value_mode', 'closed')).strip().lower()
+        allowed_values = _categorical_allowed_values(field) if value_mode == 'closed' else []
+        if allowed_values:
             if allow_multiple:
-                field_schema['items']['enum'] = suggested_values
+                field_schema['items']['enum'] = allowed_values
             else:
-                field_schema['enum'] = suggested_values
+                field_schema['enum'] = allowed_values
         categorical_props[field_name] = field_schema
         if field.get('required') is True:
             categorical_required.append(field_name)
