@@ -17,6 +17,7 @@ from fastapi.testclient import TestClient
 
 from app import config as app_config
 from app import server as server_module
+from app import server_jobs as server_jobs_module
 from app.config import POST_PROCESSING_SUBDIR, TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
 from app.dedup import TagDedupOutput
 from app.processing.job_store import JobStore
@@ -285,7 +286,7 @@ class TestAsyncJobHandling:
             df.to_csv(output_path, index=False)
             return output_path
 
-        monkeypatch.setattr(server_module, 'clean_csv', slow_clean_csv)
+        monkeypatch.setattr(server_jobs_module, 'clean_csv', slow_clean_csv)
 
         temp_csv = _write_temp_csv(tmp_path, rows=30)
         content = temp_csv.read_bytes()
@@ -351,7 +352,7 @@ class TestAsyncJobHandling:
             df.to_csv(output_path, index=False)
             return output_path
 
-        monkeypatch.setattr(server_module, 'clean_csv', slow_clean_csv)
+        monkeypatch.setattr(server_jobs_module, 'clean_csv', slow_clean_csv)
 
         df_source = pd.read_csv(TEST_CSV)
         df_source[df_source.columns[0]] = [
@@ -466,7 +467,7 @@ class TestAsyncJobHandling:
 
         state = _track_results_before_completion(monkeypatch)
 
-        monkeypatch.setattr(server_module, 'analyze_dataset', slow_analyze_dataset)
+        monkeypatch.setattr(server_jobs_module, 'analyze_dataset', slow_analyze_dataset)
 
         df_source = pd.read_csv(TEST_CSV)
         df_expanded = pd.concat([df_source, df_source], ignore_index=True)
@@ -522,7 +523,7 @@ class TestAsyncJobHandling:
             mappings_path.write_text(json.dumps({'seeded': True}), encoding='utf-8')
             return TagDedupOutput(mappings_path=mappings_path, deduped_csv_path=deduped_path)
 
-        monkeypatch.setattr(server_module, 'deduplicate_tags', fake_deduplicate_tags)
+        monkeypatch.setattr(server_jobs_module, 'deduplicate_tags', fake_deduplicate_tags)
 
         with TestClient(app) as client:
             with TEST_CSV.open('rb') as handle:
@@ -677,7 +678,7 @@ class TestAsyncJobHandling:
                     await first_batch
             raise ValueError
 
-        monkeypatch.setattr(server_module, 'clean_csv', failing_clean_csv)
+        monkeypatch.setattr(server_jobs_module, 'clean_csv', failing_clean_csv)
 
         unique_id = uuid.uuid4().hex
         temp_csv = tmp_path / 'failure_input.csv'
@@ -720,7 +721,7 @@ class TestAsyncJobHandling:
             partial_path.write_text('id,data\n1,partial\n', encoding='utf-8')
             raise ValueError('forced failure after partial write')
 
-        monkeypatch.setattr(server_module, 'clean_csv', failing_clean_csv)
+        monkeypatch.setattr(server_jobs_module, 'clean_csv', failing_clean_csv)
 
         unique_id = uuid.uuid4().hex
         temp_csv = tmp_path / 'failure_input.csv'
@@ -777,7 +778,7 @@ class TestAsyncJobHandling:
                 await on_batch(rows)
             raise ValueError
 
-        monkeypatch.setattr(server_module, 'analyze_dataset', failing_analyze_dataset)
+        monkeypatch.setattr(server_jobs_module, 'analyze_dataset', failing_analyze_dataset)
 
         temp_csv = _write_temp_csv(tmp_path, rows=10)
 
@@ -845,7 +846,7 @@ class TestAsyncJobHandling:
             df.to_csv(output_path, index=False)
             return output_path
 
-        monkeypatch.setattr(server_module, 'clean_csv', fast_clean_csv)
+        monkeypatch.setattr(server_jobs_module, 'clean_csv', fast_clean_csv)
         temp_csv_one = _write_temp_csv(tmp_path / 'one', rows=15)
         temp_csv_two = _write_temp_csv(tmp_path / 'two', rows=18)
 

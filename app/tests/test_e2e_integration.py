@@ -19,6 +19,8 @@ from fastapi.testclient import TestClient
 
 from app import config as app_config
 from app import server as server_module
+from app import server_jobs as server_jobs_module
+from app import server_runtime as server_runtime_module
 from app.config import (
     ANALYSIS_CSV_FILENAME,
     ANALYSIS_JSON_FILENAME,
@@ -29,6 +31,7 @@ from app.processing import DataStore
 from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
 from app.processing.job_store import JobStore
+from app.routers import analysis as analysis_router_module
 from app.server import app
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -155,8 +158,8 @@ def _bind_runtime_data_dir(monkeypatch: pytest.MonkeyPatch, data_dir: Path) -> D
 
     monkeypatch.setattr(server_module, "DOWNLOADS_DIR", downloads_dir)
     data_store = DataStore(data_dir=data_dir)
-    monkeypatch.setattr(server_module, "_data_store", data_store)
-    monkeypatch.setattr(server_module, "_job_store", JobStore())
+    monkeypatch.setattr(server_runtime_module, "data_store", data_store)
+    monkeypatch.setattr(server_runtime_module, "job_store", JobStore())
     return data_store
 
 
@@ -493,7 +496,8 @@ def test_tag_fix_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
         pytest.fail("GEMINI_API_KEY environment variable not set")
 
     _bind_runtime_data_dir(monkeypatch, runtime_data_dir)
-    monkeypatch.setattr(server_module, "POST_PROCESSING_SUBDIR", "post_processing")
+    monkeypatch.setattr(analysis_router_module, "POST_PROCESSING_SUBDIR", "post_processing")
+    monkeypatch.setattr(server_jobs_module, "POST_PROCESSING_SUBDIR", "post_processing")
 
     analysis_csv = runtime_data_dir / EXAMPLE_DATASET_HASH / "analyzed" / ANALYSIS_CSV_FILENAME
     if not analysis_csv.exists():
