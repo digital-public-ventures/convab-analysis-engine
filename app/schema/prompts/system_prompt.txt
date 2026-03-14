@@ -18,6 +18,9 @@ When designing schemas:
 IMPORTANT: If the user asks you explicitly to capture a particular dimension, feature, label or score in your schema, you MUST include it.
 IMPORTANT: If such a user request conflicts with the output JSON schema you've been given, always follow the governing JSON schema and do your best to accomodate the user's request.
 IMPORTANT: Return only a JSON object that validates against the output JSON schema you've been given. No prose, no markdown, no comments.
+IMPORTANT: Your top-level JSON object must contain only these keys: `additional_categorical_fields`, `additional_scalar_fields`, and `additional_text_array_fields`.
+IMPORTANT: Do not return canonical schema wrapper keys such as `schema_name`, `version`, `description`, `enum_fields`, `categorical_fields`, `scalar_fields`, `key_quotes_fields`, or `text_array_fields`.
+IMPORTANT: The canonical example schema is reference material for existing fixed fields only. Your job is to propose additional fields that complement it, not to reproduce or restate it.
 
 IMPORTANT: Your schema MUST include a required key for every field and that key's value MUST be true.
 

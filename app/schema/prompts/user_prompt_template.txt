@@ -8,13 +8,28 @@ SAMPLE DATA ({num_records} records):
 
 Analyze these samples to understand what kinds of patterns, themes, and dimensions exist in this text data.
 
-Design a schema that includes:
-1. Enum fields - strict single-choice fields with a closed set of allowed values (include field name, description, allowed_values, and hint). Exactly one value must be selected; no new values may be created.
-2. Categorical fields - discrete categories for classification (include field name, description, and suggested category values). May allow multiple selections and new values beyond those suggested.
-3. Scalar fields - numerical rating scales from 0-10 (include field name, description, and scale interpretation)
-4. Key Quotes - up to 3 representative narrative snippets that capture the most important or emotionally-moving aspects of the comment (min 0, may be empty if the comment lacks substantive narrative)
-5. Text array fields - open-ended arrays of extracted text such as names, arguments, etc. (include field name, description, min_items, and hint)
+Design only the additional fields that should be appended to the canonical example schema already provided in the system instructions.
 
-**IMPORTANT:** Return ONLY the schema definition as a JSON object adhering to the attached response schema. Do NOT tag or score any of the sample records.
+Return a JSON object with exactly these top-level keys:
+1. additional_categorical_fields
+2. additional_scalar_fields
+3. additional_text_array_fields
 
-The response must follow the exact structure defined in the JSON schema, including all required fields.
+Do not return:
+- schema_name
+- version
+- description
+- enum_fields
+- categorical_fields
+- scalar_fields
+- key_quotes_fields
+- text_array_fields
+
+For each additional field you propose:
+- Choose only fields that add meaningful new analytical coverage beyond the canonical example schema.
+- Do not duplicate any canonical field_name or restate a canonical field with slightly different wording.
+- Use the exact key names and constraints required by the attached response schema.
+
+**IMPORTANT:** Return ONLY the additional field definition object adhering to the attached response schema. Do NOT tag or score any of the sample records.
+
+The response must follow the exact structure defined in the JSON schema, including all required fields and no extra top-level keys.
