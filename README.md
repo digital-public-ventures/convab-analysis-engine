@@ -36,8 +36,16 @@ The server starts at `http://127.0.0.1:8000`. Interactive docs at `/docs`.
 
 ```
 app/
-├── server.py                  # FastAPI app, endpoint definitions, background jobs
+├── server.py                  # FastAPI app setup and lifespan wiring
 ├── config.py                  # Paths, model IDs, processing constants
+├── routers/
+│   ├── cleaning.py            # /clean and /data routes
+│   ├── schema.py              # /schema route
+│   ├── analysis.py            # /analyze and /tag-fix routes
+│   └── jobs.py                # /jobs polling and cursor results
+├── server_models.py           # Shared request/response models
+├── server_runtime.py          # Shared in-memory stores and route helpers
+├── server_jobs.py             # Background job execution helpers
 ├── processing/
 │   ├── cleaner.py             # CSV cleaning, attachment detection
 │   ├── attachment.py          # PDF/DOCX/image download + OCR extraction

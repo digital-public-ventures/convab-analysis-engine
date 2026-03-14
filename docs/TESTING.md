@@ -33,10 +33,10 @@ These run in seconds with no network access. LLM calls are mocked or use fake re
 |------|---------------|
 | `test_csv_processing.py` | CSV cleaning, text normalization, attachment handling |
 | `test_data_store.py` | Content-hash directory management |
+| `test_job_store.py` | In-memory async job state and cursor pagination |
 | `test_llm_utils.py` | Token cost calculation, provider resolution, and response parsing helpers |
 | `test_cli.py` | CLI argument validation and output |
 | `test_analysis_response_validation.py` | Schema validation of analysis output (mocked LLM) |
-| `test_rate_limiter_concurrency.py` | Async rate limiter correctness and concurrency caps |
 | `test_analyzer_callbacks.py` | Batch callbacks, dynamic batching, character budgets |
 | `test_schema_generation.py` | Schema generation prompt construction (mocked LLM) |
 | `test_gemini_client_validation.py` | Gemini response schema validation (fake payloads) |
@@ -50,7 +50,7 @@ These call live LLM APIs and are marked `@pytest.mark.integration` (except `test
 | File | API key(s) | What it tests |
 |------|-----------|---------------|
 | `test_e2e_integration.py` | `GEMINI_API_KEY` | Full pipeline: clean → schema → analyze → post-process |
-| `test_job_handling_integration.py` | `GEMINI_API_KEY` | Async job creation, polling, results retrieval |
+| `test_server_lifecycle.py` | `GEMINI_API_KEY` | Async job creation, polling, caching, and results retrieval |
 | `test_analyze_first5_integration.py` | `GEMINI_API_KEY` | Analysis of a 5-row sample against live model |
 | `test_analysis_response_validation_integration.py` | `GEMINI_API_KEY`, `OPENAI_API_KEY` | Response validation against both providers (parametrized) |
 | `test_rate_limiter_throughput_integration.py` | — | Rate limiter under real timing with 5000-row fixture |
@@ -79,10 +79,10 @@ Test data lives in `app/tests/fixtures/`:
 
 | Path | Purpose |
 |------|---------|
-| `responses_100.csv` | 100-row sample dataset — primary E2E fixture |
+| `medical_billing_comments/responses_100.csv` | 100-row sample dataset — primary E2E fixture |
+| `medical_billing_comments/example_prompts/` | Example schema/analyze prompts used by the E2E flow |
 | `raw/clean_10.csv` | 10-row pre-cleaned CSV for `test_analyze_first5_integration` |
 | `raw/clean_5000.csv` | 5000-row CSV for rate limiter throughput tests |
-| `example_prompts/` | System and user prompt templates for integration tests |
 | `e2e_analyze.log` | Debug log from last E2E run — **inspect before re-running E2E tests** |
 | `<content-hash>/` | Auto-generated directories with cleaned data, schemas, and analysis results |
 
@@ -99,4 +99,4 @@ For a quick end-to-end validation outside of pytest:
 uv run python scripts/run_e2e.py
 ```
 
-Processes `app/tests/fixtures/responses_100.csv` through the full pipeline (clean → schema → analyze → tag-fix) and validates all outputs.
+Processes `app/tests/fixtures/medical_billing_comments/responses_100.csv` through the full pipeline (clean → schema → analyze → tag-fix) and validates all outputs.

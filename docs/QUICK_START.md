@@ -35,7 +35,7 @@ Upload the bundled 100-row fixture through the full pipeline using curl:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/clean \
-  -F "file=@app/tests/fixtures/responses_100.csv"
+  -F "file=@app/tests/fixtures/medical_billing_comments/responses_100.csv"
 ```
 
 Note the `job_id` and `hash` from the response.
@@ -84,4 +84,4 @@ Results are written to `app/data/{hash}/post-processing/analysis_deduped.csv`.
 uv run python scripts/run_e2e.py
 ```
 
-It runs against `app/tests/fixtures/responses_100.csv` by default. Pass `--input-csv` to use a different file. The script takes several minutes depending on Gemini API rate limits.
+It runs against `app/tests/fixtures/medical_billing_comments/responses_100.csv` by default. Pass `--input-csv` to use a different file. The script takes several minutes depending on Gemini API rate limits.

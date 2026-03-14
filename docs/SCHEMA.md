@@ -1,6 +1,6 @@
 # Schema Contract
 
-The response analysis schema (`app/schema/prompts/response_schema_example.json`) defines how the LLM extracts structured data from each public comment. During analysis, each comment is sent to Gemini along with the schema; the model returns a JSON object whose fields match the schema's definitions. The schema is therefore the single source of truth for every field the pipeline produces — it controls what the LLM extracts, how post-processing validates results, and what columns appear in the final output CSV.
+The response analysis schema (`app/schema/prompts/response_schema.json`) defines how the LLM extracts structured data from each public comment. During analysis, each comment is sent to Gemini along with the schema; the model returns a JSON object whose fields match the schema's definitions. The schema is therefore the single source of truth for every field the pipeline produces — it controls what the LLM extracts, how post-processing validates results, and what columns appear in the final output CSV.
 
 ## How the runtime uses the schema
 
@@ -93,4 +93,4 @@ LLMs occasionally leave individual categorical fields null (~2% observed rate). 
 3. The LLM returns a merged schema: base template fields plus domain-specific fields inferred from the data.
 4. The schema is cached in `app/data/{hash}/schema/` and reused by `/analyze`.
 
-The base template lives at `app/schema/prompts/response_schema_example.json`. System and user prompts for schema generation are in `app/schema/prompts/`.
+The runtime schema lives at `app/schema/prompts/response_schema.json`. System and user prompts for schema generation are in `app/schema/prompts/`.
