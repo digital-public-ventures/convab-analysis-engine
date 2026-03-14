@@ -67,11 +67,7 @@ def _normalize_dataframe_text_columns(df: pd.DataFrame) -> tuple[pd.DataFrame, i
         for idx, value in normalized_df[col].items():
             if not isinstance(value, str):
                 continue
-            normalized = normalize_text_for_llm(
-                value,
-                newline_strategy="space",
-                encoding_strategy="ascii_ignore",
-            )
+            normalized = normalize_text_for_llm(value)
             if normalized != value:
                 normalized_df.at[idx, col] = normalized
                 changed_cells += 1

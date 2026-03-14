@@ -122,20 +122,12 @@ async def generate_structured_content(
         - full_response: Full Gemini API response object (only if return_full_response=True)
     """
     original_prompt_len = len(prompt_text)
-    prompt_text = normalize_text_for_llm(
-        prompt_text,
-        newline_strategy='space',
-        encoding_strategy='ascii_ignore',
-    )
+    prompt_text = normalize_text_for_llm(prompt_text)
     normalized_prompt_len = len(prompt_text)
 
     normalized_system_instruction = None
     if system_instruction is not None:
-        normalized_system_instruction = normalize_text_for_llm(
-            system_instruction,
-            newline_strategy='space',
-            encoding_strategy='ascii_ignore',
-        )
+        normalized_system_instruction = normalize_text_for_llm(system_instruction)
 
     if normalized_prompt_len != original_prompt_len:
         logger.debug(
