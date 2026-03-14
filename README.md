@@ -46,8 +46,8 @@ Convab can be used through its REST API (for integration with other tools) or it
 Requires Python 3.13+ and [uv](https://github.com/astral-sh/uv). A Gemini API key is needed for LLM calls ([Google AI Studio](https://aistudio.google.com/apikey)).
 
 ```bash
-git clone https://github.com/jimmoffet/sensemaking.git
-cd sensemaking
+git clone https://github.com/digital-public-ventures/convab.git
+cd convab
 uv sync --extra dev
 
 cp .env.example .env
