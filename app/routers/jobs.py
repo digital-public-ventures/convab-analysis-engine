@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
+from fastapi import Query
 
 from app import server_runtime
 from app.processing.job_store import JobStatus
@@ -35,8 +36,8 @@ async def get_job_status(job_id: str) -> JobStatusResponse:
 @router.get('/jobs/{job_id}/results', response_model=JobResultsResponse)
 async def get_job_results(
     job_id: str,
-    cursor: str | None = server_runtime.CURSOR_QUERY,
-    limit: int = server_runtime.LIMIT_QUERY,
+    cursor: str | None = Query(default=None),
+    limit: int = Query(default=500, ge=1, le=5000),
 ) -> JobResultsResponse:
     """Return completed rows for a job since the provided cursor."""
     record = server_runtime.job_store.get_job(job_id)

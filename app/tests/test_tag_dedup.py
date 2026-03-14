@@ -9,7 +9,7 @@ from typing import Any
 
 import pytest
 
-from app.dedup.tag_dedup import deduplicate_tags
+from app.processing.tag_dedup import deduplicate_tags
 
 
 @pytest.mark.asyncio
@@ -51,9 +51,9 @@ async def test_deduplicate_tags_writes_outputs(
 
     monkeypatch.setenv("LLM_PROVIDER", provider)
     monkeypatch.setenv(api_key_env, "test")
-    monkeypatch.setattr("app.dedup.tag_dedup.create_llm_client", lambda *args, **kwargs: object())
+    monkeypatch.setattr("app.processing.tag_dedup.create_llm_client", lambda *args, **kwargs: object())
     monkeypatch.setattr(
-        "app.dedup.tag_dedup.generate_structured_content",
+        "app.processing.tag_dedup.generate_structured_content",
         fake_generate_structured_content,
     )
     model_id = "gemini-3-flash-preview" if provider == "gemini" else "gpt-5-mini"

@@ -5,11 +5,12 @@ from __future__ import annotations
 import logging
 
 from fastapi import APIRouter, HTTPException, Request, UploadFile
+from fastapi import File, Query
 from fastapi import Path as PathParam
 
 from app import server_runtime
-from app.processing import DataStore
-from app.server_jobs import read_csv_rows, run_clean_job
+from app.processing import DataStore, read_csv_rows
+from app.server_jobs import run_clean_job
 from app.server_models import DataInfoResponse, JobStartResponse
 
 logger = logging.getLogger(__name__)
@@ -19,10 +20,13 @@ router = APIRouter()
 @router.post('/clean', response_model=JobStartResponse, status_code=202)
 async def clean_csv_endpoint(
     request: Request,
-    file: UploadFile = server_runtime.UPLOAD_FILE,
+    file: UploadFile = File(...),
     *,
-    no_cache: bool = server_runtime.NO_CACHE_QUERY,
-    no_cache_ocr: bool = server_runtime.NO_CACHE_OCR_QUERY,
+    no_cache: bool = Query(default=False, description='Skip checking for existing cleaned CSV'),
+    no_cache_ocr: bool = Query(
+        default=False,
+        description='Bypass OCR cache reads, re-extract, and overwrite OCR cache entries',
+    ),
 ) -> JobStartResponse:
     """Start a CSV cleaning job and return the job id immediately."""
     content = await file.read()

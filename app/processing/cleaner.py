@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 import pandas as pd
 
 from app.config import ATTACHMENT_EXTENSIONS, CLEANED_DATA_DIR, DOWNLOADS_DIR, UNSUPPORTED_ATTACHMENT_EXTENSIONS
-from app.text_normalization import normalize_text_for_llm
+from app.processing.text_normalization import normalize_text_for_llm
 
 from .attachment import AttachmentProcessor, is_valid_url
 

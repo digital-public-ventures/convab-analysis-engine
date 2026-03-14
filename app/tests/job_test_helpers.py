@@ -14,7 +14,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import config as app_config
-from app.config import POST_PROCESSING_SUBDIR, TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
+from app.config import POST_PROCESSING_SUBDIR, TAG_DEDUP_CSV_FILENAME, TAG_DEDUP_MAPPINGS_FILENAME
 from app.processing.job_store import JobStore
 
 HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
@@ -81,9 +81,9 @@ def seed_tag_fix_outputs(content_hash: str) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy(
         FIXTURE_ANALYSIS_DIR / 'analysis.csv',
-        output_dir / TAG_FIX_DEDUPED_CSV_FILENAME,
+        output_dir / TAG_DEDUP_CSV_FILENAME,
     )
-    (output_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
+    (output_dir / TAG_DEDUP_MAPPINGS_FILENAME).write_text(
         json.dumps({'seeded': True}),
         encoding='utf-8',
     )

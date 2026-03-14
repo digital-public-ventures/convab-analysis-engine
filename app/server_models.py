@@ -6,7 +6,7 @@ from typing import Any
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
-from app.config import SCHEMA_DEFAULT_HEAD_SIZE, SCHEMA_DEFAULT_SAMPLE_SIZE
+from app.config import SCHEMA_DEFAULT_NUM_HEAD_ROWS, SCHEMA_DEFAULT_NUM_SAMPLE_ROWS
 
 
 class JobStartResponse(BaseModel):
@@ -28,13 +28,13 @@ class SchemaRequest(BaseModel):
 
     use_case: str = Field(..., min_length=10, description='Description of intended data analysis')
     num_sample_rows: int = Field(
-        default=SCHEMA_DEFAULT_SAMPLE_SIZE,
+        default=SCHEMA_DEFAULT_NUM_SAMPLE_ROWS,
         ge=1,
         le=100,
         validation_alias=AliasChoices('num_sample_rows', 'sample_size'),
     )
     num_head_rows: int = Field(
-        default=SCHEMA_DEFAULT_HEAD_SIZE,
+        default=SCHEMA_DEFAULT_NUM_HEAD_ROWS,
         ge=1,
         le=20,
         validation_alias=AliasChoices('num_head_rows', 'head_size'),
@@ -46,7 +46,7 @@ class SchemaResponse(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    hash: str
+    content_hash: str = Field(..., alias='hash')
     cached: bool = False
     schema_data: dict = Field(..., alias='schema')
 

@@ -12,7 +12,7 @@ from datetime import UTC, datetime
 from typing import Any, Literal, overload
 
 from app.config import TOKEN_USAGE_FILE
-from app.text_normalization import normalize_text_for_llm
+from app.processing.text_normalization import normalize_text_for_llm
 
 from .model_config import ModelProfile, resolve_model_id
 from .model_config import validate_model_config as validate_model_profile

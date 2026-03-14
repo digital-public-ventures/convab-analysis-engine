@@ -24,8 +24,8 @@ from app import server_runtime as server_runtime_module
 from app.config import (
     ANALYSIS_CSV_FILENAME,
     ANALYSIS_JSON_FILENAME,
-    TAG_FIX_DEDUPED_CSV_FILENAME,
-    TAG_FIX_MAPPINGS_FILENAME,
+    TAG_DEDUP_CSV_FILENAME,
+    TAG_DEDUP_MAPPINGS_FILENAME,
 )
 from app.processing import DataStore
 from app.processing import cleaner as processing_cleaner
@@ -505,8 +505,8 @@ def test_tag_fix_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
 
     post_processing_dir = runtime_data_dir / EXAMPLE_DATASET_HASH / "post_processing"
     post_processing_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy(analysis_csv, post_processing_dir / TAG_FIX_DEDUPED_CSV_FILENAME)
-    (post_processing_dir / TAG_FIX_MAPPINGS_FILENAME).write_text(
+    shutil.copy(analysis_csv, post_processing_dir / TAG_DEDUP_CSV_FILENAME)
+    (post_processing_dir / TAG_DEDUP_MAPPINGS_FILENAME).write_text(
         json.dumps({"seeded": True}),
         encoding="utf-8",
     )

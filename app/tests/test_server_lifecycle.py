@@ -18,8 +18,8 @@ from fastapi.testclient import TestClient
 from app import config as app_config
 from app import server as server_module
 from app import server_jobs as server_jobs_module
-from app.config import TAG_FIX_DEDUPED_CSV_FILENAME, TAG_FIX_MAPPINGS_FILENAME
-from app.dedup import TagDedupOutput
+from app.config import TAG_DEDUP_CSV_FILENAME, TAG_DEDUP_MAPPINGS_FILENAME
+from app.processing import TagDedupOutput
 from app.server import app
 from app.tests.job_test_helpers import (
     FIXTURE_SCHEMA,
@@ -394,9 +394,9 @@ class TestAsyncJobHandling:
             output_dir = kwargs['output_dir']
             analysis_csv_path = kwargs['analysis_csv_path']
             output_dir.mkdir(parents=True, exist_ok=True)
-            deduped_path = output_dir / TAG_FIX_DEDUPED_CSV_FILENAME
+            deduped_path = output_dir / TAG_DEDUP_CSV_FILENAME
             shutil.copy(analysis_csv_path, deduped_path)
-            mappings_path = output_dir / TAG_FIX_MAPPINGS_FILENAME
+            mappings_path = output_dir / TAG_DEDUP_MAPPINGS_FILENAME
             mappings_path.write_text(json.dumps({'seeded': True}), encoding='utf-8')
             return TagDedupOutput(mappings_path=mappings_path, deduped_csv_path=deduped_path)
 

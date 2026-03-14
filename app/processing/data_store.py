@@ -4,8 +4,17 @@ from __future__ import annotations
 
 import hashlib
 from pathlib import Path
+from typing import Any, cast
+
+import pandas as pd
 
 from app.config import DATA_DIR
+
+
+def read_csv_rows(csv_path: Path) -> list[dict[str, Any]]:
+    """Read an entire CSV into records."""
+    df = pd.read_csv(csv_path)
+    return cast("list[dict[str, Any]]", df.to_dict(orient="records"))
 
 
 class DataStore:

@@ -12,7 +12,7 @@ from google import genai
 from google.genai import types
 
 from app.config import TOKEN_USAGE_FILE
-from app.text_normalization import normalize_text_for_llm
+from app.processing.text_normalization import normalize_text_for_llm
 
 from .model_config import (
     ModelProfile,

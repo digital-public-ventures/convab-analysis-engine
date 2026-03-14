@@ -9,7 +9,13 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
-from app.config import ANALYSIS_MODEL_ID, ANALYSIS_THINKING_LEVEL, TOKEN_USAGE_FILE
+from app.config import (
+    ANALYSIS_MODEL_ID,
+    ANALYSIS_THINKING_LEVEL,
+    TAG_DEDUP_CSV_FILENAME,
+    TAG_DEDUP_MAPPINGS_FILENAME,
+    TOKEN_USAGE_FILE,
+)
 from app.llm import generate_structured_content, validate_model_config
 from app.llm.provider import create_llm_client, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
@@ -178,6 +184,7 @@ def _write_mappings(mappings_path: Path, mappings: dict[str, dict[str, str]]) ->
     mappings_path.parent.mkdir(parents=True, exist_ok=True)
     mappings_path.write_text(json.dumps(mappings, indent=2), encoding="utf-8")
 
+
 async def deduplicate_tags(
     *,
     schema_path: Path,
@@ -223,8 +230,8 @@ async def deduplicate_tags(
     mappings = {result.field_name: result.mapping for result in results}
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    mappings_path = output_dir / "mappings.json"
-    deduped_csv_path = output_dir / "analysis_deduped.csv"
+    mappings_path = output_dir / TAG_DEDUP_MAPPINGS_FILENAME
+    deduped_csv_path = output_dir / TAG_DEDUP_CSV_FILENAME
 
     _write_mappings(mappings_path, mappings)
     _apply_mapping(analysis_csv_path, deduped_csv_path, mappings, categorical_fields)

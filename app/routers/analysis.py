@@ -6,15 +6,16 @@ import csv
 import logging
 
 from fastapi import APIRouter, HTTPException
+from fastapi import Query
 
 from app import server_runtime
 from app.config import (
     ANALYSIS_CSV_FILENAME,
     ANALYSIS_JSON_FILENAME,
     POST_PROCESSING_SUBDIR,
-    TAG_FIX_DEDUPED_CSV_FILENAME,
-    TAG_FIX_MAPPINGS_FILENAME,
-    TAG_FIX_STREAM_CHUNK_SIZE,
+    TAG_DEDUP_CSV_FILENAME,
+    TAG_DEDUP_MAPPINGS_FILENAME,
+    TAG_DEDUP_STREAM_CHUNK_SIZE,
 )
 from app.server_jobs import add_csv_results, read_cached_analysis_rows, run_analyze_job, run_tag_dedup_job
 from app.server_models import AnalyzeRequest, JobStartResponse, TagDedupRequest
@@ -27,7 +28,7 @@ router = APIRouter()
 async def analyze_dataset_endpoint(
     request: AnalyzeRequest,
     *,
-    no_cache: bool = server_runtime.NO_CACHE_QUERY,
+    no_cache: bool = Query(default=False, description='Skip checking for existing cleaned CSV'),
 ) -> JobStartResponse:
     """Start an analysis job and return the job id immediately."""
     content_hash = request.content_hash
@@ -113,7 +114,7 @@ async def analyze_dataset_endpoint(
 async def tag_fix_endpoint(
     request: TagDedupRequest,
     *,
-    no_cache: bool = server_runtime.NO_CACHE_QUERY,
+    no_cache: bool = Query(default=False, description='Skip checking for existing cleaned CSV'),
 ) -> JobStartResponse:
     """Start a tag-fix job and return the job id immediately."""
     content_hash = request.content_hash
@@ -128,10 +129,10 @@ async def tag_fix_endpoint(
     poll_url, results_url = server_runtime.build_job_urls(job.job_id)
 
     output_dir = server_runtime.data_store.get_hash_dir(content_hash) / POST_PROCESSING_SUBDIR
-    deduped_csv = output_dir / TAG_FIX_DEDUPED_CSV_FILENAME
-    mappings_path = output_dir / TAG_FIX_MAPPINGS_FILENAME
+    deduped_csv = output_dir / TAG_DEDUP_CSV_FILENAME
+    mappings_path = output_dir / TAG_DEDUP_MAPPINGS_FILENAME
     if deduped_csv.exists() and mappings_path.exists() and not no_cache:
-        total_rows = add_csv_results(job.job_id, deduped_csv, TAG_FIX_STREAM_CHUNK_SIZE)
+        total_rows = add_csv_results(job.job_id, deduped_csv, TAG_DEDUP_STREAM_CHUNK_SIZE)
         server_runtime.job_store.set_total_rows(job.job_id, total_rows)
         server_runtime.job_store.mark_completed(job.job_id)
         return JobStartResponse(

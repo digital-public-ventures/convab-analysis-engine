@@ -14,7 +14,7 @@ def _load_prompt_file(filename: str) -> str:
     Returns:
         Content of the prompt file
     """
-    prompt_path = Path(__file__).parent / filename
+    prompt_path = Path(__file__).resolve().parent / filename
     with open(prompt_path, encoding='utf-8') as f:
         return f.read()
 
@@ -28,7 +28,7 @@ def _load_json_schema(filename: str) -> dict[str, Any]:
     Returns:
         Parsed JSON schema as a dictionary
     """
-    schema_path = Path(__file__).parent / filename
+    schema_path = Path(__file__).resolve().parent / filename
     with open(schema_path, encoding='utf-8') as f:
         return cast('dict[str, Any]', json.load(f))
 

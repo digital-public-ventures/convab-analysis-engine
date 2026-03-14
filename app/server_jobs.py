@@ -5,14 +5,9 @@ from __future__ import annotations
 import csv
 import json
 import logging
-import math
-import re
-import string
 import time
 from pathlib import Path
 from typing import Any, cast
-
-import pandas as pd
 
 from app import server_runtime
 from app.analysis import AnalysisRequest as DatasetAnalysisRequest
@@ -22,27 +17,12 @@ from app.config import (
     ANALYSIS_JSON_FILENAME,
     CLEAN_CHUNK_SIZE,
     POST_PROCESSING_SUBDIR,
-    TAG_FIX_STREAM_CHUNK_SIZE,
+    TAG_DEDUP_STREAM_CHUNK_SIZE,
 )
-from app.dedup import TagDedupOutput, deduplicate_tags
-from app.processing import AttachmentProcessor, clean_csv
+from app.processing import AttachmentProcessor, TagDedupOutput, clean_csv, deduplicate_tags, read_csv_rows
 from app.server_models import AnalyzeRequest, TagDedupRequest
 
 logger = logging.getLogger(__name__)
-
-
-def estimate_tokens(value: Any) -> int:
-    """Estimate tokens using the same heuristic as AsyncRateLimiter."""
-    content = json.dumps(value, default=str)
-    split_pattern = rf'[{re.escape(string.punctuation)}\s]+'
-    words = [word for word in re.split(split_pattern, content) if word]
-    return max(1, math.ceil(len(words) / 0.75))
-
-
-def read_csv_rows(csv_path: Path) -> list[dict[str, Any]]:
-    """Read an entire CSV into records."""
-    df = pd.read_csv(csv_path)
-    return cast('list[dict[str, Any]]', df.to_dict(orient='records'))
 
 
 def read_cached_analysis_rows(csv_path: Path) -> list[dict[str, Any]] | None:
@@ -223,7 +203,7 @@ async def run_tag_dedup_job(job_id: str, request: TagDedupRequest) -> None:
             analysis_csv_path=analysis_csv,
             output_dir=output_dir,
         )
-        total_rows = add_csv_results(job_id, result.deduped_csv_path, TAG_FIX_STREAM_CHUNK_SIZE)
+        total_rows = add_csv_results(job_id, result.deduped_csv_path, TAG_DEDUP_STREAM_CHUNK_SIZE)
         server_runtime.job_store.set_total_rows(job_id, total_rows)
         server_runtime.job_store.mark_completed(job_id)
         logger.debug('Tag dedup job %s completed in %.2fs', job_id, time.monotonic() - job_started_at)

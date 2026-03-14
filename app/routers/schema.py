@@ -10,8 +10,8 @@ from fastapi import APIRouter, HTTPException
 from fastapi import Path as PathParam
 
 from app import server_runtime
+from app.processing import estimate_tokens
 from app.schema import SchemaGenerator
-from app.server_jobs import estimate_tokens
 from app.server_models import SchemaRequest, SchemaResponse
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ async def generate_schema_endpoint(
         logger.info('Schema cache hit for hash: %s...', content_hash[:12])
         with existing_schema.open(encoding='utf-8') as handle:
             schema_data = json.load(handle)
-        return SchemaResponse(hash=content_hash, cached=True, schema=schema_data)
+        return SchemaResponse(content_hash=content_hash, cached=True, schema=schema_data)
 
     cleaned_csv = server_runtime.data_store.get_cleaned_csv(content_hash)
     if not cleaned_csv:
@@ -84,4 +84,4 @@ async def generate_schema_endpoint(
         rows_sampled=len(sample_data),
     )
 
-    return SchemaResponse(hash=content_hash, cached=False, schema=schema)
+    return SchemaResponse(content_hash=content_hash, cached=False, schema=schema)

@@ -1,6 +1,6 @@
 """Tests for text normalization helpers."""
 
-from app.text_normalization import normalize_text_for_llm
+from app.processing.text_normalization import normalize_text_for_llm
 
 
 def test_normalize_text_for_llm_uses_single_app_path() -> None:

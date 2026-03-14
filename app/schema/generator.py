@@ -17,7 +17,7 @@ from app.llm.rate_limiter import AsyncRateLimiter
 from .prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA, SCHEMA_GENERATION_SYSTEM_PROMPT, build_schema_generation_prompt
 
 logger = logging.getLogger(__name__)
-PROMPTS_DIR = Path(__file__).resolve().parent / "prompts"
+PROMPTS_DIR = Path(__file__).resolve().parent
 RESPONSE_SCHEMA_EXAMPLE_PATH = PROMPTS_DIR / "response_schema_example.json"
 
 
