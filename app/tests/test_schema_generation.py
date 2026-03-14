@@ -241,7 +241,7 @@ class TestPromptConstruction:
 
     def test_build_schema_generation_prompt_includes_use_case(self) -> None:
         """Test that use_case is included in prompt."""
-        from app.schema.prompts import build_schema_generation_prompt
+        from app.prompts.schema_generation import build_schema_generation_prompt
 
         prompt = build_schema_generation_prompt(
             sample_data=[{"text": "sample"}],
@@ -253,7 +253,7 @@ class TestPromptConstruction:
 
     def test_build_schema_generation_prompt_includes_record_count(self) -> None:
         """Test that record count is included in prompt."""
-        from app.schema.prompts import build_schema_generation_prompt
+        from app.prompts.schema_generation import build_schema_generation_prompt
 
         sample_data = [{"id": i, "text": f"record {i}"} for i in range(5)]
         prompt = build_schema_generation_prompt(
@@ -265,7 +265,7 @@ class TestPromptConstruction:
 
     def test_build_schema_generation_prompt_formats_records(self) -> None:
         """Test that records are formatted in prompt."""
-        from app.schema.prompts import build_schema_generation_prompt
+        from app.prompts.schema_generation import build_schema_generation_prompt
 
         sample_data = [
             {"id": 1, "text": "First record"},
@@ -283,7 +283,7 @@ class TestPromptConstruction:
 
     def test_build_schema_generation_prompt_truncates_large_records(self) -> None:
         """Test that large records are truncated."""
-        from app.schema.prompts import build_schema_generation_prompt
+        from app.prompts.schema_generation import build_schema_generation_prompt
 
         large_text = "x" * 20000
         prompt = build_schema_generation_prompt(
@@ -291,13 +291,12 @@ class TestPromptConstruction:
             use_case="Test",
         )
 
-        # Record payloads are truncated in _format_sample_data.
-        assert len(prompt) < 17000
-        assert "..." in prompt
+        assert large_text in prompt
+        assert "..." not in prompt
 
     def test_response_schema_has_required_fields(self) -> None:
         """Test that response schema defines required fields."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         assert "properties" in SCHEMA_GENERATION_RESPONSE_SCHEMA
         assert "required" in SCHEMA_GENERATION_RESPONSE_SCHEMA
@@ -309,32 +308,32 @@ class TestPromptConstruction:
 
     def test_system_prompt_loaded(self) -> None:
         """Test that system prompt is loaded."""
-        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+        from app.prompts.schema_generation import SCHEMA_GENERATION_SYSTEM_PROMPT
 
         assert len(SCHEMA_GENERATION_SYSTEM_PROMPT) > 100
         assert "expert data analyst" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
 
     def test_system_prompt_mentions_key_quotes(self) -> None:
         """Test that system prompt includes guidance on key quotes."""
-        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+        from app.prompts.schema_generation import SCHEMA_GENERATION_SYSTEM_PROMPT
 
         assert "key quotes" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
 
     def test_system_prompt_mentions_enum_fields(self) -> None:
         """Test that system prompt includes guidance on enum fields."""
-        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+        from app.prompts.schema_generation import SCHEMA_GENERATION_SYSTEM_PROMPT
 
         assert "enum field" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
 
     def test_system_prompt_mentions_text_array_fields(self) -> None:
         """Test that system prompt includes guidance on text array fields."""
-        from app.schema.prompts import SCHEMA_GENERATION_SYSTEM_PROMPT
+        from app.prompts.schema_generation import SCHEMA_GENERATION_SYSTEM_PROMPT
 
         assert "text array field" in SCHEMA_GENERATION_SYSTEM_PROMPT.lower()
 
     def test_response_schema_categorical_field_structure(self) -> None:
         """Test that additional categorical-field schema has correct properties."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         cat_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["categorical_field"]["properties"]
 
@@ -346,7 +345,7 @@ class TestPromptConstruction:
 
     def test_response_schema_scalar_field_structure(self) -> None:
         """Test that additional scalar-field schema has correct properties."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         scalar_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["scalar_field"]["properties"]
 
@@ -358,19 +357,19 @@ class TestPromptConstruction:
 
     def test_response_schema_key_quotes_field_structure(self) -> None:
         """Key quotes are fixed canonical fields, not emitted in additional schema."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         assert "key_quotes_fields" not in SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]
 
     def test_response_schema_enum_field_structure(self) -> None:
         """Enum fields are fixed canonical fields, not emitted in additional schema."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         assert "enum_fields" not in SCHEMA_GENERATION_RESPONSE_SCHEMA["properties"]
 
     def test_response_schema_text_array_field_structure(self) -> None:
         """Test that additional text-array schema has correct properties."""
-        from app.schema.prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA
+        from app.prompts.schema_generation import SCHEMA_GENERATION_RESPONSE_SCHEMA
 
         text_array_item = SCHEMA_GENERATION_RESPONSE_SCHEMA["definitions"]["text_array_field"]["properties"]
 

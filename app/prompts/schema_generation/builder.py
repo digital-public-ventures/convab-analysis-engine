@@ -106,10 +106,6 @@ def _format_sample_data(sample_data: list[dict]) -> str:
     for i, record in enumerate(sample_data, 1):
         record_json = json.dumps(record, indent=2)
 
-        # Truncate very long records
-        if len(record_json) > 15000:
-            record_json = record_json[:14997] + '...'
-
         formatted_records.append(f'Record {i}:\n{record_json}\n')
 
     return '\n'.join(formatted_records)

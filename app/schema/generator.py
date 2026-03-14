@@ -14,10 +14,14 @@ from app.llm import generate_structured_content, validate_model_config
 from app.llm.provider import create_llm_client, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
 
-from .prompts import SCHEMA_GENERATION_RESPONSE_SCHEMA, SCHEMA_GENERATION_SYSTEM_PROMPT, build_schema_generation_prompt
+from app.prompts.schema_generation import (
+    SCHEMA_GENERATION_RESPONSE_SCHEMA,
+    SCHEMA_GENERATION_SYSTEM_PROMPT,
+    build_schema_generation_prompt,
+)
 
 logger = logging.getLogger(__name__)
-PROMPTS_DIR = Path(__file__).resolve().parent
+PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts" / "schema_generation"
 RESPONSE_SCHEMA_EXAMPLE_PATH = PROMPTS_DIR / "response_schema_example.json"
 
 

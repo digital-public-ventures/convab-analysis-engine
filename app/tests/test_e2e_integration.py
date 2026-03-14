@@ -42,7 +42,7 @@ PROMPTS_DIR = EXAMPLE_DATASET_DIR / "example_prompts"
 RESPONSES_CSV = EXAMPLE_DATASET_DIR / "responses_100.csv"
 EXAMPLE_DATASET_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"  # pragma: allowlist secret
 SCHEMA_CACHE_BYPASS = True
-RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "schema" / "response_schema.json"
+RESPONSE_SCHEMA_PATH = REPO_ROOT / "app" / "prompts" / "schema_generation" / "response_schema.json"
 os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "true"
 
 pytestmark = pytest.mark.integration
