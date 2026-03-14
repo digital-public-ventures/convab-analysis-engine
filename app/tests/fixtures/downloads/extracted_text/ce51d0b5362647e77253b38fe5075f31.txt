@@ -1,0 +1,815 @@
+ 
+ 
+Alberto B. Casellas 
+EVP & CEO, Health & Wellness 
+ 
+Synchrony  
+555 Anton Blvd. 7th Floor 
+Costa Mesa, CA 92626 
+September 8, 2023 
+ 
+Consumer Financial Protection Bureau
+1700 G Street, NW 
+Washington, DC 20552 
+ 
+Centers for Medicare and Medicaid Services
+Department of Health and Human Services 
+P.O. Box 8010 
+Baltimore, MD 21244-8010 
+ 
+United States Department of Treasury
+1500 Pennsylvania Avenue, NW 
+Washington, DC 20220 
+Submitted via www.regulations.gov and by email to medicaldebtRFI_2023@cfpb.gov 
+ 
+Docket Nos.: 
+CFPB-2023-0038 
+ 
+ 
+CMS-2023-0106 
+ 
+ 
+TREAS-DO-2023-0008 
+ 
+To whom it may concern: 
+Synchrony is pleased to respond to the Request for Information Regarding Medical Payment Products 
+published by the Consumer Financial Protection Bureau (“CFPB”), the Department of Health and Human 
+Services (“HHS”), and the Department of Treasury (“Treasury”) (collectively, the “Agencies”) in the 
+Federal Register on July 12, 2023 (“RFI”).1 
+The RFI pertains to a wide range of worthy and important topics.  We support and share the Agencies’ 
+desire to ensure that consumers are treated fairly and in accordance with the law.  CareCredit would like 
+to play a constructive role with the Agencies in connection with how consumers can be best served 
+when seeking the health and wellness care they want.  In fact, and as the CFPB knows, CareCredit has 
+strong and industry-leading standards developed in conjunction with the CFPB relating to how 
+CareCredit engages with its providers.  We believe our experience in these relationships can be a 
+valuable resource to the Agencies.   
+In this letter, we discuss: 
+ 
+What CareCredit is (and is not); 
+ 
+The fact that when a consumer chooses to pay for medical care with CareCredit, these 
+transactions are overwhelmingly for elective procedures.  CareCredit’s presence in hospitals and 
+health systems is exceedingly small, including as a percentage of payments made to such 
+entities; 
+ 
+How CareCredit enhances consumers’ access to care; 
+ 
+1 Request for Information Regarding Medical Payment Products, 88 Fed. Reg. 44218 (July 12, 2023) [hereinafter 
+Request]. 
+
+ 
+ 
+ 
+CareCredit’s industry-leading standards and how CareCredit can partner with the Agencies on 
+addressing various concerns; and 
+ 
+The benefits of deferred interest financing.   
+We also provide three appendices.  Appendix A responds to some of the specific questions raised in the 
+RFI.  Appendix B is a copy of our Transparency Principles, discussed below.  Appendix C includes select 
+portions of CareCredit cardholder testimonials that were submitted to the CFPB in response to the RFI.2   
+Background on CareCredit 
+CareCredit resides in Synchrony’s Health and Wellness platform.  CareCredit is both a branded credit 
+card issued to consumers and a credit card network brand.  The CareCredit network is a three-party (or 
+closed) credit card network, similar to that of Discover and American Express.  Specifically, CareCredit is 
+both the issuer and acquirer for CareCredit cards.3  CareCredit has been offered to consumers for more 
+than 35 years.  Consumers can use their CareCredit cards to pay for a variety of health, wellness, and 
+veterinary products and services at over 266,000 acceptance locations across the country, including 
+large retail chains, veterinary clinics, dental offices, and cosmetic practices.4  Consumers use CareCredit 
+to pay for everything from dental care, fitness equipment, spa services, pet grooming and boarding, to 
+virtually anything in the store at certain nationwide retail chains.  We are pleased that so many 
+consumers find value in CareCredit to make these types of payments; consumers overwhelmingly rate 
+CareCredit highly, including a 90% satisfaction rate.  Our research also indicates that CareCredit has a 
+net promoter score of 76, far exceeding the consumer finance industry average of 42.5   
+CareCredit is the leading health and wellness credit card brand.  To the extent that CareCredit is used for 
+medical expenses, those expenses overwhelmingly relate to elective medical procedures not usually 
+covered by insurance.  These include dentistry, cosmetic procedures, and LASIK surgery.  While 
+CareCredit has recently been exploring how to serve cardholders when they make payments to hospitals 
+and health systems, payments to such entities (which can involve payment for a variety of elective and 
+non-elective procedures) represent a very small fraction of CareCredit’s transaction volume and a 
+virtually unmeasurably small amount of transactions at hospitals and health systems across the country.  
+For example, CareCredit has various types of relationships with over 300 hospitals in the country.  These 
+comprise less than 1% of CareCredit’s approximately 266,000 acceptance locations and account for less 
+than 1% of CareCredit’s transaction volume.  CareCredit’s acceptance and presence in hospitals and 
+health systems is exceedingly small by any measurement.   
+It is important to understand CareCredit’s role in the payments ecosystem.  The CareCredit card is a 
+credit card.  It functions like any other credit card.  For example, a consumer can use a CareCredit, 
+Discover, or Visa card anywhere such card is accepted to pay for goods and services, and repay the card 
+ 
+2 These testimonials were selected from the approximately 25,000 comments we believe our cardholders 
+submitted to the CFPB in connection with the RFI and the CFPB’s related hearing on the topic. 
+3 CareCredit is Synchrony Bank’s brand for the network and the associated credit card.  This letter will generally 
+refer to CareCredit to avoid confusion, even if the more precise reference in the context of the sentence would be 
+to Synchrony Bank.  For example, Synchrony Bank is the actual issuer of the CareCredit credit card.  
+4 The majority of CareCredit credit cards have utility solely within the CareCredit network which has over 266,000 
+acceptance locations.  Some CareCredit cards are also enabled on the Mastercard network, and can be used 
+anywhere Mastercard is accepted.  In this letter, the discussion of CareCredit pertains only to the cards used on 
+the CareCredit network. 
+5 Our customer satisfaction score is based on a survey of 1,000 cardholders who rate their satisfaction with 
+CareCredit as “highly satisfied.”  Our Net Promoter Score is calculated based on a survey of 1,000 cardholders and 
+taking those who rate CareCredit a 9 or a 10 and subtracting those who rate it from 0 to 6. 
+
+ 
+ 
+issuer according to the account terms.  Each of these types of credit card accounts is regulated in the 
+exact same way under the CFPB’s Regulation Z.  Functionally and regulatorily, there is no difference 
+between these products, although different merchant locations may or may not accept one or more of 
+these brands and each credit card issuer may provide differentiating cardholder benefits.   
+The fact that a CareCredit card is structurally no different from other credit cards is important in the 
+context of the RFI.  The RFI is focused on products the Agencies call “medical payment products” 
+(“MPPs”) and “medical credit cards.”  These terms are not used in federal law or regulation, so we rely 
+on the definition provided by the Agencies in the RFI to understand what is meant by these undefined 
+terms.  The Agencies state that “[c]harges to these products [i.e., MPPs and medical credit cards] are 
+limited to medical procedures, items, or services at participating medical service providers.”6  This 
+definition is helpful in understanding the scope of the products within the purview of the RFI.  
+CareCredit’s utility is not limited to medical procedures, items, or services at participating medical 
+service providers.  CareCredit is therefore, according to the Agencies, neither a “medical payment 
+product” nor a “medical credit card.”  Nor are, for example, credit cards issued on the Mastercard or 
+Visa network, even though there is significant transaction volume relating to medical procedures, items, 
+or services on those networks (and we believe significantly more of such volume than on the CareCredit 
+network).  We are pleased that the Agencies have specifically recognized that credit cards that can be 
+used for purchases unrelated to medical care, such as CareCredit, are not MPPs.7   
+We take great care to offer CareCredit responsibly.  CareCredit credit cards are underwritten in a safe 
+and sound manner consistent with regulatory requirements and expectations.  Applicants must 
+demonstrate that they are creditworthy and satisfy the CFPB’s “ability to pay” requirements in 
+Regulation Z before they can receive a CareCredit credit card.8  CareCredit denies applications from 
+consumers whose credit history suggests they will not be able to repay their CareCredit balance. 
+CareCredit has every interest in underwriting credit cards responsibly—not only is that the regulatory 
+expectation, but CareCredit suffers the loss when a cardholder ultimately cannot repay the balance.  
+CareCredit—not the merchant, and not the cardholder—loses money when the cardholder does not 
+repay a credit card balance. 
+CareCredit Enhances Access to Care 
+The RFI states that “[i]n some cases, [MPPs] may allow patients to access care they would otherwise 
+have to forgo.”9  The same is true for CareCredit—it expands Americans’ access to health care.  We 
+believe that any discussion of consumers’ payment options for health care should start from the 
+premise that credit expands consumer purchasing power.  For example, based on a recent survey of 
+CareCredit cardholders, 44% of cardholders said they would have postponed their most recent 
+procedure if CareCredit had not been available.  An additional 11% would have settled for a lesser 
+procedure.  In other words, over half of CareCredit cardholders surveyed would not have gotten the 
+care they wanted when they wanted it without CareCredit.  It may also be helpful to highlight some of 
+the comments our cardholders submitted to the CFPB in connection with the RFI: 
+ 
+6 Request at 44283 (emphasis added). 
+7 Despite CareCredit not being an MPP nor medical credit card based on the Agencies’ definitions of such terms, 
+the RFI makes an erroneous reference to CareCredit as a “medical credit card” or “medical payment product.”  
+(See Request at 44283.)   
+8 See 12 C.F.R. 1026.51. 
+9 Request at 44282. 
+
+ 
+ 
+ 
+“…my child needed 3 root canals in one year and had to be hospitalized due to cellulitis from her 
+tooth infection.  There is no way I could have afforded her dental work without the interest-free 
+options I got from CareCredit to allow a then 14-year old to keep her teeth.”  Rachael W. 
+ 
+“If it weren’t for CareCredit, I wouldn’t be able to have lower dentures…I had gone four years 
+without bottom teeth.  If it weren’t for CareCredit I would still be toothless and limited in what I 
+can eat.”  John S. 
+ 
+“CareCredit has helped me greatly being a single mother. Babies are already expensive, but 
+adding bills on top of that makes it more expensive. CareCredit helps me be able to pay for 
+things I need while still being able to afford larger bills. Without CareCredit I wouldn’t be able to 
+afford basic needs on top of bills that have deadlines. With inflation, CareCredit has been an 
+absolute blessing for me and my family to keep affording necessities and also being able to pay 
+off larger bills.”  Olivia H. 
+ 
+“Without CareCredit, my dog couldn’t have had the required surgery.  She was family, and 
+without it, we’d have had to put her down.  I also used CareCredit when I didn’t have any credit 
+cards for dental work.  Not everyone has the ability to qualify for regular cards or deal with 
+those interest rates.  Don’t punish low-income people even more.”  Robin M. 
+ 
+“Without CareCredit my son wouldn’t get necessary dental treatment and orthodontist 
+appointments not covered by my insurance without stressing my family finances.”  Tiffany H. 
+When a consumer seeks health or wellness care, he or she may incur out-of-pocket expenses.  For the 
+CareCredit cardholder, this may include deductibles and copays for procedures covered by insurance, or 
+the full cost of elective or other procedures not covered by insurance.  In fact, the increasing prevalence 
+of high deductible insurance plans over the past several years means that even consumers with 
+insurance may have meaningful out-of-pocket expenses.  We recognize that there is significant and 
+important debate about whether changes should be made to our health care system, including about 
+who should pay and how much it should cost.  We do not offer comment on that broader debate.  Our 
+comments are predicated on the fact that millions of Americans have out-of-pocket expenses associated 
+with health care.  It is clear that if a consumer does not have, or is not willing to use, ready cash to pay 
+for these expenses, the consumer will almost certainly not be able to obtain the care he or she wants.  
+In this regard, CareCredit plays a vital role in giving consumers the opportunity to obtain the care they 
+want with the ability to pay for such care over time. 
+It bears repeating:  CareCredit expands Americans’ access to care.  Although not explored in the RFI, the 
+availability of credit is a key facilitator for millions of consumers seeking care.  We urge the Agencies to 
+consider how to measure the quantitative and qualitative benefits associated with consumers’ ability to 
+use credit when paying for care.  Conversely, the Agencies should also explore the harms that would 
+accrue in those circumstances that consumers cannot access care due to lack of available financing.  We 
+recognize the Agencies may have concerns about how consumers pay for care, but any cost-benefit 
+analysis employed by the Agencies as part of policymaking must consider how consumers benefit from 
+credit and, conversely, on how consumers could lose access to care if limits were placed on reliable and 
+popular payment options.       
+CareCredit Does Not Engage In, and Actively Works to Prevent, Practices Described in the RFI 
+The RFI is focused on MPPs, and therefore CareCredit is generally outside the scope of the Agencies’ 
+requests for information.10  However, we believe we can provide useful and constructive perspective to 
+ 
+10See, e.g., Request at 44287-44289.  
+
+ 
+ 
+the Agencies on the topic of how Americans choose to pay for health and wellness products and 
+services.  We would welcome an opportunity for further discussion on these and related topics. 
+Issues of Particular Relevance to CareCredit 
+First, we would like to address several of the discrete concerns raised by the Agencies in connection with 
+MPPs but that could also relate to CareCredit.     
+ 
+Propensity to Pay Scores.  Neither CareCredit nor Synchrony offer “financial clearance scores” or 
+“propensity-to-pay scores” as described in the RFI. 
+ 
+Provider Incentives.  CareCredit does not provide incentives to providers to promote 
+CareCredit.11 
+ 
+Avoiding Credit Reporting/Debt Collection Restrictions.  CareCredit has not advertised, and does 
+not advertise, that providers can accept CareCredit to avoid restrictions on credit reporting or 
+debt collections. 
+ 
+Length of Billing Cycles.  CareCredit’s billing cycles are similar to that of any other credit card.  
+Even if the billing cycle were shorter relative to other credit cards, it would have no impact on a 
+due date and/or late payment (as implied by the Agencies’) given Regulation Z requirements 
+governing timing of billing statements and standardization of due dates.12 
+ 
+Length of Deferred Interest Promotions.13  CareCredit’s deferred interest promotions are 
+generally equivalent in length to those offered elsewhere by Synchrony and other credit card 
+issuers when considering the transaction size.  Additionally, the percentage of CareCredit 
+cardholders who pay no interest in connection with deferred interest financing is consistent 
+with Synchrony and industry-wide percentages. 
+We turn now to the core concern described in the RFI, i.e. that providers may be engaging in behavior 
+that is contrary to their patients’ best interests.  A recurring theme throughout the RFI is that a 
+meaningful number of providers’ offices are pressuring consumers to sign up for MPPs and/or not 
+providing sufficient guidance as it relates to billing and payments.  As a general matter, we do not 
+believe this to be true as it relates to CareCredit.  Our experience suggests that the vast majority of 
+cardholders have no dispute with their provider, with the care they receive, or how the provider bills for 
+services.  It is not clear if the Agencies have additional data detailing the prevalence of the concerning 
+behaviors described in the RFI, but we welcome the opportunity to learn more about the Agencies’ 
+perspective in more detail.   
+Although the CFPB is well familiar with CareCredit’s industry-leading practices as it relates to managing 
+relationships with providers—indeed, several of these practices were developed in conjunction with the 
+CFPB—we would like to take the opportunity to describe how CareCredit protects its cardholders, its 
+brand, and its network in connection with providers’ offering and acceptance of CareCredit.  While our 
+ 
+11 CareCredit may offer a provider (including a hospital) prospective pricing based on historic payment volumes.  
+The RFI states that MPP companies “offer lower processing or management fees to providers who enroll more 
+consumers—giving those providers an incentive to enroll as many patients as possible.”  (See Request at 44286.)  
+We do not believe this to be true.  It is likely that a provider seeking to minimize the cost of payment acceptance 
+would prefer a consumer to use more widely accepted credit or debit cards regardless of any pricing arrangements 
+offered by an MPP company or CareCredit. 
+12 See 12 C.F.R. 1026.5(b)(2)(ii)(A) and 1026.7(b)(11)(A). 
+13 We discuss deferred interest in more detail below. 
+
+ 
+ 
+experience is almost exclusively outside of the hospital and health system environment, we believe our 
+experience is relevant to the Agencies’ inquiry. 
+Additionally, CareCredit partners directly with providers and merchants to accept CareCredit-branded 
+credit cards.  Some providers present CareCredit as a payment option to their patients.  In this regard, 
+the provider may have collateral describing the benefits of CareCredit (e.g., signs, brochures) as well as 
+the ability to facilitate an application for a CareCredit credit card.  Even though providers may inform 
+consumers about the availability of CareCredit, the vast majority of our applications are received directly 
+from the consumer (e.g., the consumer submits the application on an Internet-enabled device).  Of 
+course, CareCredit applications are subject to CareCredit’s underwriting and approval standards.   
+In an effort to ensure that the providers in the CareCredit network present our financing options in an 
+appropriate manner and that cardholders receive clear and accurate information about how CareCredit 
+works, we have implemented a range of requirements for participating providers.  Many of these 
+requirements are encapsulated in the Transparency Principles (see Appendix B) that are included in each 
+provider’s contract with us.  The Transparency Principles reference our requirements that: 
+ 
+Personnel who discuss CareCredit financing with applicants take and pass our training prior to 
+being able to accept the CareCredit card and refreshed every two years; 
+ 
+Providers must follow our approved advertising templates and disclosures when promoting 
+CareCredit; 
+ 
+Providers must explicitly disclose to any person using promotional financing certain key 
+information about the promotion, such as length of term, interest rate, and what happens when 
+the promotional term expires; 
+ 
+Amounts financed on the CareCredit card should be for services actually rendered within a 
+certain period of time, generally 30 days; and 
+ 
+Providers take certain measures to provide returns/refunds, respond to complaints and 
+disputes, and retain records to assist in such resolutions.   
+Additionally, we limit when CareCredit can be presented to customers and patients, prohibiting 
+providers from promoting CareCredit in the emergency room and from facilitating any credit 
+applications from customers or patients who are under duress, such as sedation, extreme discomfort or 
+heavily medicated.     
+While we continuously seek to improve our processes and how we serve our cardholders, we believe 
+that the measures we take today have been largely effective in preventing the type of consumer harm 
+the Agencies’ describe in the RFI.  The proof is in the pudding.  CareCredit earns the highest net 
+promoter score in the credit card industry at 76 (compared to an industry average of 42), and enjoys a 
+90% cardholder satisfaction rating.  These customer satisfaction metrics reflect our commitment to a 
+positive cardholder experience.  We invite further discussion with the Agencies about our experience 
+with providers and how to continue to improve the customer and patient experience in paying for out-
+of-pocket expenses.   
+We certainly realize there are instances where cardholders are dissatisfied with their experience with 
+CareCredit, and that in some cases, this dissatisfaction is caused by provider behavior.  CareCredit 
+monitors complaints that cardholders lodge against providers in the network.  When cardholders 
+dispute a charge on their CareCredit account, we follow established processes and regulatory 
+requirements to adjudicate whether the provider followed the procedures that we require of them with 
+respect to their participation in the CareCredit network.  If we determine they have not, we refund the 
+
+ 
+ 
+disputed charge back to the cardholder and may take additional measures depending on the specifics of 
+the dispute.  We generally also rescind the disputed payment that was made to the provider. 
+Although CareCredit provides industry-leading standards, crafted pursuant to CFPB input and 
+requirements, we would welcome a discussion with the relevant Agencies to discuss what other 
+initiatives may address various Agency concerns.  While some issues fall outside of CareCredit’s ability to 
+address (as discussed below), we may be able to leverage our role as a facilitator of payment between 
+patients and providers in a manner that furthers the Agencies’ objectives without reducing consumers’ 
+awareness of, and access to, CareCredit.  We stand ready to discuss these matters further. 
+Issues of General Applicability 
+The RFI describes a variety of concerns regarding the use of MPPs in connection with paying for health 
+care.  The majority of these concerns are equally applicable, however, to virtually any form of payment 
+the consumer could use to pay for out-of-pocket expenses.  These concerns include how MPPs—or 
+more realistically, any form of credit (and in many instances, any form of out-of-pocket payment 
+whatsoever)—could lead to: 
+ 
+Providers not submitting insurance claims 
+ 
+Providers avoiding “slow and complex insurance reimbursement” and wanting faster, more 
+efficient payment 
+ 
+Providers not explaining insurance coverage 
+ 
+Providers charging prices that exceed those negotiated with the consumer’s insurance company 
+ 
+Providers not screening for charity care14 
+ 
+Consumers not being able to negotiate lower prices 
+ 
+Consumers losing the ability to dispute an erroneous charge 
+ 
+Certain debts appearing on a credit report that would otherwise be excluded 
+ 
+Downstream consequences if the credit is not repaid (e.g., damage to credit history, wage 
+garnishment, collections, etc.) 
+ 
+Increasing medical debt 
+These concerns do not appear unique to any particular form of payment, but rather apply more broadly 
+to any form of payment.  For example, there is no reason why a provider would be less likely to submit 
+an insurance claim (or explain insurance coverage, or screen for charity care, etc.) depending on 
+whether the consumer uses cash, an American Express card, or a CareCredit card to pay for the services 
+rendered.   
+In fact, when a consumer uses a credit card (including CareCredit) to make a payment, the consumer 
+receives enhanced protections with respect to at least some of the Agencies’ concerns.  For example, 
+once a consumer makes a payment with a credit card, if there is a subsequent dispute regarding the 
+ 
+14 The RFI implies that financial institutions that partner with providers should have some obligation to determine 
+if the cardholder qualifies for charity care offered by providers.  It is not clear how this could work given that the 
+financial institution is not in a position to understand the provider’s qualification requirements or the cardholder’s 
+ability to satisfy those requirements.  It is also not clear that those who would qualify for charity care would also 
+qualify for, or have access to, a credit card such as CareCredit.  Having said that, CareCredit would like to discuss 
+potential options that may help to address the concerns described in the RFI.   
+
+ 
+ 
+provider’s bill or services rendered, Regulation Z provides that the consumer can dispute the charge 
+through the card issuer and have the ability to receive a refund even if the provider refuses to provide a 
+refund to the cardholder.15  There are also circumstances where a consumer receives a discount from 
+the provider in exchange for immediate and upfront payment, such as through use of a credit card. 
+We also note that the concern about “medical debt” in the context of this RFI seems to omit critical 
+contextual consideration.  To the extent the Agencies have concerns about consumers using credit cards 
+or MPPs to pay out-of-pocket expenses for medical care, it seems there are essentially two other 
+alternatives for most consumers:  (i) they could use a different form of payment (primarily cash or 
+check); or (ii) they could forgo care.16  Our strong belief is that consumers prefer to have access to care, 
+even if they need to pay for such care through use of credit.  We also believe that this is the correct 
+public policy choice.17  Even if the Agencies’ focus was on the fact that consumers pay interest on loans 
+used to pay for health and wellness care, it is not clear that consumers would be better served if they 
+did not take the loan with interest (and therefore did not receive the care).18   
+The Agencies also suggest that consumers avoid or delay medical care “out of concern about high costs 
+or medical debt or because they believe they will be turned away due to their unpaid medical bills.”19  As 
+it relates to consumers avoiding health care due to concerns about medical debt, it is not clear what the 
+alternative would be if they do not have cash readily available.  Also, if the consumer avoids going to a 
+provider because the consumer has not paid the provider for prior medical care, it would appear that 
+having access to credit to pay the provider would mitigate, not exacerbate, this concern. 
+Deferred Interest 
+The RFI expresses concern about deferred interest financing.  CareCredit is proud to offer consumers 
+deferred interest financing.  Although the Agencies call deferred interest promotions “complex,” they 
+are actually not complicated and have been enjoyed by consumers for decades.  Furthermore, as 
+discussed below, the CFPB has noted that consumers generally understand how deferred interest 
+financing works.  CareCredit’s promotional financing offers, including deferred interest financing, are 
+key consumer value propositions that help differentiate CareCredit from other credit options.  We 
+believe our promotional financing offers are a key reason CareCredit has such a strong net promoter 
+score and customer satisfaction numbers.  Large numbers of providers and other types of retailers 
+continue to rely on deferred interest financing to drive customer satisfaction because it works.   
+We know consumers like deferred interest financing because they have told us and others, including the 
+CFPB, so.  We include here selected excerpts from comments submitted by CareCredit cardholders to 
+the CFPB in response to the RFI.   
+ 
+“Having an option, like CareCredit’s promotional financing, that can give you the time you need 
+to get your next paycheck to finish paying that bill, makes the difference between being able to 
+pay these healthcare bills and not being able to at all.”  A. Nickel 
+ 
+15 See, e.g., 12 C.F.R. 1026.13. 
+16 We surmise that most consumers who would be able to pay with cash or credit would not qualify for charity 
+care.  Also, while we recognize the Agencies’ desire for providers to offer in-house financing options, it is not clear 
+that such options are or will be prevalent, especially outside of the hospital and health system environment.  There 
+is no reason providers could not offer such financing options even if they also accepted other forms of credit.   
+17 As noted above, our comments relate to the current methods available to pay for health care.  We offer no 
+comment on potential approaches to reforming the health care system. 
+18 As we explain elsewhere, this would seem to be an issue that deferred interest financing could mitigate. 
+19 Request at 44284. 
+
+ 
+ 
+ 
+“Deferred-interest financing allowed me to pay for a number of necessary services over the 
+years that I wouldn’t have been able to reasonably afford otherwise, including multiple 
+surgeries, physical therapy, and life-extending care for my beloved dog. In addition to offering 
+extremely valuable, cost-saving options to pay for health and veterinary care, deferred-interest 
+programs like CareCredit provide accountability for paying bills on time and help cardholders 
+like me establish good credit habits while keeping them out of long-term medical debt.”  Lane S. 
+ 
+“I lived on a tight budget with my young family for 20 years before I finally finished my degree 
+and got a better-paying job. There's no way I could afford the huge chunks of dental payments. 
+CareCredit allowed me to budget interest-free dental work for my family. Our dental plans and 
+prices are bad enough without making people who live paycheck to paycheck ALSO have to pay 
+interest on basic care.”  Jenaca W. 
+ 
+“As a person who had to go on Social Security Disability unexpectedly, I was only able to keep 
+my cats and get them veterinary care when needed because of Care Credit and deferred interest 
+financing. Without it, I may have had to surrender my pets to a shelter, which would most likely 
+have resulted in them being euthanized.”  Joan G. 
+ 
+“As a disabled veteran who is only 90% rated, I do not qualify for dental coverage of any kind 
+through the VA. I must pay out of pocket for all dental. Having the interest-free care credit 
+program has been the only way I could afford dental care! Don't allow this very important 
+program to be taken away!”  Veronica R. 
+We also provide additional examples of cardholders’ satisfaction with deferred interest in Appendix C to 
+this letter. 
+When talking about deferred interest, a key fact to understand is that consumers pay no interest on the 
+promotional transaction roughly 75-80% of the time.  That means millions of consumers every year are 
+paying no interest on the loan they use to access the health and wellness care they want.  It is also 
+important to note that the fact that a consumer pays interest on a deferred interest promotion is not 
+necessarily a “failure” of the product, or indicia of consumer harm or misunderstanding.  In fact, with 
+CareCredit, the deferred interest promotional financing is automatic with qualifying purchases.  If the 
+consumer uses the card for a qualifying transaction, that transaction automatically benefits from 
+deferred interest financing.  The cardholder does not need to ask for the promotion because it is a 
+standard value proposition.  Although the promotion has been applied to the transaction, the 
+cardholder may not intend to take advantage of it (e.g., the cardholder may intend to revolve the 
+balance beyond the promotional period).  In this scenario, the fact that the consumer did not repay the 
+promotional balance in the promotional timeframe is not indicative of anything other than the 
+consumer intended to take advantage of a longer repayment period.  Regardless, the option to repay 
+the balance in full during the promotional period and avoid interest being assessed remains, however.20 
+We will take this opportunity, however, to point to prior CFPB statements to address concerns about 
+complexity and whether subprime cardholders are somehow harmed by a form of financing that allows 
+them to pay no interest.21   
+ 
+20 There are a variety of reasons a consumer may not pay a promotional balance during the promotional period, 
+and therefore pay the interest associated with the transaction.  “Consumer misunderstanding of the offer” is likely 
+toward, or at, the bottom of the list of such reasons. 
+21 We note that the information cited pertains to deferred interest promotions surveyed by the CFPB, which was 
+not limited to Synchrony or CareCredit. 
+
+ 
+ 
+ 
+“In focus groups, consumers generally recognized that they would be subject to a significant 
+interest charge unless they paid their full promotional balance during the deferred interest 
+period.”22 
+ 
+More than 75% of deferred interest transactions are taken by consumers who have had at least 
+one prior deferred interest transaction.23 
+ 
+“Some retailers and issuers…assert[] that deferred interest products generally attract few 
+complaints overall.”24 
+ 
+“[…]nearly 90% of deferred interest promotional spending is made by consumers with prime or 
+superprime credit scores.”25 
+ 
+“Consumers with deep subprime and core subprime scores account for 3% and 8% of deferred 
+interest promotional spending, respectively.”26 
+ 
+“[…]the average income associated with a deferred interest offer is higher than the average 
+income associated with an open private label account or an open general purpose account.”27 
+ 
+“[…]consumers with incomes in the lowest two quintiles accounted for only 8% of all deferred 
+interest loans.”28 
+ 
+“[…]the aggregate costs assessed to all deferred interest users are comparable, or even less 
+expensive, than revolving the same balances on general purpose cards,” including for subprime 
+borrowers.29 
+Conclusion 
+CareCredit shares the Agencies’ desire for consumers to receive the care they need, when they need it.  
+We are proud of the role we play in expanding access to health and wellness care, and we look forward 
+to learning more about how CareCredit can continue to play a positive role in health and wellness 
+payments. 
+ 
+Sincerely, 
+ 
+Alberto B. Casellas 
+Executive Vice President and CEO, Health & Wellness 
+Synchrony Financial 
+ 
+ 
+ 
+22 Consumer Financial Protection Bureau, The Consumer Credit Card Market, December 2015 at 152, note 20. 
+23 See id. at 181. 
+24 Id. at 190.  The low complaint rate is despite the fact that if a cardholder sees an unexpected large sum of 
+interest assessed at the end of the promotional period, the first call the cardholder will make is to the card issuer 
+to complain. 
+25 Id. at 16. 
+26 Id. 
+27 Id. at 157. 
+28 Id. 
+29 Id. at 17 and see id.at 197. 
+
+ 
+ 
+APPENDIX A:  ANSWERS TO SELECT QUESTIONS POSED IN THE RFI 
+General note:  As described in the our narrative response, the Agencies’ definition of a “medical 
+payment product” or “medical credit card” excludes CareCredit.  The questions in the RFI relate to such 
+products.  We have therefore recrafted the questions to pertain to CareCredit. 
+General Questions (Market Level) 
+Question 1.  What are the benefits, costs, and risks of medical payment products for consumers, health 
+care providers, and companies offering [CareCredit]? 
+As described in more detail in our narrative response, CareCredit allows cardholders to obtain 
+the care they want when they want it.  Not only does CareCredit expand access to health and 
+wellness services, but it does so in a responsible manner. 
+Question 2.  What are the terms of [CareCredit], including interest rates and fees? 
+The current terms for a CareCredit credit card can be found on CareCredit’s website, 
+www.carecredit.com. 
+Question 8.  What incentives do[es] [CareCredit] offer health care providers, including revenue-sharing 
+or other financial or non-financial incentives? 
+CareCredit does not provide any incentives to any provider associated with consumers’ use of 
+CareCredit cards.  However, CareCredit may offer a provider prospective pricing based on 
+historic payment volumes. 
+Question 12.  To what extent are patients using [CareCredit or other credit products] to pay bills that are 
+incorrect, or that could be covered or defrayed by lower-cost alternatives? 
+We have no information regarding whether credit cards, such as CareCredit, are used to pay bills 
+that are incorrect or could be paid through other means.  As noted in our narrative, however, 
+the use of a CareCredit card affords the cardholder protections not found with other forms of 
+payment if the cardholder subsequently wants to dispute the transaction.  These dispute rights 
+are enumerated in the CFPB's Regulation Z. 
+CFPB-Specific Questions 
+Question 1.  What actions should the CFPB consider taking to address problematic practices related to 
+medical credit cards or loans, including debt collection and credit reporting practices? 
+CareCredit cannot speak to "medical credit cards or loans" as CareCredit is neither.  However, in 
+the event that an entity subject to the CFPB's jurisdiction is engaged in unlawful practices, it 
+would appear that the CFPB has sufficient authority to take appropriate action.  The CFPB does 
+not appear to have the authority, nor should it attempt, to regulate how a credit card issuer bills 
+or collects from a cardholder, or reports data to a consumer reporting agency, based on what 
+the consumer obtained through use of the credit card. 
+Question 2.  How do[es] [CareCredit] typically market to providers? 
+CareCredit attends events and tradeshows sponsored by various provider professional 
+organizations for its members, partners and vendors. CareCredit typically has a booth hosted by 
+sales teams, participates through guest panels/speaking engagements and other sponsorship 
+opportunities (e.g., branded signage, reception, etc.) at the event. Marketing also includes direct 
+mail, email, print and digital media advertising in relevant industry publications targeted to the 
+different providers and practice management. 
+
+ 
+ 
+Question 4.  Do consumers understand the risks of paying medical bills via a medical credit card, 
+installment loan, or other commercial payment product, including lowered ability to negotiate their bill 
+with their provider? 
+We are unaware of risks specific to use of a credit card, installment loan, or other commercial 
+payment product that are specific to medical bills.  We do not agree that the consumer's ability 
+to negotiate a bill is impaired simply because the consumer chose to use a commercial payment 
+product to pay the bill.  Any ability to negotiate is unaffected by the tender type used to pay a 
+bill.  To the extent the CFPB believes a consumer loses the ability to negotiate a bill once it is 
+paid, that would be true regardless of how the bill was paid. 
+Question  7.  How are health care providers and financial companies using credit or "propensity to pay" 
+scores to determine patients' eligibility for financial assistance or medical payment products?  What are 
+the implications for compliance with the FCRA or other CFPB authorities? 
+CareCredit does not provide such scores and therefore cannot provide perspective. 
+HHS-Specific Questions 
+Question 8.  What financial relationships exist between [CareCredit] and health care providers?  For 
+example, do companies provide financial incentives to providers who enroll patients in medical payment 
+products?  Do providers pay financial companies to collect patients' overdue balances?  Or do providers 
+have arrangements with financial companies to indemnify the company in whole or in part if the patient 
+defaults, such as an arrangement that when patients default on their debt to the financial company, the 
+debt reverts to the provider? 
+As it relates to providers, CareCredit has relationships with providers that would be similar to 
+other closed-network credit card networks.  Specifically, CareCredit acts as an acquirer for 
+CareCredit card transactions.  As such, CareCredit collects fees in connection with a provider's 
+acceptance of the CareCredit card.  CareCredit does not provide any incentives to any provider 
+associated with consumers' use of, or applications for, CareCredit cards.  However, CareCredit 
+may offer a provider prospective pricing based on historic payment volumes.  If a consumer 
+defaults on a CareCredit card, CareCredit suffers the loss.  The debt does not revert to the 
+provider. 
+Question 10.  Do[es] [CareCredit] recommend certain health care providers to their users?  Do 
+companies limit where or how patients use [CareCredit]? 
+Like other closed-network credit card networks, CareCredit has the ability to determine who can 
+accept the CareCredit credit card.  CareCredit is currently accepted at over 266,000 locations in 
+the United States.  CareCredit does not "recommend" any particular provider, although we do 
+provide cardholders with a "provider locator" on our website if they would like to find a provider 
+near them who accepts the CareCredit card.  CareCredit generally does not limit how a 
+consumer can use the CareCredit card (assuming the location accepts the card in the first place), 
+although agreements with some providers or merchants may limit what can be purchased using 
+the card (e.g., the merchant may accept the card for purchases only in some departments).  Of 
+course, CareCredit is a responsible underwriter and therefore, for example, sets credit limits on 
+the card and may prevent the card from being used for new transactions if the consumer is 
+seriously past due. 
+ 
+ 
+
+ 
+ 
+ 
+Treasury Specific Questions 
+Question 8.  Does the availability of [CareCredit] generally benefit the community or assist patients 
+financially. 
+The availability of CareCredit benefits the public.  CareCredit allows cardholders to get the care 
+they want, when they want it.  In this way, CareCredit expands access to care.  Not only does 
+CareCredit expand access to care, but it allows a cardholder to pay for such care over time in a 
+way that fits the cardholder's budget.  Unlike most other forms of payment, CareCredit also 
+offers promotional financing that allows cardholders to avoid paying any interest on the vast 
+majority of qualifying transactions.   
+ 
+ 
+
+ 
+ 
+APPENDIX B:  TRANSPARENCY PRINCIPLES 
+ 
+Synchrony Bank promotes full transparency and disclosure to all applicants for its healthcare financing 
+program (the “Program”).  To ensure that applicants are aware of several key attributes of the Program, 
+you hereby agree as follows: 
+1) You will ensure that those personnel in your office who discuss the Program with applicants (e.g., in 
+office/store or via telephone) take and pass training offered by Synchrony Bank. Helpful training 
+materials including videos, self-paced courses and pre-recorded webinars can be found online in 
+Provider Center: https://www.carecreditprovidercenter.com/portal/newWindowAction?scoid=246.  
+2) You must retain each Program applicant’s signature page for no less than 25 months from the date of 
+the application. Failure to keep and, upon request, produce these documents to Synchrony Bank may 
+expose your office to an automatic chargeback upon consumer dispute. 
+3) You will follow the Synchrony approved advertising templates, and other disclosures or processes in 
+the manner directed by Synchrony in creating or distributing advertising about the Program. 
+4) You, your staff, and all promotional materials must inform Program applicants about the different 
+special financing options available to them and how these promotions work BEFORE choosing which 
+option to use for their specific purchase. Consumers who want to learn more about deferred interest or 
+waived interest promotions should be referred to materials provided by Synchrony. You must disclose 
+the following information to each customer that is using special financing options: 
+ 
+Credit issued under the Program is extended by Synchrony Bank and not by their healthcare 
+provider/retailer (e.g. the Program is NOT an in-house credit program). 
+ 
+The length of the applicable promotion/loan term and interest rate; 
+ 
+Whether the promotion expires and if so, what happens upon expiration; 
+ 
+Required payments during the promotional period; 
+ 
+The CareCredit credit card is NOT an interest-free credit card. For deferred interest 
+promotions made on a CareCredit credit card, interest accrues on the outstanding 
+promotional balance during the promotional period from the date of the transaction. 
+Finance charges can be avoided ONLY IF the promotional balance is paid off prior to the end 
+of the promotional period. Please refer consumers to Synchrony-provided information if 
+they are interested in receiving more information; 
+ 
+For waived interest promotions on an installment loan, monthly payments are set up to fully 
+pay off the loan over the fixed full term, not over the promotional period. Interest charged 
+will be waived ONLY IF the customer pays an amount equal to the financed amount prior to 
+the expiration of the promotional period. 
+5) Program accounts should only be charged for those costs incurred or services actually rendered 
+within 30 days of the charge. Additional services may be billed as you provide them to the consumer. 
+These requirements do not apply to charges for orthodontic services or custom products ordered by the 
+consumer. Additionally, services may be rendered or products may be delivered within a period of time 
+longer than 30 days following charges on an Account for specific industries as communicated in writing 
+to you by Synchrony Bank. 
+
+ 
+ 
+6) You agree to respond to inquiries from Synchrony Bank regarding consumer complaints and/or 
+disputes within the time frame specified with each request. 
+7) You will advise customers of your policy regarding returns/refunds. Your refund policy must be 
+reasonable and fair in Synchrony Bank’s sole discretion. 
+8) These program guidelines are designed to provide transparency for patients and customers using the 
+Program. Synchrony Bank reserves the right to monitor your adherence to these and other policies. 
+Professionals who violate these policies will be subject to chargebacks as well as to termination. 
+ 
+ 
+
+ 
+ 
+ 
+APPENDIX C:  SELECT PORTIONS OF TESTIMONIALS FILED BY CARECREDIT CARDHOLDERS IN RESPONSE 
+TO THE RFI 
+ 
+“Deferred-interest financing allowed me to pay for a number of necessary services over the years that I 
+wouldn’t have been able to reasonably afford otherwise, including multiple surgeries, physical therapy, 
+and life-extending care for my beloved dog. In addition to offering extremely valuable, cost-saving 
+options to pay for health and veterinary care, deferred-interest programs like CareCredit provide 
+accountability for paying bills on time and help cardholders like me establish good credit habits while 
+keeping them out of long-term medical debt.”  Lane S. 
+ 
+“I lived on a tight budget with my young family for 20 years before I finally finished my degree and got a 
+better-paying job. There's no way I could afford the huge chunks of dental payments. CareCredit allowed 
+me to budget interest-free dental work for my family. Our dental plans and prices are bad enough 
+without making people who live paycheck to paycheck ALSO have to pay interest on basic care. Some 
+people take care of their teeth but are still genetically prone to dental issues.  Have you ever had to 
+randomly pay two to three thousand dollars for root canal work? While living at the poverty line? It's 
+hard to plan for that working for low wages and supporting a family. Deferred interest promotions from 
+CareCredit was the only solution for me, and I continue to use it to help budget expenses greater than 
+the allowed FSA amount each year. Now that I have a decent job and can contribute the max in FSA 
+deductions, I have three kids in orthodontics, and our family still needs other dental work done along 
+the way. Honestly, in case you couldn't tell, I'm passionate about this. Please don't take deferred 
+interest programs away. Feel free to contact me if you have further questions. Thank you.”  Jenaca W.  
+ 
+“As a person who had to go on Social Security Disability unexpectedly, I was only able to keep my cats 
+and get them veterinary care when needed because of Care Credit and deferred interest financing. 
+Without it, I may have had to surrender my pets to a shelter, which would most likely have resulted in 
+them being euthanized because cats are more numerous in shelters and because my cats were already 
+"senior cats" by the time I became too sick to work, which would have made them even less likely to be 
+adopted. Not to mention how emotionally devastating that would have been.  Care Credit and deferred 
+interest financing also help me. Medicare doesn't cover dental and vision. I've needed substantial dental 
+work since becoming disabled, and I need eyeglasses. Both can be very expensive.”  Joan G. 
+ 
+“There are many health issues I am experiencing that I have not taken care yet of because my copay and 
+the uncovered amounts will be hard to pay.  I do not have dental and vision coverage as I cannot afford 
+the extra deduction from my pension. As a result, I have not purchased new glasses or had my eyes 
+examined in a few years.  A typical pair of glasses costs me $600 and that's with some of the cheapest 
+frames.  I can't visit the dentist regularly for cleanings because I can't afford to more than once a year.  I 
+would not be able to pay any uncovered health expenses if it were not for the availability of the 
+payment plans offered through credit companies such as CareCredit.  Even with such resources, I must 
+keep within a budget to make the monthly payments.  With regard to veterinary services, I recently paid 
+out over $10,000 in six months for medical care for my beloved (now sadly deceased) dog. Her last few 
+months on Earth were made a little easier for her because I am able to pay for her medical care without 
+huge interest charges.”  Elisabeth T. 
+  
+ 
+ 
+
+ 
+ 
+“As a disabled veteran who is only 90% rated, I do not qualify for dental coverage of any kind through 
+the VA. I must pay out of pocket for all dental. Having the interest-free care credit program has been the 
+only way I could afford dental care! Don't allow this very important program to be taken away!”  
+Veronica R. 
+ 
+“Without CareCredit’s deferred interest option, I would not be able to manage my family’s healthcare 
+debt and would have no way to pay for emergencies, necessary dental care, and treatments for 
+unforeseen illnesses. During this time I am going through a financial hardship, and CareCredit has been a 
+lifesaver to keep me and my family healthy, sheltered, and able to work.”  Katherine W. 
+ 
+“CareCredit with deferred interest has been a lifesaver for both me and my pets!”  Kathy G. 
+ 
+“I can’t possibly think of why anyone would want to take away a service like Care Credit when it helps so 
+many. I wouldn’t be able to get emergency medical services for my dog or pay for medical expenses 
+without worry if I didn’t have Care Credit.”  Angel D. 
+ 
+“Further, as an example of how CareCredit has helped me, my cat needed emergency surgery and if I 
+had not had care credit I would have had to pay for him to be put down.  Even more importantly, my 
+child needed 3 root canals in one year and had to be hospitalized due to cellulitis from her tooth 
+infection. There is no way I could have afforded her dental work without the interest-free options I got 
+from care credit to allow a then 14-year-old to keep her teeth and not have to have them pulled.”  
+Rachael W. 
+ 
+“I am currently using my CareCredit card to pay off a surgery for my cat. Without CareCredit, that 
+unexpected surgery would have been a bit hit to my finances, but now I am able to pay it off at my own 
+pace.” Victoria L. 
+ 
+“If it weren’t for CareCredit, I wouldn’t be able to have lower dentures. I required surgery to remove tori 
+bones and implants because there weren’t enough gums left for a regular lower denture. I had gone 
+four years without bottom teeth. If it weren’t for CareCredit I would still be toothless and limited in 
+what I can eat. I’m very certain there are others in my situation who do not have a way forward. Please 
+take our plight into consideration.”  John S. 
+ 
+“CareCredit has helped me greatly being a single mother. Babies are already expensive, but adding bills 
+on top of that makes it more expensive. CareCredit helps me be able to pay for things I need while still 
+being able to afford larger bills. Without CareCredit I wouldn’t be able to afford basic needs on top of 
+bills that have deadlines. With inflation, CareCredit has been an absolute blessing for me and my family 
+to keep affording necessities and also being able to pay off larger bills.”  Olivia H. 
+“Without CareCredit my dog couldn’t have had the required surgery. She was family and without it, 
+we’d have had to put her down. I also used Care Credit when I didn’t have any credit cards for dental 
+work. Not everyone has the ability to qualify for regular cards or deal with those interest rates. Don’t 
+punish low-income people even more.”  Robin M. 
+ 
+“Without CareCredit my son wouldn’t get necessary dental treatment and orthodontist appointments 
+not covered by my insurance without stressing my family finances.”  Tiffany H. 
+ 
+
+ 
+ 
+“Without care credit I could not have gotten braces for my daughter's teeth nor her wisdom teeth pulled 
+as I needed financing for $4900 to do both one six months after the other. And special financing helps 
+keep my costs lower.”  Janine T. 
+ 
+“Without the ability to use my CareCredit card, I would not be able to afford my dental care.  Coverage 
+for dental care is very limited.  My dental insurance does not cover the full cost of a crown, root canal, 
+or filling of cavities.   I have to use my CareCredit card to cover the cost and be able to pay it off with a 
+lower monthly payment.  Dental providers primarily require the full cost of the procedure at the time of 
+service.  I am a full-time RN and still cannot afford that type of upfront cost.  I wish more providers took 
+CareCredit because it would allow more people the opportunity to pay their bills in smaller amounts 
+making the healthcare that insurance doesn't cover, more affordable.”  Shannon T. 
+ 
+“There are MANY Americans who do not have health insurance or are not able to afford health 
+insurance premiums that will actually afford them any sort of substantial care. Having an option, like 
+CareCredit’s promotional financing, that can give you the time you need to get your next paycheck to 
+finish paying that bill, makes the difference between being able to pay these healthcare bills and not 
+being able to at all. Healthcare in America is already a joke. Please, for the love of everything, don’t 
+make it harder than it already is.”  Alexandria N. 
+ 
+“As a millennial and dedicated dog mom, I rely on CareCredit to be available any time, any place so I can 
+be at ease that my fur baby will have access to life-saving care. I take immense comfort that l have never 
+had to choose between their life or my wallet. I implore you, do not take away my option for this type of 
+financing, especially when there are so few assurances for pets.”  Erin S.  
+   
+ “I'm on a limited income and would not be able to afford veterinary care for my pets and dental work 
+for me not covered by insurance without the use of deferred financing with CareCredit. I urge you to 
+protect this type of promotional financing.”  Leslie W. 
+  
+ 
+ 

@@ -1,0 +1,252 @@
+"""LLM model configuration profiles and rate limits."""
+
+import math
+from typing import Literal, TypedDict
+
+LLMProvider = Literal['gemini', 'openai']
+SUPPORTED_PROVIDERS: tuple[LLMProvider, ...] = ('gemini', 'openai')
+
+
+class Pricing(TypedDict):
+    """Pricing for a single model."""
+
+    input: float
+    output: float
+    thinking: float
+    pricing_unit: int
+
+
+class ModelProfile:
+    """Model configuration profile with rate limits and capabilities."""
+
+    def __init__(
+        self,
+        provider: LLMProvider,
+        model_id: str,
+        rpm: int,
+        tpm: int,
+        rpd: int,
+        allowed_thinking: list[str],
+        max_concurrency: int,
+        pricing: Pricing | None = None,
+    ):
+        """Initialize a model profile.
+
+        Args:
+            provider: LLM provider for this model
+            model_id: Full model identifier
+            rpm: Requests per minute limit
+            tpm: Tokens per minute limit
+            rpd: Requests per day limit
+            allowed_thinking: List of allowed thinking levels
+            max_concurrency: Max in-flight requests allowed by config
+            pricing: Optional pricing metadata for token cost calculation
+        """
+        self.provider = provider
+        self.model_id = model_id
+        self.rpm = rpm
+        self.tpm = tpm
+        self.rpd = rpd
+        self.allowed_thinking = allowed_thinking
+        self.max_concurrency = max_concurrency
+        self.pricing = pricing
+
+
+RPM_SAFETY_MARGIN = 0.30
+AVG_REQUEST_SECONDS = 10.0
+
+
+def _max_concurrency_from_rpm(rpm: int, safety_margin: float = RPM_SAFETY_MARGIN, request_seconds: float = AVG_REQUEST_SECONDS) -> int:
+    """Derive max safe concurrency from RPM budget and average request duration."""
+    effective_rpm = max(1, math.floor(rpm * (1 - safety_margin)))
+    requests_per_worker_per_minute = max(1.0, 60.0 / max(request_seconds, 0.1))
+    return max(1, int(effective_rpm // requests_per_worker_per_minute))
+
+
+MODELS = {
+    'flash': ModelProfile(
+        provider='gemini',
+        model_id='gemini-3-flash-preview',
+        rpm=1000,
+        tpm=1_000_000,
+        rpd=10_000,
+        allowed_thinking=['MINIMAL', 'LOW', 'MEDIUM', 'HIGH'],
+        max_concurrency=_max_concurrency_from_rpm(1000),
+        pricing={
+            'input': 0.50,
+            'output': 3.00,
+            'thinking': 3.00,
+            'pricing_unit': 1_000_000,
+        },
+    ),
+    'lite': ModelProfile(
+        provider='gemini',
+        model_id='gemini-2.5-flash-lite-preview-09-2025',
+        rpm=1000,
+        tpm=1_000_000,
+        rpd=10_000,
+        allowed_thinking=['NONE'],
+        max_concurrency=_max_concurrency_from_rpm(1000),
+        pricing={
+            'input': 0.50,
+            'output': 3.00,
+            'thinking': 3.00,
+            'pricing_unit': 1_000_000,
+        },
+    ),
+    'pro': ModelProfile(
+        provider='gemini',
+        model_id='gemini-3-pro-preview',
+        rpm=25,
+        tpm=1_000_000,
+        rpd=250,
+        allowed_thinking=['LOW', 'MEDIUM', 'HIGH'],  # Pro does NOT support MINIMAL
+        max_concurrency=_max_concurrency_from_rpm(25),
+        pricing={
+            'input': 2.00,
+            'output': 12.00,
+            'thinking': 12.00,
+            'pricing_unit': 1_000_000,
+        },
+    ),
+    # OpenAI GPT models use tier-based limits. These are conservative Tier 1 defaults.
+    'gpt_5_2': ModelProfile(
+        provider='openai',
+        model_id='gpt-5.2',
+        rpm=500,
+        tpm=500_000,
+        rpd=1_000_000,
+        allowed_thinking=['NONE', 'LOW', 'MEDIUM', 'HIGH', 'XHIGH'],
+        max_concurrency=_max_concurrency_from_rpm(500),
+        pricing={
+            'input': 1.75,
+            'output': 14.00,
+            'thinking': 14.00,
+            'pricing_unit': 1_000_000,
+        },
+    ),
+    'gpt_5_mini': ModelProfile(
+        provider='openai',
+        model_id='gpt-5-mini',
+        rpm=500,
+        tpm=500_000,
+        rpd=1_000_000,
+        allowed_thinking=['NONE', 'MINIMAL', 'LOW', 'MEDIUM', 'HIGH'],
+        max_concurrency=_max_concurrency_from_rpm(500),
+        pricing={
+            'input': 0.25,
+            'output': 2.00,
+            'thinking': 2.00,
+            'pricing_unit': 1_000_000,
+        },
+    ),
+}
+
+MODEL_ALIASES = {
+    'gemini-pro': 'pro',
+    'gemini-flash': 'flash',
+    'gemini-lite': 'lite',
+    'gpt-5.2': 'gpt_5_2',
+    'gpt-5.2-2025-12-11': 'gpt_5_2',
+    'gpt-5.2-chat-latest': 'gpt_5_2',
+    'gpt-5-mini': 'gpt_5_mini',
+    'gpt-5-mini-2025-08-07': 'gpt_5_mini',
+}
+
+
+def _validate_provider(provider: str) -> LLMProvider:
+    if provider not in SUPPORTED_PROVIDERS:
+        msg = f'Unsupported provider {provider!r}. Expected one of {sorted(SUPPORTED_PROVIDERS)}.'
+        raise ValueError(msg)
+    return provider  # type: ignore[return-value]
+
+
+def get_model_profile(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> ModelProfile | None:
+    """Resolve a ModelProfile by key, alias, or full model ID."""
+    if models_dict is None:
+        models_dict = MODELS
+
+    if provider is not None:
+        provider = _validate_provider(provider)
+
+    profile: ModelProfile | None = None
+    if model_id_or_key in models_dict:
+        profile = models_dict[model_id_or_key]
+    else:
+        alias = MODEL_ALIASES.get(model_id_or_key)
+        if alias and alias in models_dict:
+            profile = models_dict[alias]
+        else:
+            for candidate in models_dict.values():
+                if candidate.model_id == model_id_or_key:
+                    profile = candidate
+                    break
+
+    if profile is None:
+        return None
+
+    if provider is not None and profile.provider != provider:
+        return None
+    return profile
+
+
+def get_model_provider(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+) -> LLMProvider | None:
+    """Resolve provider for a model key/alias/id."""
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict)
+    if profile is None:
+        return None
+    return profile.provider
+
+
+def resolve_model_id(
+    model_id_or_key: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> str:
+    """Resolve a full model ID from a key or alias."""
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict, provider=provider)
+    return profile.model_id if profile else model_id_or_key
+
+
+def validate_model_config(
+    model_id_or_key: str,
+    thinking_level: str,
+    models_dict: dict[str, ModelProfile] | None = None,
+    *,
+    provider: LLMProvider | None = None,
+) -> ModelProfile:
+    """Validate model + thinking-level configuration."""
+    if models_dict is None:
+        models_dict = MODELS
+
+    profile = get_model_profile(model_id_or_key, models_dict=models_dict, provider=provider)
+    if not profile:
+        available_profiles = [p for p in models_dict.values() if provider is None or p.provider == provider]
+        available_keys = [key for key, value in models_dict.items() if value in available_profiles]
+        available_ids = [model.model_id for model in available_profiles]
+        if provider is not None:
+            msg = (
+                f'Invalid model for provider {provider!r}. '
+                f'Choose from keys: {available_keys} or model IDs: {available_ids}'
+            )
+            raise ValueError(msg)
+        msg = f'Invalid model. Choose from keys: {available_keys} or model IDs: {available_ids}'
+        raise ValueError(msg)
+
+    normalized_thinking = thinking_level.upper()
+    if normalized_thinking not in profile.allowed_thinking:
+        msg = (
+            f"Model {profile.model_id} does not support thinking level '{thinking_level}'. "
+            f'Allowed: {profile.allowed_thinking}'
+        )
+        raise ValueError(msg)
+    return profile

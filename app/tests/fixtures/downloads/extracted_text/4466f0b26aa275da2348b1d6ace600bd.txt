@@ -1,0 +1,800 @@
+Full Terms & Conditions of access and use can be found at
+https://www.tandfonline.com/action/journalInformation?journalCode=wshc20
+Social Work in Health Care
+ISSN: (Print) (Online) Journal homepage: https://www.tandfonline.com/loi/wshc20
+Fintech and medical expenses: What social
+workers should know
+Mathieu Despard, Sally A. Hageman & Maudia Ahmad
+To cite this article: Mathieu Despard, Sally A. Hageman & Maudia Ahmad (2023) Fintech
+and medical expenses: What social workers should know, Social Work in Health Care, 62:2-4,
+93-106, DOI: 10.1080/00981389.2023.2191656
+To link to this article:  https://doi.org/10.1080/00981389.2023.2191656
+Published online: 26 Mar 2023.
+Submit your article to this journal 
+Article views: 80
+View related articles 
+View Crossmark data
+
+Fintech and medical expenses: What social workers should 
+know
+Mathieu Despard , PhD, MSW
+a, Sally A. Hageman , PhD, MSW
+b, 
+and Maudia Ahmad , MSW, LCSW, LCAS-A, CCMc
+aDepartment of Social Work, University of North Carolina, Greensboro, North Carolina, United States; 
+bSociology, Social Work and Criminology, Idaho State University, Pocatello, Idaho, United States; 
+cSociology and Social Work, North Carolina State Agriculture & Technology University, Greensboro, 
+North Carolina, United States
+ABSTRACT
+Individuals who cannot afford out of pocket medical expenses 
+may reduce health care use, resulting in poorer health out­
+comes. To ease the situation, employers turn to financial tech­
+nology (“fintech”) health care credit applications. We examine 
+whether an employer-sponsored credit fintech application 
+(MedPut) helps employees manage medical expenses. Results 
+of the analysis of variance (ANOVA) and probit regression mod­
+els reveal MedPut users did worse financially and delayed health 
+care due to cost more often than employees who did not use 
+MedPut. Results may inform social work policy and direct prac­
+tice perspectives on fin-tech and medical expenses.
+ARTICLE HISTORY 
+Received 30 July 2022  
+Accepted 8 March 2023 
+KEYWORDS 
+Medical debt; financial 
+technology; out-of-pocket 
+costs; medical credit; health 
+care use
+The United States (U.S.) has a unique system of financing health care in which 
+employers, employees, other individuals, and government pay into various 
+public and private insurance plans that finance care. Over half of individuals 
+have health insurance through their employer. Plans offered by employers vary 
+widely concerning employees’ out-of-pocket (OOP) expenses including pre­
+miums, co-payments, deductibles, and co-insurance. More than half (59%) of 
+all employees in the U.S. are covered by a high deductible health plan (HDHP) 
+through their employer (Kaiser Family Foundation, 2022a). These plans are 
+attractive to employers because premiums are typically lower than for other 
+forms of employer-sponsored insurance. HDHPs require that employees incur 
+OOP up to the deductible amount at least $1,400 for an individual and $2,800 
+for a family (HealthCare.gov, 2022) before the plan kicks in, unless their 
+employer also funds health reimbursement accounts (HRAs) or health savings 
+accounts (HSAs).
+Lower-paid employees enrolled in HDHPs without employer HRA or HSA 
+contributions might find it hard to come up with the cash to pay OOP health 
+care expenses until they reach their deductible (Bernstein, 2014). This 
+CONTACT Sally A. Hageman 
+sallyhageman@isu.edu 
+Sociology, Social Work and Criminology, Idaho State 
+University, Kegel Liberal Arts Building, Room 350, 921 S., 8th Avenue, Stop 8114, Pocatello, Idaho 83209, United States
+SOCIAL WORK IN HEALTH CARE                        
+2023, VOL. 62, NOS. 2–4, 93–106 
+https://doi.org/10.1080/00981389.2023.2191656
+© 2023 Taylor & Francis Group, LLC 
+
+challenge is even greater among employees who already have unpaid health­
+care bills. Recognizing these challenges, some employers have offered employ­
+ees MedPut, a digital financial application that helps employees pay medical 
+bills and other health care costs using interest-free payment plans and bill 
+negotiation services. The purpose of this study was to examine the registration 
+choice, use of, and benefits from using MedPut among employees enrolled in 
+HDHPs. Accordingly, our research questions are as follows:
+(1) What were the registration and usage rates for MedPut? Did these rates 
+vary based on employee and employer characteristics?
+(2) What were the frequency, amount, and disposition of health care bills 
+submitted for payment? Did bill submission vary based on employee 
+characteristics?
+(3) What were the experiences of employees in paying for health care? To 
+what degree do employees put off health care due to cost concerns? Did 
+these experiences differ among MedPut users and non-users?
+Findings from this study may inform employer perspectives on health 
+insurance and other benefits and policy concerning the intersection of health 
+care financing, consumer financial health, and health outcomes. Social work­
+ers may advocate to improve employer health insurance policy and health care 
+financing options to better protect financially vulnerable populations.
+Review of the literature
+Prior research draws a connection between individuals’ OOP expenses and 
+their health care use (Al Rowas et al., 2017; Brot-Goldberg et al., 2017; 
+Wharam et al., 2018). These studies found that individuals are sensitive to 
+changes in OOP expenses and reduce health care consumption when these 
+expenses increase. Another area of research draws a link between medical debt 
+and lessened health care use (Bennett & Dismuke, 2010; Doty et al., 2005; 
+Wiltshire et al., 2016; Zhang et al., 2018). When confronted with high deduc­
+tibles and existing medical debt, individuals’ reductions in health care use may 
+have downstream negative effects; they may avoid preventive care or put off 
+receiving care for a chronic illness and risk experiencing a catastrophic and 
+expensive care event.
+Difficulties affording OOP healthcare expenses may result in accumulating 
+medical debt; Himmelstein et al. (2019) found that nearly 60% of individuals 
+filing for bankruptcy cited medical expenses as a key reason. Difficulty repay­
+ing medical debt may render individuals reluctant to seek additional care 
+because it would add to an already unmanageable debt burden (Doty et al.,  
+2005).
+94
+S. A. HAGEMAN ET AL.
+
+Individuals have an array of choices: personal savings, HRAs (if offered by 
+their employer), HSAs, Flexible Spending Accounts (FSAs), credit cards, 
+unsecured bank loans, hospital and health care provider charity care discounts 
+and payment plans, and payday loans and similar high-interest rate credit 
+products. Yet Seymour (2020) found that most individuals with cancer used 
+their personal savings to cover medical bills but were still unable to avoid 
+medical debt. Peter et al. (2016) found that individuals who used a HDHP 
+paired with an HSA saved more but reduced their use of health care services 
+compared to respondents who were enrolled in a full coverage health care 
+plan. Kalousova and Burgard (2013) found a positive association between 
+credit card debt, medical debt and delaying health care services regardless of 
+socioeconomic and health differences. These findings suggest that as debt 
+rises, health care use falls.
+The focus of our study is on a fintech product meant to help workers in 
+HDHPs better afford healthcare. Fintech offers access to new types of financial 
+products and services that may benefit individuals and families. Digital and 
+mobile payment platforms make it easier for people to conduct transactions 
+and send and receive money from family members and friends, personal 
+financial management apps make it easier to track spending, and savings 
+apps can help people build emergency savings via goal setting, transaction 
+round-ups, and automatic saving (Despard, in press). A review of over 60 
+studies of fintech showed that the use of fintech is correlated with improve­
+ments in spending, loan repayment, and saving behaviors and can improve 
+access to credit, yet overall evidence on the benefits of fintech is mixed and it is 
+particularly unclear whether fintech benefits lower-income individuals and 
+families (Despard, in press). In our study, MedPut may have given workers an 
+affordable source of credit to pay overdue medical bills and some relief 
+through bill reductions. A fintech credit product like MedPut is especially 
+important for workers who have low or no credit scores and cannot access 
+affordable credit (Atkinson, 2020; Urban Institute, 2021). In describing results 
+from our study of MedPut, we can help shed light on ways in which fintech 
+may help workers address problems paying for and utilizing healthcare.
+Methods
+This study was part of a project called the Financial Solutions Lab (FSL) led by 
+the Financial Health Network, a national nonprofit. The Lab tests different 
+ways to promote financial health using digital technologies. We partnered with 
+the Financial Health Network to study digital financial products and services 
+offered through the workplace as part of the 5th cohort of the Lab.
+For this study, we examined one of these products, MedPut, a digital 
+financial application that helps employees pay medical bills and other health 
+care costs using interest-free payment plans and bill negotiation services. The 
+SOCIAL WORK IN HEALTH CARE
+95
+
+monthly fee to have MedPut is paid by the employer, the employee, or 
+a combination of the two. The employer-paid fee is $2 to $6 per month per 
+registered employee, depending on the financing limit, which is from $1,000 to 
+$3,000. The employee-paid fee is $3 to $7 per month. MedPut focuses on 
+employees enrolled in HDHPs who may need help paying for health care 
+expenses until they meet their deductible. Employees register to use the 
+MedPut app and upload the health care bills they need help paying. MedPut 
+pays the bills after trying to negotiate discounts for the employee. Employees 
+make monthly payments via payroll deductions. The amount that employees 
+can borrow is limited by monthly repayments capped at 5% of gross pay. 
+Repayment terms vary from one month to two years.
+Data and sample
+Data for this study came from two sources. First, administrative data from the 
+MedPut platform was de-identified and shared with researchers for analysis. 
+Data were included for 4,317 employees in 21 companies and organizations 
+who were invited to use MedPut from January 2018 through July 2020. Data 
+included employees’ age, salary range, employer size and industry, and health 
+care bills submitted for payment. Second, employees who were registered for 
+MedPut were invited by MedPut to complete a survey on two occasions, 
+including 120 employees who completed a survey in November 2019 and 
+104 employees who completed the same survey in June 2020. A total of 35 
+employees completed both surveys. Survey questions asked about employees’ 
+experiences with medical bills and debt, use of health care, general household 
+financial health, and demographic characteristics. Because MedPut provided 
+de-identified administrative and survey data to the authors for analysis, the 
+Institutional Review Board at a university in the Midwest determined the 
+project to be not human subjects research.
+Variables
+Dependent variables included whether employees registered for the MedPut 
+app, whether registered employees used the app at least once, the number, 
+amount, and disposition of submitted bills – current, delinquent, or advance 
+payment, and whether a discount was negotiated and the amount of this 
+discount. These dependent variables were measured using MedPut adminis­
+trative data. Independent variables measured from MedPut administrative 
+data included age, job tenure, salary, fee type (self, employer, or shared fee), 
+employer size, employer industry, and any dependents in the home.
+Additional dependent variables were measured from a survey that MedPut 
+users completed concerning financial difficulties and use of MedPut. Financial 
+difficulty variables included having problems paying medical bills and being 
+96
+S. A. HAGEMAN ET AL.
+
+contacted by a collections agency within the prior 12 months, and ability to 
+cover household expenses. Also, participants were asked whether in the prior 
+six months they had lost a job or taken a pay cut due to illness or injury, 
+postponed getting medical or dental care, and/or postponed filling 
+a prescription medication because they could not afford it.
+Analysis
+To answer Research Question 1 concerning variation in MedPut registration 
+and use, we estimated the marginal effects of and predicted probabilities 
+associated with independent variables on the registration choice using probit 
+regression models with covariance control, robust standard errors, and 
+employer as a cluster variable. Covariates used in probit models included 
+age, salary group, any dependents in the home, MedPut fee type, industry, 
+and employer size. To answer Research Questions 2 and 3, we used univariate 
+descriptive statistics and bivariate analysis including chi square tests for 
+categorical and ordinal level independent variables (e.g., salary group, indus­
+try) and t-tests and analysis of variance (ANOVA) for age and job tenure.
+Results
+Sample description
+The mean age of employees who had access to MedPut was 42.79 (SD = 12.69). 
+Most (73.20%) employees worked for a large company and the most common 
+type of industry was white collar. Over a third of employees had salaries below 
+$40,000 and had dependents. Out of 4,317 employees who were invited, 1,234 
+or 28.5% registered for MedPut which meant they could submit health care 
+bills for payment. Among registrants (N = 1,234), 21.31% used MedPut at least 
+once during the study period of 2.5 years. Table 1 provides a full description of 
+the sample.
+Differences in MedPut registration and use
+Marginal effects estimated from probit regression predicting MedPut registration 
+indicated that employees with dependents were more than three times as likely to 
+register for MedPut (54.0%) compared to employees without dependents (13.8%) 
+(p < .01). Employees in small companies or organizations were twice as likely to 
+register (68.5%) as employees in medium (29.8%) and large (22.5%) companies or 
+organizations (p < .001). Other factors that were statistically significant predictors 
+of MedPut registration included lesser job tenure, when employees paid the full fee 
+for MedPut, and employees working in blue collar industries. Details of the health 
+SOCIAL WORK IN HEALTH CARE
+97
+
+care financing circumstances of MedPut users and non-uses is provided in 
+Table 2.
+Marginal effects estimated from probit regression predicting usage 
+among employees who registered for MedPut, indicated that employees 
+with dependents were more likely to use MedPut (23.7%) compared to 
+employees without dependents (15.8%) (p < .05). Employees in blue collar 
+industries were more likely to use MedPut (32.4%) than employees in the 
+service sector (15.9%) (p < .05), while employees who paid the full fee for 
+MedPut were more likely to use it (25.7%) than employees whose 
+Table 1. Sample description and MedPut status.
+Mean (SD) or %
+Total
+Users
+Registered
+Invited
+Age
+42.79(12.69)
+43.31 (10.79)
+42.99 (12.01)
+42.68 (13.06)
+Tenure (mos.)*
+80.16 
+(90.18)
+76.44 
+(71.89)
+82.45 
+(92.71)
+76.44 (71.89)
+Salary***
+<$40k
+35.49
+26.62
+32.03
+37.33
+$40 – 69k
+40.63
+50.57
+43.36
+38.92
+$70k+
+23.88
+22.81
+24.61
+23.74
+Any dependents***
+34.75
+69.58
+58.39
+24.33
+Fee Type***
+Employer paid
+27.33
+21.67
+24.10
+28.84
+Employee paid
+34.31
+52.47
+52.11
+27.15
+Shared
+38.36
+25.86
+23.79
+44.02
+Employer size**
+Small
+3.71
+5.70
+5.25
+3.05
+Medium
+23.09
+20.91
+21.42
+23.81
+Large
+73.20
+73.28
+73.33
+73.14
+Industry type***
+Blue-collara
+20.64
+17.49
+17.40
+21.93
+White-collarb
+52.98
+48.67
+47.06
+55.21
+Services
+14.57
+19.01
+23.07
+11.51
+Government
+11.81
+14.83
+12.46
+11.35
+N = 4,317 (n = 263 for users, n = 971 for registered, n = 3,083 for invited). 
+aConstruction, manufacturing.  
+b Information technology, finance/insurance, professional, scientific, or technical services. 
+* p < .05, ** p < .01, *** p < .001.
+Table 2. Health care and financial circumstances of MedPut users and non-users.
+Total 
+%
+Users 
+%
+Non-Users 
+%
+In the past 12 months:
+Problems paying a medical bill***
+29.73
+52.46
+18.55
+Contacted by collections agency***
+28.25
+45.76
+19.49
+Good financial situationa
+70.49
+62.30
+74.59
+In the past 6 months:
+Lost a job or had pay cut due to illness or injury
+9.89
+13.33
+8.20
+Put off medical or dental care due to cost***
+42.86
+63.33
+32.79
+Put off getting a prescription filled due to cost**
+16.48
+26.67
+11.48
+Note: N = 185 (n = 61 users and n = 124 non-users). 
+aLive comfortably or able to meet basic expenses with a little left over for extras. 
+* p < .05, ** p < .01, *** p < .001.
+98
+S. A. HAGEMAN ET AL.
+
+employer paid the full cost (13.3%) (p < .05). MedPut usage rates are 
+listed in Table 3.
+Number, disposition, and amount of medical bills submitted
+Most employees (82%) who used MedPut did so only once; 15% used it twice, 
+and the remaining 3% used it three or more times; employees submitted a total 
+of 485 bills through 263 opened MedPut cases. Most cases1 were for delinquent 
+accounts (77%), followed by current bills (20%), and advance payments (3%) – 
+such as when a provider requires an upfront deposit. Of the cases for delin­
+quent accounts, 21% were for accounts in collections, which means the bill had 
+been assigned or sold by the health care provider to a third party debt 
+collection agency due to nonpayment. Results from regression models indi­
+cated that no factors (e.g., age) had a statistically significant relationship with 
+total bills submitted or with bill disposition.
+The mean amount of medical bills submitted through MedPut was 
+$1,378.96 (SD = $1,032.09) with a range of $44 to $4,958 and a median of 
+$1,066.60. Results from a regression model predicting bill amount indicated 
+that an increase in one year of age was associated with $15 more in submitted 
+bills (p < .05), yet no other factors were statistically significant.
+Negotiated bill reductions
+Over a third (37%) of submitted bills were negotiated downward with health 
+care providers or collection agencies, saving employees an average of $117 per 
+case, with a range of $0 to $2,728. Among cases with successfully negotiated 
+reductions, the average discount was 18%. Bills that were reduced were higher 
+Table 3. Marginal effects: MedPut usage rate.
+dy/dx
+SE
+|z|
+p
+Salary group (REF: Low <$40k) 
+Middle ($40-69k) 
+High ($70k+)
+.022 
+-.030
+.042 
+.046
+.51 
+.65
+.609 
+.513
+Age
+-.001
+.001
+.67
+.505
+Job tenure (years)
+.000
+.002
+.04
+.968
+Any dependents in the home (REF: None)
+.079
+.032
+2.49
+.013
+Fee type (REF: Employed paid) 
+Shared fee 
+Employee paid
+.048 
+.124
+.039 
+.048
+1.21 
+2.58
+.225 
+.010
+Industry type (REF: Blue collar) 
+White collar 
+Service sector 
+Government
+-.145 
+-.165 
+-.085
+.095 
+.081 
+.086
+1.52 
+2.05 
+.99
+.128 
+.040 
+.325
+Employer size (REF: Small) 
+Medium 
+Large
+-.063 
+-.009
+.079 
+.067
+.80 
+.14
+.426 
+.887
+Note: Results are from probit regression using marginal effects where dy/dx is the percentage point change 
+in probability of the MedPut usage rate based on a one-unit change in the independent variable.
+SOCIAL WORK IN HEALTH CARE
+99
+
+in their original amount ($1,749) than bills that were not reduced ($1,163) (p  
+< .001). Most health care providers willing to reduce the amount of money 
+owed for care received do so on the basis of charity care program policies that 
+consider patients’ income. However, employees’ salary range was unrelated to 
+receiving a bill reduction nor was there a statistically significant difference in 
+the likelihood a bill would be reduced based on whether it was current or 
+delinquent. However, 69% of bills in collection were reduced compared to only 
+30% of bills not in collections (p < .001).
+Employee health care experiences and financial circumstances
+Employees who registered for MedPut and completed a survey (N = 263) gave 
+responses concerning their experiences with medical bills, concerns about health 
+care costs, and their financial circumstances. MedPut users were worse off 
+financially and were more likely to have put off health care due to cost concerns 
+compared to employees who registered for but did not use MedPut. Over half 
+(52.46%) and nearly half (45.76%) of users said they had problems paying 
+a medical bill and were contacted by a collections agency within the prior 12  
+months, compared to 18.55% and 19.49% of non-users (p < .001), respectively. 
+Users were also more likely to put off medical or dental care (63.33%) and put off 
+filling a prescription (26.67%) due to cost concerns compared to 32.79% (p  
+< .001) and 11.48% (p < .01) of non-users, respectively. Employee health care 
+experiences and financial circumstances are presented in Table 4.
+Discussion
+This study examined the characteristics and experiences of employees enrolled 
+in HDHPs across 21 companies who were offered MedPut, which allows 
+employees to borrow money to pay health care bills and repay amounts 
+borrowed through automatic payroll deductions. Regarding our first research 
+question, having dependents was a significant predictor of both MedPut 
+Table 4. Healthcare and financial circumstances of MedPut users and non-users.
+Total %
+Users %
+Non-Users %
+In the past 12 months: 
+Problems paying a medical bill*** 
+Contacted by collections agency***
+29.73 
+28.25
+52.46 
+45.76
+18.55 
+19.49
+Good financial situationa
+70.49
+62.30
+74.59
+In the past 6 months:
+Lost a job or had pay cut due to illness or injury
+9.89
+13.33
+8.20
+Put off medical or dental care due to cost***
+42.86
+63.33
+32.79
+Put off getting a prescription filled due to cost**
+16.48
+26.67
+11.48
+Note: N = 185 (n = 61 users and n = 124 non-users). 
+aLive comfortably or able to meet basic expenses with a little left over for extras. 
+** p < .01, *** p < .001
+100
+S. A. HAGEMAN ET AL.
+
+registration and use. This finding suggests that employees with family cover­
+age may have cash flow challenges in meeting their deductibles, as plan 
+benefits for any family member do not begin until the full family deductible 
+is met, with certain exceptions like annual physicals. We also found that 
+employees in small companies were more likely to register for MedPut. The 
+combination of these two findings may reflect that 31% of workers in small 
+companies pay greater than 50% of family premiums compared to 7% among 
+workers in larger companies (Kaiser Family Foundation, 2022b). Individuals 
+are more likely to have medical debt if they have dependents. In addition, if 
+premiums are taking up quite a bit of a person’s income, they may experience 
+a greater challenge in paying their medical debt.
+In answering the second research question, the vast majority of bills sub­
+mitted to be paid by MedPut were for delinquent accounts, a fifth of which were 
+in collections status. This finding indicates that employees who used MedPut 
+faced a double-bind of paying for health care out-of-pocket until they reached 
+their deductible and dealing with existing medical debt. That over a third of bills 
+were reduced through negotiation with health care providers and collection 
+agencies suggests that employees may have more leverage than they realize in 
+getting portions of owed amounts forgiven. Accounts in collection were more 
+than twice as likely to be reduced than current and delinquent accounts.
+Lastly, MedPut appeared to reach a group of employees who struggle with 
+paying for health care and are prone to delay seeking health care because of 
+cost concerns. This finding is important because prior research indicates that 
+individuals with HDHPs – including those with chronic illnesses such as 
+cancer – are more likely than those without HDHPs to delay seeking health 
+care (Al Rowas et al., 2017; Wharam et al., 2018, Wharam et al., 2019). In turn, 
+delayed care is associated with poor health outcomes (Kraft et al., 2009; 
+Prentice & Pizer, 2007). Many financial products and services available to 
+patients may not relieve them of medical debt or improve healthcare use rates. 
+Several researchers demonstrated the negative financial and health outcomes 
+patients experienced due to high OOP costs for health care services (Kalousova 
+& Burgard, 2013; Peter et al., 2016; Seymour, 2020). Associations between 
+medical debt and health care use reveal individuals who have more medical 
+debt are more likely to avoid seeking health care services to the detriment of 
+their health (Bennett & Dismuke, 2010; Doty et al., 2005; Wiltshire et al., 2016; 
+Zhang et al., 2018).
+Study strengths and limitations
+This study is one of the few to examine the impact of a fintech application 
+(MedPut) on employees’ medical expenses. However, several limitations exist. 
+First, only one cohort was included in this study and adding more cohorts may 
+help to diversify the sample. Second, data was collected twice, however, only 35 
+SOCIAL WORK IN HEALTH CARE
+101
+
+employees completed both surveys. The low rate of survey completion limits our 
+ability to conduct any longitudinal analyses. Future studies could offer an 
+incentive to increase the rate of employee participation in the study over time. 
+Third, no data on employee health status was collected, which may impact the 
+internal validity of the study. Wharam et al. (2018) found that patients suffering 
+from a chronic illness (macrovascular diabetes) were more likely to delay seeking 
+health care because of costs than those who did not have a chronic illness. 
+Similarly, employees in this study who have a chronic illness may be more likely 
+to delay seeking health care due to costs than employees who do not have 
+a chronic illness. Fourth, we did not have detailed information about employees’ 
+health plans. Our results may have been different had we accounted for elements 
+of patient cost share such as deductible amounts and coinsurance rates.
+Implications for practice, policy and research
+Fintech may make it easier for people to access financial products and services 
+that better meet their needs than traditional banking. MedPut provided a source 
+of affordable credit to workers who may have lacked better options for getting 
+caught up on their medical bills. Yet fintech cannot solve the financial problems 
+individuals and families face due to low wages, unaffordable housing, healthcare, 
+and childcare, and a lack of social protection (Friedline, 2020). For example, 
+a popular fintech app in the workplace is earned wage access (EWA), where 
+workers can access funds in advance of payday to help pay bills or meet other 
+needs (Despard et al., 2020a). Yet EWA would mostly be unnecessary if employ­
+ers paid living wages (Despard et al., 2020b) and workers had paid leave, 
+universal childcare, affordable healthcare and other social protections.
+From an employer perspective, the $2 to $6 monthly fee is a modest cost to 
+offer MedPut as a benefit for employees enrolled in HDHPs to pay for 
+healthcare while in their deductible periods. Yet we found that MedPut was 
+used mostly to pay for overdue medical bills. More impactful ways for employ­
+ers to help employees afford healthcare are to offer insurance plans with lower 
+deductibles, offer wage-based premiums (i.e., lower-paid employees pay lower 
+premiums) and fund employee HSAs for the deductible amount so employees 
+can use money in the HSA to pay for care while under the deductible. But 
+employers may be unwilling or unable to pay for these more expensive 
+solutions, which suggests the need for changes in public policies concerning 
+health coverage as we outline below.
+That over a third of bills submitted to MedPut were reduced through 
+negotiation suggests that hospitals and other health care providers could do 
+a better job of offering charity care discounts (Velasquez, 2021) and zero- 
+interest payment plans to patients, especially when patients with HDHPs are 
+in their deductible periods. Nearly half of U.S. employees are low-wage earners 
+whose median hourly wages fall well within income guidelines for most charity 
+102
+S. A. HAGEMAN ET AL.
+
+care programs (Ross et al., 2020). Yet charity care accounts for less than 2% of 
+expenses among hospitals (Zare et al., 2021). ACA provisions under 
+Section 501(r)(4) of the Internal Revenue Code could be strengthened with 
+respect to nonprofit hospitals’ required reporting on Schedule H of the Form 
+990. Social workers in hospital settings are ideally situated to assist screening 
+patients for financial assistance eligibility, especially for patients in need of 
+specialty care which is harder for uninsured and underinsured patients to 
+access (Hall et al., 2013).
+A policy option for increasing health insurance affordability among 
+employees is to allow employees to opt-in to Affordable Care Act (ACA) 
+marketplace plans with subsidies. Currently, if an employer’s plan meets 
+ACA affordability and coverage criteria, employees are ineligible for market­
+place subsidies. Under the Federal Poverty Level safe harbor rule of the ACA, 
+employer-sponsored coverage is considered affordable if at least one plan 
+offering does not exceed $103.14 per month in premiums for single coverage 
+(Brandon, 2021). It is vital for social workers to advocate to change policies 
+that do not allow marketplace subsidies for financially vulnerable populations.
+Premiums are only one component of employees’ cost share and 
+many employees need family coverage which is much more expensive. 
+The inability of employees to opt-in to ACA marketplace subsidies is 
+particularly problematic for employees entering or reentering the work­
+force who experience lost Medicaid eligibility ($0 premium) and assume 
+employer coverage ($500 premium, on average). Social workers can 
+advocate for longer-term and less administratively complex policy solu­
+tions that allow individuals and families to opt-in to Medicare coverage, 
+raising income eligibility thresholds for Medicaid, and making Medicaid 
+a federal program only which provides states budgetary relief and 
+protection against the volatility of health care expenditures (Brandon,  
+2021).
+It is important to consider the implications of these types of policy changes 
+with respect to the COVID-19 pandemic. Workers in our study already strug­
+gling to pay medical bills might have been reluctant to seek care if they had been 
+exposed to the coronavirus (especially in customer-facing industries) and/or 
+decided to still come to work to avoid losing pay, potentially putting themselves 
+and their coworkers at risk. Nearly a third (29%) of workers with household 
+income below $40,000 said they went to work with COVID-19 symptoms 
+because they could not afford to lose pay (Kaiser Family Foundation, 2022a), 
+suggesting the need for social workers to advocate for universal paid sick leave. 
+Also, households in which a member lost a job at some point during the 
+pandemic were nearly four times more likely to have problems affording medical 
+care or prescription drugs compared to households with no job loss (Despard et 
+al., 2021). Having the opportunity to opt-in to ACA Marketplace subsidies or 
+Medicare would give workers uninterrupted health coverage in the event of job 
+SOCIAL WORK IN HEALTH CARE
+103
+
+loss. More research on this topic from the social work perspective is needed to 
+protect individuals and families struggling to pay for medical expenses.
+Conclusion
+We illustrate how a well-intended effort to provide a technological solution to 
+help employees enrolled in HDHPs pay for their healthcare expenses illumi­
+nated problems of underinsurance. Rather than solely focusing on increasing 
+the overall rate of insurance, a standard of affordability should be applied that 
+includes individuals and families’ full cost share relative to their incomes and 
+used to help assess the sufficiency of employer, health care provider, and 
+public policies. Social workers are in an ideal position to advocate for these 
+health care policy changes to protect financially vulnerable populations. 
+Examples of advocacy activities include organizing meetings and educating 
+health care staff, patients, and families about patient eligibility for charity care 
+and creating petitions to improve the advertisement of charity care.
+Note
+1. A case included one or more bills.
+Disclosure statement
+No potential conflict of interest was reported by the author(s).
+Funding
+The author(s) reported there is no funding associated with the work featured in this article.
+ORCID
+Mathieu Despard , PhD, MSW 
+http://orcid.org/0000-0001-7590-7908
+Sally A. Hageman , PhD, MSW 
+http://orcid.org/0000-0002-0694-9829
+References
+Al Rowas, S., Rothberg, M. B., Johnson, B., Miller, J., Al Mahmoud, M., Friderici, J., Goff, S. L., 
+& Lagu, T. (2017). The association between insurance type and cost-related delay in care: A 
+survey. The American Journal of Managed Care, 23(7), 435–442. https://pubmed.ncbi.nlm. 
+nih.gov/28817783/ 
+Atkinson, J. (2020). Inside the black box. In C.-G. Stănescu & A. A. Gikay (Eds.), 
+Discrimination, vulnerable consumers, and financial inclusion (pp. 141–165). Routledge.
+104
+S. A. HAGEMAN ET AL.
+
+Bennett, K. J., & Dismuke, C. E. (2010). Families at financial risk due to high ratio of out-of- 
+pocket health care expenditures to total income. Journal of Health Care for the Poor and 
+Underserved, 21(2), 691–703. https://doi.org/10.1353/hpu.0.0309 
+Bernstein, J. (2014). Paying one’s fair share for health coverage and care. In T. F. Buss & P. N. 
+Van de Water (Eds.), Expanding access to health care a management approach. (1st ed., pp. 
+111–136). Routledge.
+Brandon, W. P. (2021). Federalize medicaid to fix the affordable care act: For efficiency, equity, 
+and social justice. Journal of Health Care for the Poor and Underserved, 32(1), 68–89. https:// 
+doi.org/10.1353/hpu.2021.0009 
+Brot-Goldberg, Z. C., Chandra, A., Handel, B. R., & Kolstad, J. T. (2017). What does 
+a deductible do? The impact of cost-sharing on health care prices, quantities, and spending 
+dynamics. The Quarterly Journal of Economics, 132(3), 1261–1318. https://doi.org/10.1093/ 
+qje/qjx013 
+Despard, M. (in press). Financial technology and consumer financial behavior. In J. J. Xiao & S. 
+Kumar (Eds.), A research agenda for consumer financial behavior. Edward Elgar Publishing.
+Despard, M., Bufe, S., Roll, S., Kristensen, K., Fox-Dichter, S., & Grinstein-Weiss, M. (2021). 
+Employment changes during COVID-19: The importance of employer attachment. Social 
+Policy Institute, Washington University in St. Louis. https://cpb-us-w2.wpmucdn.com/ 
+sites.wustl.edu/dist/a/2003/files/2021/09/Survey-COVID-Employment_Final_SPI.pd 
+Despard, M., Frank-Miller, E., Fox Dichter, S., Germain, G., & Conan, M. (2020b). Employee 
+financial wellness programs: Opportunities to promote financial inclusion?. Journal of 
+Community Practice, 28(3), 219–233. https://doi.org/10.1080/10705422.2020.1796878 
+Despard, M., Frank-Miller, E., Zeng, Y., Fox-Dichter, S., Germain, G., Grinstein-Weiss, M., & 
+Covington, M. (2020a). Employee financial wellness programs: Promising new benefit for 
+frontline workers? Compensation and Benefits Review, 52(4), 156–174. https://doi.org/10. 
+1177/2F0886368720942371 
+Doty, M. M., Edwards, J. N., & Holmgren, A. L. (2005). Seeing red: Americans driven into debt by 
+medical bills. The Commonwealth Fund, 4, 1–12. https://www.commonwealthfund.org/sites/ 
+default/files/documents/___media_files_publications_issue_brief_2005_aug_seeing_red__ 
+americans_driven_into_debt_by_medical_bills_837_doty_seeing_red_medical_debt_pdf.pdf 
+Friedline, T. (2020). Banking on a Revolution: Why Financial Technology Won't Save a Broken 
+System. Oxford University Press.
+Hall, C., Juhila, K., Matarese, M., & van Nijnatten, C. (Eds.). (2013). Analysing social work 
+communication: Discourse in practice (1st ed.). Routledge. https://doi.org/10.4324/ 
+9780203084960 
+HealthCare.gov. (2022). High deductive health plan (HDHP). https://www.healthcare.gov/glos 
+sary/high-deductible-health-plan/ 
+Himmelstein, D. U., Lawless, R. M., Thorne, D., Foohey, P., & Woolhandler, S. (2019). Medical 
+bankruptcy: Still common despite the affordable care act. American Journal of Public Health, 
+109(3), 431–433. https://doi.org/10.2105/AJPH.2018.304901 
+Kaiser Family Foundation. (2022a). 4 in 10 workers – and 6 in 10 of those with low incomes – say 
+they missed work during the Omicron surge due to COVID-19 illness, quarantine or closure. 
+https://www.kff.org/coronavirus-covid-19/press-release/4-in-10-workers-and-6-in-10-of- 
+those-with-low-incomes-say-they-missed-work-during-omicron-surge-due-to-covid-19- 
+illness-quarantine-or-closure/ 
+Kaiser Family Foundation. (2022b). 2022 employer health benefits survey. https://www.kff.org/ 
+report-section/ehbs-2022-summary-of-findings/ 
+Kalousova, L., & Burgard, S. A. (2013). Debt and foregone medical care. Journal of Health and 
+Social Behavior, 54(2), 204–220. https://doi.org/10.1177/0022146513483772 
+SOCIAL WORK IN HEALTH CARE
+105
+
+Kraft, A. D., Quimbo, S. A., Solon, O., Shimkhada, R., Florentino, J., & Peabody, J. W. (2009). 
+The health and cost impact of care delay and the experimental impact of insurance on 
+reducing delays. The Journal of Pediatrics, 155(2), 281–285. https://doi.org/10.1016/j.jpeds. 
+2009.02.035 
+Peter, R., Soika, S., & Steinorth, P. (2016). Health insurance, health savings accounts and 
+healthcare utilization. Health Economics, 25(3), 357–371. https://doi.org/10.1002/hec.3142 
+Prentice, J. C., & Pizer, S. D. (2007). Delayed access to health care and mortality. Health Services 
+Research, 42(2), 644–662. https://doi.org/10.1111/j.1475-6773.2006.00626.x 
+Ross, M., Bateman, N., & Friedhoff, A.2020 March.A closer look at low-wage workers across the 
+countryBrookings Institution:https://www.brookings.edu/interactives/low-wage-workforce/ 
+Seymour, G. (2020). Financial toxicity: For cancer survivors, it’s personal. https://www.annex 
+ushealth.com/wp-content/uploads/2020/11/Financial_Toxicity_For_Cancer_Survivors_Its_ 
+Personal_vF.pdf 
+Urban Institute. (2021 February). Credit health during the COVID-19 pandemic. https://apps. 
+urban.org/features/credit-health-during-pandemic/ 
+Velasquez, D. E. (2021). Charity care needs to be better than this. Health Affairs, 40(4), 
+672–674. https://doi.org/10.1377/hlthaff.2021.00011 
+Wharam, J. F., Lu, C. Y., Zhang, F., Callahan, M., Xu, X., Wallace, J., Soumerai, S., Ross 
+Degnan, D., & Newhouse, J. P. (2018). High-deductible insurance and delay in care for the 
+macrovascular complications of diabetes. Annals of Internal Medicine, 169(12), 845–854. 
+https://doi.org/10.7326/M17-3365 
+Wharam, J. F., Zhang, F., Wallace, J., Lu, C., Earle, C., Soumerai, S. B., Nekhlyudov, L., & Ross 
+Degnan, D. (2019). Vulnerable and less vulnerable women in high-deductible health plans 
+experienced delayed breast cancer care. Health Affairs, 38(3), 408–415. https://doi.org/10. 
+1377/hlthaff.2018.05026 
+Wiltshire, J. C., Elder, K., Kiefe, C., & Allison, J. J. (2016). Medical debt and related financial 
+consequences among older African American and white adults. American Journal of Public 
+Health, 106(6), 1086–1091. https://doi.org/10.2105/AJPH.2016.303137 
+Zare, H., Eisenberg, M., & Anderson, G. (2021). Charity care and community benefit in 
+non-profit hospitals: Definition and requirements. INQUIRY: The Journal of Health Care 
+Organization, Provision, and Financing, 58, 1–8. https://doi.org/10.1177/00469580211028180 
+Zhang, X., Trish, E., & Sood, N. (2018). Financial burden of healthcare utilization in 
+consumer-directed health plans. The American Journal of Managed Care, 24(4), e115–121. 
+http://ajmc.s3.amazonaws.com/_media/_pdf/AJMC_04_2018_Zhang%20final.pdf
+106
+S. A. HAGEMAN ET AL.

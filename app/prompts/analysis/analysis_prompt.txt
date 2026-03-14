@@ -1,0 +1,18 @@
+Analyze the following records using the provided schema.
+Return ONLY valid JSON that matches the response schema.
+
+Use case:
+{use_case}
+
+Schema fields:
+{schema_summary}
+
+Response rules:
+- Each record must include record_id (from column '{id_column}').
+- For allow_multiple fields, return a list of strings.
+- For key quotes fields, return an array of quotes.
+
+{critical_guidelines}
+
+DATA:
+{records}

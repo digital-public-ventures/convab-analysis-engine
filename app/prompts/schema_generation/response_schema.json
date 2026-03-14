@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "additional_categorical_fields": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/categorical_field" },
+      "minItems": 0
+    },
+    "additional_scalar_fields": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/scalar_field" },
+      "minItems": 0
+    },
+    "additional_text_array_fields": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/text_array_field" },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "additional_categorical_fields",
+    "additional_scalar_fields",
+    "additional_text_array_fields"
+  ],
+  "definitions": {
+    "categorical_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "required_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "suggested_values": { "type": "array", "items": { "type": "string" }, "minItems": 0 },
+        "allow_multiple": { "type": "boolean" },
+        "minItems": { "type": "integer" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "required_values",
+        "suggested_values",
+        "allow_multiple",
+        "minItems",
+        "hint"
+      ]
+    },
+    "scalar_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "scale_min": { "type": "integer" },
+        "scale_max": { "type": "integer" },
+        "scale_interpretation": { "type": "string" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "scale_min",
+        "scale_max",
+        "scale_interpretation",
+        "hint"
+      ]
+    },
+    "text_array_field": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "field_name": { "type": "string" },
+        "required": { "type": "boolean", "enum": [true] },
+        "nullable": { "type": "boolean", "enum": [false] },
+        "description": { "type": "string" },
+        "maxItems": { "type": "integer" },
+        "minItems": { "type": "integer" },
+        "hint": { "type": "string" }
+      },
+      "required": [
+        "field_name",
+        "required",
+        "nullable",
+        "description",
+        "maxItems",
+        "minItems",
+        "hint"
+      ]
+    }
+  }
+}

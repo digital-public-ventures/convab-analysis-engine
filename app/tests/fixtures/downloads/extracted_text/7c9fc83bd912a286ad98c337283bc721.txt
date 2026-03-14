@@ -1,0 +1,2631 @@
+Response to Request for Information Regarding
+Medical Payment Products
+Consumer Financial Protection Bureau Docket No. CFPB-2023-0038
+Department of Treasury Docket No. TREAS-DO-0008
+Department of Health and Human Services Docket No. CMS-2023-0106
+Submitted by Dollar For
+
+Table of Contents
+Introduction to Dollar For
+4
+Executive Summary
+5
+Market Level Inquiry Question 12 & Treasury Specific Question 4.
+8
+Learning About and Understanding Charity Care
+8
+Charity Care Process
+9
+Financing Process
+10
+Misleading Websites
+11
+Harbor Regional Health
+11
+Cone Health
+11
+Allina Health
+11
+FirstHealth of the Carolinas
+12
+CaroMont Health
+12
+Misleading Phone Systems
+13
+Atrium Health
+13
+Misleading Invoices
+14
+Virginia Mason Franciscan Health
+14
+Mayo Clinic
+15
+Processes to Apply
+15
+Banner Health
+15
+Piedmont
+17
+Individual Inquiries Questions 1 & 7
+21
+Henry Mayo Newall
+21
+Mayo Clinic - Franciscan Medical Center
+22
+Orlando Regional Medical Center
+23
+Ochsner Medical Center
+24
+Atrium Health
+24
+Olathe Medical Center
+25
+CFPB Specific Question #1.
+25
+Treasury Specific Question #2.
+31
+Treasury Specific Question #5.
+32
+Treasury Specific Question #8.
+33
+Authors
+35
+Contributors
+35
+Appendix A - Transcribed Call with University Health
+36
+Appendix B - Transcribed Call with Piedmont Health
+41
+Appendix C - Transcribed Calls with Ochsner
+45
+2
+
+First Call
+45
+Second Call
+49
+Appendix D - Transcribed Call with Orlando Health
+54
+Appendix E - Transcribed Call with Jackson Health
+57
+Appendix F - Transcribed Call with Ascension Seton
+60
+Appendix G - Harbor Regional Health Financial Assistance Website
+65
+Appendix H - Cone Health Financial Assistance Website
+69
+Appendix I - Allina Health Financial Assistance Website
+71
+Appendix J - First Health of the Carolinas Financial Assistance Website
+73
+Appendix K - CaroMont Health Financial Assistance Website
+77
+Appendix L - Virginia Mason Invoice
+79
+Appendix M - Henry Mayo Invoice
+80
+Appendix N - Curae Financing Application
+81
+3
+
+Introduction to Dollar For
+Dollar For is a national 501(c)(3) nonprofit organization that helps patients
+with charity care applications. We also advocate for better and fairer
+administration of charity care policies by tax-exempt hospitals. We maintain
+the largest known database of hospital charity care policies in the United
+States. This database powers a screener to help patients determine if they are
+eligible for charity care at their hospital. We then help eligible patients to
+prepare and submit charity care applications and advocate on their behalf.
+Since 2019, we have helped patients submit over 7,600 applications and have
+helped relieve over $31 million in hospital bills.
+4
+
+Executive Summary
+The Consumer Financial Protection Bureau, the Treasury Department, and
+the Department of Health and Human Services are seeking comments to
+learn, in part, how hospitals are using and promoting medical payments
+products in place of other lower cost alternatives. Dollar For, a national
+non-profit focused on making charity care known, easy, and fair, has a unique
+perspective based on our experience helping over 7,600 patients navigate
+hospital financial assistance programs.
+In this public comment, we seek to show how hospitals nudge patients away
+from financial assistance and towards higher cost financing programs. We
+deem this behavior as a primary problem with any use of medical payment
+products, given that any issues related to kickbacks or fees would be moot if
+the patient had been properly screened and offered charity care in the first
+place.
+This public comment thoroughly documents the tactics that hospitals
+employ to misdirect patients away from charity care. These include (1)
+presenting medical payment products as a “financial assistance” options on
+bills and website, (2) using phone trees and staff interactions to create easy
+on-ramps to financing options, and (3) developing deeply complicated
+application processes for charity care in stark contrast to the simple processes
+offered to obtain financing.
+Hospitals often obfuscate the concept of Financial Assistance (as the term is
+used in 26 USC 501(r)) by listing both charity care and medical payment
+products as “financial assistance options” on their websites. These same
+websites very clearly and concisely convey the benefits of using a medical
+debt product, who is eligible and for how much, and how a patient applies.
+Descriptions of charity care, on the other hand, are often vague, long, and
+confusing to a layman.
+Communicating with the hospital about financial assistance presents similar
+challenges. Calling a hospital’s financial assistance department often requires
+first speaking to the billing department. Patients are put on hold, where they
+hear recorded messages about the hospital’s payment plans. Once
+connected, the patient often must interact with a billing department
+5
+
+representative with no knowledge of charity care, and often assumes the
+patient is seeking a “payment plan.”
+Yet still, the self advocacy doesn’t end when a patient succeeds in submitting
+a charity care application. Patients are required to submit a myriad of
+documents proving their income, expenses, and spending habits, often in
+very specific and unreasonable formats. They must follow up with the hospital
+over weeks or months to make sure the application actually moves forward.
+And if they are unjustly denied financial assistance, they must then navigate a
+complicated appeal process.
+Alternatively, medical debt financing is often approved within minutes.
+Patients must simply answer several questions on a mobile-friendly online
+form. Looking at these two processes in parallel, it’s clear that hospitals are
+effectively and intentionally steering patients away from charity care and into
+third-party medical debt financing products.
+Dollar For urges the Department of the Treasury, the Consumer Financial
+Protection Bureau, and Department of Health and Human Services to
+implement regulations requiring hospitals to substantively screen every
+patient for charity care – before they are permitted to offer or enroll the
+patient in an internal payment plan or third-party financing. Regulations
+could also ensure that hospitals cannot easily deny patients charity care on
+procedural grounds.
+Further, Dollar For urges the Consumer Financial Protection Bureau to bring
+enforcement actions against tax-exempt hospitals that nudge patients away
+from charity care and towards medical payment products.
+We believe these tactics are unfair, deceptive, and abusive acts that violate
+the Consumer Financial Protection Act. Given that hospitals are not
+traditional finance or credit companies, it is not apparent on its face that they
+are subject to the CFPA. However, case precedent makes clear that the
+practices outlined in this comment are financial advisory services - and
+therefore are governed by the CFPA. Hospitals also act as “service providers”
+to the medical bill financing companies – providing additional grounds for
+standing.
+6
+
+The trends and concerns outlined in this public comment will only grow in
+the coming months and years. Strong regulations and enforcement are
+needed to protect healthcare consumers across the country.
+7
+
+Market Level Inquiry Question 12 & Treasury Specific Question 4.
+RFI Market Level Question 12: To what extent are patients using medical
+payment products to pay bills that are incorrect, or that could be covered or
+defrayed by lower-cost alternatives?
+RFI Treasury Specific Question 4: How do tax-exempt hospitals' promotion of
+medical payment products compare to their operationalization of the
+requirement that their financial assistance policies be widely publicized?
+Hospitals are taking advantage of deficiencies in charity care laws, specifically
+the regulations in 26 CFR 501(r), to steer patients away from charity care and
+toward financing products.
+Our current charity care system places the burden on the patient to ask to be
+screened for eligibility instead of requiring hospitals to proactively screen
+patients. This means that patients must both be aware of charity care and
+take action to apply. Yet, many hospitals make it far easier to learn about their
+financing options than charity care. If a patient does learn about charity care,
+many hospitals make financing debt extremely easy and getting charity care
+extremely hard.
+Learning About and Understanding Charity Care
+Many hospitals hide their charity care program in plain sight. The most
+aggressive and deceitful hospitals explicitly train their staff to attempt to get
+patients to sign up for payment plans before telling them about charity care.
+This was well documented by the 2022 case filed by the Washington Attorney
+General’s office against Providence.1
+Other hospitals employ a series of subtler tactics, or “dark patterns” to nudge
+patients into consumer debt products couched as “payment plans” and away
+from charity care. These include but are certainly not limited to:
+●
+Obfuscating “financial assistance” by presenting both charity care and
+financing as “financial assistance options.”
+1State of Washington v. Providence Health & Services, No. 22-2-01754-6 SEA (Wash. Feb 24,
+2022) (
+https://agportal-s3bucket.s3.amazonaws.com/uploadedfiles/Another/News/Press_Releases/20
+22_02_24Complaint_Stamped.pdf (last visited Sep 8, 2023)).
+8
+
+●
+Structuring hospital phone trees so that all roads can lead to a hospital
+billing office but few or none lead to the charity care department.
+●
+Offering patients the option to pay a bill over the phone 24/7 but
+requiring they leave a voicemail when trying to reach the charity care
+department.
+●
+Clearly and prominently explaining their “payment plans” in invoices
+but use unclear language to discuss charity care.
+Charity Care Process
+Most charity care applications must be physically acquired from the hospital
+or downloaded as a .pdf file from the hospital website. This on its own is a
+massive hurdle to many patients. Many patients, especially those who are
+lower-income, primarily access the internet on their phones2 and can’t easily
+access a printer. Next, most hospitals require applications to be either
+personally dropped off, mailed, or faxed into the hospital - requiring
+additional time, tools, and technology that most lower-income patients
+cannot easily access.
+Patients are frequently required to gather an absurd amount of
+documentation to prove their income and financial situation. Some of the
+most egregious examples we’ve seen include:
+●
+Policies that require patients to provide three months worth of bank
+statements along with a written description of every transaction
+exceeding $100.
+●
+Unemployed patients asked to provide a letter from their pastor, lawyer,
+or doctor describing why they could not work.
+●
+Hospitals refusing to accept “pictures” of requested documents.
+●
+Hospitals refusing to accept online print-outs of bank statements for a
+patient who banked at an online-only bank.
+Typically, if patients do not provide all documents listed in the hospital’s
+financial assistance application in the exact format the hospital demands,
+2 Emily A. Vogels, Digital Divide persists even as Americans with lower incomes make gains
+in tech adoption, Pew Research Center (June 22, 2021),
+https://www.pewresearch.org/short-reads/2021/06/22/digital-divide-persists-even-as-american
+s-with-lower-incomes-make-gains-in-tech-adoption/#:~:text=With%20fewer%20options%20fo
+r%20online,have%20broadband%20internet%20at%20home (last visited Sep 8, 2023).
+9
+
+they are given a strict, arbitrary, and illegal “deadline” to provide the missing
+information. This deadline can be as short as 10 days and is rarely longer than
+30 days. Otherwise eligible patients who do not or cannot supplement their
+application in time are often denied and barred from re-applying.
+Dollar For regularly has to submit applications multiple times to hospitals
+who claim the application was never received, even when we have fax
+confirmations to prove application dates. Dollar For patient advocates
+frequently have to follow up with hospital staff multiple times, usually over
+the course of months, before a hospital will actually process a patient’s
+application to make an eligibility determination.
+Further, many hospitals continue the collection process during this time.
+Many will still refer the debt to a debt collector or sell it to a finance company
+while a charity care application is pending. Patients can be very confused
+when they have applied for financial assistance but the hospital or their
+collection agency continues to demand payment. Many patients facing this
+system on their own are likely to either pay or finance the bill, or live with the
+stress for months on end.
+If the patient makes it through that process, they may be granted charity
+care. However, many are not and must go through the hospital’s appeal
+process. Most appellate processes (if a hospital has one) are similar to the
+application process except with more confusion.
+Financing Process
+By contrast, to take out a credit line with the hospital’s debt product of choice
+patients usually just need to fill out a one-page mobile friendly form or talk to
+a single person over the phone and the bill is “paid off” in minutes. A
+screenshot of a financing application is attached as Appendix N.
+Misleading Websites
+The following are examples of hospitals that use their website to steer
+patients away from charity care and towards financing products. Images of all
+referenced websites are attached as Appendices G - K. This is only a handful of
+examples and is not an exhaustive list:
+10
+
+Harbor Regional Health
+Harbor Regional Health’s charity care information is located on the page
+labeled “charity-care-financial-assistance” in the URL. It is accessed from the
+homepage by clicking on the dropdown labeled “Charity Care - Financial
+Assistance” in the “About” section. The top section of the page is “Tax Credit
+Policy.”3 Near the top of the page, before it references anything about charity
+care, it directs patients to set up a payment plan and links to CarePayment’s
+website.
+The description about how its financing program works is in neat, short, bullet
+points that quickly and clearly convey how financing works, how one applies, and
+who is eligible.
+The description of the hospital’s charity care program is not in clear, neat bullet
+points like the description of its debt product. It is large block paragraphs of text
+that vaguely describe the program. It lacks crucial information such as how much
+money (in dollars) a person of a certain household size can make and be eligible for
+a discount.
+Cone Health
+Cone Health’s website lists the debt product AccessOne MedCard as one of its
+“Financial Assistance Programs” alongside its charity care program. Further, in
+the introductory description at the top of the page ostensibly meant to
+explain what financial assistance programs are, Cone Health describes
+financial assistance as a “feasible payment plan.”4
+Allina Health
+Allina Health lists five sections in its financial assistance website page. The first
+section at the top of the page is “[c]all us to discuss special circumstances or
+to set up a payment plan.”5 The second section is information about charity
+care, and the third section is information about financing with MedCredit
+Financial Services. If the patient follows the link for financing they reach a
+mobile-friendly application for debt to pay their bill at 2 - 5% interest.
+5 Appendix I
+4 Appendix H
+3 Appendix G.
+11
+
+Not only does this website reference setting up a payment plan before it
+references its actual charity care program, it displays this information using a
+numbered list instead of bullet points. This signals to the patient that these
+options are in some ordered priority or are steps the patient should follow -
+the first being to set up a payment plan.
+FirstHealth of the Carolinas
+FirstHealth of the Carolinas lists information about financial assistance on the
+“Billing and Insurance” section of its website.6 The page has several collapsible
+sections on different ways to pay a bill, information about insurance, etc. One
+of the collapsible section labels says “Financial Assistance.” The section gives
+information about both the hospital’s charity care program but also its
+financing options through “Mosaic Finance Solutions.” This program claims to
+finance the debt at 5.25% APR.7
+CaroMont Health
+On CaroMont Health’s website entitled “Financial Assistance,” it lists several
+options for patients including certain discounts for the uninsured or people
+who pay promptly, and different options for paying a bill. The second to last
+option discusses options for “Bank Financing” with CaroMont’s third-party
+lender. The “Charity Care Program” is the very last option at the bottom of the
+page.8
+The description of bank financing is simple and clear. It uses bullet-points to
+highlight key, quickly digestible information about how financing works and
+how a patient can acquire it. The description of charity care, however, is vague
+and confusing. The hospital says patients can “discuss” charity care with
+them, and links to more confusing language in the hospital’s charity care
+policy.
+8 Appendix K.
+7 FirstHealth of the Carolinas,
+https://www.firsthealth.org/policies-and-terms/financial-assistance#2 (last visited Sep. 8, 2023).
+6 Appendix J
+12
+
+Misleading Phone Systems
+The following is an example of hospital phone systems that steer patients
+away from charity care and towards financing products. This is merely one
+demonstrative example and is far from exhaustive:
+Atrium Health
+On Atrium Health’s website page entitled “Financial Assistance” at the top, it
+discusses its various financial assistance programs and links to where users
+can find its policies and applications. On that page it lists a phone number
+that it claims is for its “Patient Customer Service” department. When a patient
+calls that number
+“Welcome to Atrium Health. Para español, oprima dos. Thank you
+for calling Atrium Health customer service department. Please
+listen carefully to our menu as the options have changed. Did you
+know that my.atriumhealth.org allows patients to view and pay
+accounts, view and enroll in electronic statements, create
+payment plans, request itemized bills, and more? For the fastest
+service please visit us at my.atriumhealth.org. If you would like to
+use our express system to make a payment, request an itemized
+bill, or check your balance, press 1. If you are calling about
+something else, please press 2.”
+If the user presses 2 (ostensibly the only option that does not involve paying a
+bill) they are routed to the “centralized billing” department. Dollar For patient
+advocates have found that representatives in the centralized billing
+department cannot assist with financial assistance matters. If a patient has
+the wherewithal to self-advocate for financial assistance anyway, centralized
+billing may give them a separate phone number that is not on Atrium’s
+website for the financial assistance office. However, they cannot transfer the
+patient, who must hang-up and call the new number they were given.
+Atrium’s website says that they can set up a “payment plan” with AccessOne
+in their MyAtrium Health patient portal.9 So, even if a patient finds out about
+financial assistance, goes to the hospital’s financial assistance page, and calls
+9 https://atriumhealth.org/for-patients-visitors/explain-my-bill
+13
+
+the phone number that is held out as being the financial assistance
+department, they will have to listen to a recording that tries to direct them to
+my.atriumhealth.org for the “fastest service,” get connected to a billing
+department regardless of whether they selected option 1 or option 2, and be
+sophisticated enough to demand to talk to the actual financial assistance
+office, be given that phone number, hang up, and dial the new phone
+number the billing office gave them. However, all avenues will allow them to
+set up a “payment plan” with AccessOne.
+Misleading Invoices
+The following are examples of hospitals whose invoices make it far easier to
+learn about financing debt than to learn about charity care. Images of the
+invoices discussed below are attached as Appendices L-M These are merely
+examples and are not an exhaustive list:
+Virginia Mason Franciscan Health
+The CHI Franciscan Health bill makes it exceedingly clear in multiple places
+that a user can sign up for a “payment plan.” The bill even calculates what the
+user’s monthly payment would be and presents it on the bill in large, bold,
+clear text. However, the information about financial assistance is in tiny font,
+does not describe the benefit to the program with any detail, and is buried
+under the “Contact Us” section. A copy of a CHI Franciscan Health bill is
+available on their website in a section describing how to interpret their bill.10
+It is unclear if the “monthly payment plan” referenced on the above bill is
+through a third-party financing product. However, CHI Franciscan does
+advertise CareCredit as a financing option on its website.11
+Mayo Clinic
+Mayo Clinic posts a sample image on its website ostensibly to aid patients in
+interpreting their bill. It clearly conveys that patients have the option of a
+payment plan. It even calculates how much the patient’s monthly payments
+11 Virginia Mason,
+https://www.vmfh.org/our-services/plastic-and-reconstructive-surgery/payment-consideration
+s (last visited Sep. 8, 2023).
+10 Virginia Mason, https://www.vmfh.org/billing-insurance/understanding-your-bill (last visited
+Sep. 8, 2023); see also Appendix L.
+14
+
+would be. This is displayed in large, bold, prominently displayed numbers with
+a clear description on the invoice. However, any reference to charity care is in
+small font under the “Contact Us” section of the invoice.12
+Processes to Apply
+The following are examples of hospitals that make accessing debt far easier
+than charity care. These are merely examples and are not an exhaustive list:
+Banner Health
+Banner Health’s website page entitled “Financial Assistance” discusses its
+charity care program and links to its relevant policies and its .pdf file charity
+care application. It also has a link that says “Learn more about payment plans
+and financing options.” When a user clicks on that link they are given
+information about Curae financing which is advertised as 0%. When the user
+follows the link they can fill out a simple form on a mobile-optimized
+webpage and have their bill “paid off” immediately. Small text in the footer of
+the Curae application page says:
+*Subject to credit approval
+**$28 minimum monthly payment is estimated based on $1000
+financed at 14.99% APR for 48 months. Actual APR varies between
+0% and 29.99% and repayment terms vary between 24 and 48
+months, depending on your creditworthiness. Payments will vary
+depending on loan amount and offer received. All Curae revolving
+accounts are issued by The Bank of Missouri, St. Robert, MO
+Disclaimer: Curae provides financing up to $10,000 that can be
+applied to balances on services rendered at any Banner Health
+hospitals or outpatient facilities. At this time, Curae financing
+cannot be applied to Banner Imaging, Atlas Surgery Center and
+Banner Urgent Care balances, however, we plan to expand facility
+acceptance in the near future. If you have questions or require
+additional assistance, please call 1-888-264-2127.
+12 Mayo Clinic,
+https://www.mayoclinic.org/documents/monthly-statement-of-account/doc-20424423 (last
+visited Sep. 8, 2023); see also Appendix M.
+15
+
+Receiving financing through Curae is near instant. A user can access the form
+on their phone and provide the following information:
+●
+First name;
+●
+Last name;
+●
+Date of birth;
+●
+Social security number;
+●
+Phone number;
+●
+Email address;
+●
+Household income;
+●
+Estimated bill amount; and
+●
+Address.
+With that information their bill can be paid off by Curae in seconds. An image
+of the Curae application is attached as Appendix N.
+To receive charity care a patient must fill out a .pdf form (which either requires
+specialized editing software such as Adobe or a printer) that asks for:
+●
+The facility the patient went to;
+●
+The patient’s account number;
+●
+Patient name;
+●
+Patient social security number;
+●
+Patient address;
+●
+Patient phone number;
+●
+Guarantor name;
+●
+Guarantor social security number;
+●
+Guarantor address;
+●
+Guarantor city;
+●
+Guarantor address;
+●
+Guarantor phone number;
+●
+The name of every household member;
+●
+The relationship to the patient of every household member;
+●
+The age of every household member;
+●
+A designation of whether every individual household member is a
+dependent of the patient;
+●
+A complete copy of the patient’s prior year’s federal income tax return;
+16
+
+●
+Copies of the last four consecutive payroll stubs for the
+patient/guarantor and their spouse;
+●
+If the patient is self-employed, a copy of their federal tax form Schedule
+C;
+●
+If the patient is retired or receives social security, a copy of their SSA
+1099 form;
+●
+Copies of any outstanding medical bills including doctor bills,
+ambulance, etc.
+The above information must be compiled and mailed to:
+Banner Health Patient Financial Services
+Attn: Financial Assistance Department
+P.O. Box 18
+Phoenix AZ 85001
+A patient then must usually wait months and will likely be required to follow
+up with the hospital multiple times. In many instances patients will have to
+submit the entire application more than once.
+Piedmont
+Piedmont also utilizes the debt product Curae. The Curae application asks for
+gross household monthly income. It also contains this statement in the footer
+discussing interest:
+**$28 minimum monthly payment is estimated based on $1000
+financed at 14.99% APR for 48 months. Actual APR varies
+between 0% and 29.99% and repayment terms vary between 24
+and 48 months, depending on your creditworthiness. Payments
+will vary depending on loan amount and offer received. All Curae
+revolving accounts are issued by The Bank of Missouri, St. Robert,
+MO13
+Receiving financing through Curae is near instant. A user can access the form
+on their phone and provide the following information:
+●
+First name;
+●
+Last name;
+13 Curae, https://portal.curae.com/Application/?code=0HH4ARBN (last visited Sep. 8, 2023).
+17
+
+●
+Date of birth;
+●
+Social security number;
+●
+Phone number;
+●
+Email address;
+●
+Household income;
+●
+Estimated bill amount; and
+●
+Address.
+With that information their bill can be paid off by Curae in seconds.
+To receive charity care a patient must fill out a .pdf form (which either requires
+specialized editing software such as Adobe or a printer) that asks for14:
+●
+The date of service
+●
+The facility attended
+●
+Patient full name
+●
+Patient social security number
+●
+Patient date of birth
+●
+Patient physical address
+●
+Patient mailing address
+●
+Patient medical record number
+●
+Patient phone number
+●
+Name of the person completing the application
+●
+The person completing the application’s relationship to the patient
+●
+The name of every household member
+●
+The date of birth of every household member
+●
+The age of every household member
+●
+The relationship to patient of every household member
+●
+The occupation of every household member
+●
+The social security member of every household member
+●
+The annual income of every household member
+●
+The total household income
+●
+How much of the household income is from income
+●
+How much of household income is from social security
+14 Piedmont Health, https://www.piedmont.org/patient-tools/ContentPage.aspx?nd=2216 (last
+visited Sep. 8, 2023).
+18
+
+●
+How much of household income is from other
+income/alimony/investments/retirement
+●
+401k balance
+●
+Mortgage amount
+●
+Rent amount
+●
+Savings account balance
+●
+Change healthcare verification
+●
+If the patient has no income a description of how they are supporting
+themself
+●
+Whether the patient has health insurance
+●
+If the patient has any third-party liability such as auto insurance or
+worker’s compensation
+●
+Whether the patient has Medicaid
+●
+Whether the patient has applied for Medicaid
+●
+Whether the patient is pregnant
+●
+Whether the patient is on social security disability
+●
+Whether the patient is over 65
+●
+Whether the patient is 19 or younger
+●
+Whether the patient is a custodial parent and unemployed
+●
+Either a driver’s license, State ID card, passport, military ID, consular or
+school picture ID, or a Visa or Resident Alien card
+●
+Proof of residency that is not more than 30 days old which can be either
+a lease contract, food stamps letter, utility bill with physical address, or
+other business documents such as credit card statement, IRS, Medicaid
+letter, student letters from school, bank statements, or mortgage
+statements.
+●
+Proof of income
+○
+If the patient is employed this must be the three most recent
+paycheck stubs for the patient and their spouse
+○
+If the patient is unemployed they must provide an
+unemployment claim or award letter and copies of the three
+most recent bank statements for all checkings or savings
+accounts
+○
+If the patient is self-employed they must provide copies of the
+three most recent bank statements for all checkings or savings
+19
+
+accounts for any personal and business accounts for both the
+patient and their spouse/partner
+○
+If the patient is retired they must provide a social security letter (if
+applicable) and copies of three months’ recent bank statements
+from both personal and business checking and savings accounts
+for the patient and their spouse/partner. The patient must also
+provide a Medicare SSN letter.
+●
+Any decision letters indicating that the patient is receiving
+unemployment compensation, Medicaid, Social Security Disability,
+General Assistance, etc.
+●
+Food Stamps Letter
+●
+Verification of homelessness or a letter from a shelter on company
+letterhead
+●
+Other business documents showing how the patient is being
+supported
+●
+Proof of number of dependents in one of the following forms
+○
+Previous years signed income tax return
+○
+Any decision letters indicating that the patient has legal
+responsibility for the child, such as, court ordered guardianship
+papers or custody papers
+All of the above information must be mailed, faxed, or emailed to the hospital.
+While a patient has 245 days from the date they receive their first
+post-discharge bill to begin an application for charity care, if a patient begins
+an application that does not include any of the above information that applies
+to them Piedmont will deny the patient charity care if they do not
+supplement with any missing information within 30 days. It is worth noting
+that this is impermissible under 501(r). See 26 CFR 1.501(r)-1(b)(3) and 26 CFR
+1.501(r)-6(c)(5)(ii) (“If an individual who has submitted an incomplete FAP
+application during the application period subsequently completes the FAP
+application during the application period (or, if later, within a reasonable
+timeframe given to respond to requests for additional information and/or
+documentation), the individual will be considered to have submitted a
+complete FAP application during the application period…”).
+On the section of the website that discusses financial assistance there is a
+phone number listed for the “Patient Financial Care team.” If the user calls
+20
+
+that phone number outside of business hours the only option is for them to
+make a payment through the automated system. There is not even the ability
+to leave a voicemail.
+Individual Inquiries Questions 1 & 7
+RFI Individual Inquiry Question 1: Have medical payment products ever been
+marketed to you, including by your health care provider? If so, please
+describe your experience and how the products were marketed to you. Were
+other options, such as financial assistance, marketed or explained at the
+same time?
+RFI Individual Inquiry Question 7: Have you ever used or been pressured to
+use a medical credit card or loan to pay a bill that you believe should have
+been covered by your health care provider's financial assistance policy? If so,
+please describe your experience.
+Dollar For has helped several patients who were eligible for charity care but
+were instead put on a “payment plan” financed by a third-party. Below are
+just a few examples.
+Henry Mayo Newall
+Dollar For helped a patient who received services at Henry Mayo Newall in
+California. He had put off seeking medical treatment for a long time because
+he was worried about the cost. However, one day he started having trouble
+breathing and, upon his family’s insistence, he went to the emergency room.
+Ultimately he was hospitalized for one day for Covid.
+After receiving the approximately $14,000 bill, the patient called the hospital
+to tell them he could not afford it. He was never told about charity care.
+Instead he was transferred to a representative with Commerce Healthcare. By
+the end of the phone call the patient had taken out a loan with Commerce
+Healthcare. The patient never signed any documents and does not
+remember being given any written disclosures. In fact, when Dollar For
+advocates approached the hospital and learned that the debt was sold to
+Commerce Healthcare the patient was confused by this — he did not realize
+he took out a loan. Dollar For applied for financial assistance regardless. Dollar
+21
+
+For submitted the patient’s charity care application with accompanying
+documentation in February, 2022.
+In late March, 2022 the patient called Henry Mayo Newall to follow up. They
+were told that the patient did not owe anything to Henry Mayo because
+Commerce had paid off the loan, so the patient should be contacting
+Commerce. Dollar For patient advocates re-engaged with the hospital for the
+next several months to follow up and advocate on the patient’s behalf. On
+August 10, 2022 Henry Mayo Newall finally granted 100% charity care, which
+the patient was entitled to the entire time. In the intervening months the
+patient paid over $3,100 to Commerce Healthcare towards the loan. It took
+more than a year of advocacy for Henry Mayo to finally refund the patient the
+amount he paid to Commerce - which they finally did in August, 2023.
+Mayo Clinic - Franciscan Medical Center
+In this case, the patient was diagnosed with a disease that required ongoing
+treatment. They reached out to the hospital for help with their $7,100
+deductible payment. The Mayo Clinic never told the patient about charity care
+and only referred them to the debt product Clear Balance. The patient, under
+the belief that they had no other choice, took out a loan with Clear Balance
+and was on a payment plan. The patient was never given any explicit
+disclosures from Clear Balance. They only remember checking a box agreeing
+to terms, but were never given any clear or conspicuous disclosures about
+how the loan works, what the interest rate may be, or how interest may
+accrue.
+Eventually the patient learned of Dollar For and reached out for help. Dollar
+For applied for financial assistance with the Mayo Clinic in December, 2022.
+The Mayo Clinic approved the patient for a 50% charity care discount.
+However, Clear Balance only applied that discount to the remaining balance.
+They did not send a 50% refund for the $1,500 the patient had already made in
+diligent payments. To date both the Mayo Clinic and Clear Balance have
+refused to refund the patient 50% of what they paid prior to being approved
+for charity care.
+22
+
+Orlando Regional Medical Center
+A patient of Orlando Regional Medical Center’s debt was transferred to Care
+Payment before the patient learned about Dollar For, who informed her
+about charity care. Dollar For helped the patient fill out a charity care
+application, gather necessary documentation, and submitted the application
+on the patient’s behalf. Dollar For has followed up with the hospital multiple
+times with varying excuses why the hospital has not granted charity care.
+Over two months after submitting the charity care application a Dollar For
+patient advocate emailed the hospital to follow up. The hospital responded
+with the following email:
+Good morning,
+Thank you for contacting us we hope all is well. We have received
+your Financial Assistance application we appreciate the
+information received. We are waiting to hear back from
+CarePayment and the process may take up to Thirty (30) days or
+more. Once we obtain an update, we will further review the
+application. Patient will receive a letter of determination to the
+mailing address on file once completed.
+Please advise if you have any further questions.
+Approximately a week later a patient advocate called the hospital to follow up.
+They were told that the patient was denied because they are “over income.”
+The patient advocate explained that the application clearly states that the
+patient’s household income is $40,584 and states the household size is four. It
+states that the patient is married and lists personal details for two dependent
+children. This meant the patient is at 135% of the federal poverty level and
+clearly eligible for 100% financial assistance. The hospital representative kept
+repeating that the patient’s household size is one, however given that the
+application clearly states the household size is four he could not explain why
+he believed the household size was one. He suggested the patient “update”
+their household size –without explaining how one would do that when they
+properly filled out the application indicating a larger household size. He also
+indicated there was nothing he could do. He went on to make vague
+statements about the patient’s income exceeding their expenses, that the
+patient seemed to have “assets,” and that making that much money for a
+23
+
+household of one is “pretty nice” — ignoring the fact that the actual
+household size is four. A transcript of this call is attached as Appendix D. This
+matter is unresolved.
+Ochsner Medical Center
+A patient of Ochsner turned to Dollar For for help when they could not pay a
+bill. Dollar For, through its normal process, helped the patient fill out the
+hospital’s charity care application, gather all necessary documentation, and
+submitted it on the patient’s behalf within the 240 day application period.
+Ochsner denied the patient’s application. Dollar For patient advocates
+followed up with the hospital via phone. Ochsner repeatedly told Dollar For
+patient advocates that the patient had no balance on their account and
+alleged that the patient may have told Dollar For the wrong hospital.
+Ultimately, through advocacy, Dollar For uncovered that the patient had the
+right hospital, but the hospital had already sold the debt to ClearBalance.
+Dollar For staff have repeatedly requested that the hospital pull the bills back
+from ClearBalance and apply charity care, as the patient is eligible and timely
+applied. The hospital has refused to do so and has claimed that the hospital
+“cannot pull a balance from ClearBalance.”
+Transcriptions of calls between Dollar For patient advocates and Ochsner are
+attached as Appendix C.
+Atrium Health
+Before finding Dollar For, a patient received services from Atrium Health in
+January, 2020; in August, October, and December of 2021; and in January and
+December of 2022. Atrium had sold much of the patient’s debt to AccessOne
+– their integrated “payment plan” partner. The patient contacted Dollar For
+out of desperation because she had new bills and was afraid they would be
+sent to collections. Dollar For submitted a charity care application for this
+patient in February, 2023. The patient made $1,607.86 per month in a
+household of 1. That placed the patient at 141.9% of the federal poverty level —
+well below Atrium’s income requirements for charity care. However, three
+months after the patient applied for charity care and 1 month after her bills
+were sent to a debt collector Atrium sent the patient a letter denying her any
+24
+
+charity care. The reason for the denial was that all of her bills except for those
+associated with the December 2022 stay were too old.
+Olathe Medical Center
+A patient received services from Olathe Medical Center and, after finding
+themselves unable to pay, came to Dollar For for help. Dollar For helped the
+patient apply for charity care. In March, 2023 Dollar For helped the patient
+apply for charity care. The application showed that the patient made $2,240
+per month and had a household of two, placing her at 136% of the federal
+poverty level. In the general comments section of the charity care application
+the patient wrote, in part:
+Im still trying to pay a hospital bill off from Olathe Medical a year
+ago. Still have a balance $1726. I struggle to pay that at Commerce
+Bank.
+Dollar For has heard from neither the hospital nor the patient as to whether
+the hospital ever processed the financial assistance application. What is clear
+from the patient comments, however, is that Olathe did secure a line of credit
+at Commerce Bank for the patient instead of pursuing charity care.
+CFPB Specific Question #1.
+RFI Question: What actions should the CFPB consider taking to address
+problematic practices related to medical credit cards or loans, including debt
+collection and credit reporting practices?
+The CFPB should bring suit against hospitals who promote “payment plans”
+to charity-care eligible patients. Whenever a patient finances charity-care
+eligible funds, the hospital has very likely engaged in unfair, deceptive, and
+abusive acts. This is especially true in the context of prohibited abusive acts.
+Pursuant to the Consumer Financial Protection Act (CFPA):
+(a)In general
+It shall be unlawful for—
+(1)any covered person or service provider—
+25
+
+(A) to offer or provide to a consumer any
+financial product or service not in conformity
+with Federal consumer financial law, or
+otherwise commit any act or omission in
+violation of a Federal consumer financial law; or
+(B)to engage in any unfair, deceptive, or abusive
+act or practice;
+…
+(3)any person to knowingly or recklessly provide
+substantial assistance to a covered person or service
+provider in violation of the provisions of section 5531
+of this title, or any rule or order issued thereunder,
+and notwithstanding any provision of this title, the
+provider of such substantial assistance shall be
+deemed to be in violation of that section to the same
+extent as the person to whom such assistance is
+provided.15
+The CFPB has broadly described what constitutes an abusive act as:
+The statutory text of these two prohibitions can be summarized
+at a high level as: (1) obscuring important features of a product or
+service, or (2) leveraging certain circumstances to take an
+unreasonable advantage. The circumstances that Congress set
+forth, stated generally, concern gaps in understanding, unequal
+bargaining power, and consumer reliance.16
+No rational patient would choose to finance debt that was eligible for charity
+care. It is difficult to imagine a scenario where a patient financed charity-care
+eligible debt that is not the result of gaps in the patient’s understanding
+about their options, unequal bargaining power between the patient and
+16 Policy Statement on Abusive Acts or Practices, CFPB (Apr. 03, 2023)
+https://www.consumerfinance.gov/compliance/supervisory-guidance/policy-statement-on-ab
+usiveness/
+15 12 U.S.C. 5536(a)(1)-(3).
+26
+
+hospital, or the patient’s reliance on representations by the hospital — or a
+combination of all three.
+As documented in this public comment, the messaging of charity care and
+“payment plans” by hospitals, the structural barriers that make accessing
+charity care harder than financing, and the overall friction in the charity care
+process that is removed in the financing process are actionable abusive acts
+under the CFPA.
+Hospitals engaged in this conduct are “covered persons” under the CFPA.
+“Covered person” is defined as:
+(A)any person that engages in offering or providing a consumer
+financial product or service; and
+(B)any affiliate of a person described in subparagraph (A) if such
+affiliate acts as a service provider to such person.17
+Hospitals fit squarely within the definition of “covered person” because they
+engage in “financial advisory services” to charity care eligible patients who are
+nudged towards financing their debt instead. The CFPA lists multiple actions
+that meet the definition of “financial product or service.” Among them are:
+[P]roviding financial advisory services (other than services relating
+to securities provided by a person regulated by the Commission
+or a person regulated by a State securities Commission, but only
+to the extent that such person acts in a regulated capacity) to
+consumers on individual financial matters or relating to
+proprietary financial products or services (other than by
+publishing any bona fide newspaper, news magazine, or business
+or financial publication of general and regular circulation,
+including publishing market data, news, or data analytics or
+investment information or recommendations that are not
+tailored to the individual needs of a particular consumer),
+including—
+(I)providing credit counseling to any consumer; and
+17 12 U.S.C. 5481(6).
+27
+
+(II)providing services to assist a consumer with debt
+management or debt settlement, modifying the terms of any
+extension of credit, or avoiding foreclosure.18
+Federal courts have found similar conduct by non-financial entities to meet
+the definition of “financial advisory services.” One prominent example is the
+holding by the Southern District of Indiana in the CFPB’s action against ITT
+Education Services, Inc.
+In that case the CFPB alleged that most ITT students could not afford to pay
+the full cost of tuition with federal loans. The difference between the amount
+received in student loans and the cost of tuition was known as the “tuition
+gap.”19 To close the tuition gap, ITT pushed no-interest loans called
+“Temporary Credit” onto students, which were due in nine months.20 “The
+Bureau alleg[ed] that ITT employed the Temporary Credit loans as an ‘entry
+point’ for ‘pushing’ students into taking out private loans …”21 As to the private
+loans, the CFPB alleged:
+ITT Financial Aid staff coerced students into taking out loans that
+they did not want, did not understand, or did not even realize
+they were getting… ITT sought to have its students pay for the
+tuition gap with ostensible third-party loans because outside
+sources of payment could be booked as income to the company,
+improving its free cash flow and the appearance of its financial
+statements, and because outside sources of revenue helped ITT
+meet a requirement by the Department of Education that at least
+10% of its revenue be derived from sources outside Title IV loans
+and grants.22
+ITT claimed that they were not a covered person under the CFPA as one of
+their defenses. The Court disagreed. It specifically found that their conduct
+surrounding the private loans could make them fall under the CFPA purview.
+To this point the Court held:
+22 Id. at 887.
+21 Id.
+20 Id.
+19 Consumer Financial Protection Bureau v. ITT Educational Services, Inc. 219 F.Supp.3d 878,
+884 (S.D. Ind. 2015).
+18 12 U.S.C. 5481(15)(A)(viii).
+28
+
+The Complaint includes allegations that ITT advised students on
+how to manage their debt to the school after having taken out
+Temporary Credit; this advice often channeled the students into
+the private loan programs … According to the Bureau, ITT
+completed nearly every step in the process of acquiring CUSO
+loans on the students’ behalf, including filling out the requisite
+forms (save signatures) and forwarding them to the lending
+credit union … At a minimum, we conclude that such conduct, if
+proven, would fall within the realm of “credit counseling” and
+“assisting a consumer with debt management.23
+Hospitals that nudge charity-care eligible patients into finance products are
+engaging in the same problematic behavior. As is shown in this comment,
+many hospitals advertise financing options on their website as a “financial
+assistance” option; they use very clear language to describe financing
+products and vague language to describe charity care; they make it difficult
+for both patients and staff to reach the financial assistance departments; they
+do not train staff on how charity care works or how patients can apply; and
+they make the charity care application process extremely difficult while
+making financing a breeze. Scores of low and middle income patients who
+are eligible for charity care, but are ignorant of its existence, turn to the
+hospital for help when they cannot pay the bill they were sent for a price they
+rarely agree to at the forefront. Many of these patients are pushed to finance
+their debt and away from charity care by hospital websites, phone
+infrastructures, application processes, and hospital employees.
+The case against ITT also shows that hospitals meet the definition of a “service
+provider.” The CFPA defines “service provider” as follows:
+(A)In general
+The term “service provider” means any person that provides a
+material service to a covered person in connection with the
+offering or provision by such covered person of a consumer
+financial product or service, including a person that—
+23 Id. at 910 (internal citations omitted).
+29
+
+(i)participates in designing, operating, or maintaining the
+consumer financial product or service; or
+(ii)processes transactions relating to the consumer financial
+product or service (other than unknowingly or incidentally
+transmitting or processing financial data in a manner that such
+data is undifferentiated from other types of data of the same form
+as the person transmits or processes).24
+In the ITT case the Court found that ITT could be a service provider if the
+CFPB proved its allegations that ITT:
+Used Temporary Credit as a tool to pre-qualify students for private
+loans, that ITT developed the loans’ underwriting criteria, that it
+paid the credit union membership fees in the lead credit union
+on behalf of the students who took out the loans, and that it
+provided a stop-loss guarantee to the programs’ lenders –
+covering any losses from defaults exceeding 35% of participating
+students.25
+Many elements listed above are present in hospital contracts with third-party
+financing companies. While contracts between finance companies and
+hospitals are difficult to obtain, Kaiser Health News published three contracts
+between nonprofit and government hospitals and AccessOne.26 There are
+several similar terms. For example, the contract has addendums that appear
+to select a unique combination of different products by AccessOne that will
+be available to the hospital’s patients, and in one contract the hospital pays
+AccessOne a $75,000 “implementation payment” but in another it pays a
+“Servicing Fee” of 6% of all monies collected. The AccessOne contracts also
+call for non-performing accounts to be returned to the hospital. This is strong
+evidence that hospitals have negotiation power in how these products are
+specifically tailored at their hospital for their patients – in other words
+26 Noam Levey, What One Lending Company’s Hospital Contracts Reveal About Financing
+Patient Debt, Kaiser Health News (Aug. 8, 2023),
+https://kffhealthnews.org/news/article/what-one-lending-companys-hospital-contracts-reveal
+-about-financing-patient-debt/ (last visited Sep. 8, 2023).
+25 Consumer Financial Protection Bureau v. ITT Educational Services, Inc. 219 F.Supp.3d 878,
+912 (S.D. Ind. 2015).
+24 12 U.S.C. 5481(26).
+30
+
+hospitals appear to have some authority over how these products are
+designed, operated, and maintained.
+In addition to or in lieu of the above recommendation, Dollar For also
+recommends the CFPB issue guidance or compliance bulletins outlining
+specific hospital conduct that would place a hospital under the purview of the
+CFPA.
+Hospitals receive extremely valuable tax exemption in exchange for providing
+charity care to patients in-need. It is unjust and unlawful to allow a charity
+care policy to be no more than a .pdf buried on a website. Hospitals should be
+expected to be the pillars of the communities they claim to be. They should
+be seeking patients they can grant charity care to instead of begrudgingly
+giving it to those few who can get through the gauntlet. The CFPB currently
+has authority to act and it should.
+Treasury Specific Question #2.
+RFI Question: Should a tax-exempt hospital's signing patients up for medical
+payment products be considered similar to a tax-exempt hospital's selling
+medical debt, such that the special rules that only exclude debt sales from
+being extraordinary collection actions if certain requirements are met would
+be applied to these payment products?
+The vast majority of these payment products are debt sales and should
+already be treated as such under 501(r). In the vast majority of instances the
+hospital bills a patient for products and services rendered, and the right to
+collect that bill is transferred to a third-party financing company in exchange
+for the financing company paying the hospital money. If the bill is debt, which
+it is, then the hospital is selling the debt to the financing company.
+Treasury should not approach this issue to determine if these financing
+products should be treated as debt sales. It should recognize that they
+already are and always have been debt sales and it should enforce the law
+accordingly. Further, these sales violate 501(r). Hospitals are often not waiting
+120 days from the date the patient is sent their first post-discharge bill as
+required by 26 CFR 501(r)-6(c)(3).
+31
+
+Treasury Specific Question #5.
+RFI Question: What are the best practices for hospitals publishing and
+making patients aware of financial assistance programs (beyond
+compliance with a widely publicized requirements found in the section 501(r)
+regulations)?
+Dollar For recommends regulations that require hospitals to find and screen
+patients as opposed to ending the hospital’s obligation at certain types of
+publishing and marketing of their policies.
+Treasury should adopt charity care regulations that shift much of the burden
+from patients to learn about charity care to hospitals to screen patients for
+charity care. In other words, regulations should not focus on new ways to
+educate patients about charity care, they should focus on ways to get
+hospitals to find charity care eligible patients.
+Most patients fundamentally do not understand what charity care is. This is
+understandable as there really is nothing else in society quite like charity care.
+There are few, if any, other products and services for which you can receive a
+discount to reduce a bill you have already received. It is unlike how most
+discounts work, how rebates work, and any other general form of consumer
+benefit. Further, most fundamental concepts that charity care is built with
+such as the percentage of the federal poverty level are totally foreign to the
+everyday patient. People do not know where their household falls as a
+percentage of the poverty level. Even if patients are loosely familiar with the
+general concept of charity care they think that it only applies to the extremely
+poor. Many patients also think that charity care is a limited fund of
+government money that runs out. Many patients, for many different reasons,
+wrongfully assume they are not eligible for charity care or that the program
+will not actually help them. However, even if these hurdles to understanding
+could be addressed through different messaging requirements — this
+regulatory regime is unfair to patients. Low and middle-income patients
+simply do not have the bandwidth to learn about and get through the charity
+care gauntlet.
+In the past decade studies have shown that being poor comes with so many
+mentally taxing everyday life compilations that it is “similar to a 13-point dip in
+32
+
+IQ, or a loss of an entire night’s sleep.”27 Many patients who are eligible for
+charity care are dealing with many things on top of everyday financial
+pressures. They are trying to recover from an injury, battle a disease, comfort
+an upset newborn, or any number of mentally and emotionally draining
+things. It is simply more difficult and less fair to put the burden on these
+patients to learn about and acquire charity care as opposed to putting the
+burden on the hospital to find them and give them charity care.
+At minimum Treasury should adopt regulations that: 1) add the referral of a
+bill to any debt collector or outside billing entity, regardless of whether the
+debt is assigned, sold, or any other designation, to the list of Extraordinary
+Collection Activities; and 2) it should adopt a requirement that before any
+patient can have their bill put on any sort of payment plan, whether in-house
+or through a third-party financing company, the patient must first be
+screened for charity care.
+Treasury Specific Question #8.
+RFI Question: Does the availability of medical payment products generally
+benefit the community or assist patients financially?
+In very limited circumstances when all other forms of payment available to
+the patient such as Medicaid, charity care, etc. have been properly and fairly
+applied, there may be a small benefit to a few patients to offer zero interest
+long-term payment plans for any remaining balance. However, under no
+circumstances should this be considered a “community benefit” for the
+purpose of justifying a hospital’s tax exemption.
+There are already too many categories of community benefit that are either
+tenuously related to or completely untethered from the purpose of
+not-for-profit tax exemption. If a hospital employs a tool that allows it to get
+paid in full a price that is artificially and opaquely inflated to begin with, this is
+not a benefit to the community.
+27Morgan Kelly, Poor concentration: Poverty reduces brainpower needed for navigating other
+areas of life, Princeton University (Aug. 29, 2013)
+https://www.princeton.edu/news/2013/08/29/poor-concentration-poverty-reduces-brainpower-
+needed-navigating-other-areas-life. See also Anandi Mani, Sendhil Mullainathan, Eldar Shafir,
+and Jiaying Zhao, Poverty Impedes Cognitive Function, Science (Aug 30, 2023)
+https://www.science.org/doi/10.1126/science.1238041
+33
+
+Authors
+_____________________________________
+Eli Rushbanks
+General Counsel & Director of Policy
+Dollar For
+_____________________________________
+Jared Walker
+Executive Director
+Dollar For
+Contributors
+Elise Goldstein
+Chief Operations Officer
+Dollar For
+Christy Snodgrass
+Lead Policy Advocate
+Dollar For
+Erica Dowden
+Lead Patient Advocate
+Dollar For
+Karen Nunez
+Patient Advocate
+Dollar For
+Courtney Ulmer
+Patient Advocate
+Dollar For
+Killeen McCans
+Patient Advocate
+Dollar For
+Lin Navarro
+Patient Advocate
+Dollar For
+Loanni Martinez
+Patient Advocate
+Dollar For
+Lola Bajomo
+Patient Advocate
+Dollar For
+Lindsey Muniak
+Organizer
+Debt Collective
+34
+
+Appendix A - Transcribed Call with University Health
+S1: 00:00
+Thank you for choosing University Health.
+S2: 00:04
+The patient business services and precision billing customer service
+department.
+S3: 00:09
+[foreign].
+S2: 00:17
+If this is a medical emergency, please hang up and dial 911. Please
+listen carefully as our menu options have changed.
+S4: 00:27
+If you are a CareLink member and would like to discuss your CareLink
+statement or make a payment, please press three.
+S5: 00:37
+If you are an attorney adjuster requesting medical records, press
+four.
+S1: 00:42
+If you're wanting to make a payment for your University Health
+statement and pay by phone, please hold for the next available
+representative, or you can visit our website at myuhs.com. You can
+also email us with any questions at uhs.pbs@uhs-sa.com.
+S2: 01:05
+Otherwise, please stay on the line for the next available
+representative.
+S1: 01:12
+Please hold while your call is being connected to the next available
+representative. Your call may be recorded and may be monitored for
+quality assurance.
+S6: 01:23
+Thank you for calling University Health billing. This is REDACTED.
+How may I help you?
+S7: 01:27
+Hi, REDACTED. My name is REDACTED. I'm calling from Dollar For.
+We're a nonprofit that helps folks apply to financial assistance
+programs at hospitals. And I'm calling on behalf of our client,
+REDACTED. I was hoping to get an update on a financial assistance
+application that we sent in on her behalf.
+S6: 01:46
+And where was that sent in to, ma'am?
+S7: 01:48
+That was submitted on June 20th via email, and let me take a look,
+to financial.assist@uhtx.com.
+S6: 02:03
+Okay. That's a different department. I could give you the phone
+number to the financial department. That is 210-644-61-- well, you
+know what? Financial assist. Hold on, hold on. Let me see if I have a
+phone number because I think that is something different.
+[silence]
+35
+
+S6: 02:38
+Yeah. Because when you started to say that email, it sounded
+familiar. One moment.
+[silence]
+S6: 02:57
+Well, you know what? While I'm looking for this, what is the account
+number so I can pull up the account? Maybe it's notated.
+S7: 03:03
+The account number is REDACTED.
+S6: 03:10
+Is that for UTHealth?
+S7: 03:13
+I have that she was seen at University Hospital in Texas.
+S6: 03:18
+Let me see. What is the patient's name?
+S7: 03:21
+REDACTED.
+[silence]
+S6: 03:35
+All right. Let me see here.
+[silence]
+S6: 04:06
+I mean, I think this is for UT because that's not coming up-- when I
+put it in as the account number, it comes up a different patient.
+Yeah. Because the guarantor numbers for UTHealth start
+3-something. Ours is 100. I even used it as like a-- try to use it--
+looking it up as a medical record, didn't come up, guarantor number,
+didn't come up.
+S7: 04:37
+Okay. So is that--
+S6: 04:37
+But the account--
+S7: 04:38
+Is that a different health system?
+S6: 04:41
+So it is for physicians that are in our ER hospital. Or if they went to a
+specialist, the specialist doctor is a UT employee. Wherever they
+come get labs or x-rays done, the lab and x-ray tech are UT
+employees in our facility.
+S7: 05:02
+Let me take a look and just make sure I don't have any other bills
+from her.
+S6: 05:10
+Was it for an ER visit?
+S7: 05:12
+I think it was. But even if that's not her account number, could we
+look her up by name and date of birth?
+S6: 05:22
+Yes, ma'am.
+S7: 05:23
+Okay. So the last name is REDACTED.
+36
+
+S6: 05:36
+And the date of birth?
+S7: 05:38
+Is REDACTED.
+S6: 05:42
+All right. REDACTED. All right. Let me see here.
+[silence]
+S6: 06:12
+Do you have an address for the patient?
+S7: 06:14
+Yeah. We have REDACTED.
+S6: 06:21
+Thank you. And is there a specific date of service, or?
+S7: 06:28
+We don't collect dates of service exactly, but it looks like we have
+September and October of 2022. And we submitted that application,
+like I said, on June 20th.
+S6: 06:51
+All right. So I did pull up the patient, but I don't have a September or
+October visit. The last time she was seen here was August of 2022.
+S7: 07:00
+That might be right, because we collect the bill date, not the date of
+service. So if it was a bill date of September 1st, it could be August.
+S6: 07:10
+All right. Let me see if there's any notation here.
+[silence]
+S6: 07:35
+And you said it was sent in June?
+S7: 07:38
+Yes.
+[silence]
+S6: 08:05
+I do show a notation in May, where the patient called and said she's
+getting help from an onsite agency, but I don't show anything stating
+that we received documentations or forms or anything. I'm looking
+[inaudible]. I don't see anything there either. Let me check
+something else here.
+[silence]
+S6: 09:16
+And you said the email was financial.assist@uhtx.com?
+S7: 09:22
+Yes.
+S6: 09:24
+I mean, I do show the email, but it doesn't give me a department
+name or phone number.
+[silence]
+S6: 09:52
+Or an address or anything. It's just an email in our system. And if I'm
+not mistaken, I think that's the only thing that we have. Because I
+had a sheet where they sent us. And it was by management, but we
+37
+
+asked for a phone number. It says, "We don't have." If I'm not
+mistaken, if I remember correctly, we have no phone number. It
+would just be email. You would just send an email to request a follow
+up. And I usually print all these things, and I can't locate it at this
+time. I got pharmacy. I got client billing. Maybe I'm thinking of the
+client billing, but that's a similar thing that they send us from
+management when in regards to client billing and it's telling us that it
+needs to be forwarded to this email, but it doesn't give us any phone
+number or address or anything or a contact person or nothing.
+[silence]
+S6: 11:26
+Yeah. This is something that I would have to present to management,
+but they won't be back till next week. They're on vacation, and then
+our supervisor is no longer with us, so. Is there a callback number
+that we could call you back?
+S7: 11:45
+Yes. You can give us a call back at REDACTED. And you'll be able to
+leave a message on that line, and then one of us will be able to
+follow up with you.
+S6: 11:57
+All right. That was REDACTED?
+S7: 12:02
+REDACTED
+S6: 12:08
+Oh, REDACTED?
+S7: 12:14
+REDACTED.
+S6: 12:17
+REDACTED. All right. REDACTED. And you said your name was
+REDACTED?
+S7: 12:24
+Yes.
+S6: 12:25
+And what was the name of your organization again?
+S7: 12:28
+Dollar For. Dollar like a dollar bill, F-O-R.
+S6: 12:36
+Dollar For. All right. All right. I will notate the account with this
+information, but yeah, I'll have to find out where this financial assist
+goes to, who handles this. Because yeah, I mean, it's an email
+address and it just says alias financial.assist. Department, it doesn't
+give me a department. You know what? Let me see if-- hold on one
+moment. Let me see if I can-- because one of our reps that used to
+be with us went to the financial department. I want to see if I can get
+a hold of her and see if she knows if they handled this email. Let me
+just push you on a brief hold.
+S7: 13:23
+That would be great. Thank you.
+S6: 13:24
+Yes, ma'am. [music]
+38
+
+[silence]
+S6: 15:34
+Thank you for holding, ma'am. No, she did not pick up, so I'll have to
+reach out to somebody else and see if we can find out who handles
+that website.
+S7: 15:47
+Okay. Awesome. Thank you so much for your help today. And I look
+forward to hearing back from you all.
+S6: 15:52
+Yes, ma'am.
+S7: 15:53
+All right. Thanks. Bye-bye.
+S6: 15:55
+Bye-bye.
+39
+
+Appendix B - Transcribed Call with Piedmont Health
+S1: 00:00
+Thank you for calling [inaudible] Healthcare Customer Solutions
+Center. If you are calling for emergency services, please hang up and
+dial 9-1-1. Your call may be monitored for quality assurance
+purposes. Did you know that Piedmont offers multiple ways to
+contact us for help? During business hours, you can contact us any
+time through your patient coportal, through MyChart, or by emailing
+your questions to customer service at Piedmont.org. Please listen
+carefully as our menu options have recently changed. Please choose
+from one of the following seven options. If you would like to pay
+your bill or discuss payment arrangement options, press one. If you
+are calling regarding an existing financial assistance application,
+press two. In order to serve you better, we would appreciate your
+participation in a brief survey after the call. To take the survey,
+please press one. All representatives are currently busy assisting
+other callers. Please stay on the line and your call will be answered in
+the order it was received.
+[music]
+S1: 01:37
+All representatives are currently busy assisting other callers. Please
+stay on the line and your call will be answered in the order it was
+received.
+[music]
+S1: 02:15
+Thank you for your patience. All representatives are still assisting
+other callers. Please continue to hold.
+[music]
+S1: 03:22
+We are currently experiencing high call volumes. Please continue to
+hold for the next available customer service representative or feel
+free to try your call again at a later time. All representatives are
+currently busy assisting other callers. Please stay on the line and your
+call will be answered in the order it was received.
+[music]
+S1: 04:12
+All representatives are currently busy assisting other callers. Please
+stay on the line and your call will be answered in the order it was
+received.
+[music]
+S1: 04:49
+Thank you for your patience. All representatives are still assisting
+other callers. Please continue to hold.
+[music]
+40
+
+S1: 05:56
+All representatives are currently busy assisting other callers. Please
+stay on the line and your call will be answered in the order it was
+received.
+[music]
+S2: 06:24
+Thanks for calling Piedmont customer service. This is REDACTED.
+How can I help you?
+S3: 06:31
+Hi, REDACTED. My name is REDACTED. I'm with an organization
+called Dollar For. We're a nonprofit, and we help patients apply for
+financial assistance. I just want to let you know that this call is being
+recorded. So we helped a patient, REDACTED, apply. And she was
+denied for being over income, and I just wanted to get some details
+about, I guess, how or why the patient was determined to be over
+income. The information that we have, and we have a lot of her
+income documents as well, reflect that she's well below the
+threshold. And I was just trying to get some details on her account
+and her denial today. If you could help me with that?
+S2: 07:15
+You want information on what again? I'm sorry.
+S3: 07:21
+Oh, so this patient was denied financial assistance for being over the
+income threshold, and I'm trying to figure out how the hospital
+calculated her federal poverty level or just her income. According to
+the information that we have and the patient gave us, she's well
+below the income threshold to qualify for assistance. And we did
+send an appeal letter so we sent all of this in writing to the hospital,
+and that was denied as well. And I'm just trying to get a little bit of
+an explanation as to why.
+S2: 07:52
+Okay. I can review that account if you have the account number or
+the guarantor number.
+S3: 07:57
+Yeah. The patient's account number is REDACTED.
+[silence]
+S2: 08:30
+And you said, what was your name?
+S3: 08:32
+So my name is REDACTED. My last name is REDACTED. And the
+organization I'm with is Dollar For. The release of information that we
+sent was--
+S2: 08:41
+Dollar For?
+S3: 08:43
+Yes. So the release of information won't have any person's name
+specifically. It'll say just Dollar For and its agent.
+41
+
+S2: 08:59
+And you said you're trying to find out why the application was
+denied.
+S3: 09:02
+Yes.
+S2: 09:04
+Let me see. I'll see if I see something here. One second.
+S3: 09:08
+Okay.
+[silence]
+S2: 10:50
+Give me just a moment here.
+[silence]
+S2: 13:17
+Thanks so much for your patience. So I'm showing that that was, per
+the notes here on the account, that was denied here because she's
+over the monthly income, the income property.
+S3: 13:26
+Okay. Do you know what the limit is exactly? What the threshold is?
+S2: 13:35
+That I'm not sure about. No, ma'am.
+S3: 13:39
+Okay. Does it show anything about how the patient's income was
+totaled? What number do you have?
+S2: 13:48
+It doesn't. No, ma'am.
+S3: 13:51
+Okay. Well, I guess just to clarify what I'm trying to get at is this
+patient makes way below the income threshold. So they're a
+household of one. Y'all's policy states that somebody can make up to
+300% of the federal poverty level. So in order to qualify for
+assistance-- so for a household of one, that figure of 300% of the
+federal poverty level is $43,740 a year in gross annual income. This
+patient submitted their tax return, the most recent one for 2022, and
+their total wages on their tax return is $29,728. They submitted their
+pay stubs. Their monthly income is about, let's see here, $1,501 with
+66 cents. So that's monthly. I mean, their net earnings are about
+$18,000, but again, that figure on their tax return, even their total
+wages, $29,000 a year, is way below the $43,000 threshold. I don't
+know if this account can be flagged for review or anything like that.
+We try to do that through the appeal process, but nothing came of it.
+And I don't know. I don't know if this was just a mistake on the
+hospital's part, but I'm hoping to get some sort of explanation from
+the hospital as to why. There's this kind of huge discrepancy in-- and
+how the hospital might have come back [inaudible].
+S2: 15:34
+That was already denied. I'm not sure how that they come up with
+that decision here in that back end with financial assistance. Now,
+the only thing would be the patient would apply again.
+42
+
+S3: 15:51
+Okay. All right. Okay. Well, you're saying there's no way to just sort of
+flag this to the, I don't know, whoever the financial assistance
+department or whoever reviews this, that team? There's no way to
+kind of just slide this account for review or some of the recording of
+this phone call or anything like that?
+S2: 16:14
+No, ma'am.
+S3: 16:16
+Okay. All right. Cool. Okay. Well, I guess I exhausted that. So I will try
+to help this patient reapply. But thank you so much for your help
+today.
+S2: 16:29
+No problem at all. And if you opt for that survey, please hold. If not,
+have a wonderful day.
+S3: 16:33
+All right. Thank you. Bye bye.
+43
+
+Appendix C - Transcribed Calls with Ochsner
+First Call
+S1: 00:01
+Thank you for calling Ochsner patient accounts customer service.
+Your call is important to us. You may experience longer than normal
+wait times. Thank you for your patience as we help each caller. We
+value your feedback, so please remain on the line after you've been
+helped to answer a brief survey. All calls are recorded for quality and
+training purposes. Please press 1 if this is your first time calling about
+this request, or press 2 if you've called previously regarding this
+request. Here at Ochsner Health, patients are always our first
+priority. Skip the wait and connect with a live chat agent now. Simply
+log in to your MyOchsner account to begin a live chat session today.
+To make a payment, please press 1. To request an estimate before
+your service, please press 2. To schedule an appointment, please
+press 3. For a copy of an itemized bill, please press 4. For all other
+inquiries, or to speak with a customer service representative, please
+press 0.
+[silence]
+S2: 01:21
+Good afternoon. Thank you for choosing [inaudible]. My name is
+REDACTED. May I ask who I'm speaking with, please?
+S3: 01:27
+Hi, REDACTED. My name is REDACTED, and I'm calling from Dollar
+For. We are a nonprofit that helps folks apply to financial assistance
+programs at hospitals. I'm calling on behalf of our client, REDACTED.
+And just so you know, you're on a recorded line with me. I have a
+medical record number and a date of birth. However is easiest for
+you to look her up, just let me know.
+S2: 01:50
+What's the last name? Spell it for me.
+S3: 01:52
+REDACTED.
+S2: 02:11
+And can you verify the date of birth, address, and phone number?
+S3: 02:14
+Yeah. The date of birth is REDACTED, address is REDACTED, and
+phone number is REDACTED.
+S2: 02:31
+Thank you so much for verifying the information. And how can I help
+you today?
+S3: 02:35
+Yeah. So we submitted a financial assistance application on July 12th
+via email for REDACTED, and we heard back on July 18th that that
+application was denied because the patient has no balance. But she
+does have a balance from Ochsner Health. And [crosstalk]--
+44
+
+S2: 03:00
+She has a zero balance on her account. Which hospital? Because she
+has a zero balance on her account.
+S3: 03:06
+She told us it was Ochsner Medical Center. [crosstalk]--
+S2: 03:12
+So it could depend on the hospital, because we don't have all-- even
+though it's a hospital of Ochsner-- we don't have [inaudible]
+memorial accounts. We don't have [inaudible]. We don't have
+Lafayette. We don't have-- it's another one that we don't have. If it's
+one of those hospitals, they have their own billing, which they have
+their own number. From what I'm seeing, she doesn't have a balance
+on this account with us.
+S3: 03:40
+Interesting. So--
+S2: 03:40
+And the last time she was seen, it looks like was-- with us, the last
+time she was seen--looks like it was back in March REDACTED. And
+looks like that claim was paid by Blue Cross/Blue Shield, and she
+doesn't have a balance with us at all.
+S3: 04:02
+So what I'm seeing on my end is-- I have a bill in front of me. It says,
+"Date of service, March REDACTED, 2023." Med surg charges-- the
+insurance paid $33,000, but she still owes $4,082.
+S2: 04:24
+Again, could you verify which hospital [inaudible] with the patient?
+That way I can see-- because I'm not seeing a account. I'm not seeing
+a balance on her account.
+S3: 04:34
+Sure. All I'm seeing is Ochsner Medical Center under the hospital
+services. I do have [crosstalk]--
+S2: 04:42
+Does it list the hospital?
+S3: 04:44
+It doesn't list the hospital anywhere on the bill that I'm seeing. I have
+a guarantor ID and a specific account number, if those would be
+helpful in trying to locate it.
+S2: 04:55
+Not the account number. The guarantor ID number would help.
+S3: 04:58
+Okay. That is REDACTED.
+S2: 05:07
+Yes, ma'am. That's the account that I'm looking at, and she has a zero
+balance.
+S3: 05:12
+Okay. Now, would it be possible that that balance had been sent to
+ClearBalance?
+S2: 05:20
+I can double-check as well. Give me one second.
+S3: 05:23
+Thank you.
+[silence]
+45
+
+S2: 05:34
+Let's see.
+[silence]
+S2: 05:50
+Yes. It was sent to ClearBalance, so they have the account now.
+S3: 05:54
+Okay. So since she applied within 240 days, I do believe that the
+hospital is still required to review that financial assistance
+application, and if so, hold the account back and issue her a refund,
+or pull the account back from ClearBalance, since you all sent her to
+ClearBalance originally.
+S2: 06:21
+Okay. Can I place you on a brief hold while I find the information
+out?
+S3: 06:25
+Yeah. That'd be great. Thanks.
+S2: 06:27
+Hold on for me.
+S1: 06:31
+[Virus?] in our communities. We all have the power to make a
+difference. Every person who gets vaccinated brings us closer to
+getting our lives back to normal and helps keep our loved ones
+healthy and safe. For up-to-date information on COVID-19 vaccines,
+please visit ochsner.org/vaccine. Have you heard the news? For the
+10th year in a row Ochsner Medical Center has been ranked the
+number one hospital in Louisiana and one of the nation's top 35 in
+neurology and neurosurgery by US News and World Report. In 2020
+we healed more than 900,000 people from across the globe,
+providing the latest medical breakthroughs and therapies across 90
+specialties and subspecialties. You are the reason for our team's
+relentless pursuit of excellence, and we will continue to strive to give
+our community and patients the best care possible. For more
+information visit ochsner.org. As part of Ochsner Health's continued
+commitment to improving price transparency and empowering
+patients through better access to price information, you can now
+create a personalized estimate online for over 300 Ochsner services
+through MyOchsner or on our website. For more information, please
+visit ochsner.org/billingestimates. With MyOchsner we make it easy
+for you to schedule an appointment, communicate with your
+providers, view test results, refill prescriptions, and more right from
+your phone. Log in or sign up for an account today, and you'll have
+every aspect of your care at your fingertips. Visit my.ochsner.org and
+download the app to start managing your health online today.
+S1: 08:30
+We are proud to announce that Ochsner Hospital for Children is the
+number one children's hospital in Louisiana. We have been named
+best children's hospital by US News and World Report, and are the
+only ranked children's hospital in Louisiana for five years in a row.
+Ochsner Hospital for Children has offered exceptional pediatric care
+46
+
+for more than 75 years. We offer the only pediatric heart and liver
+transplant program in the state, serving over 76,000 children every
+year. Our team is made up of more than 150 physicians, specializing
+in more than 30 pediatric specialties and subspecialties. To learn
+more visit ochsner.org/forchildren. Calling to schedule an
+appointment? Did you know you can do this online through chat
+with a live team member on ochsner.org? In addition to scheduling
+an appointment, you can also receive assistance with billing, finding
+a location or physician, as well as getting answers to general
+questions. This is all available Monday through Friday, 8 AM through
+5 PM, and 24/7.
+S2: 09:40
+Yes, ma'am. Please continue to hold while I find out more
+information.
+S3: 09:43
+Yeah. Thank you.
+S2: 09:45
+Okay. Hold on.
+S1: 09:47
+[Children's?] hospital in Louisiana for five years in a row. Ochsner
+Hospital for Children has offered exceptional pediatric care for more
+than 75 years. We offer the only pediatric heart and liver transplant
+program in the state, serving over 76,000 children every year. Our
+team is made up of more than 150 physicians, specializing in more
+than 30 pediatric specialties and subspecialties. To learn more, visit
+ochsner.org/forchildren. Calling to schedule an appointment? Did
+you know you can do this online through chat with a live team
+member on ochsner.org? In addition to scheduling an appointment,
+you can also receive assistance with billing, finding a location or
+physician, as well as getting answers to general questions. This is all
+available Monday through Friday, 8 AM through 5 PM, and 24/7
+through the Ochsner chatbot. Skip the wait and visit ochsner.org to
+start chatting now with one of our team members.
+[silence]
+S1: 11:07
+[Ochsner Health?] is now administering the Pfizer COVID-19 vaccine
+for children ages 5 to 11 at limited locations across our region, with
+convenient weekday and weekend hours. Children under age 18
+require consent by a parent or legal guardian before vaccination will
+be given. Ochsner and Ochsner Hospital for Children fully support
+and highly encourage vaccination of all eligible children, adolescents,
+and adults. To learn more or view vaccine locations and hours,
+please visit ochsner.org/vaccineinfo. Ochsner Health is committed to
+protecting our patients and staff from COVID-19. Controlling a
+pandemic [requires using?] every tool available. Just like wearing
+masks, social distancing and washing your hands, getting the
+COVID-19 vaccine will help stop the spread of the virus in our
+47
+
+communities. We all have the power to make a difference. Every
+person who gets vaccinated--
+S2: 12:12
+Okay. Thank you so much for holding. So what I could do-- I'll have to
+send it to upper management to get it approved to pull from
+ClearBalance to be back on the patient account. It could take about 7
+to 14 business days to reflect that balance back on the account. And
+once the balance is reflected, then the patient can call to reapply for
+financial assistance. So if she hasn't heard anything in two weeks, or
+that she see a change coming from a zero balance back to the
+payment-- the account that she sent over to them, she can call back
+and reapply once the balance is put back on her account, which
+could take about 7 to 14 business days, because I have to send it to
+management approval first.
+S3: 12:58
+Okay. Awesome. I will email the patient and let her know that is
+what's happening. And then we will resubmit that application in two
+weeks.
+S2: 13:09
+All righty. Anything else I can assist you with today?
+S3: 13:12
+That's all I have. Thanks.
+S2: 13:14
+All right. You have a great day. Thank you for [inaudible].
+S3: 13:16
+You too. Bye-bye.
+Second Call
+S1: 00:01
+Thank you for calling Ochsner Patient Accounts Customer Service.
+Your call is important to us. You may experience longer than normal
+times. Thank you for your patience as we help each caller. We value
+your feedback, so please remain on the line after you've been helped
+to answer a brief survey. All calls are recorded for quality and
+training purposes. Please press 1 if this is your first time calling about
+this request, or press 2 if you've called previously regarding this
+request. Here at Ochsner Health, patients are always our first
+priority. Skip through and connect with a live chat agent now. Simply
+log in to your MyOchsner account to begin a live chat session today.
+To make a payment, please press 1. [music] When you receive all
+your care at Ochsner, you can rely on a care team that coordinates
+care on your behalf. Our Ochsner providers work collaboratively from
+a single medical record so they more fully understand your health
+history and can provide a personalized approach. Additionally,
+because all Ochsner providers have access to your complete medical
+file, you won't need repeat tests or unnecessary procedures and you
+48
+
+can focus on getting healthy faster. Schedule now at
+ochsner.org/appointments or by going to my.ochsner.org.
+S2: 01:29
+With MyOchsner, we make it easy for you to schedule an
+appointment, communicate with your providers, view test results,
+refill prescriptions, and more, right from your phone. Log in or sign
+up for an account today, and you'll have every aspect of your care at
+your fingertips. Visit my.ochsner.org and download the app to start
+managing your health online today.
+S1: 01:51
+We aim to offer convenience when you need to be seen. At Ochsner,
+appointments with a primary care provider are available at a time
+that works for you. You'll find both early and late extended-hour
+appointments as well as weekend options at Ochsner. And with
+Ochsner Urgent Care around the region, you will have access to
+immediate quality care that gets you back on your feet faster. We're
+relentless about providing the care you need. Visit
+ochsner.org/appointments to schedule now or to find an urgent care
+location near you.
+S2: 02:27
+Are you calling to schedule an appointment? Did you know that you
+can schedule your appointment online for more than 50 specialties?
+Schedule now at ochsner.org/appointments. If you have a
+MyOchsner account, you can schedule quickly and easily with any of
+your regular physicians.
+S1: 02:45
+Our primary care doctors don't just see you when you're sick. They
+work hard to keep you well. At Ochsner, your primary care team
+serves as your healthcare quarterback and monitors your care to
+ensure that everything from specialist treatments to routine
+screenings build one complete picture. That way, they can guide you
+through changes or issues so they're addressed quickly. If you don't
+have a primary care doctor, schedule a primary care appointment
+now to get that support in place. Simply visit
+ochsner.org/appointments.
+S2: 03:19
+Ochsner Pharmacy & Wellness is here to help extend the care
+Ochsner provides for patients. We offer home delivery, bedside
+delivery, automatic prescription refills, on-site immunizations, and
+more. With more than eight locations serving New Orleans, Baton
+Rouge, and surrounding areas, Ochsner is committed to meeting
+your needs conveniently. Download the Ochsner Pharmacy app,
+request refills in your MyOchsner account, or visit
+ochsnerpharmacy.com for details and locations. That's innovating
+healthcare. Ochsner Pharmacy & Wellness is here to help extend the
+care Ochsner provides for patients. We offer home delivery, bedside
+delivery, automatic prescription refills, on-site immunizations, and
+more. With more than eight locations serving New Orleans, Baton
+49
+
+Rouge, and surrounding areas, Ochsner is committed to meeting
+your needs conveniently. Download the Ochsner Pharmacy app,
+request refills in your MyOchsner account, or visit
+ochsnerpharmacy.com for details and locations. That's innovating
+healthcare. With MyOchsner, we make it easy for you to schedule an
+appointment, communicate with your providers, view test results,
+refill prescriptions, and more, right from your phone. Log in or sign
+up for an account today, and you'll have every aspect of your care at
+your fingertips. Visit my.ochsner.org and download the app to start
+managing your health online today.
+S1: 04:54
+We aim to offer convenience when you need to be seen. At Ochsner,
+appointments with a primary care provider are available at a time
+that works for you. You'll find both early and late extended-hour
+appointments as well as weekend options at Ochsner. And with
+Ochsner Urgent Care around the region, you will have access to
+immediate quality care that gets you back on your feet faster. We're
+relentless about providing the care you need. Visit
+ochsner.org/appointments to schedule now or to find an urgent care
+location near you.
+S2: 05:30
+Are you calling to schedule an appointment? Did you know that you
+can schedule your appointment online for more than 50 specialties?
+Schedule now at ochsner.org/appointments. If you have a
+MyOchsner account, you can schedule quickly and easily with any of
+your regular physicians.
+S1: 05:48
+Our primary care doctors don't just see you when you're sick. They
+work hard to keep you well. At Ochsner, your primary care team
+serves as your healthcare quarterback and monitors your care to
+ensure that everything from specialist treatments to routine
+screenings build one complete picture. That way, they can guide you
+through changes or issues so they're addressed quickly. If you don't
+have a primary care doctor, schedule a primary care appointment
+now to get that support in place. Simply visit
+ochsner.org/appointments.
+S2: 06:23
+Ochsner Pharmacy & Wellness is here to help extend the care
+Ochsner provides for patients. We offer home delivery, bedside
+delivery, automatic prescription refills, on-site immunizations, and
+more.
+S3: 06:43
+Good afternoon. Thank you for choosing Patient Accounts Customer
+Service. My name is REDACTED. May I ask who I'm speaking with,
+please?
+S4: 06:49
+Hi, REDACTED. My name is REDACTED, and I'm calling from Dollar
+For. We are a nonprofit organization that helps folks apply to
+50
+
+financial assistance programs at hospitals. You are on a recorded line
+with me. I called and spoke with one of your other representatives,
+REDACTED, on August 4th about our client REDACTED, and she
+confirmed that she would send a request to pull this patient's
+balance from ClearBalance so that they could apply for financial
+assistance. So I was hoping to check in on that and see if the balance
+had been pulled.
+S3: 07:26
+Okay, ma'am. We cannot pull the balance from ClearBalance to place
+it on financial assistance.
+S4: 07:34
+Interesting. That is what the representative told me the last time I
+spoke to them. Could we take a look at this account and see what
+the status of it is?
+S3: 07:42
+Yeah, I can take a look, but I can definitely know that we can't take
+[your?] collections to place it on there. That's not true information. I
+apologize. What's the patient's first name?
+S4: 07:51
+The patient's first name is REDACTED.
+S3: 07:56
+Last name?
+S4: 07:57
+REDACTED.
+S3: 08:07
+Her date of birth and address?
+S4: 08:09
+Date of birth is REDACTED, and the address is REDACTED.
+S3: 08:21
+Okay. And this is the patient's current address, right?
+S4: 08:27
+That is the one that we have. We may have another one on file. I
+could look.
+S3: 08:31
+That's what we have on file too. And also, we don't service Houston,
+Texas residents. We service them, but they won't be eligible for any
+type of financial assistance if they're living in the State of Texas.
+S4: 08:45
+Okay. I think that she was living in Louisiana at the time, potentially.
+She had to move to Houston in order to get care at MD Anderson.
+S3: 08:56
+Okay. All right. So I don't show anything. You say you called, but I
+don't show anything of that. I do show on July 17th, the financial
+assistance was denied, but I don't show anything else.
+S4: 09:16
+Yeah. The last time I spoke to a representative, she said the financial
+assistance was denied because the account had a balance of 0
+because it was put on ClearBalance. Now, ClearBalance, to my
+understanding, is not a collections agency. It's a care credit card.
+S3: 09:32
+No, it's not a care credit card.
+51
+
+S4: 09:35
+Okay. [Excuse me?].
+S3: 09:35
+[CSI?] is a third-party payment plan. It's a payment plan where it
+starts from a year up until 24 months, patients that have large
+balances. Ochsner pays the interest fees on it. The patient doesn't
+pay interest fees. So that's not a care credit.
+S4: 09:56
+Okay. Interesting. I will bring this up to our team to find the best next
+steps for this patient. Thank you for your help today.
+S3: 10:05
+You're very welcome. And good luck with everything. Sorry I can't be
+more of assistance.
+S4: 10:10
+That's all right. Have a nice day. Bye-bye.
+S3: 10:12
+You too. Bye-bye.
+52
+
+Appendix D - Transcribed Call with Orlando Health
+S1: 00:00
+Thank you for calling the Orlando Health Patient Business Services.
+All of our calls are recorded for quality assurance purposes. We are
+currently aware of a technical issue surrounding our MyChart portal
+payment option. If you are calling in regards to this and wish to make
+a payment, please follow the appropriate steps to use our secure
+automated payment system. Thank you. If you are calling from an
+insurance company, please press one. If you are calling from an
+attorney's office, please press two. If you are calling in to make a
+payment, please press three, or you can go online at
+Orlandohealth.com in order to make your payment. If you are a
+patient or guardian of a patient, please press four or remain on the
+line for the next available agent. Thank you.
+S2: 00:51
+Thank you for calling Orlando Health Patient Business Services. All
+calls may be monitored or recorded for quality assurance purposes.
+Can I please have the account [inaudible]?
+S3: 01:01
+Hi, my name is REDACTED and I'm calling from an organization called
+Dollar For that helps folks apply for financial assistance, and just so
+you know this call is recorded on our end as well. I was just calling
+for an update on a client of ours and their financial assistance
+application. So I don't think I actually have his account number, but I
+can give other identifying features.
+S2: 01:28
+Okay. Can you provide the first and last name?
+S3: 01:31
+Yeah. It's REDACTED. The last name is REDACTED.
+S2: 01:49
+And the first name is what?
+S3: 01:53
+Is REDACTED.
+S2: 02:02
+Okay. And for security purposes, can you please provide the date of
+birth as well as address?
+S3: 02:10
+Yes. The date of birth is REDACTED. And the address is REDACTED.
+S2: 02:21
+Okay. Is there a phone number that she can be reached out?
+S3: 02:25
+Yeah. Their phone number is REDACTED.
+S2: 02:37
+You said REDACTED?
+S3: 02:41
+Mm-hmm.
+S2: 02:43
+REDACTED?
+S3: 02:44
+REDACTED.
+53
+
+S2: 03:07
+Yeah. Okay. It looks like the financial assistance that she applied for
+for March 28th, it was denied over income threshold. Basically, I
+guess the income surpassed was over the threshold of the
+requirement for assistance.
+S3: 03:27
+Okay. So can you tell me what you had their household income
+recorded as?
+S2: 03:36
+According to what I'm looking at here, looks like the total that
+they're bringing in gross annual income is $36,000.
+S3: 04:08
+Okay. And so if they're making $36,000 annually and that's a
+household of four people, that's only on--
+S2: 04:17
+[inaudible] the same.
+S3: 04:20
+What was that?
+S2: 04:21
+It's saying it's no dependents. Well, it's actually saying no
+dependents and it's just one person.
+S3: 04:26
+That is not the information we have, actually. We have that there is a
+spouse and two children. Or there's a spouse and a child.
+S2: 04:33
+[inaudible]. But that's not listed on there.
+S3: 04:38
+Okay. Let's see. I have their application here as well. [inaudible]
+application. So I have a copy of the financial statement and hospital
+application that we sent to you. And it has household and family
+information. And it has a child. Yeah. I think it has two children listed
+on it.
+[silence]
+S2: 05:25
+Okay. So is there any way they can update the information on file?
+S3: 05:38
+We can work on that. I guess my question would be then where are
+you getting your information? Because I have a copy of the
+application that we sent to you. It says guarantor financial statement
+for Orlando Health at the top. And it does have four household
+members listed and it has two children on it.
+S2: 06:00
+But it's saying that employee or the person is full time.
+[silence]
+S2: 06:23
+And it looks like your expenses is lower than the amount that's
+bringing in. And she's got assets. There's a lot of the-- I guess, they
+expect [to see?] of an income.
+54
+
+S3: 06:47
+Like her checking account asset? So even though they would be at
+120% of the federal poverty level with their income and household
+size, that doesn't count?
+S2: 07:00
+Well, the household size over here is just one person and that's
+$36,000. To be honest with you, if I was one person bringing in
+$36,000 a year, that'd probably be a pretty nice line to be at for one
+person.
+S3: 07:21
+Yeah. No, I agree with you, but this is for a family of four. And we can
+resubmit an application. I'm just not sure why you have recorded
+that it is a household of one because I have the application that we
+sent to you and it has two children on it.
+S2: 07:40
+Well, it's not on this one. I apologize.
+S3: 07:45
+Okay. And let me just see when this was submitted. Okay. So we
+submitted an application on April 11th. Is that the one that you're
+seeing?
+S2: 08:12
+No, it's not unfortunately.
+S3: 08:15
+Okay. Can you tell me when the one you were seeing was received?
+S2: 08:21
+This one was received March 28.
+S3: 08:25
+March 28th. Okay. I will make sure that we get an updated
+application to you that accurately reflects the size of the house.
+S2: 08:44
+Please.
+S3: 08:46
+All right. Thank you very much. Have a nice day.
+S2: 08:48
+You too.
+S3: 08:49
+Bye.
+55
+
+Appendix E - Transcribed Call with Jackson Health
+S1: 00:00
+Thank you for calling the Jackson Eligibility Management Department
+at Jackson Health System. For instructions in English, please press
+one. This call may be recorded or monitored for quality assurance
+purposes. Please stay on the line to speak to a representative. We
+value your opinion about your experience with us today. After you
+speak to a representative, please stay on the line and an optional
+survey will be available that will take less than two minutes to
+complete. Thank you. Thank you for calling Jackson Health System.
+We understand that your time is precious, and we appreciate your
+holding. Your call is very important to us, and we'll be with you in
+just a moment. [music]
+S2: 01:03
+Thank you for calling Jackson Health System. How may I assist you?
+S3: 01:07
+Hi, my name is REDACTED. I'm calling with Dollar For. We're an
+organization that helps folks apply for financial assistance. And just
+so you know, you're on a recorded line. I was calling to ask about a
+status update for a client who we prepared an application for. And
+you should have [crosstalk] on file for him.
+S2: 01:29
+Okay. So let me explain-- give you a little caveat. I'll be glad to look,
+but most likely I'm going to have to send a message because we
+schedule the initial appointment. We don't really know until and
+unless we see a change on the patient's chart, if they've had the J
+card before. These people only communicate through email. So we
+advise-- well, I advise the patient to make sure they check their email
+because if they need any more documents, they'll correspond to that
+way, but I will be glad to send a message to have a specialist go
+ahead and give the patient a call back. Usually, they call back
+because I haven't gotten any complaints that they don't. May I have
+the patient's last name?
+S3: 02:14
+Yeah. It's REDACTED. It's REDACTED.
+S2: 02:28
+Okay. And may I have the patient's first name?
+S3: 02:31
+Alexander. REDACTED-- birthday is.
+S2: 02:39
+Oh, I'm sorry.
+S3: 02:41
+That's okay. If you have REDACTED down, we don't have to spell it.
+And then his birthday is REDACTED.
+S2: 02:54
+Okay. And do you have the last four of the patient's social?
+56
+
+S3: 02:59
+I don't have his social. I could give you a phone number or his
+address that the bill goes to.
+S2: 03:03
+Okay. Okay. What is this current mailing address?
+S3: 03:07
+REDACTED.
+S2: 03:13
+Okay. And may I have the patient's phone number?
+S3: 03:15
+REDACTED.
+S2: 03:21
+Okay. All right. Let's see what's going on. Okay. So it's still self-pay.
+Let me see something. So he had his-- oh, he should have been--
+that's improper English. He should have had a response by now. Has
+he been checking his email?
+S3: 03:41
+We have not received correspondence, but we're helping him with
+this case. So since you have a release of information on file, you
+should be able to tell me if it was approved or denied or if he needs
+more paperwork.
+S2: 03:53
+Yeah, we don't. Like I said, before we were scheduling, they don't
+share that pertinent information. We don't even have access to their
+database. Like I said, we schedule the initial appointment and then
+they correspond through the email if they need any documents. So
+usually we're supposed to tell the patient that please check your
+email because if they're missing anything, they're going to let you
+know through that email.
+S3: 04:16
+Okay. Is there anyone that I could be transferred to? Because we--
+S2: 04:21
+No. They don't have a phone number. I would have to send a
+message over for them to have them give you a call back.
+S3: 04:29
+That would be great because we emailed them back in May, and we
+have not heard a response.
+S2: 04:35
+Okay. So did he ever check his email?
+S3: 04:39
+I'm not sure. And I'm not sure what the patient's access to email is
+like. I'll definitely reach out to him as well and ask if he has an update
+for us, but if you could maybe send them a note and ask them to
+send an update to debtforgiveness@dollarfor.org?
+S2: 05:01
+Give me one moment. Is he getting this out-- I want to find out. Is he
+getting this card to pay off debts or is he getting it for-- because this
+card is only primarily for outpatient appointments?
+S3: 05:17
+Well, so we prepared a financial assistance application because he
+had an outstanding bill of $14,748.55 cents. So yes--
+57
+
+S2: 05:29
+This card would not help pay that debt though.
+S3: 05:33
+Okay. It's mostly outpatient services?
+S2: 05:37
+Yes, ma'am. If the patient wanted to go to primary care physician or
+if he wanted to, say, get his teeth clean or a teeth pull, if he had a
+specialty doctor that he was going to. But for past due bills, they do
+not use this card for that. This is not an insurance card. It's just a card
+to say, hey, we want to help you pay the bill. They'll pay the full bill
+depending on the patient's income or the documents that are
+provided. Or they will tell them how much of a portion they need to
+pay.
+S3: 06:17
+Yeah. Well, so is Jackson Memorial Hospital a nonprofit hospital?
+S2: 06:24
+Yes, but they don't help pay. If a person has a pass through bill, I had
+to explain this to someone else. They weren't happy. I try to explain
+as much as possible when scheduling my appointment for the
+patient so that they were on the same page. So they won't think,
+"Hey, I got a pass through bill. They're going to help me pay for it."
+No, they're not. They're only helping you for your appointment--
+they're only helping you for your appointment. If you have an
+appointment for a primary care physician, or say if it was a woman
+she needed to pay for her OB appointment and she has no
+insurance, they'll look at the income and determine the type of J
+card they're going to give the patients to help them to pay for their
+appointments.
+S3: 07:02
+Yeah, I definitely understand that that's your hospital's policy, but
+according to the Affordable Care Act, it's a legal requirement for
+every hospital to have a charity care program for folks with
+outstanding medical bills. And so this would be covered under that
+policy. And that's what we're trying to help this patient apply for.
+We're a national nonprofit.
+S2: 07:20
+You definitely need to talk to these people because we have never
+heard that they have to do that.
+S3: 07:26
+Okay. That sounds good. Thank you so much for your help today.
+S2: 07:32
+Okay. Is there anything else I can assist you with?
+S3: 07:34
+No, that's all I have. Thank you.
+S2: 07:37
+Thank you for calling Jackson Health System.
+58
+
+Appendix F - Transcribed Call with Ascension Seton
+S1: 00:01
+Thank you for calling Ascension Seton Medical Center Austin at 1201
+West 38th street, Zip code 78705. If you would like patient
+information, press two. If you need an operator, press zero at any
+time. If you know your party's five digit extension, press one. If you
+remain on the line, your call will be transferred to the operator. Good
+afternoon. Thank you for calling. Your call will be answered by the
+first available operator. You are caller number three in queue. Calls
+are answered in the order that they are received. [music]
+S2: 01:48
+Thank you for calling Seton Medical Center Austin. This is REDACTED.
+How can I help you?
+S3: 01:52
+Hi, REDACTED. Can I speak to your financial assistance or billing
+department?
+S2: 01:57
+Of course. I'd be happy to. Is this for billing for the facility providers
+or do you know if it was from a specific department like US acute
+care, tri-county practice, or AMG?
+S3: 02:14
+I don't think I have a copy of the bill in front of me. So I would just
+say it's probably the hospital bill.
+S2: 02:23
+Of course, I'd be happy to connect you.
+S3: 02:25
+Great. Thanks.
+S2: 02:26
+All right. And when I do connect you over, since you don't have a
+copy of that bill and you don't have the account number correct, if
+you want to speak with one of those representatives, it's going to be
+one of the last options. It's going to ask for an account number. Just
+enter zero followed by pound, and confirm that is correct. That way
+it connects you over through to one of the representatives.
+S3: 02:49
+Okay. Great. Thanks.
+S2: 02:51
+You're welcome. All right. Connecting you over to billing. Have a
+great day.
+S3: 02:57
+Thanks.
+S1: 03:04
+Thank you for calling Ascension Seton Customer Service. All calls are
+monitored and are recorded. To continue in English, please press
+one. [foreign]. Please be aware that the following menu options may
+have changed. To make a payment over the phone, please press one.
+If you would like to provide an insurance update, please press two.
+To request an itemized statement, please press three. To request a
+charity application in the mail, please press four. If you are calling
+from an insurance company or on behalf of an insurance company or
+59
+
+affiliate, please press five. If you are calling for a price estimate,
+please press six. If you need to speak with one of our customer
+service representatives, please press seven. To repeat these menu
+options-- please enter the account number found on your most
+recent statement sent in the mail followed by pound. You have
+entered zero. If this is correct, press one for yes or two to reenter. All
+of our agents are currently assisting patients. If you'd like us to hold
+your spot in line and call you back when the next representative is
+available, press one now. Otherwise, please continue holding for the
+next available--
+S4: 04:32
+Hi. Thank you for calling Ascension Customer Service. My name is
+REDACTED. Can I have your account number, please?
+S3: 04:39
+Hi. My name is REDACTED. I'm calling from Dollar For. We are a
+nonprofit that helps folks supply for financial assistance. Just so you
+know, this is a recorded line. I do not have an account number, but I
+could give you the patient's first, last name, date of birth, all that
+good stuff.
+S4: 04:56
+Thank you very much. Just to confirm, your name is REDACTED. Is
+that correct?
+S3: 05:00
+It's Killeen, REDACTED.
+S4: 05:06
+REDACTED.
+S3: 05:08
+Yes.
+S4: 05:08
+That's a beautiful name. Thank you very much. Can I ask for your full
+name so that I can put you in my system, please REDACTED?
+S3: 05:14
+Yes. My last name is REDACTED, REDACTED.
+S4: 05:23
+Thank you very much. And from what company that you're in right
+now, REDACTED? Sorry, they didn't get that one.
+S3: 05:28
+Dollar For. Dollar like a dollar bill space F-O-R.
+S4: 05:35
+Dollar For. Is this an insurance provider or a law firm office?
+S3: 05:43
+No, neither of those. We're a nonprofit that helps folks apply for
+financial assistance.
+S4: 05:51
+Okay. Thank you very much for that one. Do you have right now the
+phone number of the patient so that I can check here in my system?
+S3: 05:57
+Yes. That's REDACTED.
+S4: 06:07
+Just to confirm I got it right, it's REDACTED. Is that correct?
+S3: 06:13
+Yes.
+60
+
+S4: 06:14
+Thank you. Give me a second here. Let me check if I can pull up an
+account for you. Bear with me, REDACTED. Well, just to confirm as
+myself well, can I ask for the facility or the hospital that the patient
+go through?
+S3: 06:37
+Yeah, Ascension Seton Medical Center Austin.
+S4: 06:42
+Austin. Can I ask for the first name of the patient, please?
+S3: 06:47
+Yeah, that's REDACTED?
+S4: 06:56
+REDACTED. I'm sorry.
+S3: 06:59
+REDACTED, as in REDACTED.
+S4: 07:16
+Can you spell it out for me the first name? Please the first.
+S3: 07:19
+Yeah. REDACTED.
+S4: 07:32
+Thank you very much for that one. Let me check this one for you.
+Give me a second here.
+S3: 07:34
+Thanks.
+S4: 07:38
+You're welcome. So let's check in for the phone number. And first
+thing here or last thing. Just give me a second here. Thank you. And
+this for a future service or a past service?
+S3: 08:07
+Past service.
+S4: 08:10
+Past service. Can I ask, are you looking for a position bill or a hospital
+bill?
+S3: 08:16
+With the balance, it is probably a combination of both. It looks like
+they are from potentially around February and March of 2023. But
+[crosstalk] application on July 7th, via mail. So I'm hoping to check
+and see if that has been received.
+S4: 08:40
+Let me check that for you first. If I have the records for the patient's
+name REDACTED, okay?
+S3: 08:46
+Okay. Thanks.
+S4: 08:47
+One moment, please, REDACTED. You're welcome. REDACTED. Okay.
+It seems that I can not find a record using the phone number of
+REDACTED. Let me check for the first name and last name. Bear with
+me. You're welcome. It's loading. And do you know the full address
+on the account, please?
+S3: 09:42
+The one that I have is REDACTED.
+S4: 09:52
+Thank you very much. And can you confirm the date of birth of the
+patient, please?
+61
+
+S3: 09:57
+Yes. That is REDACTED.
+S4: 10:03
+Thank you very much for that one. It seems that I can now see a
+record named REDACTED. Just give me a second here. Thank you. So
+you were calling for today because you wanted to see or check if the
+payment goes through. Is that correct?
+S3: 10:28
+Not the payment. The application for financial assistance.
+S4: 10:33
+The application for the financial assistance. Just give me a second
+here. Let me check that one for you.
+S3: 10:42
+Thank you.
+S4: 10:43
+You're welcome.
+[silence]
+S4: 11:06
+Okay. Very cool. I see my notes here, the notes.
+[silence]
+S4: 12:14
+Okay. Sorry for the long wait here, REDACTED. Thank you. So upon
+tracking here, it seems that I cannot see a record that the patient is
+currently under the charity form, or if the application form already
+go through to our system. Can they ask for the text number or
+something, what method did you use to send us the application form
+or something like the application financial assistance?
+S3: 12:40
+Yeah. We mailed that on July 7th, 2023.
+S4: 12:46
+July 7th, 2023. Let me check all the documents here in my system.
+Just bear with me here, REDACTED. It's the big one. If the specific
+document already go through, one moment please. Thank you. I'm
+just going to put you and hold for at least a minute or two so that I
+can fully check, okay?
+S3: 13:33
+Mm-hmm.
+S4: 13:33
+One moment. Thank you, REDACTED.
+[silence]
+S4: 16:15
+Hello. Sorry for the long wait here, REDACTED. Thank you very much
+for patiently waiting. So upon checking here in my system, I try to
+double check all the documents associated with the account or the
+account numbers. Well, but unfortunately, I can see a document for
+this application form that you are mentioning for the financial
+assistance now. So have you tried to send this one in the email
+address or e-fax number that we have in our system?
+62
+
+S3: 16:47
+Let me see what we did originally, because we mailed it to the
+mailing address on the application. There's a PO box in Dallas, and a
+PO box in Indianapolis. That, we would have sent it to. And then let's
+see, before that, we faxed that to 512-406-0714.
+S4: 17:21
+0714.
+S3: 17:24
+Do you have a better place for me to email or track that? I can get it
+resubmitted today.
+S4: 17:32
+Sure. I have here the email address that you can send this
+application form. And just to confirm as well, out of curiosity, is this
+an application form that the patient already applied for? Or is the
+patient trying to apply for financial assistance?
+S3: 17:50
+Yes, the patient is trying to apply for financial assistance.
+S4: 17:55
+Okay. You can send the document to us, by the way.
+S3: 17:59
+Okay.
+S4: 18:02
+Tell me if you're ready.
+S3: 18:03
+I'm ready.
+S4: 18:06
+Wonderful. It's support documents, @ symbol, R for Romeo, number
+one, R for Romeo again, C for Charlie, M for Mike, dot com.
+S3: 18:37
+Okay. We will get that resubmitted today and maybe the mail
+application will also be processed soon. Thanks so much for your
+help today.
+S4: 18:45
+Wonderful. And by the way, the document will be written in our
+system or reflected in our system in the next 7 to 10 business days.
+Okay. It'd be processed by one of our back-end office [inaudible].
+S3: 18:56
+Okay. Great. Thanks so much. I will make a task.
+S4: 19:00
+You're welcome. Goodbye for now.
+S3: 19:02
+Bye.
+63
+
+Appendix G - Harbor Regional Health Financial Assistance Website
+64
+
+65
+
+66
+
+67
+
+Appendix H - Cone Health Financial Assistance Website
+68
+
+69
+
+Appendix I - Allina Health Financial Assistance Website
+70
+
+71
+
+Appendix J - First Health of the Carolinas Financial Assistance Website
+72
+
+73
+
+74
+
+75
+
+Appendix K - CaroMont Health Financial Assistance Website
+76
+
+77
+
+Appendix L - Virginia Mason Invoice
+78
+
+Appendix M - Henry Mayo Invoice
+79
+
+Appendix N - Curae Financing Application
+80
+
+81

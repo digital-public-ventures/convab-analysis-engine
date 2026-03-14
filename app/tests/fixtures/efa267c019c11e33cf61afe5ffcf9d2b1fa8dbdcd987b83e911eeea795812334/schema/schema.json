@@ -1,0 +1,270 @@
+{
+  "_metadata": {
+    "generated_at": "2026-03-13T16:00:32.114794",
+    "model_id": "gemini-2.5-flash-lite-preview-09-2025",
+    "thinking_level": "NONE",
+    "rows_sampled": 9,
+    "use_case": "I need help analyzing public comments submitted to a federal regulatory docket regarding medical payment products (medical credit cards and loans). These comments were submitted in response to a joint Request for Information (RFI) from the Consumer Financial Protection Bureau (CFPB), Department of Health and Human Services (HHS), and Department of the Treasury.\n\nThe comments come from diverse stakeholders:\n- Individual patients sharing personal experiences with medical credit cards\n- Healthcare "
+  },
+  "schema_name": "Response Analysis Schema",
+  "version": "1.0.0",
+  "description": "Example schema instance for response analysis fields",
+  "enum_fields": [
+    {
+      "field_name": "stakeholder_type",
+      "required": true,
+      "description": "Type of stakeholder",
+      "allowed_values": [
+        "private_individual",
+        "organization",
+        "government_agency"
+      ],
+      "nullable": false,
+      "hint": "Classify the stakeholder as one of: private individual, organization, or government agency"
+    },
+    {
+      "field_name": "organization_advocacy_type",
+      "required": true,
+      "description": "Advocacy orientation of the commenting organization",
+      "allowed_values": [
+        "public_consumer_worker_environment_advocate",
+        "business_or_industry_advocate",
+        "government_official",
+        "not_applicable"
+      ],
+      "nullable": false,
+      "hint": "Classify the organization's advocacy type. Use 'not_applicable' when stakeholder_type is 'private_individual'."
+    }
+  ],
+  "categorical_fields": [
+    {
+      "field_name": "impact_drivers",
+      "required": true,
+      "description": "Factors the commenter identifies as driving the impact",
+      "required_values": [
+        "rule/regulation",
+        "product",
+        "practice",
+        "person",
+        "company",
+        "unclear"
+      ],
+      "suggested_values": [],
+      "allow_multiple": true,
+      "nullable": false,
+      "minItems": 1,
+      "hint": "Select one or more drivers that the commenter identifies as causing the impact they assert has occurred or will occur. Identify only what the commenter blames or credits. Do not infer whether the impact is positive or negative\u2014that is captured in impact_sentiment. Use 'unclear' only when the commenter does not specify a driver."
+    },
+    {
+      "field_name": "vulnerable_population_tags",
+      "required": true,
+      "description": "Types of vulnerable populations mentioned in the comment, including the commenter.",
+      "required_values": [
+        "Low-Income Individuals",
+        "Seniors/Elderly",
+        "Veterans",
+        "Students"
+      ],
+      "allow_multiple": true,
+      "nullable": false,
+      "minItems": 0,
+      "maxItems": 5,
+      "hint": "Select the vulnerable population tags that are explicitly or implicitly mentioned. If no vulnerable populations are mentioned, leave empty."
+    },
+    {
+      "field_name": "reported_harmful_impacts",
+      "required": true,
+      "description": "Types of harmful impacts mentioned in the comment.",
+      "required_values": [
+        "None or Not Applicable"
+      ],
+      "suggested_values": [
+        "Debt Burden",
+        "Credit Damage",
+        "Collections Activity",
+        "Care Delay or Avoidance",
+        "Financial Stress",
+        "Confusing Terms",
+        "Aggressive Enrollment"
+      ],
+      "allow_multiple": true,
+      "nullable": false,
+      "minItems": 0,
+      "maxItems": 10,
+      "hint": "Select all harmful impacts explicitly mentioned by the commenter or clearly implied by their described experiences. Include only impacts the commenter reports or clearly experienced, not inferred downstream consequences. Use 'None or Not Applicable' if no harmful impacts are described."
+    },
+    {
+      "field_name": "reported_beneficial_impacts",
+      "required": true,
+      "description": "Types of beneficial impacts mentioned in the comment.",
+      "required_values": [
+        "None or Not Applicable"
+      ],
+      "suggested_values": [
+        "Improved Access to Care",
+        "Payment Flexibility",
+        "Lower Upfront Cost",
+        "Predictable Payments",
+        "Administrative Convenience"
+      ],
+      "allow_multiple": true,
+      "nullable": false,
+      "minItems": 0,
+      "maxItems": 10,
+      "hint": "Select all beneficial impacts explicitly mentioned by the commenter or clearly implied by their described experiences. Include only impacts the commenter reports or clearly experienced, not inferred downstream consequences. Use 'None or Not Applicable' if no beneficial impacts are described."
+    },
+    {
+      "field_name": "product_or_company_mentions",
+      "required": true,
+      "description": "Product names or company mentions referenced in the comment.",
+      "required_values": [
+        "None or Not Applicable"
+      ],
+      "suggested_values": [
+        "CareCredit",
+        "Wells Fargo Health Advantage",
+        "Synchrony",
+        "Affirm",
+        "Afterpay",
+        "Klarna"
+      ],
+      "allow_multiple": true,
+      "nullable": false,
+      "minItems": 0,
+      "maxItems": 15,
+      "hint": "Select known products or companies when clearly mentioned; use 'None or Not Applicable' when no explicit mention exists."
+    },
+    {
+      "field_name": "rfi_agency_focus",
+      "required": true,
+      "nullable": false,
+      "description": "Which specific RFI agency's questions the comment primarily addresses.",
+      "required_values": [
+        "CFPB",
+        "HHS/CMS",
+        "Treasury",
+        "All Agencies"
+      ],
+      "suggested_values": [
+        "CFPB",
+        "HHS/CMS",
+        "Treasury"
+      ],
+      "allow_multiple": false,
+      "minItems": 1,
+      "hint": "Identify the primary agency focus of the comment based on explicit mention or content."
+    }
+  ],
+  "scalar_fields": [
+    {
+      "field_name": "amount_of_impact",
+      "required": true,
+      "description": "Magnitude of impact asserted by the commenter",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = no impact, 10 = greatest possible impact",
+      "nullable": false,
+      "hint": "While keeping in mind that impact can be good, bad, unknown, etc., rate the overall amount of impact the commenter asserts. This asserted impact may have already happened, or it may be contingent on a future event or decision. Use a 0-10 scale where 0 means no impact and 10 means the strongest possible impact. If the commenter does not assert any impact, score 0."
+    },
+    {
+      "field_name": "impact_sentiment",
+      "required": true,
+      "description": "Direction of the asserted impact from the commenter's perspective (harmful to beneficial)",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = most harmful impact, 10 = most beneficial impact",
+      "nullable": false,
+      "hint": "Rate the direction of impact from the commenter's perspective, where zero indicates the most harmful impact and 10 indicates the most beneficial impact. Consider the commenter's perspective when rating. If the commenter describes a mix of positive and negative impacts, rate the net sentiment."
+    },
+    {
+      "field_name": "urgency_of_impact",
+      "required": true,
+      "description": "Time-sensitivity and urgency of the issue for decision-making or action",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = low urgency, tangential to core issues, 10 = high urgency, requires immediate attention or decision",
+      "nullable": false,
+      "hint": "Rate how time-sensitive or urgent the commenter's concerns are. 10 means the issue requires immediate attention or action because a decision will have imminent consequences (good or bad). 0 means the comment is tangential to core issues, low-priority, or the commenter is primarily advertising their own business rather than addressing the substantive policy question. Consider whether the commenter is raising a concern that policymakers must address urgently versus making a general point or tangential argument."
+    },
+    {
+      "field_name": "seriousness_of_life_impact",
+      "required": true,
+      "nullable": false,
+      "description": "Severity of the life impact asserted by the commenter due to medical payment products or related issues.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No discernible life impact, 10 = Severe, life-altering impact (e.g., bankruptcy, severe health deterioration, housing instability).",
+      "hint": "Rate the seriousness of the consequences described by the commenter, focusing on life outcomes beyond mere financial inconvenience."
+    },
+    {
+      "field_name": "financial_assistance_reference",
+      "required": true,
+      "nullable": false,
+      "description": "Indicates if the comment discusses the availability or displacement of hospital financial assistance/charity care.",
+      "scale_min": 0,
+      "scale_max": 10,
+      "scale_interpretation": "0 = No mention of financial assistance/charity care, 10 = Primary focus on financial assistance/charity care issues.",
+      "hint": "Rate the degree to which the comment addresses the interaction between medical payment products and existing financial assistance programs (like 501(r) charity care)."
+    }
+  ],
+  "key_quotes_fields": [
+    {
+      "field_name": "lived_experience_quotes",
+      "required": true,
+      "description": "Quotes capturing concrete examples of lived experience with harms or benefits",
+      "max_quotes": 3,
+      "minItems": 0,
+      "nullable": false,
+      "hint": "Select up to 3 direct quotes that capture concrete examples of lived experience with harms or benefits from the commenter's perspective. Prioritize authentic narratives and specific experiences that illustrate the impact. May be empty if the comment lacks substantive narrative content or lived experience examples."
+    }
+  ],
+  "text_array_fields": [
+    {
+      "field_name": "individual_name",
+      "required": true,
+      "description": "Name or names of individual commenters",
+      "minItems": 0,
+      "nullable": false,
+      "hint": "Extract one string per individual commenter identified in the comment. May be empty if no individual names are provided."
+    },
+    {
+      "field_name": "organization_name",
+      "required": true,
+      "description": "Name or names of the organizations commenting",
+      "minItems": 0,
+      "nullable": false,
+      "hint": "Extract one string per organization identified in the comment. May be empty if no organization names are provided."
+    },
+    {
+      "field_name": "identified_arguments",
+      "required": true,
+      "description": "Causal or conditional arguments extracted from the comment",
+      "maxItems": 5,
+      "minItems": 0,
+      "nullable": false,
+      "hint": "Extract claims that connect causes to consequences (e.g., 'if X then Y', 'because X, therefore Y'). Focus on arguments relevant to the commenter's impact_drivers, amount_of_impact, and impact_sentiment. May be empty if no clear arguments are present."
+    },
+    {
+      "field_name": "policy_recommendations",
+      "required": true,
+      "description": "Advice, desires, wishes, or policy recommendations mentioned in the comment.",
+      "required_values": [
+        "None or Not Applicable",
+        "No Change/Maintain Status Quo"
+      ],
+      "maxItems": 10,
+      "minItems": 0,
+      "nullable": false,
+      "hint": "Extract policy recommendations as short phrases; use 'None or Not Applicable' or 'No Change/Maintain Status Quo' when applicable."
+    },
+    {
+      "field_name": "downstream_consequence_tags",
+      "required": true,
+      "nullable": false,
+      "description": "Specific downstream consequences mentioned (e.g., credit reporting, housing, mental health).",
+      "maxItems": 10,
+      "minItems": 0,
+      "hint": "Extract specific negative outcomes that result from the medical debt or financing product, such as credit score damage, inability to rent housing, or mental health strain."
+    }
+  ]
+}

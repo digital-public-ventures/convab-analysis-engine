@@ -1,156 +1,133 @@
-# cfpb-exploration
+# Convab
 
-CFPB data exploration and analysis
+Convab transforms unstructured public comments, complaints, and feedback into structured, analysis-ready datasets. Given a CSV of free-text responses, it cleans the data, generates a tagging schema tailored to the dataset's domain, runs LLM-powered analysis across every record, and deduplicates the resulting tags.
+
+The goal is to make large-scale qualitative feedback — the kind that usually requires weeks or months of manual coding — legible in hours or minutes.
+
+## Background
+
+Effectively understanding large-scale public input is a significant challenge. When a federal agency receives thousands of public comments on a proposed regulation, or a city solicits resident feedback on a long-range plan, the resulting corpus is rich but unwieldy. Traditional manual coding methods are slow and expensive, and simple keyword searches miss the nuance of what people actually said.
+
+Convab uses LLMs to bridge this gap: it reads every comment, tags it against a schema fitted to the dataset, and surfaces structured patterns — while preserving the original voices through extracted quotes.
+
+## Pilot: CFPB Medical Debt RFI
+
+In 2023, the Consumer Financial Protection Bureau asked the public to share their experiences with medical payment products — specialty credit cards and installment loans used to pay uninsured costs of medical, dental, and veterinary care. The Request for Information was part of an effort to understand the effects of medical debt on American consumers.
+
+Almost 5,000 Americans — individuals, advocates, industry groups, and government officials — responded. Reading and analyzing those responses manually took six CFPB staff members three months.
+
+Convab's prototype analyzed a sample of these responses in minutes, producing insights actionable to policymakers:
+
+- **Categorizing common issues and sub-issues** among respondents
+- **Isolating different perspectives** from consumers, industry, and consumer advocates
+- **Identifying specific products and product models** mentioned repeatedly across comments
+- **Distilling policy suggestions** directly from commenter language
+
+Throughout the analysis, Convab pulls exemplar text and quotes to show its work — grounding every category and insight in what people actually wrote.
+
+## How It Works
+
+```text
+CSV upload ──▶ Clean ──▶ Generate Schema ──▶ Analyze ──▶ Deduplicate Tags
+```
+
+1. **Clean & OCR** — Upload a CSV. Attachments (PDF, DOCX, images) are downloaded and OCR'd. Text is normalized and a cleaned CSV is written to a content-hash-addressed directory.
+
+2. **Generate Schema** — A sample of the cleaned data is sent to an LLM, which produces a JSON tagging schema fitted to the dataset: categorical fields, enums, scalars, quote arrays, and free-text arrays.
+
+3. **Analyze** — Cleaned rows are batched through the LLM. Each record is tagged with structured JSON conforming to the schema. Responses are validated and retried automatically.
+
+4. **Deduplicate Tags** — A final LLM pass merges near-duplicate categorical labels (e.g. "Low Income" / "Low-Income Individuals") and writes a deduplicated CSV.
+
+All long-running steps return a job ID immediately. Poll `/jobs/{job_id}` for status and retrieve results from `/jobs/{job_id}/results`.
 
 ## Quick Start
 
-See [docs/QUICK_START.md](docs/QUICK_START.md) for detailed setup instructions.
+Requires Python 3.13+ and [uv](https://github.com/astral-sh/uv). A Gemini API key is needed for LLM calls ([Google AI Studio](https://aistudio.google.com/apikey)).
 
-## Features
+```bash
+git clone https://github.com/jimmoffet/sensemaking.git
+cd sensemaking
+uv sync --extra dev
 
-- Feature 1
-- Feature 2
-- Feature 3
+cp .env.example .env
+# Edit .env — at minimum set GEMINI_API_KEY
 
-## Repository Structure
-
-This repository follows an agent-friendly three-tier documentation system designed for effective human-agent collaboration:
-
-```
-cfpb-exploration/
-├── .github/                    # GitHub configuration
-│   ├── ISSUE_TEMPLATE/        # Bug reports, feature requests, docs issues
-│   ├── PULL_REQUEST_TEMPLATE/ # Specialized PR templates by type
-│   ├── copilot-instructions.md # GitHub Copilot workspace guidance
-│   └── pull_request_template.md # PR template selector
-│
-├── ADRs/                      # Architecture Decision Records
-│   ├── README.md             # ADR template and best practices
-│   └── 001-repo-structure.md # Documentation system decisions
-│
-├── docs/                      # Developer documentation
-│   ├── README.md             # Documentation index and TOC
-│   └── QUICK_START.md        # Setup and getting started guide
-│
-├── temp/                      # Temporary files and agent workspace
-│   ├── notes/                # Agent planning and working memory
-│   │   ├── README.md         # Notes directory guide
-│   │   ├── ROADMAP.md        # Long-term planning (REQUIRED)
-│   │   ├── NEXT_STEPS.md     # Immediate tasks (REQUIRED)
-│   │   └── archive/          # Completed notes by month (YYYY-MM/)
-│   ├── debug/                # Debug scripts and outputs
-│   └── output/               # Temporary output files
-│
-├── [src/app/lib/...]         # Your application code (structure varies)
-│
-├── .env.example              # Environment variable template
-├── .gitignore                # Git ignore patterns
-├── CHANGELOG.md              # Version history
-├── CODE_OF_CONDUCT.md        # Contributor Covenant
-├── CONTRIBUTING.md           # Contribution guidelines
-├── LICENSE                   # MIT License
-├── README.md                 # This file
-└── SECURITY.md               # Security policy
+uv run uvicorn app.server:app --reload
 ```
 
-### Documentation System
+The server starts at `http://127.0.0.1:8000`. Interactive API docs are available at `/docs`.
 
-**Three Tiers**:
+See [docs/QUICK_START.md](docs/QUICK_START.md) for a walkthrough of processing your first dataset.
 
-1. **`/docs/`** - Formal developer documentation (setup, APIs, guides)
-2. **`/ADRs/`** - Immutable architectural decision records
-3. **`/temp/notes/`** - Agent working memory and planning documents
+## Architecture
 
-**Key Principles**:
+```text
+app/
+├── server.py                  # FastAPI app, lifespan wiring
+├── config.py                  # Paths, model IDs, processing constants
+├── routers/                   # HTTP layer
+│   ├── cleaning.py            #   /clean and /data
+│   ├── schema.py              #   /schema
+│   ├── analysis.py            #   /analyze and /tag-fix
+│   └── jobs.py                #   /jobs polling and cursor results
+├── prompts/                   # LLM interaction contracts
+│   ├── schema_generation/     #   Schema generation prompts and response schema
+│   ├── analysis/              #   Analysis prompts and templates
+│   ├── response_schema.py     #   Builds structured output schema for analysis
+│   └── response_validation.py #   Validates LLM output against schema
+├── schema/
+│   └── generator.py           # Schema generation orchestration
+├── analysis/
+│   └── analyzer.py            # Batch analysis pipeline
+├── processing/                # Data ingestion
+│   ├── cleaner.py             #   CSV cleaning, attachment detection
+│   ├── attachment.py          #   PDF/DOCX/image download + OCR
+│   ├── cache.py               #   OCR result caching
+│   ├── data_store.py          #   Content-hash directory management
+│   └── job_store.py           #   Async job tracking
+├── llm/                       # LLM provider abstraction
+│   ├── gemini_client.py       #   Gemini API wrapper
+│   ├── openai_client.py       #   OpenAI API wrapper
+│   ├── model_config.py        #   Provider-aware model configuration
+│   ├── rate_limiter.py        #   Async rate limiter
+│   └── costs.py               #   Token/cost tracking
+├── dedup/
+│   └── tag_dedup.py           # LLM-driven tag deduplication
+└── tests/
+```
 
-- `ROADMAP.md` and `NEXT_STEPS.md` are **required** and must always exist
-- Archive completed notes to `temp/notes/archive/YYYY-MM/`
-- Extract architectural decisions to ADRs before archiving
-- ADRs are immutable (create new ADR to supersede, don't edit)
+Datasets are stored under `app/data/{content_hash}/` with subdirectories for raw input, downloads, cleaned data, schema, analysis output, and post-processing results.
 
-See [ADRs/001-repo-structure.md](ADRs/001-repo-structure.md) for the full rationale behind this structure.
+## API
+
+All endpoints accept and return JSON unless noted.
+
+| Method | Path                     | Description                                                                                    |
+| ------ | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `POST` | `/clean`                 | Upload a CSV file (multipart). Cleans text, downloads and OCR's attachments. Returns a job ID. |
+| `POST` | `/schema/{hash}`         | Generate a tagging schema for the cleaned dataset. Body: `{ use_case }`.                       |
+| `POST` | `/analyze`               | Start analysis. Body: `{ hash, use_case, system_prompt }`. Returns a job ID.                   |
+| `POST` | `/tag-fix`               | Start tag deduplication. Body: `{ hash }`. Returns a job ID.                                   |
+| `GET`  | `/jobs/{job_id}`         | Poll job status. `completed` is true when the job finishes (check `error` for failures).       |
+| `GET`  | `/jobs/{job_id}/results` | Cursor-paginated results. Pass `cursor` and `limit` query params.                              |
+| `GET`  | `/data/{hash}`           | Check whether cleaned data and schema exist for a given hash.                                  |
+
+All `POST` endpoints that create jobs accept `?no_cache=true` to force reprocessing. `/clean` also accepts `?no_cache_ocr=true` to re-extract OCR.
 
 ## Development
 
-### Prerequisites
-
-- [List your project's prerequisites]
-- [e.g., Python 3.12+, Node.js 20+, Docker, etc.]
-
-### Setup
-
 ```bash
-# Clone the repository
-git clone https://github.com/jimmoffet/cfpb-exploration.git
-cd cfpb-exploration
+ruff check .                 # Lint
+ruff format .                # Format
+mypy .                       # Type check
 
-# Install dependencies
-[Your installation commands]
-
-# Copy environment variables
-cp .env.example .env
-# Edit .env with your values
-
-# Run the application
-[Your run commands]
+pytest                       # All tests (some require API keys)
+pytest -k "not integration"  # Unit tests only
 ```
 
-See [docs/QUICK_START.md](docs/QUICK_START.md) for detailed instructions.
-
-### Running Tests
-
-```bash
-[Your test commands]
-```
-
-### Code Quality
-
-```bash
-[Your lint/format/type-check commands]
-```
-
-## Usage
-
-[Add usage examples and documentation]
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Quick Contribution Guide
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Write tests for your changes
-4. Make your changes
-5. Run quality checks (lint, format, test)
-6. Commit with clear messages
-7. Push to your fork
-8. Open a Pull Request (use appropriate template)
-
-## Documentation
-
-- [Quick Start Guide](docs/QUICK_START.md) - Setup and getting started
-- [Architecture Decision Records](ADRs/README.md) - Key architectural decisions
-- [Contributing Guidelines](CONTRIBUTING.md) - How to contribute
-- [Code of Conduct](CODE_OF_CONDUCT.md) - Community standards
-- [Security Policy](SECURITY.md) - Vulnerability reporting
+See [docs/TESTING.md](docs/TESTING.md) for test layout, fixtures, and API key requirements.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- **Maintainer**: Jim Moffet (jim@digitalpublic.ventures)
-- **Issues**: [GitHub Issues](https://github.com/jimmoffet/cfpb-exploration/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/jimmoffet/cfpb-exploration/discussions)
-
-## Acknowledgments
-
-- Built with an agent-friendly cfpb-exploration template
-- Documentation structure designed for human-agent collaboration
-
----
-
-**Note**: This README was generated from a cfpb-exploration template. Update it with your project-specific information.
+MIT

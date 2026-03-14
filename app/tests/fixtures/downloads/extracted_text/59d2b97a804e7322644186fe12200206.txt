@@ -1,0 +1,518 @@
+Date:  7/10/2023 
+ 
+To:  
+Consumer Financial Protection Bureau (CFPB), Centers for Medicare & Medicaid Services 
+(CMS), Department of Health and Human Services (HHS), Department of the Treasury 
+(Treasury) 
+Cc:  
+Federal Reserve, X9 ISO20022 Working Group on Faster Healthcare Payments  
+From:  Kendra Wyatt, New Birth Company LLC, Chief Executive Officer 
+Re:  
+Request for Information Regarding Medical Payment Products 
+ 
+I am answering this RFI as a State Licensed Healthcare Provider, who is in-network with Kansas 
+and Missouri Medicaid, Tricare, Federal Exchange Insurance Products and 3rd Party Commercial 
+Insurance Plans.  I am reviewing the use of medical payment credit cards for my business right 
+now due to high deductible maternity benefits and slow insurance plan payments.   
+ 
+The bluntness in my RFI response reflects the intolerable length of time it takes for small 
+healthcare businesses to be paid by Insurance Plans and TPAs reviewing claims. 60+ days is 
+common for Federal Exchange and TPA plans. In some cases, we are faxing and mailing claims. 
+These systems can’t support the 10s of ICD10 codes needed to back up modern Social 
+Determinant of Health (SODH) risk assessments.   
+ 
+We can’t talk about faster payments in healthcare without talking about the impact of 
+ISO20022 on the American banking system and that impact on the small business owner. Large 
+banks and vendors are working on ISO20022 adoption and the ability to bill their customers 
+(me) in real time.  Large institutions will leverage fast-payment bank products into basis point 
+discounts and small business providers will be stuck with no banking float.  
+ 
+Mr. Mick Talley and I co-chair an X9 ISO20022 Faster Healthcare Payments Working Group. I 
+recommend you interview me, Mr. Talley, Mr. Stephen Ranzini with University Bank and Mr. 
+David Repking at JPMorganChase, Chair of X9C and ISO 20022 Market Practice Industry Forum. 
+Guy Berg and Carolyn Kroll with the Chicago Federal Reserve are key leaders in the faster 
+payments space.  I recommend talking to Professor Ge Bai, John Hopkins regarding Hospitals 
+non-for-profit tax status.  
+ 
+In the spirit of “if you oppose, propose” I ask the Biden Administration, CFPB, CMS, HHS, the 
+ONC, Treasury and the Federal Reserve to sponsor 4 Corner Pilots of “Faster Payments” in the 
+healthcare sector.  We already have a (4 Corner) healthcare use case using the Federal Reserve 
+framework. Let’s learn by doing. We are underutilizing our national HIT infrastructure; and 
+driving out small business providers in our underserved, rural and tribal communities. Doing 
+nothing represents the status quo of friction in 18.3% of the GDP. The use of medical credit 
+cards is a symptom; the disease is friction and lack of innovation.  We must create the low-
+friction policy environment where healthcare providers can survive and thrive.  Let’s support 
+alternate market forces to compete head-to-head with robber barons who make money off the 
+friction.  Thank you for listening.  I welcome your inquiries regarding my responses.  
+ 
+
+ 
+What are the benefits, costs, and risks of medical payment products for consumers, health 
+care providers, and companies offering these products?  
+Our APRN Midwife Led & State Licensed Birth Center provides low-risk pregnant women with 
+prenatal, birth, and birth facility services for mothers and their newborns.  We represent the 
+best-case scenario of a low-risk birth and appropriate resourced birth experience.  
+ 
+There is a myth in US healthcare that “Pregnancy & Birth” is covered 100% by all American 
+insurance plans.  This is simply NOT THE CASE.  High deductibles are being applied to low-risk 
+birth.   
+ 
+Plan deductibles of $2000, $3000, $4000, and $5000 are commonly applied deductibles for 
+maternity services.  HHS needs to compare the differences in payments made through 
+Medicaid, Federal Employee Health Plan and the Federal Exchange Plans.  The Federal Exchange 
+Plans have the least programming and the highest deductibles for Maternity Services. The cost 
+of the newborn is paid separately from the mother, adding additional cost.  I have no desire to 
+take these young families to small claims court, yet my unpaid patient accounts receivables is 
+currently over $100,000.   
+ 
+What are the terms of medical payment products, including interest rates and fees?  
+My understanding it varies based on the terms of the loan. I’ve attached marketing material 
+from one company.  
+ 
+How much debt do consumers carry on medical credit cards and loans in total, and what is 
+the average individual debt level?  If we move forward with this product, the patient debt will 
+be from $1000-$5000 dollars reflecting their plan deductible.   
+ 
+How concentrated is the medical payment product market, and what role do private equity 
+firms play in this market?  I do not know.  I only have exposure to Care Credit and United 
+Credit.   
+ 
+Are there specific populations (e.g., race, socioeconomic status, gender identity, sexual 
+orientation, age, language, etc.) or geographic regions that experience disproportionately 
+higher utilization of medical payment products?  Look at Maternity Care. Look at States where 
+there is no Medicaid expansion and where the Medicaid income levels for Maternity coverage 
+are low.    
+ 
+What are the health equity impacts of medical payment products and related billing and 
+collection policies and practices? Many OB, Pediatric, Dentist and Orthodontic Offices do not 
+participate in Medicaid.  So, by definition, access to medical credit is only way for these patients 
+to access highly desirable services where the Provider refuses to accept less than 
+Medicare/Cost based reimbursement.   
+ 
+
+It is an American policy failure that we haven’t adopted aligned multi-payer policy and payment 
+environment for high utilization and highly desirable outcomes.   
+Align Birth across Medicaid, Federal Exchange, Tricare, VA CCN, Federal Employee Health Plan.  
+PROTIP:  **Providers will change behavior if you pay them quickly. ** 
+ 
+Kansas Medicaid pays the Pregnancy and Birth Global of 59400 70% of Medicare.  Certified 
+Nurse Midwives are only paid 75% of the OB Global, which is only 50% of Medicare.  The Birth 
+Center reimbursement of $1295 hasn’t been increased for 20 years.  
+ 
+Do medical payment products affect members of specific underserved communities 
+differently, including members of Tribal communities and geographically isolated 
+communities?  I’m thinking many of these places of no access to capital.  Ask Matt Libman, CEO 
+of United Credit and Beto Casellas, CEO of Care Credit where they offer their product.  
+ 
+Do certain products or policies present opportunities to better serve members of 
+underserved communities? Yes. Suggestion….US Government sponsors pregnant families with 
+personal health bank accounts with first $10,000 to purchase maternity/birth care as they see 
+fit, subject to IRS eligibility criteria, allowing families to bank unused amount in child’s name.  
+Implement this for all Americans including Medicaid eligible. Any amount over $10,000 subject 
+to healthcare insurance rules and case management.   
+ 
+Patients can pay for care in many different ways, such as by medical credit card or loan, 
+general purpose credit card, insurance, or through a zero-interest payment plan. What are 
+the costs and benefits for health care providers of offering each of these methods? Are there 
+situations where one method of payment is more advantageous than another?  
+As a small provider, I have to accept credit cards for these deductables or I wouldn’t be paid.  I 
+lose 5% to the cost of credit card processing. I have no ability to finance long term payment 
+plans. Large provider health systems have plenty of capital to support this as an option.  Thus, 
+our current economic system empowers very large systems over small entrepreneurs and 
+business owners.   
+What incentives do financial services companies offer health care providers, including 
+revenue-sharing or other financial or non-financial incentives? Largest incentive to take this 
+product is time.   I’m having to pay a fee upfront to recoup 85% of the fee that would typically 
+take me months to receive; and that is after I bug and nag and send people to collections.  We 
+are failing people.   
+ 
+The rich have the most free time, the rich never wait in line in person, don’t have to fax paper, 
+don’t have to “go down to the agency”.  HCA or Kaiser can chase down $1000 when it has 
+rooms of people to wait people out and lawyers to take people to small claims court.  See 
+attached list of Non for Profit Hospital Cases at Small Claims Court.    
+ 
+ 
+
+How do medical payment products and health insurance coverage interact? Do group health 
+plan or health insurance issuer practices contribute to uptake of medical payment products 
+by patients and providers?  The medical payment product market is a direct result of slow 
+payments by insurance companies and pathetic plan design for high utilization procedures such 
+as birth. Instead of innovating more efficient care delivery models and faster payments to 
+incent quality; your plans are moving costs to higher deductibles.   
+ 
+How many days do providers typically have to wait to be paid by plans or issuers versus by 
+medical payment product companies or general purpose credit card companies? My 
+credit/debit processor settles within 48 hours.  The fastest insurance plan can pay a claim in 
+two weeks for a perfect claim.  The TPAs and Federal Exchange Plans can easily take up to 90 
+days and that is based on us chasing them down repeatedly.  The TPA plans have the highest 
+deductibles, thus the medical credit market was born.  ISO20022 predicts I’m paid in minutes.  
+ 
+What factors, such as administrative requirements or clinical reviews, contribute to any 
+differential resolution timelines?  Yes- because CMS requires fee for service claims as a 
+requirement of participation. These claims are rekeyed by hand by person and people make 
+many mistakes. We should be paid off of our clinical data in our EHRs.  
+ 
+Please direct HHS, CMS, Office of the National Coordinator and Federal Reserve to pilot 4 
+Corner payment models in 2023.  We’ve had the ONC and federally funded EHRs for 13 years.  
+Why aren’t Plans paying on clinical data instead of claims starting with the most simple of 
+pediatric and maternal/women’s health visits and birth?   You start at the beginning with the 
+highly desired, predictable easy transactions. The best security against fraudulent payments is 
+rapid payments incenting the provider to give up 100% transparent clinical data.   
+ 
+Does a patient’s use of a medical payment product exempt them from certain consumer 
+protections, provider requirements, or group health plan or health insurance issuer 
+requirements? No. Not that I’m aware of.  
+ 
+Are different types of health coverage treated differently?  
+Yes.  Let’s consider the history of racial segregation on American pregnancy and birth. We are in 
+a multi-payer Safety Net/FQHC/Academic Medical Center vs the Private Suburban and Rural 
+markets fragmented reality.    As a result, we don’t have the Adam Smith economic market 
+driving equity and outcomes.  We need the Federal Government to align agencies towards an 
+outcome. Not all consumers have equal access to all Providers.      
+ 
+Does health care provider organizational structure, including ownership by private equity, 
+affect providers’ decisions to offer and promote these products?  
+Sure.  Yes. Does this factor compare to taking or not taking low Medicaid payments ??  We 
+wouldn’t exist if I were a non-for-profit.  Funding my own business was the only way to raise 
+capital.  I take both states Medicaid.  
+ 
+
+What are some best practices for health care providers who offer medical payment products 
+in avoiding adverse financial and health impacts for patients? i. Are there specific tactics or 
+practices that are well tailored and adapted for use by health care professionals in and 
+serving underserved communities, including Tribal communities and geographically isolated 
+communities?  
+See great idea of funding first $10,000 for every pregnancy/child. Empower the people not the 
+institutions.   
+ 
+What actions should the agencies take to develop and encourage uptake of these established 
+best practices? iii. Are there examples of actions or best practices at the State or local level to 
+which the Federal government should look?  
+Google “Child to College” and “Baby Bonds”.  There are many people across the political 
+spectrum that would be likely to support the first $10,000 idea.  Invest in American family’s 
+financial literacy during pregnancy and birth.  Set them up for success.   
+ 
+To what extent are patients using medical payment products to pay bills that are incorrect, or 
+that could be covered or defrayed by lower-cost alternatives?  
+Better plan design for Birth; eg cover 100% and these products won’t have a market in 
+maternity care.  Start there.   There is so much infertility due to untreated diabetes.  Let’s get 
+healthcare for women right first.  
+ 
+What billing errors may patients commonly encounter? 
+Patient not eligible.  Not aware less than 26 years old are on their parent or step parent plan.  
+Baby not included on Parent/Grandparent Plan.  Plan deems Provider not eligible or not in-
+network.  Need one single CAQH like system.  The idea that you must credential your six 
+providers with every plan and TPA is a terrible Provider burden and waste of everyone’s time.    
+ 
+How does using a medical payment product affect patients’ rights to dispute incorrect bills?  
+It shouldn’t.  That isn’t in our best interest.  Many providers game the system as an “out of 
+network” provider.  We don’t. Using the medical payment plan is last resort assuming Mom is in 
+good standing.  Again, we are talking about poor plan design with $4000 deductibles. New 
+parents know the least about navigating insurance and have the least time to figure it out.  
+ 
+Are certain groups of patients, such as members of specific underserved communities, more 
+likely to experience medical billing errors or issues resolving disputes over bills paid using 
+medical payment products? It is our experience that the most vulnerable working Americans, 
+whether in the urban core or in rural communities have the most poorly designed benefits.  If 
+they work for the school, they have high deductibles. If they work at a small business, they have 
+high deductibles.   (NOTE- look at Nashville Public School and Vanderbilt for example of doing it 
+right).  The inequity is that only the richest most affluent people working at corporate offices 
+have the best benefits.  The poorest have access to Medicaid but equal access to all Providers. 
+Ineligible Moms in labor are lucky if they are served when they walk into the ER under EMTALA.   
+ 
+
+What actions should agencies consider taking to better understand the effects of medical 
+payment products on consumers and the health care industry, educate consumers and 
+providers about the risks of these products, and collect complaints?  
+Send my RFI comments around.  You should start with fixing Birth.  This financial situation is 
+depressing the birth rate.  There is a bureaucratic fear of addressing pregnancy head on due to 
+abortion. Get healthy birth right. Increase likelihood good things can happen.   
+ 
+What are some sources of data on medical payment products? What additional data are 
+needed to understand the impact of medical payment products on patients and the health 
+care industry?  Backward engineer Federal Exchange Plan claims with high deductibles.  
+Analyze those CPTs. Ask direct questions. Ask the credit companies to give testimony.   
+ 
+What data collection, data analysis, and research actions should agencies take? iii. Are there 
+different or other actions that agencies should consider for underserved communities, 
+including Tribal communities and geographically isolated communities?  
+Identify and pay Community Health Workers in underserved, rural and Tribal communities to 
+ask around.  People close to the trenches know the answers.  Have you asked your FQHC 
+partners how people are making it work?  
+ 
+What types of consumer complaints have States and localities received?  
+No idea.  My complaint is that we OK every drug that comes on the market, but we can’t pay for 
+a healthy birth that would make the drug not necessary in the future.  Our values are screwed 
+up.  
+ 
+Where medical payment products are causing harm, what are some specific levers for 
+regulatory oversight and enforcement by Federal agencies that regulate financial products or 
+health care providers?  
+We are talking about outpatient procedures vs inpatient procedures right ?  These products are 
+sold as loans vs credit cards…is a bank involved?  Who holds the funds for the Credit 
+companies?  What regulatory oversight do you have over a clinic when the Plan isn’t Medicare?   
+You don’t have that oversight at the federal level.  You should be pushing best practice out 
+through the Federal Exchange Plans and Federal Employee Health Plan to impact BCBS, United 
+and Centene.  You must partner with States and Boards of Nursing and Boards of Healing Arts 
+to solicit and educate on complaints.  You can also check with malpractice companies.  
+ 
+Are there specific areas for Federal enforcement actions? Are there examples of regulation or 
+enforcement at the State or local level to which the Federal government should look? 
+Go fix plan design first.  Skipping to law enforcement when we haven’t fixed the main problem 
+is half our SDOH problems in this country. Focus on removing demand from the market.  
+ 
+ 
+ 
+ 
+
+What complementary legislative actions are worth exploring? Where may additional 
+statutory authority be needed?  
+Identify the difference between the necessary use of these products that reflect policy failure 
+and poor plan design (Birth) vs funding of Dog Hip Replacement (discretionary income).  And 
+then use that data to inform legislative action.  
+ 
+I have not used this type of product myself. I’m not going to comment on this section 
+regarding Individuals.  
+ 
+What actions should the CFPB consider taking to address problematic practices related to 
+medical credit cards or loans, including debt collection and credit reporting practices ?   
+Assess the reasons why the cards are being used the first place.  See above.  
+ 
+How do firms offering medical financial products typically market to providers?  
+We are cold-called/solicited through our licenses (public/purchasable), trade associations and 
+membership organizations.  
+ 
+How do creditors and their affiliates underwrite loans to patients? What specific factors (e.g., 
+age, type of medical procedure, credit score, etc.) are considered in underwriting?  
+I don’t know.  They seem to be happy to support “Birth” given the large deductibles described.  
+Eg, “they have 75 providers in this space”.   
+ 
+Do consumers understand the risks of paying medical bills via a medical credit card, 
+installment loan, or other commercial payment product, including lowered ability to 
+negotiate their bill with their provider?  
+If their choices are being take to small claims court over their 20% co-pay and $3000 deductible 
+or using a card; they are making a rational choice to open an account and pay the bill.  Do you 
+see how close we are to debtor’s prisons? Garnishing wages for a healthcare bill?  
+ 
+To what extent are alleged debts placed on medical credit cards and loans sent to debt 
+collectors? How do medical payment product companies’ debt collection practices differ from 
+those of health care providers, and are any issuer or provider debt collection practices posing 
+risks to consumers? 
+I have no idea how they differ.  Being threatened with court is scary.  People calling you day and 
+night and calling your relatives is scary.  It puts you in a constant state of stress, depression, and 
+leads to cardiac conditions.  It contributes to substance abuse.  See “these people are the ones 
+who can least afford these large deductibles”.  
+ 
+How can the CFPB use its authorities to ensure people with medical bills in collections, 
+including medical payment product debt, are screened for eligibility for financial assistance 
+and other benefits?  
+You need a healthcare stabilization fund and availability fund as the “back up” for the indigent 
+not yet eligible for Medicare, Medicaid and Disability SSI and SSID.   Google “healthcare 
+
+stabilization fund” for examples of how states created funds as a last resort for provider 
+malpractice.  
+ 
+How are health care providers and financial companies using credit or “propensity to pay” 
+scores to determine patients’ eligibility for financial assistance or medical payment products?  
+I’m looking at their deductible.  If it’s over $1000 and there isn’t proof of payment plan/income, 
+then they would meet criteria to receive information on the product.   
+ 
+What are the implications for compliance with the Fair Credit Reporting Act or other CFPB 
+authorities?  
+No idea.  
+ 
+When hospitals write off a patient’s debt as uncollectible or “bad debt” and cease attempts 
+to collect, do they notify patients that collection attempts will cease?  
+I don’t know.  Ask Hospitals.  Ask Ambulatory Surgery Centers. We provide a final letter that the 
+person is in good standing if they make good faith attempts with us to pay their bill.  We are on 
+a cash basis. Look at IRS policy how to lift up small healthcare providers with annual revenue 
+less than 5 Million per year who are in-network with Medicaid.   
+ 
+Would patients benefit from such notifications, and would such notifications reduce hospital 
+revenue? See Ge Bai at John Hopkins. Jumbo non-for-profit hospitals suing its own patients.   
+Where’s the charity care?  https://www.healthaffairs.org/doi/abs/10.1377/hlthaff.2020.01627 
+ 
+What actions should HHS consider taking to address problematic practices related to medical 
+credit cards or loans, particularly as they relate to patients eligible for or enrolled in 
+Medicare, Medicaid, or the Children’s Health Insurance Program, or patients enrolled in 
+Affordable Care Act Marketplace plans?  
+Start with the ACA Marketplace high deductible plans and paying for pregnancy and birth.   
+This is a policy failure.  
+ 
+What types of health insurance (Medicare, Medicaid, private insurance, etc.) are particularly 
+associated with the likelihood that an individual is offered or makes use of medical credit 
+cards and loans, and how does the type of health coverage affect relevant provider billing 
+practices?  
+ACA Marketplace plans followed by Self Insured Employers with Third Party Administrators are 
+the WORST offenders creating the poor plan design circumstances where these products are 
+needed.  Overlay high-deductible plans with low poverty requirements (must be very poor) to 
+obtain Medicaid.  Here are your problem areas.  
+ 
+Are there particular health care provider types that are most associated with being offered or 
+offering medical payment products, and are these providers receiving directed payments or 
+other incentives through State Medicaid programs?  
+Certified Nurse Midwives and Birth Centers are not being solicited.  
+ 
+
+Has the No Surprises Act and its surprise billing protections affected the prevalence and use 
+of medical credit cards and loans, and if so, how? i. Has the notice and consent process been 
+used to promote medical cards and loans to patients seeking health care items or services 
+from out-of-network providers/facilities, and if so, how?  
+We are just seeing the beginning of transparency for birth services come through on the 
+Hospital Web Sites.  There is still much confusion as the Hospital isn’t clear on what is a Facility 
+Charge vs the Professional Charge, Anesthesia, Facility for Mom, Facility Charge for Baby, 
+Pediatrician bill.  Please come down on the Hospitals and make this crystal clear for a basic 
+NVSD and a normal newborn. These are the #1 utilized hospital admissions and we still don’t 
+have basic consumer transparency.  There are still many opportunities for “surprises”.  
+ 
+For example, in instances where the No Surprises Act permits providers and facilities to seek 
+notice and obtain consent from an insured patient to waive their balance billing and cost-
+sharing protections under the No Surprises Act, are providers and facilities impermissibly 
+attaching or incorporating medical card or loan documents or information to the notice and 
+consent forms, or giving them to the patient at the same time as the notice and consent 
+forms?  
+I can’t speak to this. Talk to hospitals.  
+ 
+What steps are health care providers and facilities putting into place to ensure that bills paid 
+through medical payment products do not violate surprise billing requirements and that 
+patients who use medical payment products retain their No Surprises Act rights?  
+I can’t speak to this.  Talk to hospitals.  
+How does or might the use of medical credit cards and loans affect the amount and timing of 
+cost sharing a patient covered through Medicare, Medicaid, and/or the Affordable Care Act 
+Marketplace owes for a covered service?  
+It shouldn’t affect either.  The allowable should be the same.  
+ 
+Are there any observable differences in cost sharing among patients belonging to 
+underserved communities, such as Tribal communities or geographically isolated 
+communities?   
+Underserved and rural community members covered by ACA or Employer sponsored TPA plans 
+tend to have higher co-insurance percentages and higher deductibles.  It isn’t fair at all.   
+ 
+Hospital Price Transparency: What prices or versions of standard charges (e.g., cash prices) 
+are offered to patients who sign up for a medical credit card or installment loan?  
+I don’t know.  Ask the Hospitals.  
+ 
+What steps are taken by health care providers to ensure these charges are adequately 
+disclosed in accordance with hospital price transparency requirements? Do these charges 
+reflect and specifically identify facility fees?  
+We are just seeing the beginning of transparency for birth services come through on the 
+Hospital Web Sites.  There is still much confusion as the Hospital isn’t clear on what is a Facility 
+Charge vs the Professional Charge, Anesthesia, Facility for Mom, Facility Charge for Baby, 
+
+Pediatrician. Please come down on the Hospitals and make the total cost for a basic NVSD and a 
+normal newborn. These are the #1 utilized hospital admissions and we still don’t have basic 
+consumer transparency.   
+ 
+How might HHS improve patient understanding of options for covering the cost of medical 
+treatments? At what points in the care process could patients be provided with information 
+about their financial obligations and payment options?  
+We should have the ability to purchase a birth bundle and see true apples to apples on quality 
+with CNMs and Birth Centers. For the 1000th time, the family healthcare literacy journey starts 
+when a woman is pregnant and gives birth. It’s the first time we use our insurance. You educate 
+her and her partner on price transparency; you are educating her family for the lifespan.   She is 
+family medical case manager 80% of the time.  Dear Treasury and Federal Reserve- invest in 
+Mom/Partner Baby Financial Literacy as part of Pregnancy Childbirth Classes.  Let’s go pilot 
+these together and invest in American families.  
+ 
+What financial relationships exist between medical payment product companies and health 
+care providers? For example, do companies provide financial incentives to providers who 
+enroll patients in medical payment products?  
+None to my knowledge.  It’s a service sold for a fee.   
+ 
+Do providers pay financial companies to collect patients’ overdue balances? Or, do providers 
+have arrangements with financial companies to indemnify the company in whole or in part if 
+the patient defaults, such as an arrangement that when patients default on their debt to the 
+financial company, the debt reverts to the provider?  
+Yes, providers pay their billing companies to collect balances every day as part of the 5.75% we 
+are charged to process claims on top of the 5% we lose to credit card processing fees for paid 
+deductibles.  Some providers “sell” their debt to collection agencies.  Ask the big guys who do 
+that- look them up by NAIC codes.   
+ 
+Do health care providers or financial institutions market or recommend medical credit cards 
+or loans to Federal health care program beneficiaries (e.g. Medicare, Medicaid, Affordable 
+Care Act Marketplace, or Children’s Health Insurance Program enrollees)? Is the use of these 
+products limited to certain types of health care items or services, such as items and services 
+that are not reimbursable by Medicare or another third-party payor? 
+Any time there is a high deductible plan being used to purchase an expensive service that is 
+predictable, you will see the introduction of medical credit cards. Birth. Further, any time you 
+segregate the market availability of a desirable service by payer, eg Medicaid not paying for 
+orthodontics, weight reduction surgery or lasik, you will see medical credit cards.  
+ 
+Do medical payment product companies recommend certain health care providers to their 
+users?  
+No idea. Ask the Medical Payment companies.  
+ 
+ 
+
+Do companies limit where or how patients use medical credit cards?  
+No idea.  Ask the Medical Payment companies.  
+ 
+Is the health care provider (or the medical payment product company) offsetting some of the 
+patient’s medical debt or providing any other incentives to the patient (e.g., travel rewards 
+for charges to the card)?  
+I don’t see this.  
+ 
+What policy actions should Treasury consider taking to address problematic practices related 
+to medical credit cards or loans, including debt collection and credit reporting practices, to 
+conform with the existing tax laws and regulations pertaining to tax exempt hospitals? 
+See IRS testimony from Ge Bai, John Hopkins.  The audacity of “non-for-profit” hospitals limiting 
+access by Medicaid and non-eligible Mothers is well known in the birth community.  The 
+hospital employs a Provider moat strategy that don’t accept Medicaid, self-pay or 
+underperforming insurance plans.   The only way in is through an additional ER claim.   
+ 
+Should a tax-exempt hospital’s signing patients up for medical payment products be 
+considered similar to a tax-exempt hospital’s selling medical debt, such that the special rules 
+that only exclude debt sales from being extraordinary collection actions if certain 
+requirements are met would be applied to these payment products?  
+On what basis should a tax-exempt hospital be selling medical debt when it has an obligation to 
+provide charity care to retain its IRS status?  See Ge Bai and small Claims Court example.  
+ 
+How would applying the debt sale special rules to payment products change hospitals’ and 
+payment product providers’ current practices, especially those related to financial assistance 
+eligibility screening, extraordinary collection actions, interest rates, and recall or return of 
+balances owed by FAP-eligible individuals?  
+I have no idea.  Ask the Hospitals.  
+ 
+How do tax-exempt hospitals’ promotion of medical payment products compare to their 
+operationalization of the requirement that their financial assistance policies be widely 
+publicized?  
+Please look into the largest Non-For-Profit IDNs in America, birth policies and drill into the 
+Provider Moat/EMTALA reality.  
+ 
+What are best practices for hospitals publishing and making patients aware of financial 
+assistance programs (beyond compliance with the widely publicized requirements found in 
+the section 501(r) regulations)? 
+People don’t’ inquire where they aren’t allowed in the first place.  New hospitals are placing 
+themselves within monitored/gated communities so they aren’t easily found by people who 
+would need assistance.  Cross reference healthiest counties with new Hospitals.  
+ 
+ 
+
+Are medical payment product companies advertising their products as delivering community 
+benefits or as a form of financial assistance?  
+See marketing material.  
+ 
+Are tax-exempt hospitals claiming that their promotion of medical payment products delivers 
+community benefits or provides financial assistance, including in their filings of Form 990, 
+Schedule H?  
+Ask Hospitals. 
+ 
+Does the availability of medical payment products generally benefit the community or assist 
+patients financially? 
+They can serve as a financial tool for savvy consumers.  More likely, they are serving as a stop 
+gap that reflects a failure in health plan design and health policy.  
+ 
+ 
+In summary, the advent of medical credit cards in the pregnancy economy reflects a breakdown 
+in US Federal healthcare policy and opportunity for innovation and care delivery 
+transformation.  Please invite me and other small business owners like me to the table to 
+contribute to solutions.   Thank you.  
+ 
+Sincerely,  
+ 
+Kendra Wyatt, Chief Executive Officer  
+kendra@newbirthcompany.com 
+New Birth Company LLC  
+9202 West 110th ST 
+Overland Park, KS 66210 
+(m) 816-210-8964 

@@ -1,0 +1,262 @@
+ 
+ 
+September 11, 2023 
+Comment Intake 
+Request for Information Regarding Medical Payment Products 
+Consumer Financial Protection Bureau 
+1700 G Street NW 
+Washington, DC 20552 
+ 
+Re:  
+Request for Information Regarding Medical Payments Products; Consumer 
+Financial Protection Bureau, Centers for Medicare & Medicaid Services, Department 
+of Health and Human Services, and Department of the Treasury (88 Fed. Reg. 44,281-
+44,290, July 12, 2023) 
+To Whom It May Concern: 
+The Center for Capital Markets Competitiveness (“CCMC”) appreciates the 
+opportunity to submit comments regarding the Request for Information regarding 
+medical payment products (the “RFI”).1 
+Medical care providers play an important role in Americans’ lives, allowing them 
+to live longer and better than ever before. Congress and relevant regulators have taken 
+numerous policy actions to make this medical care more accessible and affordable. 
+These actions include the creation of Medicaid and Medicare, the establishment of 
+health insurance exchanges, and establishing protections for Americans when they 
+seek care in an emergency room.  
+Practically speaking, financial services companies play an important role for 
+Americans seeking healthcare, since they provide payment options to consumers 
+making use of medical care when it is not paid for by insurance. However, we note as 
+a threshold matter that there are significant limitations on the scope of payment 
+providers’ role in the context of medical care. These limitations also result in a 
+corresponding limitation in the authority of the CFPB and inform the scope of our 
+comments today in two primary ways. 
+First, payments products do not have a role in the underlying transactions that 
+give rise to an obligation to pay a medical provider. Given the structure of medical 
+billing practices, Americans frequently use various payment cards, checks, or other 
+payments products to satisfy whatever obligation they have incurred. The role of 
+ 
+1 See Request for Information Regarding Medical Payment Products, CFPB-2023-0038, 88 Fed. Reg. 
+44281 (July 12, 2023).  
+
+ 
+2 
+ 
+payments products in the medical sector is not unique. As in other sectors, consumer 
+financial services providers have no role in the underlying transaction that gives rise to 
+an obligation. Rather, they simply allow a consumer to pay for an incurred financial 
+obligation once incurred. Here, this means that consumer financial services providers 
+do not have a role in the sale or delivery of medical services, the medical insurance 
+market, or the medical billing system. As the RFI acknowledges, these matters are 
+likewise outside the authority of the CFPB. We consequently do not focus on those 
+activities in our comments today. 
+Second, we also note that there are a range of specialized financial products 
+that receive special treatment under the tax code and that play an important role in 
+paying for medical care. Such financial products include Health Savings Accounts and 
+Flexible Spending Accounts. These important products are also outside the CFPB’s 
+authority, however. We accordingly do not address such products in these comments. 
+Given these limitations, we focus our comments on issues within the authority 
+of the CFPB: use of payments products offered by financial services companies 
+without preferred tax treatment in the medical services context. While obligations vary 
+widely based on insurance coverage and other factors, individual patients often have 
+financial responsibility for a portion of the cost of medical care. A variety of payment 
+products make it easier for Americans to cover these expenses. These general 
+payment products (such as credit cards, debit cards, etc.) are subject to numerous 
+regulatory requirements, including transparent disclosures and responsible 
+underwriting. Consumers are likewise entitled to—and already receive—appropriate 
+protections when such debts enter the collections process, including from errors or 
+inappropriate conduct in debt collection, just like they do in other contexts.  
+The CFPB should not attempt to impose discrete regulations on “medical 
+payments” since, from a financial services perspective, there are no distinctive 
+payments features that would merit such specialized treatment. This is because it 
+could very well result in unintended consequences, reducing Americans’ access to 
+payment and credit products and making it more difficult for Americans to pay for the 
+care they need. Making it more difficult for creditors to collect on debt to which they 
+are contractually entitled would likewise increase the cost of medical care. (Debt 
+collection activities support the existing payment system by allowing recovery on 
+these obligations—thereby keeping borrowing costs low and encouraging lenders to 
+continue to offer popular products.) Similarly, making it harder for creditors, and other 
+companies, to rely on the information provided to credit bureaus would make it more 
+challenging to assess a borrower’s ability to repay a loan, leading to a higher cost of 
+credit for consumers and reduced access to credit. 
+
+ 
+3 
+ 
+We accordingly would ask the CFPB to consider three key points as it evaluates 
+the information it receives in response to this RFI. 
+• The CFPB should not try to use payment regulations to address 
+perceived concerns with medical billing and business practices.  
+• Any policy actions based on the distinctive treatment of medical debt 
+would be misplaced.  
+• The CFPB should not discourage the use of any particular payment 
+product. 
+I. 
+The CFPB should not try to use payment regulations to address perceived 
+concerns with medical billing and business practices.  
+The RFI identifies several perceived concerns with the way that medical 
+services are provided and billed. These concerns do not relate to how Americans 
+choose to pay for these products and services, however. Rather, they relate to 
+dynamics in the underlying transaction between a patient and a medical provider 
+and/or insurance company—matters that, as noted above, are outside the CFPB’s 
+statutory authority. In short, the CFPB is not a healthcare regulator. It has neither the 
+knowledge nor the appropriate tools to address issues it perceives in how patients 
+interact with their doctors or their insurance companies. The CFPB should not use its 
+authority over payments products to address any such matters.  
+We certainly acknowledge that payments products are regularly used by 
+Americans to pay for medical products and services. Products with medical benefits 
+are a constant presence in our lives. Whether putting on a bandage, taking a pain 
+reliever, using sunscreen, measuring your child’s temperature, putting on contacts, or 
+wearing a hearing aid, an American consumer may use a handful of different products 
+with medical benefits before breakfast. Many Americans purchase such products with 
+general purpose credit cards, much like they use such cards to pay for a co-pay for a 
+doctor’s visit.  
+There is nothing distinctive, however, about the use of a payment product in 
+this manner. From a payments perspective, this is just another transaction on a credit 
+card. The payment is not treated differently from the purchase of other products, 
+including non-medical products that may be purchased in the same transaction. As a 
+result, there is no appropriate policy basis for treating the use of a payment card to 
+pay for medical products or services differently than payments for other products. 
+The CFPB consequently should not attempt to address medical billing or 
+business practices through special regulation of “medical payments products.” The 
+
+ 
+4 
+ 
+CFPB has not—and cannot—define this term in a way that would limit it to a 
+distinctive set of payments products that merit distinctive regulation. Neither 
+Congress nor other regulatory agencies have defined this term in the past, and the 
+CFPB offers only ambiguous and conflicting definitions of the term here.  
+To that end, the RFI appears to view the term as covering “medical credit cards” 
+and “installment loans” that are “limited to” paying for “medical procedures, items, or 
+services at participating medical service providers, including primary and specialty 
+care, labs and diagnostics, inpatient and outpatient services, dental, vision, and 
+pharmacy care.”2 But, to our knowledge, there are no such products that meet the 
+CFPB’s own definition since the cited products can be used to pay for products 
+unrelated to healthcare. Other than certain payment products associated with Flexible 
+Spending Accounts and Health Savings Accounts, which are not addressed in this 
+letter, we are aware of no credit cards that are exclusively used as a “medical 
+payments product” (if this is what the Bureau is suggesting)—i.e., permitting use only 
+for medical products or services. Rather, these products typically allow for consumers 
+to purchase non-medical services—in the same way that a card marketed at 
+consumers to buy flights or make transactions at a particular retailer can be used for 
+other purposes. Indeed, the CFPB itself acknowledges that one of the examples it 
+cites allows for payment for “veterinary services.”3 
+II. 
+Any policy actions based on the distinctive treatment of medical debt would 
+be misplaced.  
+The CFPB appears to be contemplating policy actions that would attempt to 
+address concerns it has identified with medical debt. Indeed, the RFI repeatedly 
+mentions apparent concerns with the overall medical debt burden. The RFI suggests, 
+for example, that the federal government is already working to “reduce the burden of 
+medical debt.”4 Likewise, the RFI refers to the CFPB’s own report, produced in March 
+2022, on “Medical debt burden in the United States.”5 Similarly, the RFI cites to the 
+White House’s April 11, 2022 Fact Sheet pointing to concerns with overall medical debt 
+in the United States.6 But payments and debt collection policy is not the right tool to 
+address the cost of medical care. We would urge the CFPB not to attempt to use its 
+authority to address issues that are outside its purview.  
+ 
+2 88 Fed Reg at 44283. 
+3 88 Fed. Reg. at 44283 n.18. 
+4 88 Fed. Reg. at 44281 (characterizing the RFI as “[i]n line with the agencies’ work to lower health care 
+costs and reduce the burden of medical debt…”). 
+5 Id. at 44282 n.9. 
+6 Id. at 44282 n.8. 
+
+ 
+5 
+ 
+As a general matter, different types of debt should not be subject to different 
+regulatory frameworks. Whether a debt was incurred in a doctor’s office or a grocery 
+store does not change the importance of repayment of debt or change the appropriate 
+policy approach to such debt. Moreover, imposing different regulatory frameworks 
+would be impossible to administer.7 Practically speaking, payments processors do not 
+code payments to medical providers as “medical payments,” nor do they include 
+information about such “medical payments” in information provided to debt collectors. 
+As a result, debt collectors are not able to treat certain debts as “medical debts.” This 
+means that any rule imposing special requirements on the collection of “medical 
+debts” would result in confusion and/or require massive—and unjustified—reworkings 
+of existing payments and debt collection practices. Consider, for example, the 
+collection of a debt on a credit card that was used to purchase medical services, 
+among many other things. It would be virtually impossible for a debt collector to know 
+whether, and to what extent, a charged off balance on that card constituted a 
+“medical debt.” Similarly, a debt collector could not know whether a borrower had 
+used a “medical credit card” to purchase medical or veterinary services. Only a 
+significant reworking of existing approaches could make this possible. But this would 
+not make them appropriate.  
+The CFPB must not disrupt the debt collection marketplace by introducing 
+unjustified and impractical distinctions. The regulation of debt collectors should not 
+vary based on how such debt is recognized. Any other approach that restricts 
+collection of medical debt would likely increase the cost of credit and reduce the 
+availability of payments products that consumers want.  
+Relatedly, the CFPB also should not make credit reporting less reliable by 
+limiting the reporting of medical debts. The Chamber strongly cautions against the 
+banning of reporting any information related to medical debt (or otherwise) to credit 
+bureaus. Making more information available strengthens the risk-based pricing 
+system that has been historically proven to expand access to credit.8 This information 
+enables creditors, such as banks and credit unions, to understand a borrower’s ability 
+to repay a loan. Not only does this information protect the safety and soundness of 
+the financial institution depending on a credit report, but it plays a critical consumer 
+protection function since it helps institutions avoid extending credit to borrowers who 
+ 
+7 The three nationwide credit reporting companies recently removed all paid medical debt from 
+consumer credit reports and the time period before unpaid medical collection debt will appear on a 
+consumers’ credit report was increased from six months to one year. These measures are designed to 
+address specific circumstances, rather than all credit reporting relating to medical debt. 
+8 US Chamber, Supporting and Strengthening Risk-Based Pricing to Benefit All U.S. Consumers (April 
+15, 2021), https://www.uschamber.com/finance/supporting-and-strengthening-risk-based-pricing-
+benefit-all-us-consumers  
+
+ 
+6 
+ 
+are more likely to default. Any action by the CFPB to restrict the reporting of medical 
+debts (or any other class of debt) would have significant unintended negative 
+consequences. 
+III. 
+The CFPB should not discourage the use of any particular payments 
+product.  
+Consumers choose to use a wide range of payments products to make 
+payments to medical (and other) providers. While not every consumer will need or 
+benefit from each particular payment product, many rely upon them to gain access to 
+the care they need. These responsible payment products are designed to succeed: no 
+financial institution benefits from consumer default. These responsible products are 
+also already heavily regulated, with clear disclosures and sound underwriting 
+practices required by existing law. Current laws covering credit require extensive 
+disclosures; In particular, Truth in Lending Act disclosures that show the cost of credit 
+must be provided to the consumer. This information can be used by the customer to 
+compare financing options. Lenders also perform credit underwriting for new 
+accounts, which includes an analysis of the borrower’s ability to repay. The CFPB 
+consequently should not treat these responsible credit products as inherently risky or 
+problematic, and should not discourage their use by informed consumers.  
+The CFPB should not discourage the use of any payment product that is offered 
+in compliance with existing law. To that end, we are concerned that the CFPB provides 
+unjustified criticism of deferred interest in connection with “medical payment 
+products.” To this end, the RFI notes that “[m]any medical payment products offer 
+complex deferred interest promotions, which consumers often do not understand 
+fully, and which can significantly increase the cost of their care if they do not pay in 
+full during the promotional period.” Deferred interest is offered in payment products 
+throughout the economy, oftentimes via credit cards, and is not exclusive to “medical 
+payment products.” And despite the misplaced criticism in this RFI, the CFPB’s 2021 
+CARD Act report finds that promotions by private label and retail co-brand cards to 
+use deferred interest as an option to finance larger purchases “remain generally 
+popular with consumers, with purchase volumes relatively high despite pandemic-era 
+disruptions in retail sales.”9 The CFPB should not impose distinctive negative 
+treatment on this broadly popular and well-regulated product feature. 
+ 
+ 
+9 CFPB, The Consumer Credit Card Market 93 (2021), 
+https://files.consumerfinance.gov/f/documents/cfpb_consumer-credit-card-market-report_2021.pdf 
+
+ 
+7 
+ 
+* * * * * 
+ 
+We thank you for your consideration of these comments and would be happy to 
+discuss these issues further. 
+ 
+Sincerely,  
+ 
+Bill Hulse 
+Senior Vice President  
+Center for Capital Markets Competitiveness 
+U.S. Chamber of Commerce 
