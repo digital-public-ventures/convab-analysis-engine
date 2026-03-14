@@ -16,7 +16,8 @@ EXAMPLE_DATASET_DIR = FIXTURES_ROOT / 'medical_billing_comments'
 PROMPTS_DIR = EXAMPLE_DATASET_DIR / 'example_prompts'
 RESPONSES_CSV = EXAMPLE_DATASET_DIR / 'responses_100.csv'
 DATA_DIR = REPO_ROOT / 'app' / 'data'
-DEFAULT_BASE_URL = 'http://127.0.0.1:8000'
+PORT = 8010
+DEFAULT_BASE_URL = f'http://127.0.0.1:{PORT}'
 
 
 def _load_prompt(path: Path) -> str:

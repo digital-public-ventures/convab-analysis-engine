@@ -127,8 +127,29 @@ class DataStore:
         cleaned_dir = self.get_hash_dir(content_hash) / "cleaned_data"
         if not cleaned_dir.exists():
             return None
-        cleaned_files = list(cleaned_dir.glob("cleaned_*.csv"))
-        return cleaned_files[0] if cleaned_files else None
+
+        # Prefer the canonical cleaned artifact produced from the raw input.
+        hash_dir = self.get_hash_dir(content_hash)
+        raw_input_path = hash_dir / "input.csv"
+        preferred_names = []
+        if raw_input_path.exists():
+            preferred_names.append(f"cleaned_{raw_input_path.name}")
+        preferred_names.append("cleaned_input.csv")
+
+        for filename in preferred_names:
+            preferred_path = cleaned_dir / filename
+            if preferred_path.exists():
+                return preferred_path
+
+        cleaned_files = sorted(cleaned_dir.glob("cleaned_*.csv"))
+        if not cleaned_files:
+            return None
+
+        primary_files = [path for path in cleaned_files if not path.stem.endswith("missing_ids")]
+        if len(primary_files) == 1:
+            return primary_files[0]
+
+        return cleaned_files[0]
 
     def get_schema(self, content_hash: str) -> Path | None:
         """Find schema.json if it exists.

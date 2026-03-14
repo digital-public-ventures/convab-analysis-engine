@@ -290,6 +290,8 @@ class TestAsyncJobHandling:
             expect_truthy(results_payload.get('rows'), 'Expected analysis rows')
             if results_payload.get('completed') is not True:
                 pytest.fail('Expected completed to be true')
+            if len(results_payload['rows']) != len(pd.read_csv(TEST_CSV)):
+                pytest.fail('Expected cached analysis rows to match source CSV row count')
 
             cursor = results_payload.get('next_cursor')
             expect_truthy(cursor, 'Expected cursor in analysis results')
@@ -301,6 +303,90 @@ class TestAsyncJobHandling:
                 pytest.fail('Expected no new rows after cursor')
             if follow_payload.get('completed') is not True:
                 pytest.fail('Expected completed to be true')
+
+    def test_analyze_job_uses_canonical_cleaned_csv_when_auxiliary_file_exists(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+    ) -> None:
+        """Analyze output rows should match input rows even when auxiliary cleaned files exist."""
+
+        async def fake_analyze_dataset(
+            request: AnalysisRequest,
+            config: AnalysisConfig | None = None,
+            on_batch: Callable[[list[dict[str, Any]]], Awaitable[None]] | None = None,
+            on_row_count: Callable[[int], Awaitable[None]] | None = None,
+        ) -> tuple[dict[str, Any], str]:
+            _ = config
+            df = pd.read_csv(request.cleaned_csv)
+            id_column = df.columns[0]
+            rows = [{'record_id': str(value)} for value in df[id_column].tolist()]
+            if on_row_count is not None:
+                await on_row_count(len(rows))
+            if on_batch is not None:
+                await on_batch(rows)
+
+            output_dir = request.output_dir
+            output_dir.mkdir(parents=True, exist_ok=True)
+            csv_path = output_dir / 'analysis.csv'
+            json_path = output_dir / 'analysis.json'
+            payload = {'metadata': {'record_count': len(rows)}, 'records': rows}
+            pd.DataFrame(rows).to_csv(csv_path, index=False)
+            json_path.write_text(json.dumps(payload), encoding='utf-8')
+            return payload, csv_path.read_text(encoding='utf-8')
+
+        monkeypatch.setattr(server_jobs_module, 'analyze_dataset', fake_analyze_dataset)
+
+        temp_csv = write_temp_csv(tmp_path, rows=12)
+        source_df = pd.read_csv(temp_csv)
+        subset_df = source_df.head(5)
+        content = temp_csv.read_bytes()
+        content_hash = DataStore.hash_content(content)
+        hash_dir = app_config.DATA_DIR / content_hash
+        cleaned_dir = hash_dir / 'cleaned_data'
+        schema_dir = hash_dir / 'schema'
+        cleaned_dir.mkdir(parents=True, exist_ok=True)
+        schema_dir.mkdir(parents=True, exist_ok=True)
+        (hash_dir / 'input.csv').write_bytes(content)
+        source_df.to_csv(cleaned_dir / 'cleaned_input.csv', index=False)
+        subset_df.to_csv(cleaned_dir / 'cleaned_missing_ids.csv', index=False)
+        copy_if_different(FIXTURE_SCHEMA, schema_dir / 'schema.json')
+
+        original_glob = Path.glob
+
+        def reversed_glob(path: Path, pattern: str):
+            matches = list(original_glob(path, pattern))
+            if path == cleaned_dir and pattern == 'cleaned_*.csv':
+                return iter([cleaned_dir / 'cleaned_missing_ids.csv', cleaned_dir / 'cleaned_input.csv'])
+            return iter(matches)
+
+        monkeypatch.setattr(Path, 'glob', reversed_glob)
+
+        with TestClient(app) as client:
+            analyze_response = client.post(
+                '/analyze?no_cache=true',
+                json={
+                    'hash': content_hash,
+                    'use_case': 'Analyze public comments for themes and sentiment',
+                    'system_prompt': 'You are a helpful research assistant.',
+                },
+            )
+
+            expect_status(analyze_response, HTTPStatus.ACCEPTED)
+            analyze_job_id = analyze_response.json()['job_id']
+            poll_until_complete(client, analyze_job_id)
+
+            results_response = client.get(f'/jobs/{analyze_job_id}/results')
+            expect_status(results_response, HTTPStatus.OK)
+            rows = results_response.json().get('rows', [])
+            if len(rows) != len(source_df):
+                pytest.fail('Expected analyze job results to match source CSV row count')
+
+        analysis_csv = hash_dir / 'analyzed' / 'analysis.csv'
+        if not analysis_csv.exists():
+            pytest.fail('Expected analysis.csv to be created')
+        if len(pd.read_csv(analysis_csv)) != len(source_df):
+            pytest.fail('Expected analysis.csv row count to match source CSV row count')
 
     def test_analyze_job_streams_results_before_completion(
         self,

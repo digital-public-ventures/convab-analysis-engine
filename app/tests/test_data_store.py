@@ -112,6 +112,31 @@ class TestDataStore:
 
         assert result == csv_file
 
+    def test_get_cleaned_csv_prefers_canonical_input_file(self, monkeypatch, tmp_path: Path) -> None:
+        """Test get_cleaned_csv prefers the canonical cleaned_input.csv when multiple files exist."""
+        store = DataStore(data_dir=tmp_path)
+        test_hash = "ea" * 32
+
+        paths = store.ensure_hash_dirs(test_hash)
+        canonical_file = paths["cleaned_data"] / "cleaned_input.csv"
+        auxiliary_file = paths["cleaned_data"] / "cleaned_missing_ids.csv"
+        canonical_file.write_text("record_id\n1\n2\n3\n", encoding="utf-8")
+        auxiliary_file.write_text("record_id\n1\n", encoding="utf-8")
+
+        original_glob = Path.glob
+
+        def reversed_glob(self: Path, pattern: str):
+            matches = list(original_glob(self, pattern))
+            if self == paths["cleaned_data"] and pattern == "cleaned_*.csv":
+                return iter([auxiliary_file, canonical_file])
+            return iter(matches)
+
+        monkeypatch.setattr(Path, "glob", reversed_glob)
+
+        result = store.get_cleaned_csv(test_hash)
+
+        assert result == canonical_file
+
     def test_get_schema_returns_none_if_missing(self, tmp_path: Path) -> None:
         """Test get_schema returns None for non-existent hash."""
         store = DataStore(data_dir=tmp_path)

@@ -394,9 +394,9 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     if csv_df.empty:
         pytest.fail("Analysis CSV did not contain any successful rows")
 
-    if len(csv_df) > len(responses_df):
+    if len(csv_df) != len(responses_df):
         pytest.fail(
-            f"Analysis CSV row count exceeded source CSV: "
+            f"Analysis CSV row count did not match source CSV: "
             f"{len(csv_df)}/{len(responses_df)}"
         )
 
@@ -405,6 +405,12 @@ def test_analyze_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
 
     source_ids = set(responses_df[source_id_column].astype(str))
     record_ids = set(csv_df["record_id"].astype(str))
+    missing = source_ids - record_ids
+    if missing:
+        pytest.fail(
+            f"Analysis CSV was missing source record_ids "
+            f"(missing={len(missing)})"
+        )
     extra = record_ids - source_ids
     if extra:
         pytest.fail(
