@@ -14,12 +14,6 @@ from typing import TYPE_CHECKING, Any, cast
 
 import pandas as pd
 
-from app.analysis.response_validation import (
-    build_analysis_response_schema as _build_analysis_response_schema,
-)
-from app.analysis.response_validation import (
-    validate_analysis_payload as _validate_analysis_payload,
-)
 from app.config import (
     ANALYSIS_BATCH_SIZE,
     ANALYSIS_CSV_FILENAME,
@@ -32,14 +26,13 @@ from app.config import (
 from app.llm import generate_structured_content, validate_model_config
 from app.llm.provider import create_llm_client, resolve_api_key
 from app.llm.rate_limiter import AsyncRateLimiter
+from app.prompts.analysis import build_analysis_prompt, summarize_schema
+from app.prompts.response_schema import build_analysis_response_schema
+from app.prompts.response_validation import validate_analysis_payload
 
 logger = logging.getLogger(__name__)
 
-MAX_PROMPT_RECORD_CHARS = 500_000
 BATCH_CHAR_BUDGET = 100_000
-PROMPTS_DIR = Path(__file__).resolve().parent / 'prompts'
-ANALYSIS_PROMPT_TEMPLATE = (PROMPTS_DIR / 'analysis_prompt.txt').read_text(encoding='utf-8')
-CRITICAL_GUIDELINES = (PROMPTS_DIR / 'critical_guidelines.txt').read_text(encoding='utf-8')
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -79,114 +72,6 @@ class AnalysisContext:
     source_schema_sha256: str
     response_schema_sha256: str
     source_schema: dict[str, Any]
-
-
-def _summarize_schema(schema: dict[str, Any]) -> str:
-    """Create a concise text summary of schema fields for prompting.
-
-    Args:
-        schema: Generated schema dictionary
-
-    Returns:
-        Human-readable schema summary
-    """
-    lines: list[str] = []
-
-    enum_fields = schema.get('enum_fields', [])
-    if enum_fields:
-        lines.append('Enum fields:')
-        for field in enum_fields:
-            field_name = field.get('field_name', '').strip()
-            description = field.get('description', '').strip()
-            allowed_values = field.get('allowed_values', [])
-            values_text = ', '.join(str(v) for v in allowed_values)
-            lines.append(f'- {field_name}: {description} | allowed_values: [{values_text}]')
-
-    categorical_fields = schema.get('categorical_fields', [])
-    if categorical_fields:
-        lines.append('Categorical fields:')
-        for field in categorical_fields:
-            field_name = field.get('field_name', '').strip()
-            description = field.get('description', '').strip()
-            suggested_values = field.get('suggested_values', [])
-            allow_multiple = field.get('allow_multiple', False)
-            values_text = ', '.join(str(v) for v in suggested_values)
-            lines.append(f'- {field_name}: {description} | values: [{values_text}] | allow_multiple={allow_multiple}')
-
-    scalar_fields = schema.get('scalar_fields', [])
-    if scalar_fields:
-        lines.append('Scalar fields (0-10):')
-        for field in scalar_fields:
-            field_name = field.get('field_name', '').strip()
-            description = field.get('description', '').strip()
-            scale_min = field.get('scale_min', 0)
-            scale_max = field.get('scale_max', 10)
-            lines.append(f'- {field_name}: {description} | scale {scale_min}-{scale_max}')
-
-    key_quotes_fields = schema.get('key_quotes_fields', [])
-    if key_quotes_fields:
-        lines.append('Key quotes fields:')
-        for field in key_quotes_fields:
-            field_name = field.get('field_name', '').strip()
-            description = field.get('description', '').strip()
-            max_quotes = field.get('max_quotes', 1)
-            lines.append(f'- {field_name}: {description} | max_quotes={max_quotes}')
-
-    text_array_fields = schema.get('text_array_fields', [])
-    if text_array_fields:
-        lines.append('Text array fields:')
-        for field in text_array_fields:
-            field_name = field.get('field_name', '').strip()
-            description = field.get('description', '').strip()
-            max_items = field.get('max_items')
-            max_text = f'max_items={max_items}' if max_items is not None else 'max_items=unlimited'
-            lines.append(f'- {field_name}: {description} | {max_text}')
-
-    return '\n'.join(lines)
-
-
-def _format_records_for_prompt(records: list[dict[str, Any]]) -> str:
-    """Format record data for inclusion in the prompt.
-
-    Args:
-        records: List of record dictionaries
-
-    Returns:
-        Formatted records string
-    """
-    formatted_records = []
-    for i, record in enumerate(records, 1):
-        record_json = json.dumps(record, indent=2)
-        if len(record_json) > MAX_PROMPT_RECORD_CHARS:
-            record_json = record_json[: MAX_PROMPT_RECORD_CHARS - 3] + '...'
-        formatted_records.append(f'Record {i}:\n{record_json}\n')
-    return '\n'.join(formatted_records)
-
-
-def _build_analysis_prompt(
-    use_case: str,
-    schema_summary: str,
-    records: list[dict[str, Any]],
-    id_column: str,
-) -> str:
-    """Build the prompt for a batch of records.
-
-    Args:
-        use_case: Use case description
-        schema_summary: Summary of schema fields
-        records: Batch of records to analyze
-        id_column: Name of the ID column in the CSV
-
-    Returns:
-        Prompt text
-    """
-    return ANALYSIS_PROMPT_TEMPLATE.format(
-        use_case=use_case.strip(),
-        schema_summary=schema_summary.strip(),
-        id_column=id_column,
-        critical_guidelines=CRITICAL_GUIDELINES.strip(),
-        records=_format_records_for_prompt(records),
-    )
 
 
 def _build_dynamic_batches(
@@ -489,7 +374,7 @@ async def _analyze_batch(
     started_at = time.monotonic()
     max_retries = 5
 
-    prompt_text = _build_analysis_prompt(
+    prompt_text = build_analysis_prompt(
         context.use_case,
         context.schema_summary,
         records,
@@ -512,7 +397,7 @@ async def _analyze_batch(
         )
 
         if response_data:
-            failure = _validate_analysis_payload(response_data, context.source_schema)
+            failure = validate_analysis_payload(response_data, context.source_schema)
             if failure is None:
                 break
             logger.warning(
@@ -644,11 +529,11 @@ async def analyze_dataset(
     limiter = AsyncRateLimiter(profile.rpm, profile.tpm, profile.rpd, max_concurrency=profile.max_concurrency)
 
     prompt_prep_started_at = time.monotonic()
-    response_schema = _build_analysis_response_schema(schema)
+    response_schema = build_analysis_response_schema(schema)
     response_schema_sha256 = hashlib.sha256(
         json.dumps(response_schema, sort_keys=True, separators=(',', ':')).encode('utf-8')
     ).hexdigest()
-    schema_summary = _summarize_schema(schema)
+    schema_summary = summarize_schema(schema)
     logger.debug(
         'Prepared prompt inputs in %.2fs (source_schema_sha256=%s response_schema_sha256=%s)',
         time.monotonic() - prompt_prep_started_at,

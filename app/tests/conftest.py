@@ -8,6 +8,7 @@ import pytest
 from app import config as app_config
 from app import server as app_server
 from app.analysis import analyzer as analysis_analyzer
+from app.prompts.analysis import builder as analysis_prompt_builder
 from app.processing import AttachmentProcessor
 from app.processing import cleaner as processing_cleaner
 from app.processing import data_store as processing_data_store
@@ -165,7 +166,7 @@ def override_data_dir(
 @pytest.fixture(autouse=True)
 def override_prompt_record_chars(monkeypatch: pytest.MonkeyPatch) -> None:
     """Keep prompt record truncation small for test runs."""
-    monkeypatch.setattr(analysis_analyzer, 'MAX_PROMPT_RECORD_CHARS', 500)
+    monkeypatch.setattr(analysis_prompt_builder, 'MAX_PROMPT_RECORD_CHARS', 500)
 
 
 @pytest.fixture(autouse=True)

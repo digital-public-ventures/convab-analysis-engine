@@ -10,6 +10,7 @@ import pytest
 
 from app.analysis import AnalysisConfig, AnalysisRequest
 from app.analysis import analyzer as analyzer_module
+from app.prompts.response_validation import validate_analysis_payload
 
 
 def _valid_payload(schema: dict[str, Any], record_id: str = "1") -> dict[str, Any]:
@@ -56,7 +57,7 @@ def _valid_payload(schema: dict[str, Any], record_id: str = "1") -> dict[str, An
 def test_validate_payload_missing_required_field(mock_schema: dict[str, Any]) -> None:
     payload = _valid_payload(mock_schema)
     payload["records"][0]["enum_fields"].pop("category_type")
-    failure = analyzer_module._validate_analysis_payload(payload, mock_schema)
+    failure = validate_analysis_payload(payload, mock_schema)
     assert failure is not None
     assert failure.category == "missing_required_fields"
 
@@ -64,13 +65,13 @@ def test_validate_payload_missing_required_field(mock_schema: dict[str, Any]) ->
 def test_validate_payload_wrong_scalar_type_and_range(mock_schema: dict[str, Any]) -> None:
     payload = _valid_payload(mock_schema)
     payload["records"][0]["scalar_fields"]["urgency"] = "high"
-    failure = analyzer_module._validate_analysis_payload(payload, mock_schema)
+    failure = validate_analysis_payload(payload, mock_schema)
     assert failure is not None
     assert failure.category == "wrong_types"
 
     payload = _valid_payload(mock_schema)
     payload["records"][0]["scalar_fields"]["urgency"] = 999
-    failure = analyzer_module._validate_analysis_payload(payload, mock_schema)
+    failure = validate_analysis_payload(payload, mock_schema)
     assert failure is not None
     assert failure.category == "wrong_types"
 
@@ -78,7 +79,7 @@ def test_validate_payload_wrong_scalar_type_and_range(mock_schema: dict[str, Any
 def test_validate_payload_unexpected_keys(mock_schema: dict[str, Any]) -> None:
     payload = _valid_payload(mock_schema)
     payload["records"][0]["unknown"] = "nope"
-    failure = analyzer_module._validate_analysis_payload(payload, mock_schema)
+    failure = validate_analysis_payload(payload, mock_schema)
     assert failure is not None
     assert failure.category == "unexpected_keys"
 
@@ -111,7 +112,7 @@ def test_validate_payload_invalid_categorical_arrays() -> None:
             }
         ]
     }
-    failure = analyzer_module._validate_analysis_payload(payload, schema)
+    failure = validate_analysis_payload(payload, schema)
     assert failure is not None
     assert failure.category == "wrong_types"
 
