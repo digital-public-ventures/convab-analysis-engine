@@ -4,6 +4,27 @@ Convab transforms unstructured public comments, complaints, and feedback into st
 
 The goal is to make large-scale qualitative feedback — the kind that usually requires weeks or months of manual coding — legible in hours or minutes.
 
+## Background
+
+Effectively understanding large-scale public input is a significant challenge. When a federal agency receives thousands of public comments on a proposed regulation, or a city solicits resident feedback on a long-range plan, the resulting corpus is rich but unwieldy. Traditional manual coding methods are slow and expensive, and simple keyword searches miss the nuance of what people actually said.
+
+Convab uses LLMs to bridge this gap: it reads every comment, tags it against a schema fitted to the dataset, and surfaces structured patterns — while preserving the original voices through extracted quotes.
+
+## Pilot: CFPB Medical Debt RFI
+
+In 2023, the Consumer Financial Protection Bureau asked the public to share their experiences with medical payment products — specialty credit cards and installment loans used to pay uninsured costs of medical, dental, and veterinary care. The Request for Information was part of an effort to understand the effects of medical debt on American consumers.
+
+Almost 5,000 Americans — individuals, advocates, industry groups, and government officials — responded. Reading and analyzing those responses manually took six CFPB staff members three months.
+
+Convab's prototype analyzed a sample of these responses in minutes, producing insights actionable to policymakers:
+
+- **Categorizing common issues and sub-issues** among respondents
+- **Isolating different perspectives** from consumers, industry, and consumer advocates
+- **Identifying specific products and product models** mentioned repeatedly across comments
+- **Distilling policy suggestions** directly from commenter language
+
+Throughout the analysis, Convab pulls exemplar text and quotes to show its work — grounding every category and insight in what people actually wrote.
+
 ## How It Works
 
 ```text
@@ -41,7 +62,7 @@ See [docs/QUICK_START.md](docs/QUICK_START.md) for a walkthrough of processing y
 
 ## Architecture
 
-```
+```text
 app/
 ├── server.py                  # FastAPI app, lifespan wiring
 ├── config.py                  # Paths, model IDs, processing constants
