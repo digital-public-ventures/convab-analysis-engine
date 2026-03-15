@@ -15,8 +15,7 @@ from app.routers.models import SchemaRequest
 from app.server import app
 
 FIXTURES_DIR = Path(__file__).parent / 'fixtures'
-HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
-TEST_CSV = FIXTURES_DIR / HASH_VALUE / 'responses.csv'
+TEST_CSV = FIXTURES_DIR / 'raw' / 'responses.csv'
 
 
 def _poll_job_completion(client: TestClient, job_id: str, timeout_seconds: float = 20.0) -> None:
@@ -121,7 +120,7 @@ class TestCSVProcessing:
         assert len(final_df) == 4
 
     @pytest.mark.asyncio
-    async def test_clean_csv_processes_attachments(self, processor: AttachmentProcessor) -> None:
+    async def test_clean_csv_processes_attachments(self, processor: AttachmentProcessor, tmp_path: Path) -> None:
         """Test that clean_csv correctly processes a CSV with attachments.
 
         This test verifies:
@@ -132,7 +131,7 @@ class TestCSVProcessing:
         5. Caching is utilized (via pre-populated cache)
         """
         # Process the test CSV
-        output_path = await clean_csv(TEST_CSV, processor=processor)
+        output_path = await clean_csv(TEST_CSV, processor=processor, output_dir=tmp_path)
 
         # Verify output file was created
         assert output_path.exists(), 'Output CSV should be created'
@@ -161,7 +160,7 @@ class TestCSVProcessing:
         output_path.unlink(missing_ok=True)
 
     @pytest.mark.asyncio
-    async def test_caching_prevents_redownload(self, processor: AttachmentProcessor) -> None:
+    async def test_caching_prevents_redownload(self, processor: AttachmentProcessor, tmp_path: Path) -> None:
         """Test that caching prevents re-downloading and re-extracting files.
 
         Processes the same CSV twice and verifies cache hits on second run.
@@ -177,11 +176,11 @@ class TestCSVProcessing:
             return result
 
         # First run - populates cache
-        await clean_csv(TEST_CSV, processor=processor)
+        await clean_csv(TEST_CSV, processor=processor, output_dir=tmp_path / 'first_pass')
 
         # Track cache hits on second run
         with patch('app.processing.cache.get_cached_content', side_effect=track_cache):
-            await clean_csv(TEST_CSV, processor=processor)
+            await clean_csv(TEST_CSV, processor=processor, output_dir=tmp_path / 'second_pass')
 
         # Should have cache hits on second run (from text cache)
         # The pre-populated cache should provide hits

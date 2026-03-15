@@ -14,14 +14,18 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import config as app_config
-from app.config import POST_PROCESSING_SUBDIR, TAG_DEDUP_CSV_FILENAME, TAG_DEDUP_MAPPINGS_FILENAME
+from app.config import (
+    ANALYSIS_CSV_FILENAME,
+    ANALYSIS_JSON_FILENAME,
+    POST_PROCESSING_SUBDIR,
+    TAG_DEDUP_CSV_FILENAME,
+    TAG_DEDUP_MAPPINGS_FILENAME,
+)
 from app.processing.job_store import JobStore
 
-HASH_VALUE = '8ca4ff2e602137ec54d559b9b3f4689803e270cfe2f286f51681dd83428dec28'  # pragma: allowlist secret
-FIXTURES_DIR = Path(__file__).parent / 'fixtures' / HASH_VALUE
-TEST_CSV = FIXTURES_DIR / 'responses.csv'
-FIXTURE_SCHEMA = FIXTURES_DIR / 'schema' / 'schema.json'
-FIXTURE_ANALYSIS_DIR = FIXTURES_DIR / 'analyzed' / 'integration_test' / '20260131-215335'
+FIXTURES_DIR = Path(__file__).parent / 'fixtures'
+TEST_CSV = FIXTURES_DIR / 'raw' / 'responses.csv'
+FIXTURE_SCHEMA = FIXTURES_DIR / 'schema' / 'server_lifecycle_schema.json'
 STREAMING_BATCH_THRESHOLD = 2
 
 
@@ -71,17 +75,27 @@ def seed_analysis_outputs(content_hash: str) -> None:
     (hash_dir / 'analyzed').mkdir(parents=True, exist_ok=True)
 
     copy_if_different(FIXTURE_SCHEMA, hash_dir / 'schema' / 'schema.json')
-    shutil.copy(FIXTURE_ANALYSIS_DIR / 'analysis.csv', hash_dir / 'analyzed' / 'analysis.csv')
-    shutil.copy(FIXTURE_ANALYSIS_DIR / 'analysis.json', hash_dir / 'analyzed' / 'analysis.json')
+    source_df = pd.read_csv(TEST_CSV)
+    id_column = source_df.columns[0]
+    analysis_rows = [{'record_id': str(value)} for value in source_df[id_column].tolist()]
+    analysis_df = pd.DataFrame(analysis_rows)
+    analysis_df.to_csv(hash_dir / 'analyzed' / ANALYSIS_CSV_FILENAME, index=False)
+    analysis_payload = {'metadata': {'record_count': len(analysis_rows)}, 'records': analysis_rows}
+    (hash_dir / 'analyzed' / ANALYSIS_JSON_FILENAME).write_text(
+        json.dumps(analysis_payload),
+        encoding='utf-8',
+    )
 
 
 def seed_tag_fix_outputs(content_hash: str) -> None:
     """Seed cached tag-fix outputs for the requested hash."""
     output_dir = app_config.DATA_DIR / content_hash / POST_PROCESSING_SUBDIR
     output_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy(
-        FIXTURE_ANALYSIS_DIR / 'analysis.csv',
+    source_df = pd.read_csv(TEST_CSV)
+    id_column = source_df.columns[0]
+    pd.DataFrame({'record_id': source_df[id_column].astype(str)}).to_csv(
         output_dir / TAG_DEDUP_CSV_FILENAME,
+        index=False,
     )
     (output_dir / TAG_DEDUP_MAPPINGS_FILENAME).write_text(
         json.dumps({'seeded': True}),

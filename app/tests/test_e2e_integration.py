@@ -41,6 +41,8 @@ EXAMPLE_DATASET_DIR = FIXTURES_ROOT / 'medical_billing_comments'
 PROMPTS_DIR = EXAMPLE_DATASET_DIR / 'example_prompts'
 RESPONSES_CSV = EXAMPLE_DATASET_DIR / 'responses_100.csv'
 EXAMPLE_DATASET_HASH = 'efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334'  # pragma: allowlist secret
+SCHEMA_FIXTURE = FIXTURES_ROOT / 'schema' / 'medical_billing_comments_schema.json'
+CLEANED_CSV_FIXTURE = FIXTURES_ROOT / 'cleaned_data' / 'medical_billing_comments_cleaned_input.csv'
 SCHEMA_CACHE_BYPASS = True
 RESPONSE_SCHEMA_PATH = REPO_ROOT / 'app' / 'prompts' / 'schema_generation' / 'response_schema.json'
 os.environ['PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK'] = 'true'
@@ -124,6 +126,32 @@ def _clear_fixtures_outputs(fixtures_root: Path, content_hash: str, output_dir: 
                 file_path.unlink()
 
 
+def _seed_runtime_hash_inputs(runtime_data_dir: Path) -> None:
+    hash_dir = runtime_data_dir / EXAMPLE_DATASET_HASH
+    cleaned_dir = hash_dir / 'cleaned_data'
+    downloads_dir = hash_dir / 'downloads'
+    schema_dir = hash_dir / 'schema'
+    cleaned_dir.mkdir(parents=True, exist_ok=True)
+    downloads_dir.mkdir(parents=True, exist_ok=True)
+    schema_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(CLEANED_CSV_FIXTURE, cleaned_dir / 'cleaned_input.csv')
+    shutil.copy(SCHEMA_FIXTURE, schema_dir / 'schema.json')
+    fixture_downloads_dir = FIXTURES_ROOT / 'downloads'
+    if fixture_downloads_dir.exists():
+        for item in fixture_downloads_dir.iterdir():
+            destination = downloads_dir / item.name
+            if item.is_dir():
+                shutil.copytree(item, destination)
+            else:
+                shutil.copy(item, destination)
+
+
+def _build_seed_analysis_df(source_csv: Path) -> pd.DataFrame:
+    source_df = pd.read_csv(source_csv)
+    id_column = source_df.columns[0]
+    return pd.DataFrame({'record_id': source_df[id_column].astype(str)})
+
+
 def _prepare_runtime_data_dir(tmp_path: Path) -> Path:
     runtime_data_dir = tmp_path / 'fixtures_runtime'
     runtime_data_dir.mkdir()
@@ -132,9 +160,7 @@ def _prepare_runtime_data_dir(tmp_path: Path) -> Path:
     downloads_dir = FIXTURES_ROOT / 'downloads'
     if downloads_dir.exists():
         shutil.copytree(downloads_dir, runtime_data_dir / 'downloads')
-    fixture_hash_dir = FIXTURES_ROOT / EXAMPLE_DATASET_HASH
-    if fixture_hash_dir.exists():
-        shutil.copytree(fixture_hash_dir, runtime_data_dir / EXAMPLE_DATASET_HASH)
+    _seed_runtime_hash_inputs(runtime_data_dir)
     return runtime_data_dir
 
 
@@ -512,8 +538,8 @@ def test_tag_fix_outputs_with_cached_hash(tmp_path: Path, monkeypatch: pytest.Mo
     monkeypatch.setattr(server_jobs_module, 'POST_PROCESSING_SUBDIR', 'post_processing')
 
     analysis_csv = runtime_data_dir / EXAMPLE_DATASET_HASH / 'analyzed' / ANALYSIS_CSV_FILENAME
-    if not analysis_csv.exists():
-        pytest.fail('analysis.csv fixture was missing for hardcoded hash')
+    analysis_csv.parent.mkdir(parents=True, exist_ok=True)
+    _build_seed_analysis_df(RESPONSES_CSV).to_csv(analysis_csv, index=False)
 
     post_processing_dir = runtime_data_dir / EXAMPLE_DATASET_HASH / 'post_processing'
     post_processing_dir.mkdir(parents=True, exist_ok=True)

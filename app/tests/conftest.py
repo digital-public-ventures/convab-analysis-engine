@@ -14,6 +14,7 @@ from app.processing import data_store as processing_data_store
 from app.prompts.analysis import builder as analysis_prompt_builder
 from app.routers import jobs_runner as app_jobs_runner
 from app.routers import state as app_router_state
+from app.processing.job_store import JobStore
 from app.schema import generator as schema_generator
 
 
@@ -139,10 +140,10 @@ def override_attachment_cache_dir(
 @pytest.fixture(autouse=True)
 def override_data_dir(
     monkeypatch: pytest.MonkeyPatch,
-    test_fixtures_dir: Path,
+    tmp_path: Path,
 ) -> Path:
-    """Force app data directories to use test fixtures for all tests."""
-    data_dir = test_fixtures_dir
+    """Force app data directories to use an isolated per-test runtime directory."""
+    data_dir = tmp_path / 'data_runtime'
     downloads_dir = data_dir / 'downloads'
     cleaned_dir = data_dir / 'cleaned_data'
     raw_dir = data_dir / 'raw'
@@ -161,7 +162,8 @@ def override_data_dir(
     monkeypatch.setattr(processing_cleaner, 'CLEANED_DATA_DIR', cleaned_dir)
 
     monkeypatch.setattr(app_server, 'DOWNLOADS_DIR', downloads_dir)
-    app_router_state.data_store.data_dir = data_dir
+    monkeypatch.setattr(app_router_state, 'data_store', processing_data_store.DataStore(data_dir=data_dir))
+    monkeypatch.setattr(app_router_state, 'job_store', JobStore())
 
     return data_dir
 

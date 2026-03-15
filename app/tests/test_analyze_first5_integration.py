@@ -14,9 +14,8 @@ from app.analysis.analyzer import AnalysisConfig, AnalysisRequest, analyze_datas
 from app.config import ANALYSIS_CSV_FILENAME, ANALYSIS_JSON_FILENAME
 
 FIXTURES_ROOT = Path(__file__).parent / "fixtures"
-CONTENT_HASH = "efa267c019c11e33cf61afe5ffcf9d2b1fa8dbdcd987b83e911eeea795812334"
 INPUT_CSV = FIXTURES_ROOT / "raw" / "clean_10.csv"
-SCHEMA_PATH = FIXTURES_ROOT / CONTENT_HASH / "schema" / "schema.json"
+SCHEMA_PATH = FIXTURES_ROOT / "schema" / "medical_billing_comments_schema.json"
 TEST_USE_CASE = "Extract structured fields for each record."
 TEST_SYSTEM_PROMPT = "Return valid JSON matching the schema."
 pytestmark = pytest.mark.integration

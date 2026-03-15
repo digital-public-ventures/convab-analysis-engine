@@ -43,11 +43,18 @@ logs/
 # Project data (download from source)
 app/data/*
 app/data/raw/*
-app/tests/fixtures/*/analyzed/*
-app/tests/fixtures/*/cleaned_data/*
-app/tests/fixtures/*/post_processing/*
-app/tests/fixtures/*/downloads/*
-app/tests/fixtures/raw/*
+app/tests/fixtures/*
+!app/tests/fixtures/cleaned_data/
+!app/tests/fixtures/cleaned_data/**
+!app/tests/fixtures/downloads/
+!app/tests/fixtures/downloads/**
+!app/tests/fixtures/medical_billing_comments/
+!app/tests/fixtures/medical_billing_comments/**
+!app/tests/fixtures/raw/
+!app/tests/fixtures/raw/**
+!app/tests/fixtures/schema/
+!app/tests/fixtures/schema/**
+!app/tests/fixtures/responses_100.csv
 
 # Local planning & notes
 /plans
